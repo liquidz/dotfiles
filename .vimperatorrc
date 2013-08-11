@@ -1,0 +1,87 @@
+set verbose=9
+
+" <Leader>をコンマに
+let mapleader=","
+
+" no beep
+set visualbell
+highlight Bell display:none
+" 検索語を強調表示
+set hlsearch
+" 検索時に大文字小文字を無視
+set ignorecase
+
+" j/k での移動量を3行に
+nmap j 5<C-e>
+nmap k 5<C-y>
+
+" H/L でタブ移動
+nnoremap h <C-p>
+nnoremap l <C-n>
+
+" visualmode {{{
+    " ヴィジュアルモードでもカーソル移動できるように
+    vmap j <Down>
+    vmap k <Up>
+    vmap h <Left>
+    vmap l <Right>
+    " 選択文字をGoogle検索
+    vmap <silent> <M-g> y<Esc><Esc>P
+" }}}
+
+" <C-h> で戻る
+map <C-h> :back<CR>
+" Q でタブ閉じる
+map Q :quit<CR>
+
+" tabopenの補完設定
+"   s = 検索エンジン + キーワードURL
+"   S = Google Suggest
+"   l = ロケーションバー
+"   f = ローカルファイル
+set complete=Sl
+
+" ヒント文字をアルファベットにする
+set hintchars=hlasdfgyuiopqwernmc
+" ヒントスタイル
+highlight Hint <<<EOT
+    font-size:130%;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding:2px 5px;
+    border-radius:5px;
+    color:white;
+    background-color:#0044CC;
+    border:2px solid #fff;
+    opacity:0.8;
+EOT
+
+" プラグイン {{{
+    let g:plugin_loader_roots = "~/Dropbox/sources/vimperator-plugins/ ~/.vimperator/load/"
+    let g:plugin_loader_plugins = "exShowElementInfo"
+" }}}
+
+" ステータスラインにたぶグループ名を表示
+autocmd LocationChange .* -js setTimeout(function(){ statusline.updateField("tabgrouptitle", "<" + tabGroup.tabView.GroupItems.getActiveGroupItem().getTitle() + ">")}, 0);
+set status^=tabgrouptitle
+
+" コマンドラインでIMEをオフ
+" http://vimperator.g.hatena.ne.jp/teramako/20090311/1236776437
+style -name commandline-ime chrome://* #liberator-commandline-command input {ime-mode: inactive;}
+
+" 最近閉じたタブ
+nnoremap U :<C-u>u<Space>
+
+" タブグループ
+nnoremap <Leader>pc :<C-u>panorama<Space>
+nnoremap <Leader>ps :<C-u>panorama switch<Space>
+nnoremap <Leader>pa :<C-u>panorama add<Space>
+nnoremap <Leader>pl :<C-u>panorama list<CR>
+nnoremap <Leader>pp :<C-u>panorama pushtab<Space>
+nnoremap <Leader>pr :<C-u>panorama remove<Space>
+nnoremap <Leader>po <M-S-e>
+
+" R で vimperatorrcを再読み込み
+map R :source ~/.vimperatorrc<CR>
+
+echo ".vimperatorrc sourced"
