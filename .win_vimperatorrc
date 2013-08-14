@@ -1,0 +1,4 @@
+" タブグループ表示
+nnoremap <Leader>po <C-S-e>
+
+echo ".win_vimperatorrc sourced"

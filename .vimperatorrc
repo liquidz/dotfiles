@@ -26,7 +26,7 @@ nnoremap l <C-n>
     vmap h <Left>
     vmap l <Right>
     " 選択文字をGoogle検索
-    vmap <silent> <M-g> y<Esc><Esc>P
+    vmap <silent> P y<Esc><Esc>P
 " }}}
 
 " <C-h> で戻る
@@ -39,7 +39,7 @@ map Q :quit<CR>
 "   S = Google Suggest
 "   l = ロケーションバー
 "   f = ローカルファイル
-set complete=Sl
+set complete=sSl
 
 " ヒント文字をアルファベットにする
 set hintchars=hlasdfgyuiopqwernmc
@@ -61,7 +61,7 @@ EOT
     let g:plugin_loader_plugins = "exShowElementInfo"
 " }}}
 
-" ステータスラインにたぶグループ名を表示
+" ステータスラインにタブグループ名を表示
 autocmd LocationChange .* -js setTimeout(function(){ statusline.updateField("tabgrouptitle", "<" + tabGroup.tabView.GroupItems.getActiveGroupItem().getTitle() + ">")}, 0);
 set status^=tabgrouptitle
 
@@ -83,5 +83,12 @@ nnoremap <Leader>po <M-S-e>
 
 " R で vimperatorrcを再読み込み
 map R :source ~/.vimperatorrc<CR>
+
+" Windows
+javascript <<EOT
+if(liberator.has("Windows")){
+    io.source("~/.win_vimperatorrc", false);
+}
+EOT
 
 echo ".vimperatorrc sourced"
