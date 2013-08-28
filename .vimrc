@@ -386,6 +386,8 @@ NeoBundle 'git://github.com/taka84u9/unite-git.git'
 NeoBundle 'git://github.com/majutsushi/tagbar.git'
 NeoBundle 'git://github.com/vim-scripts/VOoM.git'
 NeoBundle 'git://github.com/adimit/prolog.vim.git'
+NeoBundle 'git://github.com/vim-scripts/Align.git'
+NeoBundle 'git://github.com/itchyny/lightline.vim.git'
 
 "NeoBundle 'git://github.com/ujihisa/shadow.vim.git'
 
@@ -533,6 +535,16 @@ let g:rbpt_colorpairs = [
     \ ]
 
 " }}}
+
+" =lightline.vim {{{
+let g:lightline = {
+    \ 'colorscheme': 'solarized',
+    \ 'component': {
+    \   'readonly': '%{&readonly?"(R)":""}'
+    \   }
+    \ }
+" }}}
+
 
 " smartchr
 "inoremap <expr> = smartchr#one_of(' = ', ' == ', ' === ', '=')
