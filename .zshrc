@@ -26,6 +26,7 @@ alias cp="cp -pi"
 PATH=$PATH:~/bin
 PATH=$PATH:~/bin/git-tasukete
 PATH=$PATH:/opt/local/bin
+PATH="/usr/local/bin:$PATH:/usr/local/sbin"
 export PATH
 
 #if [ -f ~/.zsh/auto-fu.zsh ]; then
