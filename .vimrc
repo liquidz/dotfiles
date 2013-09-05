@@ -492,7 +492,7 @@ aug END
 
 " =submode {{{
 let g:submode_timeout = 0
-call submode#enter_with('window', 'n', '', '<C-w><C-w><C-w>', '<Nop>')
+call submode#enter_with('window', 'n', '', '<C-w><C-w>', '<Nop>')
 call submode#leave_with('window', 'n', '', '<Esc>')
 call submode#map('window', 'n', '', 'j', '<C-w>j')
 call submode#map('window', 'n', '', 'J', '<C-w>J')
@@ -509,6 +509,14 @@ call submode#map('window', 'n', '', '>', '<C-w>5>')
 call submode#map('window', 'n', '', '<', '<C-w>5<lt>')
 call submode#map('window', 'n', '', '+', '<C-w>5+')
 call submode#map('window', 'n', '', '-', '<C-w>5-')
+
+call submode#enter_with('tab', 'n', '', '<C-t><C-t>', '<Nop>')
+call submode#leave_with('tab', 'n', '', '<Esc>')
+call submode#map('tab', 'n', '', 'n', ':<C-u>tabnew<CR>')
+call submode#map('tab', 'n', '', 'j', ':<C-u>tabn<CR>')
+call submode#map('tab', 'n', '', 'k', ':<C-u>tabp<CR>')
+call submode#map('tab', 'n', '', 'l', ':<C-u>tabn<CR>')
+call submode#map('tab', 'n', '', 'h', ':<C-u>tabp<CR>')
 " }}}
 
 " =vim-clojure-static {{{
