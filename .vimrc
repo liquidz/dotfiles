@@ -355,15 +355,12 @@ endif
 call neobundle#rc(expand('~/.vim/bundle/'))
 "NeoBundleFetch 'Shougo/neobundle.vim'
 
-" uochan color scheme for vim
-"NeoBundle 'git://github.com/liquidz/vim-colors-uochan.git'
 
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'git://github.com/Shougo/neocomplcache.git'
 NeoBundle 'git://github.com/Shougo/neobundle.vim.git'
 NeoBundle 'git://github.com/Shougo/unite.vim.git'
 NeoBundle 'git://github.com/Shougo/vimfiler.git'
-"kNeoBundle 'git://github.com/Shougo/vimproc.git'
 NeoBundle 'git://github.com/Shougo/vimshell.git'
 NeoBundle 'git://github.com/motemen/git-vim.git'
 NeoBundle 'git://github.com/thinca/vim-quickrun.git'
@@ -373,8 +370,6 @@ NeoBundle 'git://github.com/tpope/vim-classpath.git'
 NeoBundle 'git://github.com/tpope/vim-fireplace.git'
 NeoBundle 'git://github.com/liquidz/lein-vim.git'
 NeoBundle 'git://github.com/thinca/vim-visualstar.git'
-"vimplenote-vim
-NeoBundle 'git://github.com/mattn/webapi-vim.git'
 " markdown
 NeoBundle 'git://github.com/tpope/vim-markdown.git'
 " submode
@@ -545,6 +540,8 @@ let g:lightline = {
     \ }
 " }}}
 
+" =voom {{{
+" }}}
 
 " smartchr
 "inoremap <expr> = smartchr#one_of(' = ', ' == ', ' === ', '=')
