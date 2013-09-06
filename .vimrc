@@ -350,11 +350,16 @@ set nocompatible
 filetype off
 
 if has('vim_starting')
-    set runtimepath+=~/.vim/bundle/neobundle.vim/
-endif
-call neobundle#rc(expand('~/.vim/bundle/'))
-"NeoBundleFetch 'Shougo/neobundle.vim'
 
+    if has("win32")
+        set runtimepath+=c:\opt\bundle\neobundle.vim
+        call neobundle#rc(expand('c:\opt\bundle'))
+    else
+        set runtimepath+=~/.vim/bundle/neobundle.vim/
+        call neobundle#rc(expand('~/.vim/bundle/'))
+    endif
+endif
+"NeoBundleFetch 'Shougo/neobundle.vim'
 
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/neocomplcache'
@@ -381,6 +386,7 @@ NeoBundle 'adimit/prolog.vim'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'kana/vim-surround'
 NeoBundle 'h1mesuke/vim-alignta'
+NeoBundle 'w0ng/vim-hybrid'
 
 "NeoBundle 'git://github.com/ujihisa/shadow.vim.git'
 
@@ -547,6 +553,12 @@ let g:lightline = {
 " }}}
 
 " =voom {{{
+if has('win32')
+    nnoremap <Leader>vom :open C:\opt\voom\main.md<CR>:Voom markdown<CR>
+else
+    nnoremap <Leader>vom :open $HOME/opt/voom/main.md<CR>:Voom markdown<CR>
+endif
+nnoremap <Leader>vog :Voomgrep 
 " }}}
 
 " smartchr
@@ -672,13 +684,7 @@ syntax on
 filetype on
 filetype plugin on
 filetype plugin indent on
-colorscheme koehler
-"colorscheme jellybeans
-"colorscheme uochan
-
-"if g:colors_name ==? 'koehler'
-"    hi Title term=bold cterm=bold ctermfg=magenta gui=bold guifg=Magenta
-"endif
+colorscheme hybrid
 
 "let vimclojure#WantNailgun = 1
 let vimclojure#NailgunPort = 2113
@@ -717,4 +723,6 @@ aug MyJpSpace
 	au BufNewFile,BufRead * match JpSpace /　/
 aug END
 
-NeoBundleCheck
+if !has("win32")
+    NeoBundleCheck
+endif
