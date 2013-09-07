@@ -1,5 +1,10 @@
 set nocompatible
 
+" for vim-ref
+if has('win32')
+    let &termencoding = &encoding
+endif
+
 " =encoding {{{
 "    cf. http://www.kawaz.jp/pukiwiki/?vim
 " 文字コードの自動認識
@@ -361,6 +366,7 @@ if has('vim_starting')
 endif
 "NeoBundleFetch 'Shougo/neobundle.vim'
 
+NeoBundle 'thinca/vim-ref'
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neobundle.vim'
@@ -556,9 +562,24 @@ let g:lightline = {
 if has('win32')
     nnoremap <Leader>vom :open C:\opt\voom\main.md<CR>:Voom markdown<CR>
 else
-    nnoremap <Leader>vom :open $HOME/opt/voom/main.md<CR>:Voom markdown<CR>
+    nnoremap <Leader>vom :open $HOME/.vim/voom/main.md<CR>:Voom markdown<CR>
 endif
 nnoremap <Leader>vog :Voomgrep 
+" }}}
+
+" =vim-ref {{{
+let g:ref_phpmanual_path = $HOME . '/.vim/vim-ref/php-chunked-xhtml'
+let g:ref_source_webdict_sites = {
+\   'weblio' : {
+\       'url'  : 'http://ejje.weblio.jp/content/%s',
+\       'line' : 70
+\   }
+\ }
+
+"augroup vimrc-checktime
+"	au FileType php nnoremap L <Nop>
+"	au FileType php nnoremap LL :<C-u>source %<CR>
+"augroup END
 " }}}
 
 " smartchr
@@ -669,10 +690,10 @@ aug END
 augroup templatedload
 	autocmd!
 	autocmd BufNewFile *.html 0r ~/.vim/template/html.html
-	autocmd BufNewFile *.htm 0r ~/.vim/template/html.html
-	autocmd BufNewFile *.js 0r ~/.vim/template/js.js
-	autocmd BufNewFile *.clj 0r ~/.vim/template/clj.clj
-	autocmd BufNewFile *.md 0r ~/.vim/template/md.md
+	autocmd BufNewFile *.htm  0r ~/.vim/template/html.html
+	autocmd BufNewFile *.js   0r ~/.vim/template/js.js
+	autocmd BufNewFile *.clj  0r ~/.vim/template/clj.clj
+	autocmd BufNewFile *.md   0r ~/.vim/template/md.md
 augroup END
 
 inoreabbrev <expr> **** repeat('*', 50 - col('.'))
@@ -711,6 +732,11 @@ let g:quickrun_config.markdown = {
             \ 'cmdopt'   : '-a',
             \ 'args'     : 'Marked',
             \ 'exec'     : '%c %o %a %s'
+            \ }
+let g:quickrun_config.javascript = {
+            \ 'command'  : 'phantomjs',
+            \ 'args'     : $HOME . '/opt/js/underscore/underscore-min.js',
+            \ 'exec'     : '%c %s %a'
             \ }
 
 
