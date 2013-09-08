@@ -573,9 +573,14 @@ let g:ref_source_webdict_sites = {
 \   'weblio' : {
 \       'url'  : 'http://ejje.weblio.jp/content/%s',
 \       'line' : 70
+\   },
+\   'chef' : {
+\       'url'  : 'http://docs.opscode.com/resource_%s.html',
+\       'line' : 40
 \   }
 \ }
 let g:ref_clojure_cmd = ['java', '-cp', $HOME . '/.m2/repository/org/clojure/clojure/1.5.1/clojure-1.5.1.jar', 'clojure.main']
+nnoremap <Leader>dic :Ref webdict 
 
 "augroup vimrc-checktime
 "	au FileType php nnoremap L <Nop>
