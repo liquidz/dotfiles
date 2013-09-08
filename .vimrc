@@ -575,6 +575,7 @@ let g:ref_source_webdict_sites = {
 \       'line' : 70
 \   }
 \ }
+let g:ref_clojure_cmd = ['java', '-cp', $HOME . '/.m2/repository/org/clojure/clojure/1.5.1/clojure-1.5.1.jar', 'clojure.main']
 
 "augroup vimrc-checktime
 "	au FileType php nnoremap L <Nop>
