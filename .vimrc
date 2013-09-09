@@ -329,6 +329,9 @@ inoremap <Tab> <C-r>=InsertTabWrapper()<CR>
 " =vmap (ビジュアルモード) {{{
 vmap <C-j> <Esc>
 vnoremap z $
+if has("win32")
+    vnoremap <C-c> "*y
+endif
 
 " ビジュアルモードでインデントしても選択したままにする
 vnoremap < <gv
@@ -359,6 +362,8 @@ if has('vim_starting')
     if has("win32")
         set runtimepath+=c:\opt\bundle\neobundle.vim
         call neobundle#rc(expand('c:\opt\bundle'))
+
+        let g:neobundle#log_filename = 'c:\opt\log'
     else
         set runtimepath+=~/.vim/bundle/neobundle.vim/
         call neobundle#rc(expand('~/.vim/bundle/'))
@@ -494,7 +499,7 @@ aug VimFilerKeyMapping
         " Unite bookmarkのアクションをVimFilerに
         call unite#custom_default_action('source/bookmark/directory' , 'vimfiler')
         " incremental search
-        nnoremap <buffer> / /^\s*\(\|-\\|\|+\\|+\\|-\) \zs
+        "nnoremap <buffer> / /^\s*\(\|-\\|\|+\\|+\\|-\) \zs
     endfunction
 aug END
 
@@ -568,6 +573,7 @@ nnoremap <Leader>vog :Voomgrep
 " }}}
 
 " =vim-ref {{{
+
 let g:ref_phpmanual_path = $HOME . '/.vim/vim-ref/php-chunked-xhtml'
 let g:ref_source_webdict_sites = {
 \   'weblio' : {
