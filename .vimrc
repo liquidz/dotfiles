@@ -398,6 +398,7 @@ NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'kana/vim-surround'
 NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'w0ng/vim-hybrid'
+NeoBundle 'vim-scripts/project.tar.gz'
 
 "NeoBundle 'git://github.com/ujihisa/shadow.vim.git'
 
@@ -415,7 +416,7 @@ filetype plugin indent on
 " =projects.vim {{{
 " ファイルを開いたら Project は閉じる
 let g:proj_flags = "imstc"
-nnoremap <silent> <Leader>p :Project<CR>
+nnoremap <silent> PP :Project<CR>
 
 " 畳み込みを開いた状態にする
 autocmd BufAdd .vimprojects silent! %foldopen!
