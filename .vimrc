@@ -719,22 +719,6 @@ filetype plugin on
 filetype plugin indent on
 colorscheme hybrid
 
-"let vimclojure#WantNailgun = 1
-let vimclojure#NailgunPort = 2113
-if has('mac')
-    "echo "this is unix"
-    let vimclojure#NailgunClient="/Users/uochan/bin/ng"
-else
-    "echo "this is mac"
-    let vimclojure#NailgunClient="/home/masa/bin/ng"
-endif
-"let vimclojure#NailgunClient="/home/masa/bin/ng"
-let vimclojure#HighlightBuiltins = 1
-let vimclojure#SplitPos = "right"
-let vimclojure#SplitSize = 35
-let vimclojure#ParenRainbow = 1
-let g:clj_paren_rainbow = 1
-
 " quickrun
 let b:quickrun_config = {'outputter/buffer/split': 10}
 let g:quickrun_config = {}

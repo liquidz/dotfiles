@@ -4,7 +4,7 @@ export LANG=ja_JP.UTF-8
 # ビープ音を鳴らさないようにする
 setopt NO_beep
 
-export TERM=xterm-256color
+export TERM=screen-256color
 
 ## lsの色付け
 export CLICOLOR=1
