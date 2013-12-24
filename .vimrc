@@ -1,5 +1,8 @@
 set nocompatible
 
+syntax on
+filetype plugin indent on
+
 " for vim-ref
 if has('win32')
     let &termencoding = &encoding
@@ -370,10 +373,9 @@ if has('vim_starting')
     endif
 endif
 "NeoBundleFetch 'Shougo/neobundle.vim'
-
 NeoBundle 'thinca/vim-ref'
 NeoBundle 'Shougo/vimproc'
-NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Shougo/neocomplete'
 NeoBundle 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler'
@@ -399,18 +401,26 @@ NeoBundle 'kana/vim-surround'
 NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'vim-scripts/project.tar.gz'
+NeoBundle 'LeafCage/yankround.vim'
+NeoBundle 'ujihisa/unite-locate'
+NeoBundle 'rhysd/clever-f.vim'
 
 "NeoBundle 'git://github.com/ujihisa/shadow.vim.git'
 
 filetype plugin indent on
 " }}}
 
-" neocomplcache {{{
-"let g:neocomplcache_enable_at_startup = 1
-"let g:neocomplcache_enable_smart_case = 1
-"let g:neocomplcache_enable_underbar_completion = 1
-"let g:neocomplcache_lock_buffer_name_pattern = '*wiki*'
-"imap <C-l> <Plug>(neocomplcache_snippets_expand)
+" neocomplete {{{
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_ignore_case = 1
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#force_overwrite_completefunc = 1
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns._ = '\h\w*'
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 " }}}
 
 " =projects.vim {{{
@@ -595,6 +605,17 @@ nnoremap <Leader>dic :Ref webdict
 "augroup END
 " }}}
 
+" =yankround {{{
+nmap p <Plug>(yankround-p)
+nmap <C-p> <Plug>(yankround-prev)
+nmap <C-n> <Plug>(yankround-next)
+nnoremap <Leader>yr :Unite yankround<CR>
+" }}}
+
+" =unite-locate {{{
+nnoremap <Leader>lo :Unite locate<CR>a
+" }}}
+
 " smartchr
 "inoremap <expr> = smartchr#one_of(' = ', ' == ', ' === ', '=')
 
@@ -714,10 +735,6 @@ inoreabbrev <expr> ---- repeat('-', 50 - col('.'))
 inoreabbrev <expr> ==== repeat('=', 50 - col('.'))
 
 " -----------------------------------------------
-syntax on
-filetype on
-filetype plugin on
-filetype plugin indent on
 colorscheme hybrid
 
 " quickrun
