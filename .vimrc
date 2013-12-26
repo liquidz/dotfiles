@@ -404,7 +404,8 @@ NeoBundle 'vim-scripts/project.tar.gz'
 NeoBundle 'LeafCage/yankround.vim'
 NeoBundle 'ujihisa/unite-locate'
 NeoBundle 'rhysd/clever-f.vim'
-
+NeoBundle 'fuenor/qfixgrep'
+NeoBundle 'fuenor/qfixhowm'
 "NeoBundle 'git://github.com/ujihisa/shadow.vim.git'
 
 filetype plugin indent on
@@ -469,7 +470,7 @@ nnoremap <Leader>gp :GitPush<Enter>
 
 let g:vimfiler_safe_mode_by_default = 0
 let g:vimfiler_as_default_explorer = 1
-let g:vimfiler_sort_type = "Time"
+let g:vimfiler_sort_type = "filename"
 let g:vimfiler_sendto = {
 \   'test' : 'test %d %p - %f - %F'
 \ , 'unzip' : 'unzip %f'
@@ -616,6 +617,21 @@ nnoremap <Leader>yr :Unite yankround<CR>
 nnoremap <Leader>lo :Unite locate<CR>a
 " }}}
 
+" =qfixhowm {{{
+let howm_dir = '~/.vim/howm'
+let QFixMRU_Filename = '~/.vim/qfixmru'
+let howm_filename = '%Y/%m/%Y-%m-%d-%H%M%S.md'
+let QFixHowm_FileType = 'markdown'
+let QFixHowm_Title = '#'
+" タイトル行検索正規表現の辞書を初期化
+let QFixMRU_Title = {}
+" MRUでタイトル行とみなす正規表現(Vimの正規表現で指定)
+let QFixMRU_Title['mkd'] = '^###[^#]'
+" grepでタイトル行とみなす正規表現(使用するgrepによっては変更する必要があります)
+let QFixMRU_Title['mkd_regxp'] = '^###[^#]'
+let QFixMRU_Key = 'g'
+" }}}
+
 " smartchr
 "inoremap <expr> = smartchr#one_of(' = ', ' == ', ' === ', '=')
 
@@ -727,7 +743,7 @@ augroup templatedload
 	autocmd BufNewFile *.htm  0r ~/.vim/template/html.html
 	autocmd BufNewFile *.js   0r ~/.vim/template/js.js
 	autocmd BufNewFile *.clj  0r ~/.vim/template/clj.clj
-	autocmd BufNewFile *.md   0r ~/.vim/template/md.md
+	"autocmd BufNewFile *.md   0r ~/.vim/template/md.md
 augroup END
 
 inoreabbrev <expr> **** repeat('*', 50 - col('.'))
