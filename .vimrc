@@ -406,7 +406,9 @@ NeoBundle 'ujihisa/unite-locate'
 NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 'fuenor/qfixgrep'
 NeoBundle 'fuenor/qfixhowm'
-"NeoBundle 'git://github.com/ujihisa/shadow.vim.git'
+NeoBundle 'Lokaltog/vim-easymotion'
+NeoBundle 'kien/ctrlp.vim'
+
 
 filetype plugin indent on
 " }}}
@@ -440,6 +442,7 @@ autocmd BufAdd .vimprojects silent! %foldopen!
 nnoremap <Leader>. :Unite file_mru<CR>
 nnoremap <Leader>f :Unite file<CR>
 nnoremap <Leader>b :Unite buffer<CR>
+nnoremap <Leader>jump :Unite jump<CR>
 nnoremap <Leader>todo :Unite git_grep:TODO<CR>
 nnoremap <Leader>grep :Unite git_grep:
 " }}}
@@ -632,6 +635,18 @@ let QFixMRU_Title['mkd_regxp'] = '^###[^#]'
 let QFixMRU_Key = 'g'
 " }}}
 
+" =easymotion {{{
+let g:EasyMotion_keys = 'hjklasdfguiowernmHJKLASDFGUIOWERNM'
+let g:EasyMotion_leader_key = "'"
+let g:EasyMotion_grouping = 1
+" }}}
+
+" =ctrlp {{{
+let g:ctrlp_clear_cache_on_exit = 0   " 終了時キャッシュをクリアしない
+let g:ctrlp_mruf_max            = 500 " MRUの最大記録数
+let g:ctrlp_open_new_file       = 1   " 新規ファイル作成時にタブで開く
+" }}}
+
 " smartchr
 "inoremap <expr> = smartchr#one_of(' = ', ' == ', ' === ', '=')
 
@@ -685,8 +700,8 @@ aug MyAutoCommand
 	" java
 	au FileType java command! Javac :call CompileJava()<CR>
 	au FileType java command! Java :call ExecuteJava()<CR>
-	au FileType java nmap <Leader>jc :Javac<CR>
-	au FileType java nmap <Leader>jj :Java<CR>
+	"au FileType java nmap <Leader>jc :Javac<CR>
+	"au FileType java nmap <Leader>jj :Java<CR>
 	" schemeインデント設定
 	au FileType scheme setl cindent& lispwords=define 
 	" cd.vim
@@ -726,6 +741,8 @@ aug MyAutoCommand
 	au FileType clojure set lispwords+=defvalidate,validate,testing,defhtml,bind-config,defcompilertest
     " midje
 	au FileType clojure set lispwords+=facts,fact
+    " conjure
+	au FileType clojure set lispwords+=stubbing
 
     " rainbow
     au VimEnter * RainbowParenthesesToggle
@@ -733,12 +750,19 @@ aug MyAutoCommand
     au Syntax * RainbowParenthesesLoadSquare
     au Syntax * RainbowParenthesesLoadBraces
 
+    " markdown
+    au FileType markdown set formatoptions+=ro
+    "setlocal comments=fb:*,fb:-,mb:*,mb:-
+    "au FileType markdown set comments=sb:*,mb:*,ex:*
+    au FileType markdown set comments=sl:/*,mb:*,elx:*/
+
+
 aug END
 
 " }}}
 
 augroup templatedload
-	autocmd!
+    autocmd!
 	autocmd BufNewFile *.html 0r ~/.vim/template/html.html
 	autocmd BufNewFile *.htm  0r ~/.vim/template/html.html
 	autocmd BufNewFile *.js   0r ~/.vim/template/js.js

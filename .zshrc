@@ -10,10 +10,12 @@ export TERM=screen-256color
 export CLICOLOR=1
 export LSCOLORS=DxGxcxdxCxegedabagacad
 
+export LT_HOME=/Users/uochan/LightTable
+
 # alias
 case $(uname) in
     *BSD|Darwin)
-        alias ctags="/opt/local/bin/ctags --langmap=Lisp:+.clj"
+        alias ctags="ctags --langmap=Lisp:+.clj"
         ;;
 esac
 alias ll="ls -al"
