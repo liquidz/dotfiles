@@ -1,4 +1,14 @@
-# autoload -U colors; colors
+autoload -U compinit; compinit
+
+setopt auto_cd
+# cd した先のディレクトリをディレクトリスタックに追加する
+# `cd +<Tab>` でディレクトリの履歴を表示
+setopt auto_pushd
+# pushd したとき、ディレクトリがすでにスタックに含まれていればスタックに追加しない
+setopt pushd_ignore_dups
+# 入力したコマンドがすでにコマンド履歴に含まれる場合、履歴から古いほうのコマンドを削除する
+setopt hist_ignore_all_dups
+
 export LANG=ja_JP.UTF-8
 
 # ビープ音を鳴らさないようにする
@@ -30,6 +40,8 @@ PATH=$PATH:~/bin/git-tasukete
 PATH=$PATH:/opt/local/bin
 PATH="/usr/local/bin:$PATH:/usr/local/sbin"
 export PATH
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
 #if [ -f ~/.zsh/auto-fu.zsh ]; then
 #    source ~/.zsh/auto-fu.zsh
