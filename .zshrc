@@ -1,26 +1,72 @@
-autoload -U compinit; compinit
+# Path to your oh-my-zsh installation.
+export ZSH=$HOME/.oh-my-zsh
 
-setopt auto_cd
-# cd した先のディレクトリをディレクトリスタックに追加する
-# `cd +<Tab>` でディレクトリの履歴を表示
-setopt auto_pushd
-# pushd したとき、ディレクトリがすでにスタックに含まれていればスタックに追加しない
-setopt pushd_ignore_dups
-# 入力したコマンドがすでにコマンド履歴に含まれる場合、履歴から古いほうのコマンドを削除する
-setopt hist_ignore_all_dups
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+# Optionally, if you set this to "random", it'll load a random theme each
+# time that oh-my-zsh is loaded.
+#ZSH_THEME="robbyrussell"
+#ZSH_THEME="wedisagree"
+ZSH_THEME="gallois"
 
-export LANG=ja_JP.UTF-8
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# ビープ音を鳴らさないようにする
-setopt NO_beep
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
 
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to disable command auto-correction.
+# DISABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+plugins=(git)
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 export TERM=screen-256color
 
-## lsの色付け
-export CLICOLOR=1
-export LSCOLORS=DxGxcxdxCxegedabagacad
+# You may need to manually set your language environment
+export LANG=ja_JP.UTF-8
 
-export LT_HOME=/Users/uochan/LightTable
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+
+# ssh
+# export SSH_KEY_PATH="~/.ssh/dsa_id"
+
+setopt NO_beep
 
 # alias
 case $(uname) in
@@ -33,20 +79,6 @@ alias la="ls -a"
 alias rm="rm -i"
 alias mv="mv -i"
 alias cp="cp -pi"
-
-# =path
-PATH=$PATH:~/bin
-PATH=$PATH:~/bin/git-tasukete
-PATH=$PATH:/opt/local/bin
-PATH="/usr/local/bin:$PATH:/usr/local/sbin"
-export PATH
-
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
-
-# heroku
-export PATH="/usr/local/heroku/bin:$PATH"
-# docker
-export DOCKER_HOST=tcp://localhost:4243
 
 # cd した時に遷移先ディレクトリの ls を表示する
 chpwd() {
@@ -88,8 +120,6 @@ ls_abbrev() {
         echo "$ls_result"
     fi
 }
-
-
 function do_enter() {
     if [ -n "$BUFFER" ]; then
         zle accept-line
@@ -97,17 +127,8 @@ function do_enter() {
     fi
     echo
     ls_abbrev
-    #if [ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" = 'true' ]; then
-    #    echo
-    #    echo -e "\e[0;33m--- git status ---\e[0m"
-    #    git status -sb
-    #fi
     zle reset-prompt
     return 0
 }
 zle -N do_enter
 bindkey '^m' do_enter
-
-
-
-eval "$(rbenv init -)"
