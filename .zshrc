@@ -5,9 +5,7 @@ export ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-#ZSH_THEME="robbyrussell"
-#ZSH_THEME="wedisagree"
-ZSH_THEME="gallois"
+ZSH_THEME="sunrise"
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -67,6 +65,7 @@ export LANG=ja_JP.UTF-8
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
 setopt NO_beep
+setopt correct
 
 # alias
 case $(uname) in
@@ -74,11 +73,14 @@ case $(uname) in
         alias ctags="ctags --langmap=Lisp:+.clj"
         ;;
 esac
+alias reload="source ~/.zshrc"
 alias ll="ls -al"
 alias la="ls -a"
 alias rm="rm -i"
 alias mv="mv -i"
 alias cp="cp -pi"
+alias ...="cd ../.."
+alias ....="cd ../../.."
 
 # cd した時に遷移先ディレクトリの ls を表示する
 chpwd() {
@@ -132,3 +134,15 @@ function do_enter() {
 }
 zle -N do_enter
 bindkey '^m' do_enter
+
+# cdr コマンドでよく行くディレクトリに移動できるようにする
+autoload -Uz compinit && compinit
+zstyle ':completion:*' menu select
+zstyle ':completion:*:cd:*' ignore-parents parent pwd
+zstyle ':completion:*:descriptions' format '%BCompleting%b %U%d%u'
+typeset -ga chpwd_functions
+autoload -U chpwd_recent_dirs cdr
+chpwd_functions+=chpwd_recent_dirs
+zstyle ":chpwd:*" recent-dirs-max 500
+zstyle ":chpwd:*" recent-dirs-default true
+zstyle ":completion:*" recent-dirs-insert always
