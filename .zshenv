@@ -5,6 +5,8 @@ PATH=$PATH:/opt/local/bin
 PATH="/usr/local/bin:$PATH:/usr/local/sbin"
 export PATH
 
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+
 # =lighttable
 export LT_HOME=/Users/uochan/LightTable
 
