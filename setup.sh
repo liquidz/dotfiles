@@ -1,6 +1,6 @@
 #/bin/sh
 
-INSTALL_DIR=$HOME/.dotfiles
+INSTALL_DIR=$HOME/dotfiles
 
 git clone https://github.com/liquidz/dotfiles.git $INSTALL_DIR
 
