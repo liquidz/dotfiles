@@ -1,3 +1,3 @@
 ```
-curl https://raw.githubusercontent.com/liquidz/dotfiles/master/bin/vim.sh | sh
+curl https://raw.githubusercontent.com/liquidz/dotfiles/master/bin/setup_vim.sh | sh
 ```
