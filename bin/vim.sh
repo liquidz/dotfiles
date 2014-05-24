@@ -12,3 +12,4 @@ if [ ! -e $HOME/.vim/bundle/neobundle.vim ]; then
 fi
 
 ln -s $INSTALL_DIR/.vimrc $HOME/.vimrc
+foo
