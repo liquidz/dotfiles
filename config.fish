@@ -19,21 +19,21 @@ set fish_plugins autojump vi-mode
 # -------------------------------------------
 if status --is-login
     if test -e ~/bin
-        set PATH $PATH ~/bin
-        set PATH $PATH ~/bin/git-tasukete
+        set -x PATH $PATH ~/bin
+        set -x PATH $PATH ~/bin/git-tasukete
     end
     if test -e ~/.autojump/bin
-        set PATH $PATH ~/.autojump/bin
+        set -x PATH $PATH ~/.autojump/bin
     end
-    set PATH $PATH /opt/local/bin
-    set PATH $PATH /usr/local/bin
-    set PATH $PATH /usr/local/sbin
-    set PATH $PATH /usr/local/heroku/bin
+    set -x PATH $PATH /opt/local/bin
+    set -x PATH $PATH /usr/local/bin
+    set -x PATH $PATH /usr/local/sbin
+    set -x PATH $PATH /usr/local/heroku/bin
 
-    set LD_LIBRARY_PATH $LD_LIBRARY_PATH /usr/local/lib
+    set -x LD_LIBRARY_PATH $LD_LIBRARY_PATH /usr/local/lib
 
     # docker
-    set DOCKER_HOST tcp://localhost:4243
+    set -x DOCKER_HOST tcp://localhost:4243
 
     # autojump
     if test -f /root/.autojump/etc/profile.d/autojump.fish
@@ -51,6 +51,10 @@ if status --is-login
     set -xg __fish_git_prompt_color_stagedstate "green"
     set -xg __fish_git_prompt_color_bare red
     set -xg __fish_git_prompt_color_invalidstate red
+
+    # vi mode
+    set -g vi_mode_normal  '[N]'
+    set -g vi_mode_insert  '[I]'
 end
 
 # PROMPT
@@ -71,17 +75,22 @@ function fish_prompt --description 'Write out the prompt'
     # dollar
     if not test $last_status -eq 0
         set_color $fish_color_error
-        echo -n ' $ '
     else
         set_color yellow
-        echo -n ' $ '
     end
+    echo -n " $vi_mode "
     set_color normal
 end
 
 function fish_right_prompt
     # git status
     printf '%s ' (__fish_git_prompt)
-    # vi mode
-    echo $vi_mode
+end
+
+function dl
+    docker ps -lq
+end
+
+function reload
+    source ~/.config/fish/config.fish
 end
