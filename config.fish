@@ -36,8 +36,8 @@ if status --is-login
     set -x DOCKER_HOST tcp://localhost:4243
 
     # autojump
-    if test -f /root/.autojump/etc/profile.d/autojump.fish
-        . /root/.autojump/etc/profile.d/autojump.fish
+    if test -f $HOME/.autojump/etc/profile.d/autojump.fish
+        . $HOME/.autojump/etc/profile.d/autojump.fish
     end
 
     # git prompt setting
