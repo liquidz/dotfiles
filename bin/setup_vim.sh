@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/sh
 
 INSTALL_DIR=$HOME/dotfiles
 
