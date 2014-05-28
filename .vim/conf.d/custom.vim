@@ -1,4 +1,4 @@
-set directory=$HOME/.vim/backup
+set directory=$HOME/dotfiles/.vim/backup
 
 " auto saving
 autocmd CursorHold * update
