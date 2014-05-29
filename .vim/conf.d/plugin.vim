@@ -1,15 +1,16 @@
-" header {{{1
+" vim: foldmethod=marker
+" vim: foldlevel=0
+
+" basic {{{1
 if has('vim_starting')
     set runtimepath+=$HOME/dotfiles/.vim/bundle/neobundle.vim/
 endif
 
 call neobundle#begin(expand($HOME . '/dotfiles/.vim/bundle/'))
-
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 " plugins {{{1
 
-"NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/unite.vim'
 NeoBundleLazy 'Shougo/vimfiler', {'autoload': {'commands': ['VimFiler']}}
 NeoBundle 'thinca/vim-visualstar'
@@ -19,11 +20,20 @@ NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 'fuenor/qfixgrep'
 NeoBundle 'fuenor/qfixhowm'
+NeoBundle 'kien/ctrlp.vim'
+"NeoBundle 'h1mesuke/vim-alignta'
+NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'LeafCage/yankround.vim'
+
+call neobundle#end()
+filetype plugin indent on
+NeoBundleCheck
 
 " VimFiler {{{2
 let g:vimfiler_safe_mode_by_default = 0
 let g:vimfiler_as_default_explorer = 1
 let g:vimfiler_sort_type = "filename"
+let g:vimfiler_enable_auto_cd = 1
 
 nnoremap <Leader><leader> :VimFiler<CR>
 
@@ -60,26 +70,30 @@ aug END
 " submode {{{2
 let g:submode_timeout = 0
 " window {{{3
-"call submode#enter_with('window', 'n', '', '<C-w><C-w>', '<Nop>')
-"call submode#leave_with('window', 'n', '', '<Esc>')
-"call submode#map('window', 'n', '', 'j', '<C-w>j')
-"call submode#map('window', 'n', '', 'J', '<C-w>J')
-"call submode#map('window', 'n', '', 'k', '<C-w>k')
-"call submode#map('window', 'n', '', 'K', '<C-w>K')
-"call submode#map('window', 'n', '', 'l', '<C-w>l')
-"call submode#map('window', 'n', '', 'L', '<C-w>L')
-"call submode#map('window', 'n', '', 'h', '<C-w>h')
-"call submode#map('window', 'n', '', 'H', '<C-w>h')
-"call submode#map('window', 'n', '', 's', '<C-w>s')
-"call submode#map('window', 'n', '', 'v', '<C-w>v')
-"call submode#map('window', 'n', '', 'x', ':q<CR>')
-"call submode#map('window', 'n', '', '>', '<C-w>5>')
-"call submode#map('window', 'n', '', '<', '<C-w>5<lt>')
-"call submode#map('window', 'n', '', '+', '<C-w>5+')
-"call submode#map('window', 'n', '', '-', '<C-w>5-')
+call submode#enter_with('window', 'n', '', '<C-w><C-w>', '<Nop>')
+call submode#leave_with('window', 'n', '', '<Esc>')
+call submode#map('window', 'n', '', 'j', '<C-w>j')
+call submode#map('window', 'n', '', 'J', '<C-w>J')
+call submode#map('window', 'n', '', 'k', '<C-w>k')
+call submode#map('window', 'n', '', 'K', '<C-w>K')
+call submode#map('window', 'n', '', 'l', '<C-w>l')
+call submode#map('window', 'n', '', 'L', '<C-w>L')
+call submode#map('window', 'n', '', 'h', '<C-w>h')
+call submode#map('window', 'n', '', 'H', '<C-w>h')
+call submode#map('window', 'n', '', 's', '<C-w>s')
+call submode#map('window', 'n', '', 'v', '<C-w>v')
+call submode#map('window', 'n', '', 'x', ':q<CR>')
+call submode#map('window', 'n', '', '>', '<C-w>5>')
+call submode#map('window', 'n', '', '<', '<C-w>5<lt>')
+call submode#map('window', 'n', '', '+', '<C-w>5+')
+call submode#map('window', 'n', '', '-', '<C-w>5-')
 
 " hybrid {{{2
-"colorscheme hybrid
+colorscheme hybrid
+
+" clever_f {{{2
+let g:clever_f_across_no_line = 1
+let g:clever_f_ignore_case = 1
 
 " qfixhowm {{{2
 let howm_dir = $HOME . '/dotfiles/.vim/howm'
@@ -95,8 +109,15 @@ let QFixMRU_Title['mkd'] = '^###[^#]'
 let QFixMRU_Title['mkd_regxp'] = '^###[^#]'
 let QFixMRU_Key = 'g'
 
-" footer {{{1
-call neobundle#end()
+" ctrlp{{{2
+let g:ctrlp_clear_cache_on_exit = 0   " 終了時キャッシュをクリアしない
+let g:ctrlp_mruf_max            = 500 " MRUの最大記録数
+let g:ctrlp_open_new_file       = 1   " 新規ファイル作成時にタブで開く
 
-filetype plugin indent on
-NeoBundleCheck
+" quickrun {{{2
+let b:quickrun_config = {'outputter/buffer/split': 10}
+
+" yankround {{{2
+"nmap p <Plug>(yankround-p)
+nnoremap <Leader>yr :Unite yankround<CR>
+
