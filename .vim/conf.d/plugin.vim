@@ -48,7 +48,7 @@ aug VimFilerKeyMapping
         nmap <buffer> m <Plug>(vimfiler_set_current_mask)
         nmap <buffer> M <Plug>(vimfiler_move_file)
         nmap <buffer> D <Plug>(vimfiler_make_directory)
-        nmap <buffer> h <Plug>(vimfiler_smart_h)zz
+        nmap <buffer> h <Plug>(vimfiler_smart_h)
         nmap <buffer> F <Plug>(vimfiler_new_file)
         " sendtoåƒÇ—èoÇµ
         nnoremap <buffer> <Leader>s :Unite sendto<CR>
@@ -66,6 +66,9 @@ aug VimFilerKeyMapping
         call unite#custom_default_action('source/bookmark/directory' , 'vimfiler')
     endfunction
 aug END
+
+" unite.vim {{{2
+nnoremap <Leader>b :Unite buffer<CR>
 
 " submode {{{2
 let g:submode_timeout = 0
