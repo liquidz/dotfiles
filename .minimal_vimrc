@@ -168,6 +168,8 @@ command! ToUTF8 set fileencoding=utf-8
 command! ToEUC  set fileencoding=euc-jp
 command! ToSJIS set fileencoding=sjis
 
+command! ToUNIX set fileformat=unix
+
 " auto command {{{1
 aug MyAutoCompletion
     au!
@@ -182,5 +184,5 @@ aug MyAutoCd
 aug END
 
 " load conf.d {{{1
-set runtimepath+=$HOME/dotfiles/.vim/
+set runtimepath+=$HOME/.vim/
 runtime! conf.d/*.vim
