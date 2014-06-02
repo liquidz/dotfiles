@@ -151,17 +151,24 @@ endif
 " paste from clipboard
 nnoremap <C-y> i<C-r><C-o>+<Esc>l
 cnoremap <C-y> <C-r><C-o>+
+inoremap <C-y> <C-r><C-o>+
 
 " tab {{{2
-nnoremap [Tab] <Nop>
-nmap <C-t> [Tab]
-nnoremap [Tab]n :<C-u>tabnew<CR>
-nnoremap [Tab]h :<C-u>tabp<CR>
-nnoremap [Tab]l :<C-u>tabn<CR>
-nnoremap [Tab]0 :<C-u>tabfirst<CR>
-nnoremap [Tab]$ :<C-u>tablast<CR>
-nnoremap << :<C-u>tabp<CR>
-nnoremap >> :<C-u>tabn<CR>
+nnoremap tn :<C-u>tabnew<CR>
+nnoremap th :<C-u>tabp<CR>
+nnoremap tl :<C-u>tabn<CR>
+nnoremap t0 :<C-u>tabfirst<CR>
+nnoremap t$ :<C-u>tablast<CR>
+
+"nnoremap [Tab] <Nop>
+"nmap t [Tab]
+"nnoremap [Tab]n :<C-u>tabnew<CR>
+"nnoremap [Tab]h :<C-u>tabp<CR>
+"nnoremap [Tab]l :<C-u>tabn<CR>
+"nnoremap [Tab]0 :<C-u>tabfirst<CR>
+"nnoremap [Tab]$ :<C-u>tablast<CR>
+"nnoremap << :<C-u>tabp<CR>
+"nnoremap >> :<C-u>tabn<CR>
 
 " command {{{1
 command! ToUTF8 set fileencoding=utf-8
