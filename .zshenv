@@ -5,6 +5,8 @@ PATH=$PATH:/opt/local/bin
 PATH="/usr/local/bin:$PATH:/usr/local/sbin"
 export PATH
 
+export TERM=screen-256color
+
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
 # =lighttable
