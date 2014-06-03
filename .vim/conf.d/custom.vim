@@ -7,6 +7,11 @@ aug MyAutoSaving
 aug END
 set updatetime=300000 "5min
 
+aug MyIndent
+    au!
+    autocmd FileType php set noexpandtab
+aug END
+
 aug MyClojure
     au!
 

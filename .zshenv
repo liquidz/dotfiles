@@ -12,8 +12,13 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 # =lighttable
 export LT_HOME=/Users/uochan/LightTable
 
-# =heroku
-export PATH="/usr/local/heroku/bin:$PATH"
-
 # =docker
 export DOCKER_HOST=tcp://localhost:4243
+
+## heroku
+export PATH=$PATH:/usr/local/heroku/bin
+
+## go
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/.go
+export PATH=$PATH:$GOROOT/bin
