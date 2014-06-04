@@ -120,6 +120,12 @@ let g:ctrlp_open_new_file       = 1   " 新規ファイル作成時にタブで開く
 " quickrun {{{2
 let b:quickrun_config = {'outputter/buffer/split': 10}
 
+let g:quickrun_config = {}
+let g:quickrun_config.golang = {
+            \ 'command' : 'go',
+            \ 'exec'    :  '%c run %s'
+            \ }
+
 " yankround {{{2
 "nmap p <Plug>(yankround-p)
 nnoremap <Leader>yr :Unite yankround<CR>

@@ -190,6 +190,18 @@ aug MyAutoCd
     autocmd BufEnter * silent! lcd %:p:h
 aug END
 
+" status line {{{1
+set statusline=[%n]\        " バッファ番号
+set statusline+=%f\         " 相対ファイル名
+set statusline+=%m\         " バッファ状態[+]
+set statusline+=%r          " 読み取り専用フラグ
+set statusline+=%<%=        " 右寄せ
+set statusline+=%{'['.(&fenc!=''?&fenc:'?').'-'.&ff.']'}\   " フォーマット＆文字コード
+set statusline+=%y\         " タイプ
+set statusline+=%4l,%2c\    " 行、列
+set statusline+=%3p%%\      " 何％
+set laststatus=2
+
 " load conf.d {{{1
 set runtimepath+=$HOME/.vim/
 runtime! conf.d/*.vim
