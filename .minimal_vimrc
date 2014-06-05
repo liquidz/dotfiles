@@ -58,7 +58,7 @@ augroup END
 highlight CursorLine ctermbg=black guibg=black
 
 " fold {{{2
-set foldmethod=indent
+set foldmethod=marker
 set foldlevel=2
 
 " buffer {{{2
