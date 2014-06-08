@@ -42,7 +42,7 @@ aug VimFilerKeyMapping
     autocmd FileType vimfiler call s:vimfiler_local()
 
     function! s:vimfiler_local()
-        " ƒL[ƒ}ƒbƒv‚ÌƒJƒXƒ^ƒ}ƒCƒY
+        " ã‚­ãƒ¼ãƒãƒƒãƒ—ã®ã‚«ã‚¹ã‚¿ãƒã‚¤ã‚º
         nmap <buffer> <C-r> <Plug>(vimfiler_rename_file)
         nmap <buffer> a <Plug>(vimfiler_toggle_mark_all_lines)
         nmap <buffer> m <Plug>(vimfiler_set_current_mask)
@@ -50,19 +50,19 @@ aug VimFilerKeyMapping
         nmap <buffer> D <Plug>(vimfiler_make_directory)
         nmap <buffer> h <Plug>(vimfiler_smart_h)
         nmap <buffer> F <Plug>(vimfiler_new_file)
-        " sendtoŒÄ‚Ño‚µ
+        " sendtoå‘¼ã³å‡ºã—
         nnoremap <buffer> <Leader>s :Unite sendto<CR>
 
-        " ŠÖ˜A•t‚¯
+        " é–¢é€£ä»˜ã‘
         if has('unix')
             call vimfiler#set_execute_file('sh', 'sh')
             call vimfiler#set_execute_file('html,htm,pdf,jpg,gif,png,svg,lzh,mp3,mpg,wmv,rm,flv', 'xdg-open')
         endif
 
-        " Unite bookmark˜AŒg
+        " Unite bookmarké€£æº
         nnoremap <buffer> z <C-u>:Unite bookmark<CR>
         nnoremap <buffer> A <C-u>:UniteBookmarkAdd<CR>
-        " Unite bookmark‚ÌƒAƒNƒVƒ‡ƒ“‚ğVimFiler‚É
+        " Unite bookmarkã®ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚’VimFilerã«
         call unite#custom_default_action('source/bookmark/directory' , 'vimfiler')
     endfunction
 aug END
@@ -104,27 +104,31 @@ let QFixMRU_Filename = $HOME . '/dotfiles/.vim/qfixmru'
 let howm_filename = '%Y/%m/%Y-%m-%d-%H%M%S.md'
 let QFixHowm_FileType = 'markdown'
 let QFixHowm_Title = '#'
-" ƒ^ƒCƒgƒ‹sŒŸõ³‹K•\Œ»‚Ì«‘‚ğ‰Šú‰»
+" ã‚¿ã‚¤ãƒˆãƒ«è¡Œæ¤œç´¢æ­£è¦è¡¨ç¾ã®è¾æ›¸ã‚’åˆæœŸåŒ–
 let QFixMRU_Title = {}
-" MRU‚Åƒ^ƒCƒgƒ‹s‚Æ‚İ‚È‚·³‹K•\Œ»(Vim‚Ì³‹K•\Œ»‚Åw’è)
+" MRUã§ã‚¿ã‚¤ãƒˆãƒ«è¡Œã¨ã¿ãªã™æ­£è¦è¡¨ç¾(Vimã®æ­£è¦è¡¨ç¾ã§æŒ‡å®š)
 let QFixMRU_Title['mkd'] = '^###[^#]'
-" grep‚Åƒ^ƒCƒgƒ‹s‚Æ‚İ‚È‚·³‹K•\Œ»(g—p‚·‚égrep‚É‚æ‚Á‚Ä‚Í•ÏX‚·‚é•K—v‚ª‚ ‚è‚Ü‚·)
+" grepã§ã‚¿ã‚¤ãƒˆãƒ«è¡Œã¨ã¿ãªã™æ­£è¦è¡¨ç¾(ä½¿ç”¨ã™ã‚‹grepã«ã‚ˆã£ã¦ã¯å¤‰æ›´ã™ã‚‹å¿…è¦ãŒã‚ã‚Šã¾ã™)
 let QFixMRU_Title['mkd_regxp'] = '^###[^#]'
 let QFixMRU_Key = 'g'
 
 " ctrlp{{{2
-let g:ctrlp_clear_cache_on_exit = 0   " I—¹ƒLƒƒƒbƒVƒ…‚ğƒNƒŠƒA‚µ‚È‚¢
-let g:ctrlp_mruf_max            = 500 " MRU‚ÌÅ‘å‹L˜^”
-let g:ctrlp_open_new_file       = 1   " V‹Kƒtƒ@ƒCƒ‹ì¬‚Éƒ^ƒu‚ÅŠJ‚­
+let g:ctrlp_clear_cache_on_exit = 0   " çµ‚äº†æ™‚ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã‚’ã‚¯ãƒªã‚¢ã—ãªã„
+let g:ctrlp_mruf_max            = 500 " MRUã®æœ€å¤§è¨˜éŒ²æ•°
+let g:ctrlp_open_new_file       = 1   " æ–°è¦ãƒ•ã‚¡ã‚¤ãƒ«ä½œæˆæ™‚ã«ã‚¿ãƒ–ã§é–‹ã
 
 " quickrun {{{2
-let b:quickrun_config = {'outputter/buffer/split': 10}
+" çµæœã‚’ç¸¦åˆ†å‰²ã§è¡¨ç¤º
+let b:quickrun_config = {'_': {'split': 'vertical'}}
+" æ¨ªåˆ†å‰²æ™‚ã¯ä¸‹ï½¤ ç¸¦åˆ†å‰²æ™‚ã¯å³ã¸æ–°ã—ã„ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‹ã
+set splitbelow
+set splitright
 
 let g:quickrun_config = {}
-let g:quickrun_config.golang = {
-            \ 'command' : 'go',
-            \ 'exec'    :  '%c run %s'
-            \ }
+let g:quickrun_config.go = {
+    \ 'command' : 'go',
+    \ 'exec'    :  '%c run %s'
+    \ }
 
 " yankround {{{2
 "nmap p <Plug>(yankround-p)
