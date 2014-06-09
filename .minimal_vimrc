@@ -180,7 +180,7 @@ command! ToUNIX set fileformat=unix
 " auto command {{{1
 aug MyAutoCompletion
     au!
-	" XML, HTML•âŠ®
+	" XML, HTMLè£œå®Œ
     autocmd FileType eruby,html,xml,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 	autocmd FileType xml,html inoremap <buffer> </ </<C-x><C-o>
 aug END
@@ -191,16 +191,42 @@ aug MyAutoCd
 aug END
 
 " status line {{{1
-set statusline=[%n]\        " ƒoƒbƒtƒ@”Ô†
-set statusline+=%f\         " ‘Š‘Îƒtƒ@ƒCƒ‹–¼
-set statusline+=%m\         " ƒoƒbƒtƒ@ó‘Ô[+]
-set statusline+=%r          " “Ç‚İæ‚èê—pƒtƒ‰ƒO
-set statusline+=%<%=        " ‰EŠñ‚¹
-set statusline+=%{'['.(&fenc!=''?&fenc:'?').'-'.&ff.']'}\   " ƒtƒH[ƒ}ƒbƒg••¶šƒR[ƒh
-set statusline+=%y\         " ƒ^ƒCƒv
-set statusline+=%4l,%2c\    " sA—ñ
-set statusline+=%3p%%\      " ‰½“
+set statusline=[%n]\        " ãƒãƒƒãƒ•ã‚¡ç•ªå·
+set statusline+=%f\         " ç›¸å¯¾ãƒ•ã‚¡ã‚¤ãƒ«å
+set statusline+=%m\         " ãƒãƒƒãƒ•ã‚¡çŠ¶æ…‹[+]
+set statusline+=%r          " èª­ã¿å–ã‚Šå°‚ç”¨ãƒ•ãƒ©ã‚°
+set statusline+=%<%=        " å³å¯„ã›
+set statusline+=%{'['.(&fenc!=''?&fenc:'?').'-'.&ff.']'}\   " ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆï¼†æ–‡å­—ã‚³ãƒ¼ãƒ‰
+set statusline+=%y\         " ã‚¿ã‚¤ãƒ—
+set statusline+=%4l,%2c\    " è¡Œã€åˆ—
+set statusline+=%3p%%\      " ä½•ï¼…
 set laststatus=2
+
+" omni completion {{{1
+function InsertTabWrapper(type)
+    let col = col('.') - 1
+    "omniè£œå®Œã®å ´åˆã€ominiä»¥å¤–ã«ã‚‚ä¸Šä¸‹å·¦å³ã®ç§»å‹•ã‚‚ã™ã‚‹
+    if a:type=='omni'
+        if pumvisible()
+            return "\<c-n>"
+        endif
+        if !col || getline('.')[col - 1] !~ '\k\|<\|/'
+            return "\<tab>"
+        elseif exists('&omnifunc') && &omnifunc == ''
+            return "\<c-n>"
+        else
+            return "\<c-x>\<c-o>"
+        endif
+        "keywordã®å ´åˆã€è©²å½“ã®ã¨ãä»¥å¤–ã¯ä½•ã‚‚ã—ãªã„
+    else
+        if pumvisible() || !col || getline('.')[col - 1] !~ '\k\|<\|/'
+            return ""
+        else
+            return "\<c-x>\<c-p>"
+        endif
+    endif
+endfunction
+inoremap <tab> <c-r>=InsertTabWrapper('omni')<cr><c-r>=InsertTabWrapper('keyword')<cr>
 
 " load conf.d {{{1
 set runtimepath+=$HOME/.vim/
