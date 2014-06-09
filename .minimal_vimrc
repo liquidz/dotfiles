@@ -190,6 +190,11 @@ aug MyAutoCd
     autocmd BufEnter * silent! lcd %:p:h
 aug END
 
+aug MyAutoOpenCWindow
+    au!
+    autocmd QuickFixCmdPost *grep* cwindow
+aug END
+
 " status line {{{1
 set statusline=[%n]\        " バッファ番号
 set statusline+=%f\         " 相対ファイル名
