@@ -2,7 +2,13 @@
 bindkey -v
 
 # 自動補完を有効
-autoload -U compinit; compinit
+autoload -U compinit &&  compinit
+
+autoload -U promptinit && promptinit
+autoload -U colors && colors
+
+PROMPT="%n%{$fg[yellow]%}@%{$reset_color%}%m %{$fg[magenta]%}%1~%{$reset_color%} %?: "
+RPROMPT="%{$fg[yellow]%}%~%{$reset_color%}"
 
 # cd 先をディレクトリスタックに追加
 setopt auto_pushd
