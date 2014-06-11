@@ -24,6 +24,10 @@ NeoBundle 'kien/ctrlp.vim'
 "NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'LeafCage/yankround.vim'
+NeoBundle 'guns/vim-clojure-static'
+NeoBundle 'kien/rainbow_parentheses.vim'
+NeoBundle 'tpope/vim-fireplace'
+NeoBundle 'tpope/vim-classpath'
 
 call neobundle#end()
 filetype plugin indent on
@@ -134,3 +138,11 @@ let g:quickrun_config.go = {
 "nmap p <Plug>(yankround-p)
 nnoremap <Leader>yr :Unite yankround<CR>
 
+" rainbow_parentheses {{{2
+aug MyRainbowParentheses
+    au!
+    au VimEnter * RainbowParenthesesToggle
+    au Syntax * RainbowParenthesesLoadRound
+    au Syntax * RainbowParenthesesLoadSquare
+    au Syntax * RainbowParenthesesLoadBraces
+aug END
