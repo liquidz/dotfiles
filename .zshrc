@@ -47,3 +47,6 @@ bindkey '^P' history-beginning-search-backward
 bindkey '^N' history-beginning-search-forward
 # ヒストリーのインクリメンタルサーチ
 bindkey '^R' history-incremental-search-backward
+
+## docker
+alias dl="docker ps -lq"

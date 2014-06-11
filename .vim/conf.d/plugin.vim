@@ -29,6 +29,7 @@ NeoBundle 'kien/rainbow_parentheses.vim'
 NeoBundle 'tpope/vim-fireplace'
 NeoBundle 'tpope/vim-classpath'
 "NeoBundle 'thinca/vim-qfreplace'
+NeoBundle 'kannokanno/previm'
 
 call neobundle#end()
 filetype plugin indent on
@@ -147,3 +148,10 @@ aug MyRainbowParentheses
     au Syntax * RainbowParenthesesLoadSquare
     au Syntax * RainbowParenthesesLoadBraces
 aug END
+
+" previm {{{2
+if has('win32')
+    let g:previm_open_cmd = 'start'
+elseif has('mac')
+    let g:previm_open_cmd = 'open'
+endif
