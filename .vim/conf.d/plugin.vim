@@ -28,6 +28,7 @@ NeoBundle 'guns/vim-clojure-static'
 NeoBundle 'kien/rainbow_parentheses.vim'
 NeoBundle 'tpope/vim-fireplace'
 NeoBundle 'tpope/vim-classpath'
+"NeoBundle 'thinca/vim-qfreplace'
 
 call neobundle#end()
 filetype plugin indent on
