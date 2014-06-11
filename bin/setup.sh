@@ -21,6 +21,7 @@ cecho() { # {{{
 recommended() {
     cecho $green "Recommended operations:"
     cat <<EOT
+ $ git config --global github.user liquidz
  $ go get github.com/nsf/gocode
 EOT
 }

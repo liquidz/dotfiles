@@ -30,6 +30,9 @@ NeoBundle 'tpope/vim-fireplace'
 NeoBundle 'tpope/vim-classpath'
 "NeoBundle 'thinca/vim-qfreplace'
 NeoBundle 'kannokanno/previm'
+NeoBundle 'mattn/webapi-vim'
+NeoBundle 'mattn/gist-vim'
+
 
 call neobundle#end()
 filetype plugin indent on
@@ -155,3 +158,13 @@ if has('win32')
 elseif has('mac')
     let g:previm_open_cmd = 'open'
 endif
+
+aug PrevimSettings
+    au!
+    au BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+aug END
+
+" gist-vim {{{2
+let g:gist_show_privates = 1
+let g:gist_post_private = 1
+let g:gist_get_multiplefile = 1
