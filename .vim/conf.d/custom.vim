@@ -12,20 +12,12 @@ aug MyIndent
     autocmd FileType php set noexpandtab
 aug END
 
-aug MyClojure
+aug MyTemplate
     au!
-
-    " 今いる括弧をもひとつ括弧でくくる(Lisp用)
-    au FileType clojure nnoremap <Leader>( F(i(<Esc><Right>%a)<Esc>%a<Space><Left>
-    au FileType clojure nnoremap <Leader>[ F[i[<Esc><Right>%a]<Esc>%a<Space><Left>
-    au FileType clojure nnoremap <Leader>{ F{i{<Esc><Right>%a}<Esc>%a<Space><Left>
-
-    " compojure
-	au FileType clojure set lispwords+=defroutes,GET,POST
-    " misaki
-	au FileType clojure set lispwords+=defvalidate,validate,testing,defhtml,bind-config,defcompilertest
-    " midje
-	au FileType clojure set lispwords+=facts,fact
-    " conjure
-	au FileType clojure set lispwords+=stubbing
+	autocmd BufNewFile *.clj  0r $HOME/.vim/template/clj.clj
+	autocmd BufNewFile *.html 0r $HOME/.vim/template/html.html
+	autocmd BufNewFile *.htm  0r $HOME/.vim/template/html.html
+	autocmd BufNewFile *.js   0r $HOME/.vim/template/js.js
+	autocmd BufNewFile *.go   0r $HOME/.vim/template/go.go
+	autocmd BufNewFile *.sh   0r $HOME/.vim/template/sh.sh
 aug END
