@@ -5,7 +5,7 @@
 # env MODE=full sh ./setup.sh full => full setup
 #==================================================
 
-INSTALL_DIR=$HOME/dotfiles
+INSTALL_DIR=$HOME/src/github.com/liquidz/dotfiles
 # colors {{{
 red=31
 green=32
@@ -21,8 +21,11 @@ cecho() { # {{{
 recommended() {
     cecho $green "Recommended operations:"
     cat <<EOT
- $ git config --global github.user liquidz
  $ go get github.com/nsf/gocode
+ $ go get github.com/motemen/ghq
+ $ go get github.com/lestrrat/peco
+ $ go get github.com/jessevdk/go-flags
+ $ go install github.com/lestrrat/peco/cmd/peco/
 EOT
 }
 
@@ -52,6 +55,10 @@ if [ "${MODE}" == "full" ]; then
     if [ ! -e $HOME/.vim/bundle/neobundle.vim ]; then
         git clone https://github.com/Shougo/neobundle.vim.git $HOME/.vim/bundle/neobundle.vim
     fi
+
+    cecho $yellow " * git config"
+    git config --global ghq.root ~/src
+    git config --global github.user liquidz
 
     recommended
 fi

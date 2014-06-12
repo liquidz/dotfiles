@@ -1,4 +1,4 @@
-set directory=$HOME/dotfiles/.vim/backup
+set directory=$HOME/.vim/backup
 
 " auto saving
 aug MyAutoSaving

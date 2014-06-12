@@ -3,10 +3,10 @@
 
 " basic {{{1
 if has('vim_starting')
-    set runtimepath+=$HOME/dotfiles/.vim/bundle/neobundle.vim/
+    set runtimepath+=$HOME/.vim/bundle/neobundle.vim/
 endif
 
-call neobundle#begin(expand($HOME . '/dotfiles/.vim/bundle/'))
+call neobundle#begin(expand($HOME . '/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 " plugins {{{1
@@ -109,8 +109,8 @@ let g:clever_f_across_no_line = 1
 let g:clever_f_ignore_case = 1
 
 " qfixhowm {{{2
-let howm_dir = $HOME . '/dotfiles/.vim/howm'
-let QFixMRU_Filename = $HOME . '/dotfiles/.vim/qfixmru'
+let howm_dir = $HOME . '/.vim/howm'
+let QFixMRU_Filename = $HOME . '/.vim/qfixmru'
 let howm_filename = '%Y/%m/%Y-%m-%d-%H%M%S.md'
 let QFixHowm_FileType = 'markdown'
 let QFixHowm_Title = '#'
