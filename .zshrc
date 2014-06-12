@@ -42,11 +42,33 @@ linux*)
   ;;
 esac
 
+# ヒストリーサーチ時にカーソルを末尾にする
+# Look for a command that started like the one starting on the command line.
+# taken from: http://www.xsteve.at/prg/zsh/.zshrc (not sure of original source)
+function history-search-end {
+    integer ocursor=$CURSOR
+
+    if [[ $LASTWIDGET = history-beginning-search-*-end ]]; then
+        # Last widget called set $hbs_pos.
+        CURSOR=$hbs_pos
+    else
+        hbs_pos=$CURSOR
+    fi
+
+    if zle .${WIDGET%-end}; then
+        # success, go to end of line
+        zle .end-of-line
+    else
+        # failure, restore position
+        CURSOR=$ocursor
+        return 1
+    fi
+}
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+
 # 先頭マッチのヒストリーサーチ
-bindkey '^P' history-beginning-search-backward
-bindkey '^N' history-beginning-search-forward
+bindkey '^P' history-beginning-search-backward-end
+bindkey '^N' history-beginning-search-forward-end
 # ヒストリーのインクリメンタルサーチ
 bindkey '^R' history-incremental-search-backward
-
-## docker
-alias dl="docker ps -lq"
