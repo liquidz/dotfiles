@@ -21,13 +21,18 @@ cecho() { # {{{
 recommended() {
     cecho $green "Recommended operations:"
     cat <<EOT
- $ go get github.com/nsf/gocode
- $ go get github.com/motemen/ghq
- $ go get github.com/lestrrat/peco
- $ go get github.com/jessevdk/go-flags
- $ go install github.com/lestrrat/peco/cmd/peco/
+ go get github.com/nsf/gocode
+ go get github.com/motemen/ghq
+ go get github.com/lestrrat/peco
+ go get github.com/jessevdk/go-flags
+ go install github.com/lestrrat/peco/cmd/peco/
 EOT
 }
+
+if [ ! -x "`which git`" ]; then
+    cecho $red "Error: git is not installed"
+    exit 1
+fi
 
 if [ "${MODE}" == "" ]; then
     MODE="minimal"
