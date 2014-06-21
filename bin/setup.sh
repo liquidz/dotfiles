@@ -6,7 +6,7 @@
 #==================================================
 
 INSTALL_DIR=$HOME/src/github.com/liquidz/dotfiles
-DOT_FILES=(".vimrc" ".tmux.conf" ".zshenv" ".zshrc" ".config/peco")
+DOT_FILES=(".vimrc" ".tmux.conf" ".zshenv" ".zshrc" ".peco")
 # colors {{{
 red=31
 green=32
@@ -47,7 +47,6 @@ if [ ! -e $INSTALL_DIR ]; then
 fi
 
 cecho $yellow " * create symbolic links to dotfiles"
-mkdir -p $HOME/.config
 for file in ${DOT_FILES[@]}; do
     ln -sfn $INSTALL_DIR/$file $HOME/$file
 done
