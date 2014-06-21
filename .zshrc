@@ -72,4 +72,3 @@ bindkey '^P' history-beginning-search-backward-end
 bindkey '^N' history-beginning-search-forward-end
 # ヒストリーのインクリメンタルサーチ
 bindkey '^R' history-incremental-search-backward
-
