@@ -144,6 +144,19 @@ let g:quickrun_config.go = {
 "nmap p <Plug>(yankround-p)
 nnoremap <Leader>yr :Unite yankround<CR>
 
+" vim-clojure-static {{{2
+aug MyLispWords
+    au!
+    " compojure
+	au FileType clojure set lispwords+=defroutes,GET,POST
+    " misaki
+	au FileType clojure set lispwords+=defvalidate,validate,testing,defhtml,bind-config,defcompilertest
+    " midje
+	au FileType clojure set lispwords+=facts,fact
+    " conjure
+	au FileType clojure set lispwords+=stubbing
+aug END
+
 " rainbow_parentheses {{{2
 aug MyRainbowParentheses
     au!
@@ -165,3 +178,4 @@ aug END
 let g:gist_show_privates = 1
 let g:gist_post_private = 1
 let g:gist_get_multiplefile = 1
+
