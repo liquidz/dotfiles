@@ -36,3 +36,4 @@ export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 # ghq {{{1
 alias ghc='cd $(ghq list --full-path | peco)'
 alias ghf='find $(git rev-parse --show-cdup) -type f | grep -v "/.git/" | peco'
+alias gho='gh-open $(ghq list --full-path | peco)'
