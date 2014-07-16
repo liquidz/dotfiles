@@ -26,8 +26,12 @@ NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'LeafCage/yankround.vim'
 NeoBundle 'guns/vim-clojure-static'
 NeoBundle 'kien/rainbow_parentheses.vim'
+
+" FIXME: clojureの場合のみにしたい
 NeoBundle 'tpope/vim-fireplace'
 NeoBundle 'tpope/vim-classpath'
+NeoBundle 'typedclojure/vim-typedclojure'
+
 "NeoBundle 'thinca/vim-qfreplace'
 NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'kannokanno/previm'

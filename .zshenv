@@ -13,17 +13,17 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 export LT_HOME=/Users/uochan/LightTable
 
 # docker {{{1
-export DOCKER_HOST=tcp://192.168.59.103:2375
+export DOCKER_HOST=tcp://localhost:2375
 alias dl='docker ps -ql'
 alias da='docker ps -qa'
 alias di="docker images | grep -v 'REPOSITORY' | peco | awk '{print \$3}'"
 alias dc="docker ps -a | grep -v 'CONTAINER ID' | peco | awk '{print \$1}'"
-alias docker-run='docker run -i -t $(di) /bin/zsh'
+alias docker-run='docker run -v /vagrant:/src -i -t $(di)'
 alias docker-rm='docker rm $(dc)'
 alias docker-start='docker start $(dc)'
 alias docker-attach='docker attach $(dc)'
 alias docker-rm-all='docker rm $(da)'
-alias docker-rmi='docker rm $(di)'
+alias docker-rmi='docker rmi $(di)'
 
 # heroku {{{1
 export PATH=$PATH:/usr/local/heroku/bin
