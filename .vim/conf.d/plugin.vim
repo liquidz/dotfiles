@@ -27,10 +27,8 @@ NeoBundle 'LeafCage/yankround.vim'
 NeoBundle 'guns/vim-clojure-static'
 NeoBundle 'kien/rainbow_parentheses.vim'
 
-" FIXME: clojureの場合のみにしたい
 NeoBundle 'tpope/vim-fireplace'
 NeoBundle 'tpope/vim-classpath'
-NeoBundle 'typedclojure/vim-typedclojure'
 
 "NeoBundle 'thinca/vim-qfreplace'
 NeoBundle 'tyru/open-browser.vim'
@@ -38,6 +36,11 @@ NeoBundle 'kannokanno/previm'
 NeoBundle 'mattn/webapi-vim'
 NeoBundle 'mattn/gist-vim'
 
+if has("unix")
+    NeoBundle 'tpope/vim-fireplace'
+    NeoBundle 'tpope/vim-classpath'
+    NeoBundle 'typedclojure/vim-typedclojure'
+endif
 
 call neobundle#end()
 filetype plugin indent on

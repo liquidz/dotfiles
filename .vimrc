@@ -39,7 +39,7 @@ set formatoptions+=mM
 set nonumber
 set ruler
 set list
-set listchars=tab:\ \ ,trail:_,eol:\ ,extends:>,precedes:>
+set listchars=tab:>-,trail:_,eol:\ ,extends:>,precedes:>
 set wrap
 set cmdheight=2
 set showcmd
