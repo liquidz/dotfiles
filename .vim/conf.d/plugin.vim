@@ -85,7 +85,7 @@ aug VimFilerKeyMapping
 aug END
 
 " unite.vim {{{2
-nnoremap <Leader>b :Unite buffer<CR>
+nnoremap <Leader>b :Unite file buffer tab<CR>
 
 " submode {{{2
 let g:submode_timeout = 0
