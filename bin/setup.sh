@@ -62,6 +62,14 @@ if [ "${MODE}" == "full" ]; then
         git clone https://github.com/Shougo/neobundle.vim.git $HOME/.vim/bundle/neobundle.vim
     fi
 
+    cecho $yellow " * getting manuals for vim-ref"
+    mkdir -p $HOME/.vim/vim-ref
+    if [ ! -e $HOME/.vim/vim-ref/php-chunked-xhtml ]; then
+        wget http://jp2.php.net/get/php_manual_ja.tar.gz/from/jp1.php.net/mirror -O /tmp/php-chunked-xhtml
+        (cd $HOME/.vim/vim-ref && tar xvf /tmp/php-chunked-xhtml)
+        /bin/rm -f /tmp/php-chunked-xhtml
+    fi
+
     cecho $yellow " * git config"
     git config --global ghq.root ~/src
     git config --global github.user liquidz
