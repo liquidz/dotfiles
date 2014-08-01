@@ -36,6 +36,15 @@ NeoBundle 'kannokanno/previm'
 NeoBundle 'mattn/webapi-vim'
 NeoBundle 'mattn/gist-vim'
 
+" Neosnippet
+if has("lua")
+    NeoBundle 'Shougo/neocomplete'
+else
+    NeoBundle 'Shougo/neocomplcache'
+endif
+NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/neosnippet-snippets'
+
 if has("unix")
     NeoBundle 'tpope/vim-fireplace'
     NeoBundle 'tpope/vim-classpath'
@@ -85,7 +94,7 @@ aug VimFilerKeyMapping
 aug END
 
 " unite.vim {{{2
-nnoremap <Leader>b :Unite buffer<CR>
+nnoremap <Leader>b :Unite file buffer tab<CR>
 
 " submode {{{2
 let g:submode_timeout = 0
@@ -186,3 +195,8 @@ let g:gist_show_privates = 1
 let g:gist_post_private = 1
 let g:gist_get_multiplefile = 1
 
+" neosnippet {{{2
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+smap <C-k> <Plug>(neosnippet_expand_or_jump)
+xmap <C-k> <Plug>(neosnippet_expand_target)
+let g:neosnippet#snippets_directory = $HOME . '/.vim/snippets'
