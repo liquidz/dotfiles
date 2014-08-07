@@ -1,5 +1,6 @@
 .vim/bundle
 .vim/backup
 .vim/howm
+.vim/vim-ref
 .vim/qfixmru
 .vim/.netrwhist

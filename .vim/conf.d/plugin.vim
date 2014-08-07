@@ -27,14 +27,12 @@ NeoBundle 'LeafCage/yankround.vim'
 NeoBundle 'guns/vim-clojure-static'
 NeoBundle 'kien/rainbow_parentheses.vim'
 
-NeoBundle 'tpope/vim-fireplace'
-NeoBundle 'tpope/vim-classpath'
-
 "NeoBundle 'thinca/vim-qfreplace'
 NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'kannokanno/previm'
 NeoBundle 'mattn/webapi-vim'
 NeoBundle 'mattn/gist-vim'
+NeoBundle 'thinca/vim-ref'
 
 " Neosnippet
 if has("lua")
@@ -95,6 +93,10 @@ aug END
 
 " unite.vim {{{2
 nnoremap <Leader>b :Unite file buffer tab<CR>
+aug UniteKeyMapping
+    au!
+    au FileType unite nnoremap <Esc><Esc> :q<CR>
+aug END
 
 " submode {{{2
 let g:submode_timeout = 0
@@ -195,8 +197,30 @@ let g:gist_show_privates = 1
 let g:gist_post_private = 1
 let g:gist_get_multiplefile = 1
 
+" vim-ref {{{2
+let g:ref_phpmanual_path = $HOME . '/.vim/vim-ref/php-chunked-xhtml'
+let g:ref_source_webdict_sites = {
+\   'weblio' : {
+\       'url'  : 'http://ejje.weblio.jp/content/%s',
+\       'line' : 70
+\   },
+\   'chef' : {
+\       'url'  : 'http://docs.opscode.com/resource_%s.html',
+\       'line' : 40
+\   }
+\ }
+nnoremap <Leader>dic :Ref webdict
+aug VimRefKeyMapping
+    au!
+    autocmd FileType php nnoremap <Leader>ur :Unite ref/phpmanual<CR>
+aug END
+
 " neosnippet {{{2
 imap <C-k> <Plug>(neosnippet_expand_or_jump)
 smap <C-k> <Plug>(neosnippet_expand_or_jump)
 xmap <C-k> <Plug>(neosnippet_expand_target)
 let g:neosnippet#snippets_directory = $HOME . '/.vim/snippets'
+aug NeoSnippetIndent
+    au!
+    autocmd FileType neosnippet set noexpandtab
+aug END

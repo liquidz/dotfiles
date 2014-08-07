@@ -11,5 +11,4 @@ aug MyIndent
     au!
     autocmd FileType vim set expandtab
     autocmd FileType php set noexpandtab
-    autocmd BufNewFile,BufRead *.snip set noexpandtab
 aug END
