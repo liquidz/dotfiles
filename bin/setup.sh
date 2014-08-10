@@ -33,6 +33,8 @@ cecho $green "Start: ${MODE} setup"
 cecho $yellow " * cloning dotfiles"
 if [ ! -e $INSTALL_DIR ]; then
     git clone https://github.com/liquidz/dotfiles.git $INSTALL_DIR
+else
+    (cd $INSTALL_DIR && git pull origin master)
 fi
 
 cecho $yellow " * create symbolic links to dotfiles"
