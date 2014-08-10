@@ -26,6 +26,7 @@ NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'LeafCage/yankround.vim'
 NeoBundle 'guns/vim-clojure-static'
 NeoBundle 'kien/rainbow_parentheses.vim'
+NeoBundle 'osyo-manga/vim-over'
 
 "NeoBundle 'thinca/vim-qfreplace'
 NeoBundle 'tyru/open-browser.vim'
@@ -183,6 +184,13 @@ aug MyRainbowParentheses
     au Syntax * RainbowParenthesesLoadSquare
     au Syntax * RainbowParenthesesLoadBraces
 aug END
+
+" vim-over {{{2
+nnoremap <silent> <Leader>m :OverCommandLine<CR>
+" カーソル下の単語をハイライト付きで置換
+nnoremap sub :OverCommandLine<CR>%s/<C-r><C-w>//g<Left><Left>
+" コピーした文字列をハイライト付きで置換
+nnoremap subp y:OverCommandLine<CR>%s!<C-r>=substitute(@0, '!', '\\!', 'g')<CR>!!gI<Left><Left><Left>
 
 " previm {{{2
 let g:previm_open_cmd = '' " set empty to use open-browser.vim
