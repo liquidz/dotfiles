@@ -20,6 +20,7 @@ NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 'fuenor/qfixgrep'
 NeoBundle 'fuenor/qfixhowm'
+NeoBundle 'osyo-manga/unite-qfixhowm'
 NeoBundle 'kien/ctrlp.vim'
 "NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'thinca/vim-quickrun'
@@ -34,6 +35,9 @@ NeoBundle 'kannokanno/previm'
 NeoBundle 'mattn/webapi-vim'
 NeoBundle 'mattn/gist-vim'
 NeoBundle 'thinca/vim-ref'
+NeoBundle 't9md/vim-quickhl'
+NeoBundle 'kana/vim-operator-replace.git'
+NeoBundle 'kana/vim-operator-user.git'
 
 " Neosnippet
 if has("lua")
@@ -140,6 +144,8 @@ let QFixMRU_Title['mkd'] = '^###[^#]'
 " grepでタイトル行とみなす正規表現(使用するgrepによっては変更する必要があります)
 let QFixMRU_Title['mkd_regxp'] = '^###[^#]'
 let QFixMRU_Key = 'g'
+" リスト表示のキーマップを unite-qfixhowm で上書き
+nnoremap g<Leader>l :Unite qfixhowm<CR>
 
 " ctrlp{{{2
 let g:ctrlp_clear_cache_on_exit = 0   " 終了時キャッシュをクリアしない
@@ -233,9 +239,19 @@ aug NeoSnippetIndent
     autocmd FileType neosnippet set noexpandtab
 aug END
 
+
 " vim-fireplace {{{2
 aug VimFireplaceSetting
     au!
     " vim-ref の K と競合するため再定義
     au Filetype clojure nmap <buffer> K <Plug>FireplaceK
 aug END
+
+" vim-quickhl {{{2
+nmap <Space>m <Plug>(quickhl-manual-this)
+xmap <Space>m <Plug>(quickhl-manual-this)
+nmap <Space>M <Plug>(quickhl-manual-reset)
+xmap <Space>M <Plug>(quickhl-manual-reset)
+
+" vim-operator {{{2
+map - <Plug>(operator-replace)
