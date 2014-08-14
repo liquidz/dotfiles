@@ -72,3 +72,55 @@ bindkey '^P' history-beginning-search-backward-end
 bindkey '^N' history-beginning-search-forward-end
 # ヒストリーのインクリメンタルサーチ
 bindkey '^R' history-incremental-search-backward
+
+function git-interactive () {
+    local GIT_COMMANDS="branch\nstatus\ndiff\ncheckout\ncommit\nlog\nmerge\nrebase\nstash\npull\npush"
+    local CMD=$(echo $GIT_COMMANDS | peco --prompt "Git>")
+
+    if [[ "$CMD" == "branch" || "$CMD" == "status" || "$CMD" == "log" || "$CMD" == "diff" ]]; then
+        BUFFER="git $CMD"
+        zle accept-line
+    elif [[ "$CMD" == "commit" ]]; then
+        BUFFER="git $CMD -av"
+        zle accept-line
+    elif [[ "$CMD" == "checkout" || "$CMD" == "merge" ]]; then
+        BRANCH=$(git branch | peco --prompt "Branch>")
+        if [[ "$BRANCH" != "" ]]; then
+            BUFFER="git $CMD $BRANCH"
+            zle accept-line
+        fi
+    elif [[ "$CMD" == "pull" || "$CMD" == "push" ]]; then
+        REMOTE=$(git remote | peco --prompt "Remote>")
+        if [[ "$REMOTE" != "" ]]; then
+            REMOTE_BRANCH=$(git branch -a | grep remotes | grep -v HEAD | cut -d"/" -f3 | peco --prompt "Remote branch>")
+            if [[ "$REMOTE_BRANCH" != "" ]]; then
+                BUFFER="git $CMD $REMOTE $REMOTE_BRANCH"
+                zle accept-line
+            fi
+        fi
+    elif [[ "$CMD" == "rebase" ]]; then
+        REVISION=$(git log --oneline | peco --prompt "Revision>" | cut -d" " -f1)
+        if [[ "$REVISION" != "" ]]; then
+            BUFFER="git $CMD -i $REVISION"
+            zle accept-line
+        fi
+    elif [[ "$CMD" == "stash" ]]; then
+        SCMD=$(echo "list\nshow\npop\nsave\ndrop\nclear" | peco --prompt "Stash>")
+        if [[ "$SCMD" == "list" || "$SCMD" == "save" || "$SCMD" == "clear" ]]; then
+            BUFFER="git $CMD $SCMD"
+            zle accept-line
+        elif [[ "$SCMD" == "pop" || "$SCMD" == "apply" || "$SCMD" == "drop" || "$SCMD" == "show" ]]; then
+            STASH=$(git stash list | peco | cut -d":" -f1)
+            if [[ "$STASH" != "" ]]; then
+                BUFFER="git $CMD $SCMD $STASH"
+                zle accept-line
+            fi
+        fi
+    fi
+}
+
+zle -N git-interactive
+#bindkey '^[g' git-interactive # Esc-g
+bindkey '^g' git-interactive # C-g
+
+
