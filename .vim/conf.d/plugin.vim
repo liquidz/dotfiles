@@ -38,6 +38,8 @@ NeoBundle 'thinca/vim-ref'
 NeoBundle 't9md/vim-quickhl'
 NeoBundle 'kana/vim-operator-replace.git'
 NeoBundle 'kana/vim-operator-user.git'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'itchyny/lightline.vim'
 
 " Neosnippet
 if has("lua")
@@ -255,3 +257,26 @@ xmap <Space>M <Plug>(quickhl-manual-reset)
 
 " vim-operator {{{2
 map - <Plug>(operator-replace)
+
+" lightline.vim {{{2
+let g:lightline = {
+    \ 'colorscheme': 'wombat',
+    \ 'active': {
+    \   'left': [['mode', 'paste'],
+    \            ['fugitive', 'readonly', 'filename', 'modified']]
+    \ },
+    \ 'component_function': {
+    \   'fugitive': 'MyFugitive',
+    \ },
+    \ 'separator': { 'left': '', 'right': '' },
+    \ 'subseparator': { 'left': "|", 'right': '|' }
+    \ }
+
+function! MyFugitive()
+    let l:branch = exists('*fugitive#head') ? fugitive#head() : ''
+    if l:branch ==# 'master'
+        let l:branch = '*' . toupper(l:branch) . '*'
+    endif
+    return l:branch
+endfunction
+

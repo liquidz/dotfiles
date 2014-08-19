@@ -27,6 +27,9 @@ function! s:search_forward_p()
     return exists('v:searchforward') ? v:searchforward : 1
 endfunction
 
+" paste {{{2
+set pastetoggle=<C-e>
+
 " visual {{{2
 set showtabline=2
 set tabstop=4
