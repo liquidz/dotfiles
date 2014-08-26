@@ -153,6 +153,7 @@ nnoremap g<Leader>l :Unite qfixhowm<CR>
 let g:ctrlp_clear_cache_on_exit = 0   " 終了時キャッシュをクリアしない
 let g:ctrlp_mruf_max            = 500 " MRUの最大記録数
 let g:ctrlp_open_new_file       = 1   " 新規ファイル作成時にタブで開く
+let g:ctrlp_show_hidden         = 1   " 隠しファイルも表示
 
 " quickrun {{{2
 " 結果を縦分割で表示
@@ -212,6 +213,7 @@ aug END
 let g:gist_show_privates = 1
 let g:gist_post_private = 1
 let g:gist_get_multiplefile = 1
+nnoremap <Leader>todo :Gist 1ec3a489823690e31661<CR><C-w>o
 
 " vim-ref {{{2
 let g:ref_phpmanual_path = $HOME . '/.vim/vim-ref/php-chunked-xhtml'
