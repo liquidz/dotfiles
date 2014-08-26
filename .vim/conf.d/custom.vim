@@ -12,3 +12,9 @@ aug MyIndent
     autocmd FileType vim set expandtab
     autocmd FileType php set noexpandtab
 aug END
+
+" external grep
+if executable('pt')
+    set grepprg=pt\ --nogroup\ -iS
+    set grepformat=%f:%l:%m
+endif
