@@ -1,0 +1,44 @@
+snippet		playbook
+abbr		Ansible: playbook template
+	---
+	- hosts: 127.0.0.1
+	  connection: local
+	  sudo: yes
+	  vars:
+		hello: "world"
+	  tasks:
+
+snippet		yum
+abbr		Ansible: yum install
+	- name: install ${1:package_name}
+	  yum: name=${2:package} state=${3:present}
+
+snippet		shell
+abbr		Ansible: executing shell
+	- shell: ${1:shell_command}
+	  args:
+	    chdir: "${2:FIXME}"
+	    creates: "${3:FIXME}"
+
+snippet		git
+abbr		Ansible: git
+	- git: repo=${1:FIXME}
+	       dest=${2:FIXME}
+	       version=${3:master}
+	       accept_hostkey=${4:yes}
+	       update=${5:no}
+
+snippet		hg
+abbr		Ansible: hg
+	- hg: repo=${1:FIXME}
+	      dest=${2:FIXME}
+
+snippet		file
+alias		mkdir
+abbr		Ansible: make directory
+	- file: path=${1:FIXME} state=${2:directory}
+
+snippet		get_url
+alias		wget
+abbr		Ansible: get_url
+	- get_url: url=${1:url} dest=${2:dest} mode=${3:0755}
