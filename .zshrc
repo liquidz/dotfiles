@@ -82,3 +82,7 @@ if hash ig 2>/dev/null; then
     bindkey '^g' interactive-git
 fi
 
+# cd したら ls する
+function cd() {
+    builtin cd $@ && ls;
+}
