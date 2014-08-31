@@ -15,6 +15,7 @@ export LT_HOME=/Users/uochan/LightTable
 # docker {{{1
 export DOCKER_HOST=tcp://localhost:2375
 alias dl='docker ps -ql'
+alias -g DL='$(dl)'
 alias da='docker ps -qa'
 alias di="docker images | grep -v 'REPOSITORY' | peco | awk '{print \$3}'"
 alias dc="docker ps -a | grep -v 'CONTAINER ID' | peco | awk '{print \$1}'"
