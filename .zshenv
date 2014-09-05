@@ -43,7 +43,7 @@ alias gho='gh-open $(ghq list --full-path | peco)'
 alias bm='cd $(cat ~/.bookmark | peco)'
 
 # git {{{1
-alias b='git branch -a | peco'
+alias b='git branch -a | peco | sed "s/\* *//g"'
 alias -g B='$(b)'
 alias l='git log --oneline | peco | cut -d" " -f1'
 alias -g L='$(l)'
