@@ -100,10 +100,6 @@ aug END
 
 " unite.vim {{{2
 nnoremap <Leader>b :Unite file buffer tab<CR>
-aug UniteKeyMapping
-    au!
-    au FileType unite nnoremap <Esc><Esc> :q<CR>
-aug END
 
 " submode {{{2
 let g:submode_timeout = 0
