@@ -40,6 +40,7 @@ NeoBundle 'kana/vim-operator-replace.git'
 NeoBundle 'kana/vim-operator-user.git'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'sorah/unite-ghq'
 
 " Neosnippet
 if has("lua")
@@ -278,3 +279,5 @@ function! MyFugitive()
     return l:branch
 endfunction
 
+" unite-ghq {{{2
+nnoremap <buffer> <Leader>ghc :Unite ghq<CR>
