@@ -20,7 +20,6 @@ NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 'fuenor/qfixgrep'
 NeoBundle 'fuenor/qfixhowm'
-NeoBundle 'osyo-manga/unite-qfixhowm'
 NeoBundle 'kien/ctrlp.vim'
 "NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'thinca/vim-quickrun'
@@ -52,6 +51,7 @@ NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
 
 if has("unix")
+    NeoBundle 'osyo-manga/unite-qfixhowm'
     NeoBundle 'tpope/vim-fireplace'
     NeoBundle 'tpope/vim-classpath'
     NeoBundle 'typedclojure/vim-typedclojure'
@@ -143,8 +143,10 @@ let QFixMRU_Title['mkd'] = '^###[^#]'
 " grepでタイトル行とみなす正規表現(使用するgrepによっては変更する必要があります)
 let QFixMRU_Title['mkd_regxp'] = '^###[^#]'
 let QFixMRU_Key = 'g'
-" リスト表示のキーマップを unite-qfixhowm で上書き
-nnoremap g<Leader>l :Unite qfixhowm<CR>
+if has("unix")
+    " リスト表示のキーマップを unite-qfixhowm で上書き
+    nnoremap g<Leader>l :Unite qfixhowm<CR>
+endif
 
 " ctrlp{{{2
 let g:ctrlp_clear_cache_on_exit = 0   " 終了時キャッシュをクリアしない
