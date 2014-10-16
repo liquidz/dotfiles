@@ -38,6 +38,7 @@ NeoBundle 't9md/vim-quickhl'
 NeoBundle 'kana/vim-operator-replace.git'
 NeoBundle 'kana/vim-operator-user.git'
 NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'gregsexton/gitv'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'sorah/unite-ghq'
 
@@ -276,6 +277,13 @@ xmap <Space>M <Plug>(quickhl-manual-reset)
 " vim-operator {{{2
 map - <Plug>(operator-replace)
 
+" vim-fugitive, gitv {{{2
+nnoremap <Leader>gs :Gstatus<CR>
+nnoremap <Leader>gb :Glame<CR>
+nnoremap <Leader>gd :Gdiff<CR>
+nnoremap <Leader>gc :Gcommit -av<CR>
+nnoremap <Leader>gl :Gitv<CR>
+
 " lightline.vim {{{2
 let g:lightline = {
     \ 'colorscheme': 'wombat',
@@ -300,3 +308,4 @@ endfunction
 
 " unite-ghq {{{2
 nnoremap <buffer> <Leader>ghc :Unite ghq<CR>
+
