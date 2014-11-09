@@ -1,8 +1,8 @@
  * minimal setup
 ```
-curl https://raw.githubusercontent.com/liquidz/dotfiles/master/bin/setup.sh | sh
+curl -L http://bit.ly/uochan_dotfile | sh
 ```
  * full setup
 ```
-curl https://raw.githubusercontent.com/liquidz/dotfiles/master/bin/setup.sh | env MODE=full sh
+curl -L http://bit.ly/uochan_dotfile | env MODE=full sh
 ```

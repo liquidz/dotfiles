@@ -41,6 +41,9 @@ NeoBundle 'kana/vim-operator-user.git'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'sorah/unite-ghq'
+NeoBundle 'cohama/lexima.vim'
+NeoBundle 'soramugi/auto-ctags.vim'
+NeoBundle 'tsukkee/unite-tag'
 
 " Neosnippet
 if has("lua")
@@ -100,7 +103,7 @@ aug VimFilerKeyMapping
 aug END
 
 " unite.vim {{{2
-nnoremap <Leader>b :Unite file buffer tab<CR>
+nnoremap <Space>b :Unite file buffer tab<CR>
 
 " submode {{{2
 let g:submode_timeout = 0
@@ -166,8 +169,8 @@ let g:quickrun_config.go = {
     \ }
 
 " yankround {{{2
-"nmap p <Plug>(yankround-p)
-nnoremap <Leader>yr :Unite yankround<CR>
+"nmap P <Plug>(yankround-p)
+nnoremap <Space>y :Unite yankround<CR>
 
 " vim-clojure-static {{{2
 aug MyLispWords
@@ -244,7 +247,7 @@ let g:ref_source_webdict_sites = {
 nnoremap <Leader>dic :Ref webdict
 aug VimRefKeyMapping
     au!
-    autocmd FileType php nnoremap <Leader>ur :Unite ref/phpmanual<CR>
+    autocmd FileType php nnoremap <Space>r :Unite ref/phpmanual<CR>
 aug END
 
 " neosnippet {{{2
@@ -297,4 +300,12 @@ function! MyFugitive()
 endfunction
 
 " unite-ghq {{{2
-nnoremap <buffer> <Leader>ghc :Unite ghq<CR>
+nnoremap <buffer> <Space>q :Unite ghq<CR>
+
+" auto-ctags {{{2
+let g:auto_ctags = 1
+let g:auto_ctags_directory_list = [$HOME . '/.tags']
+let g:auto_ctags_filetype_mode = 1
+
+" unite-tag {{{2
+nnoremap <Space>t :Unite tag<CR>

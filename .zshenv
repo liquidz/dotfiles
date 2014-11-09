@@ -15,7 +15,6 @@ export LT_HOME=/Users/uochan/LightTable
 # docker {{{1
 export DOCKER_HOST=tcp://localhost:2375
 alias dl='docker ps -ql'
-alias -g DL='$(dl)'
 alias da='docker ps -qa'
 alias di="docker images | grep -v 'REPOSITORY' | peco | awk '{print \$3}'"
 alias dc="docker ps -a | grep -v 'CONTAINER ID' | peco | awk '{print \$1}'"
@@ -25,6 +24,11 @@ alias docker-start='docker start $(dc)'
 alias docker-attach='docker attach $(dc)'
 alias docker-rm-all='docker rm $(da)'
 alias docker-rmi='docker rmi $(di)'
+
+alias -g DL='$(dl)'
+alias -g DA='$(da)'
+alias -g DI='$(di)'
+alias -g DC='$(dc)'
 
 # heroku {{{1
 export PATH=$PATH:/usr/local/heroku/bin
