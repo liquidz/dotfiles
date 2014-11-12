@@ -6,7 +6,7 @@
 #==================================================
 
 INSTALL_DIR=$HOME/src/github.com/liquidz/dotfiles
-DOT_FILES=(".vimrc" ".tmux.conf" ".zshenv" ".zshrc" ".peco")
+DOT_FILES=(".vimrc" ".tmux.conf" ".zshenv" ".zshrc" ".peco" ".ctags")
 # colors {{{
 red=31
 green=32
