@@ -41,7 +41,6 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'gregsexton/gitv'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'sorah/unite-ghq'
-NeoBundle 'cohama/lexima.vim'
 NeoBundle 'soramugi/auto-ctags.vim'
 NeoBundle 'tsukkee/unite-tag'
 

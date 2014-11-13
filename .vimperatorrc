@@ -45,15 +45,13 @@ set complete=sSl
 set hintchars=hlasdfgyuiopqwernmc
 " ヒントスタイル
 highlight Hint <<<EOT
-    font-size:130%;
+    font-size:110%;
     font-weight: bold;
     text-transform: uppercase;
     padding:2px 5px;
-    border-radius:5px;
     color:white;
     background-color:#0044CC;
     border:2px solid #fff;
-    opacity:0.8;
 EOT
 
 " プラグイン {{{
@@ -90,5 +88,8 @@ if(liberator.has("Windows")){
     io.source("~/.win_vimperatorrc", false);
 }
 EOT
+
+" 無効化の定義
+ignorekeys add app\\.gistboxapp\\.com
 
 echo ".vimperatorrc sourced"
