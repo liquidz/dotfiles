@@ -43,6 +43,7 @@ NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'sorah/unite-ghq'
 NeoBundle 'soramugi/auto-ctags.vim'
 NeoBundle 'tsukkee/unite-tag'
+NeoBundle 'scrooloose/syntastic'
 
 " Neosnippet
 if has("lua")
@@ -58,6 +59,8 @@ if has("unix")
     NeoBundle 'tpope/vim-fireplace'
     NeoBundle 'tpope/vim-classpath'
     NeoBundle 'typedclojure/vim-typedclojure'
+    NeoBundle 'Shougo/vimproc.vim'
+    NeoBundle 'Shougo/unite-build'
 endif
 
 call neobundle#end()
@@ -318,3 +321,6 @@ let g:auto_ctags_filetype_mode = 1
 
 " unite-tag {{{2
 nnoremap <Space>t :Unite tag<CR>
+
+" unite-build {{{2
+nnoremap <Space>b :Unite build<CR><C-w><C-p>

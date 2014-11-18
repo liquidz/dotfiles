@@ -15,6 +15,9 @@ export PATH=$COCOS_CONSOLE_ROOT:$PATH
 # Add environment variable NDK_ROOT for cocos2d-x
 export NDK_ROOT=/Users/uochan/app/android-ndk-r10c
 export PATH=$NDK_ROOT:$PATH
+# Add environment variable ANT_ROOT for cocos2d-x
+export ANT_ROOT=/usr/local/ant/bin
+export PATH=$ANT_ROOT:$PATH
 # Add environment variable ANDROID_SDK_ROOT for cocos2d-x
 export ANDROID_SDK_ROOT=/Users/uochan/app/adt-bundle-mac-x86_64-20140702/sdk
 export PATH=$ANDROID_SDK_ROOT:$PATH

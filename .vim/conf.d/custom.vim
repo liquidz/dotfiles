@@ -19,6 +19,7 @@ aug MyTags
     au BufNewFile,BufRead *.rb set tags+=$HOME/.tags/ruby.tags
     au BufNewFile,BufRead *.php set tags+=$HOME/.tags/php.tags
     au BufNewFile,BufRead *.inc set tags+=$HOME/.tags/php.tags
+    au BufNewFile,BufRead *.cpp set tags+=$HOME/.tags/cpp.tags
 aug END
 
 " external grep
