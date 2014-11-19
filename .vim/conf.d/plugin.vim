@@ -196,6 +196,7 @@ let g:quickrun_config.make = {
 aug RunMakeCommandByQuickRun
     au!
     au FileType cpp nnoremap <Leader>r :QuickRun make<CR>
+    au FileType cpp nnoremap <Leader>R :QuickRun<CR>
 aug END
 
 " yankround {{{2
