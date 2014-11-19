@@ -11,6 +11,17 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 " plugins {{{1
 
+if has("unix")
+    NeoBundle 'Shougo/vimproc.vim', {
+    \ 'build' : {
+    \     'windows' : 'tools\\update-dll-mingw',
+    \     'cygwin' : 'make -f make_cygwin.mak',
+    \     'mac' : 'make -f make_mac.mak',
+    \     'linux' : 'make',
+    \     'unix' : 'gmake',
+    \    },
+    \ }
+endif
 NeoBundle 'Shougo/unite.vim'
 NeoBundleLazy 'Shougo/vimfiler', {'autoload': {'commands': ['VimFiler']}}
 NeoBundle 'thinca/vim-visualstar'
@@ -59,7 +70,7 @@ if has("unix")
     NeoBundle 'tpope/vim-fireplace'
     NeoBundle 'tpope/vim-classpath'
     NeoBundle 'typedclojure/vim-typedclojure'
-    NeoBundle 'Shougo/vimproc.vim'
+    " TODO: quickrun での make で問題なければ消す
     NeoBundle 'Shougo/unite-build'
 endif
 
@@ -168,10 +179,24 @@ set splitbelow
 set splitright
 
 let g:quickrun_config = {}
+" デフォルトで非同期実行にする
+let g:quickrun_config._ = {
+    \ "runner": "vimproc",
+    \ "runner/vimproc/updatetime" : 60
+    \ }
 let g:quickrun_config.go = {
     \ 'command' : 'go',
     \ 'exec'    :  '%c run %s'
     \ }
+let g:quickrun_config.make = {
+    \ "command"   : "make",
+    \ "exec"      : "%c %o",
+    \ "outputter" : "error:buffer:quickfix"
+    \ }
+aug RunMakeCommandByQuickRun
+    au!
+    au FileType cpp nnoremap <Leader>r :QuickRun make<CR>
+aug END
 
 " yankround {{{2
 "nmap P <Plug>(yankround-p)
@@ -323,4 +348,5 @@ let g:auto_ctags_filetype_mode = 1
 nnoremap <Space>t :Unite tag<CR>
 
 " unite-build {{{2
+" TODO: quickrun での make で問題なければ消す
 nnoremap <Space>b :Unite build<CR><C-w><C-p>
