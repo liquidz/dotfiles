@@ -11,18 +11,9 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 " plugins {{{1
 
-if has("unix")
-    NeoBundle 'Shougo/vimproc.vim', {
-    \ 'build' : {
-    \     'windows' : 'tools\\update-dll-mingw',
-    \     'cygwin' : 'make -f make_cygwin.mak',
-    \     'mac' : 'make -f make_mac.mak',
-    \     'linux' : 'make',
-    \     'unix' : 'gmake',
-    \    },
-    \ }
-endif
+NeoBundle 'Shougo/vimproc.vim'
 NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/vimshell.vim'
 NeoBundleLazy 'Shougo/vimfiler', {'autoload': {'commands': ['VimFiler']}}
 NeoBundle 'thinca/vim-visualstar'
 NeoBundle 'kana/vim-submode'
