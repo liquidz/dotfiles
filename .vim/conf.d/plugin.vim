@@ -45,7 +45,10 @@ NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'sorah/unite-ghq'
 NeoBundle 'soramugi/auto-ctags.vim'
 NeoBundle 'tsukkee/unite-tag'
-NeoBundle 'scrooloose/syntastic'
+NeoBundle "osyo-manga/shabadou.vim"
+NeoBundle "osyo-manga/vim-watchdogs"
+NeoBundle "jceb/vim-hier"
+
 
 " Neosnippet
 if has("lua")
@@ -169,20 +172,31 @@ let b:quickrun_config = {'_': {'split': 'vertical'}}
 set splitbelow
 set splitright
 
-let g:quickrun_config = {}
-" デフォルトで非同期実行にする
-let g:quickrun_config._ = {
-    \ "runner": "vimproc",
-    \ "runner/vimproc/updatetime" : 60
-    \ }
-let g:quickrun_config.go = {
-    \ 'command' : 'go',
-    \ 'exec'    :  '%c run %s'
-    \ }
+let g:quickrun_config = {
+\   "_": {
+\       "runner"                    : "vimproc",
+\       "runner/vimproc/updatetime" : 60
+\   },
+\   "go": {
+\       'command' : 'go',
+\       'exec'    : '%c run %s'
+\   },
+\   "make": {
+\       "command"   : "make",
+\       "exec"      : "%c %o",
+\       "outputter" : "error:buffer:quickfix"
+\   },
+\
+\   "watchdogs_checker/phpcs": {
+\       "command" : "phpcs",
+\       "exec"    : "%c --report=emacs %s"
+\   },
+\   "php/watchdogs_checker": {
+\       "type" : "watchdogs_checker/phpcs",
+\   }
+\ }
+
 let g:quickrun_config.make = {
-    \ "command"   : "make",
-    \ "exec"      : "%c %o",
-    \ "outputter" : "error:buffer:quickfix"
     \ }
 aug RunMakeCommandByQuickRun
     au!
@@ -342,3 +356,7 @@ nnoremap <Space>t :Unite tag<CR>
 " unite-build {{{2
 " TODO: quickrun での make で問題なければ消す
 nnoremap <Space>b :Unite build<CR><C-w><C-p>
+
+" vim-watchdog {{{2
+let g:watchdogs_check_BufWritePost_enable = 1
+call watchdogs#setup(g:quickrun_config)
