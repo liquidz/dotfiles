@@ -72,6 +72,10 @@ call neobundle#end()
 filetype plugin indent on
 NeoBundleCheck
 
+" VimShell {{{2
+nnoremap <Leader>ss :VimShell<CR>
+nnoremap <Leader>sp :VimShellPop<CR>
+
 " VimFiler {{{2
 let g:vimfiler_safe_mode_by_default = 0
 let g:vimfiler_as_default_explorer = 1
