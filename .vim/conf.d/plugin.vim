@@ -49,13 +49,11 @@ NeoBundle "osyo-manga/shabadou.vim"
 NeoBundle "osyo-manga/vim-watchdogs"
 NeoBundle "jceb/vim-hier"
 
-
-" Neosnippet
-if has("lua")
+" neocomplete
+if has('lua')
     NeoBundle 'Shougo/neocomplete'
-else
-    NeoBundle 'Shougo/neocomplcache'
 endif
+" neosnippet
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
 
@@ -64,9 +62,10 @@ if has("unix")
     NeoBundle 'tpope/vim-fireplace'
     NeoBundle 'tpope/vim-classpath'
     NeoBundle 'typedclojure/vim-typedclojure'
-    " TODO: quickrun での make で問題なければ消す
     NeoBundle 'Shougo/unite-build'
 endif
+
+"NeoBundle 'osyo-manga/vim-marching'
 
 call neobundle#end()
 filetype plugin indent on
@@ -168,6 +167,7 @@ let g:ctrlp_clear_cache_on_exit = 0   " 終了時キャッシュをクリアし�
 let g:ctrlp_mruf_max            = 500 " MRUの最大記録数
 let g:ctrlp_open_new_file       = 1   " 新規ファイル作成時にタブで開く
 let g:ctrlp_show_hidden         = 1   " 隠しファイルも表示
+nnoremap <Leader>ccc :CtrlPClearCache<CR>
 
 " quickrun {{{2
 " 結果を縦分割で表示
@@ -243,13 +243,15 @@ let g:rbpt_colorpairs = [
     \ ['red',         'firebrick3'],
     \ ]
 
-aug MyRainbowParentheses
-    au!
-    au VimEnter * RainbowParenthesesToggle
-    au Syntax * RainbowParenthesesLoadRound
-    au Syntax * RainbowParenthesesLoadSquare
-    au Syntax * RainbowParenthesesLoadBraces
-aug END
+if neobundle#is_installed('rainbow_parentheses.vim')
+    aug MyRainbowParentheses
+        au!
+        au VimEnter * RainbowParenthesesToggle
+        au Syntax * RainbowParenthesesLoadRound
+        au Syntax * RainbowParenthesesLoadSquare
+        au Syntax * RainbowParenthesesLoadBraces
+    aug END
+endif
 
 " vim-over {{{2
 nnoremap <silent> <Leader>m :OverCommandLine<CR>
@@ -290,6 +292,18 @@ aug VimRefKeyMapping
     autocmd FileType php nnoremap <Space>r :Unite ref/phpmanual<CR>
 aug END
 
+" neocomplete {{{2
+if neobundle#is_installed('neocomplete')
+    " neocomplete用設定
+    let g:neocomplete#enable_at_startup = 1
+    let g:neocomplete#enable_ignore_case = 1
+    let g:neocomplete#enable_smart_case = 1
+    if !exists('g:neocomplete#keyword_patterns')
+        let g:neocomplete#keyword_patterns = {}
+    endif
+    let g:neocomplete#keyword_patterns._ = '\h\w*'
+endif
+
 " neosnippet {{{2
 imap <C-k> <Plug>(neosnippet_expand_or_jump)
 smap <C-k> <Plug>(neosnippet_expand_or_jump)
@@ -302,11 +316,13 @@ aug END
 
 
 " vim-fireplace {{{2
-aug VimFireplaceSetting
-    au!
-    " vim-ref の K と競合するため再定義
-    au Filetype clojure nmap <buffer> K <Plug>FireplaceK
-aug END
+if neobundle#is_installed('vim-fireplace')
+    aug VimFireplaceSetting
+        au!
+        " vim-ref の K と競合するため再定義
+        au Filetype clojure nmap <buffer> K <Plug>FireplaceK
+    aug END
+endif
 
 " vim-quickhl {{{2
 nmap <Space>m <Plug>(quickhl-manual-this)
@@ -358,9 +374,37 @@ let g:auto_ctags_filetype_mode = 1
 nnoremap <Space>t :Unite tag<CR>
 
 " unite-build {{{2
-" TODO: quickrun での make で問題なければ消す
-nnoremap <Space>b :Unite build<CR><C-w><C-p>
+nnoremap <Space>b :Unite build<CR>
 
 " vim-watchdog {{{2
 let g:watchdogs_check_BufWritePost_enable = 1
 call watchdogs#setup(g:quickrun_config)
+
+" vim-marching {{{2
+"" clang コマンドの設定
+let g:marching_clang_command = "/usr/bin/clang"
+" オプションを追加する
+" filetype=cpp に対して設定する場合
+let g:marching#clang_command#options = {
+\   "cpp" : "-std=gnu++1y"
+\}
+" neocomplete.vim と併用して使用する場合
+let g:marching_enable_neocomplete = 1
+if !exists('g:neocomplete#force_omni_input_patterns')
+  let g:neocomplete#force_omni_input_patterns = {}
+endif
+let g:neocomplete#force_omni_input_patterns.cpp =
+    \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
+
+" 処理のタイミングを制御する
+" 短いほうがより早く補完ウィンドウが表示される
+" ただし、marching.vim 以外の処理にも影響するので注意する
+set updatetime=400
+
+" オムニ補完時に補完ワードを挿入したくない場合
+imap <buffer> <C-x><C-o> <Plug>(marching_start_omni_complete)
+
+" キャッシュを削除してからオムに補完を行う
+imap <buffer> <C-x><C-x><C-o> <Plug>(marching_force_start_omni_complete)
+
+
