@@ -11,7 +11,12 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 " plugins {{{1
 
-NeoBundle 'Shougo/vimproc.vim'
+NeoBundle 'Shougo/vimproc.vim', {
+\ 'build' : {
+\     'mac'   : 'make -f make_mac.mak',
+\     'linux' : 'make',
+\    },
+\ }
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimshell.vim'
 NeoBundleLazy 'Shougo/vimfiler', {'autoload': {'commands': ['VimFiler']}}
