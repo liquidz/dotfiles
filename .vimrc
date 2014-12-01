@@ -73,6 +73,8 @@ let mapleader=","
 let maplocalleader="\\"
 
 " encoding {{{1
+set encoding=utf-8
+set fileencoding=utf-8
 if &encoding !=# 'utf-8'
     set encoding=japan
     set fileencoding=japan
