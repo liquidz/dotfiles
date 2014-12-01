@@ -29,7 +29,10 @@ export CPLUS_INCLUDE_PATH="/Users/uochan/app/cocos2d-x-3.3rc0/cocos:/Users/uocha
 export LT_HOME=/Users/uochan/LightTable
 
 # docker {{{1
-export DOCKER_HOST=tcp://localhost:2375
+export DOCKER_HOST=tcp://192.168.59.104:2376
+export DOCKER_CERT_PATH=$HOME/.boot2docker/certs/boot2docker-vm
+export DOCKER_TLS_VERIFY=1
+
 alias dl='docker ps -ql'
 alias da='docker ps -qa'
 alias di="docker images | grep -v 'REPOSITORY' | peco | awk '{print \$3}'"
@@ -40,6 +43,8 @@ alias docker-start='docker start $(dc)'
 alias docker-attach='docker attach $(dc)'
 alias docker-rm-all='docker rm $(da)'
 alias docker-rmi='docker rmi $(di)'
+alias docker-rm-none-image='docker rmi $(docker images | grep "<none>" | awk "{print $3}")'
+alias docker-build='docker build --rm -t $(pwd | awk -F/ "{print \$(NF-1),\$NF}" | sed "s/ /\//g") .'
 
 alias -g DL='$(dl)'
 alias -g DA='$(da)'

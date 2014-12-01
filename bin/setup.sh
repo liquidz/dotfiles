@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 #==================================================
 # sh ./setup.sh                    => minimal setup
