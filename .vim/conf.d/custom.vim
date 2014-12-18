@@ -11,6 +11,7 @@ aug MyIndent
     au!
     autocmd FileType vim set expandtab
     autocmd FileType php set noexpandtab
+    autocmd FileType go set noexpandtab
 aug END
 
 aug MyTags

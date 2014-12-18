@@ -53,6 +53,7 @@ NeoBundle 'tsukkee/unite-tag'
 NeoBundle "osyo-manga/shabadou.vim"
 NeoBundle "osyo-manga/vim-watchdogs"
 NeoBundle "jceb/vim-hier"
+NeoBundle "vim-jp/vim-go-extra"
 
 " neocomplete
 if has('lua')
