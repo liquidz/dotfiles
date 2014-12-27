@@ -26,16 +26,13 @@ NeoBundle 'tpope/vim-surround'
 NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 'fuenor/qfixgrep'
-NeoBundle 'fuenor/qfixhowm'
 NeoBundle 'kien/ctrlp.vim'
-"NeoBundle 'h1mesuke/vim-alignta'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'LeafCage/yankround.vim'
 NeoBundle 'guns/vim-clojure-static'
 NeoBundle 'kien/rainbow_parentheses.vim'
 NeoBundle 'osyo-manga/vim-over'
 
-"NeoBundle 'thinca/vim-qfreplace'
 NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'kannokanno/previm'
 NeoBundle 'mattn/webapi-vim'
@@ -50,10 +47,11 @@ NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'sorah/unite-ghq'
 NeoBundle 'soramugi/auto-ctags.vim'
 NeoBundle 'tsukkee/unite-tag'
-NeoBundle "osyo-manga/shabadou.vim"
-NeoBundle "osyo-manga/vim-watchdogs"
-NeoBundle "jceb/vim-hier"
-NeoBundle "vim-jp/vim-go-extra"
+NeoBundle 'osyo-manga/shabadou.vim'
+NeoBundle 'osyo-manga/vim-watchdogs'
+NeoBundle 'jceb/vim-hier'
+NeoBundle 'vim-jp/vim-go-extra'
+NeoBundle 'glidenote/memolist.vim'
 
 " neocomplete
 if has('lua')
@@ -64,7 +62,6 @@ NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
 
 if has("unix")
-    NeoBundle 'osyo-manga/unite-qfixhowm'
     NeoBundle 'tpope/vim-fireplace'
     NeoBundle 'tpope/vim-classpath'
     NeoBundle 'typedclojure/vim-typedclojure'
@@ -150,23 +147,6 @@ colorscheme hybrid
 let g:clever_f_across_no_line = 1
 let g:clever_f_ignore_case = 1
 
-" qfixhowm {{{2
-let howm_dir = $HOME . '/.vim/howm'
-let QFixMRU_Filename = $HOME . '/.vim/qfixmru'
-let howm_filename = '%Y/%m/%Y-%m-%d-%H%M%S.md'
-let QFixHowm_FileType = 'markdown'
-let QFixHowm_Title = '#'
-" タイトル行検索正規表現の辞書を初期化
-let QFixMRU_Title = {}
-" MRUでタイトル行とみなす正規表現(Vimの正規表現で指定)
-let QFixMRU_Title['mkd'] = '^###[^#]'
-" grepでタイトル行とみなす正規表現(使用するgrepによっては変更する必要があります)
-let QFixMRU_Title['mkd_regxp'] = '^###[^#]'
-let QFixMRU_Key = 'g'
-if has("unix")
-    " リスト表示のキーマップを unite-qfixhowm で上書き
-    nnoremap g<Leader>l :Unite qfixhowm<CR>
-endif
 
 " ctrlp{{{2
 let g:ctrlp_clear_cache_on_exit = 0   " 終了時キャッシュをクリアしない
@@ -401,16 +381,20 @@ if !exists('g:neocomplete#force_omni_input_patterns')
 endif
 let g:neocomplete#force_omni_input_patterns.cpp =
     \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
-
 " 処理のタイミングを制御する
 " 短いほうがより早く補完ウィンドウが表示される
 " ただし、marching.vim 以外の処理にも影響するので注意する
 set updatetime=400
-
 " オムニ補完時に補完ワードを挿入したくない場合
 imap <buffer> <C-x><C-o> <Plug>(marching_start_omni_complete)
-
 " キャッシュを削除してからオムに補完を行う
 imap <buffer> <C-x><C-x><C-o> <Plug>(marching_force_start_omni_complete)
 
-
+" memolist.vim {{{2
+let g:memolist_path = $HOME . "/.vim/memo"
+let g:memolist_memo_suffix = "md"
+let g:memolist_template_dir_path = $HOME . "/.vim/template/memolist"
+let g:memolist_ex_cmd = 'CtrlP'
+nnoremap <Leader>mn :MemoNew<CR>
+nnoremap <Leader>ml :MemoList<CR>
+nnoremap <Leader>mg :MemoGrep<CR>

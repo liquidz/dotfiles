@@ -37,14 +37,16 @@ alias dl='docker ps -ql'
 alias da='docker ps -qa'
 alias di="docker images | grep -v 'REPOSITORY' | peco | awk '{print \$3}'"
 alias dc="docker ps -a | grep -v 'CONTAINER ID' | peco | awk '{print \$1}'"
+alias db='docker build --rm -t $(pwd | awk -F/ "{print \$(NF-1),\$NF}" | sed "s/ /\//g") .'
 alias docker-run='docker run -v /vagrant:/src -i -t $(di)'
 alias docker-rm='docker rm $(dc)'
 alias docker-start='docker start $(dc)'
 alias docker-attach='docker attach $(dc)'
 alias docker-rm-all='docker rm $(da)'
 alias docker-rmi='docker rmi $(di)'
-alias docker-rm-none-image='docker rmi $(docker images | grep "<none>" | awk "{print $3}")'
-alias docker-build='docker build --rm -t $(pwd | awk -F/ "{print \$(NF-1),\$NF}" | sed "s/ /\//g") .'
+alias docker-stop-all='docker stop $(da)'
+alias docker-rm-none-image='docker rmi $(docker images -f dangling=true -q)'
+alias dcc='docker-stop-all && docker-rm-all && docker-rm-none-image'
 
 alias -g DL='$(dl)'
 alias -g DA='$(da)'
