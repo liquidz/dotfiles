@@ -1,0 +1,3 @@
+[submodule ".vim/memo/mydoc"]
+	path = .vim/memo/mydoc
+	url = https://uochan@bitbucket.org/uochan/mydoc.git
