@@ -79,6 +79,8 @@ alias -g S='$(s)'
 
 # ssh {{{1
 alias ss='ssh $(grep "Host " ~/.ssh/config | cut -c6- | peco)'
+alias sss='tmux split-window ss'
+alias ssn='tmux new-window ss'
 
 # my commands {{{2
 alias suteneko='docker run -it uochan/suteneko'

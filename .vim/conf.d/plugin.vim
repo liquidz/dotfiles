@@ -117,6 +117,7 @@ aug VimFilerKeyMapping
 aug END
 
 " unite.vim {{{2
+let g:unite_enable_start_insert = 1
 nnoremap <Space>b :Unite file buffer tab<CR>
 
 " submode {{{2
