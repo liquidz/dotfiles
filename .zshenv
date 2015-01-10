@@ -38,7 +38,7 @@ alias da='docker ps -qa'
 alias di="docker images | grep -v 'REPOSITORY' | peco | awk '{print \$3}'"
 alias dc="docker ps -a | grep -v 'CONTAINER ID' | peco | awk '{print \$1}'"
 alias db='docker build --rm -t $(pwd | awk -F/ "{print \$(NF-1),\$NF}" | sed "s/ /\//g") .'
-alias docker-run='docker run -v /vagrant:/src -i -t $(di)'
+alias dr='docker run --rm -it DI /bin/bash'
 alias docker-rm='docker rm $(dc)'
 alias docker-start='docker start $(dc)'
 alias docker-attach='docker attach $(dc)'
@@ -76,3 +76,9 @@ alias l='git log --oneline | peco | cut -d" " -f1'
 alias -g L='$(l)'
 alias s='git status -s | peco | cut -b 4-'
 alias -g S='$(s)'
+
+# ssh {{{1
+alias ss='ssh $(grep "Host " ~/.ssh/config | cut -c6- | peco)'
+
+# my commands {{{2
+alias suteneko='docker run -it uochan/suteneko'
