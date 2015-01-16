@@ -35,7 +35,7 @@ export DOCKER_TLS_VERIFY=1
 
 alias dl='docker ps -ql'
 alias da='docker ps -qa'
-alias di="docker images | grep -v 'REPOSITORY' | peco | awk '{print \$3}'"
+alias di="docker images | grep -v 'REPOSITORY' | peco | awk '{print \$1}'"
 alias dc="docker ps -a | grep -v 'CONTAINER ID' | peco | awk '{print \$1}'"
 alias db='docker build --rm -t $(pwd | awk -F/ "{print \$(NF-1),\$NF}" | sed "s/ /\//g") .'
 alias dr='docker run --rm -it DI /bin/bash'
@@ -46,7 +46,7 @@ alias docker-rm-all='docker rm $(da)'
 alias docker-rmi='docker rmi $(di)'
 alias docker-stop-all='docker stop $(da)'
 alias docker-rm-none-image='docker rmi $(docker images -f dangling=true -q)'
-alias dcc='docker-stop-all && docker-rm-all && docker-rm-none-image'
+alias dcc='docker-stop-all ; docker-rm-all ; docker-rm-none-image'
 
 alias -g DL='$(dl)'
 alias -g DA='$(da)'
@@ -64,12 +64,16 @@ export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 # ghq {{{1
 alias ghc='cd $(ghq list --full-path | peco)'
 alias ghf='find $(git rev-parse --show-cdup) -type f | grep -v "/.git/" | peco'
-alias gho='gh-open $(ghq list --full-path | peco)'
+alias gho='(cd $(ghq list --full-path | peco) && git browse)'
+
 
 # local bookmark {{{1
 alias bm='cd $(cat ~/.bookmark | peco)'
 
 # git {{{1
+if which hub > /dev/null 2>&1; then
+    alias git=hub
+fi
 alias b='git branch -a | peco | sed "s/\* *//g"'
 alias -g B='$(b)'
 alias l='git log --oneline | peco | cut -d" " -f1'
@@ -84,3 +88,4 @@ alias ssn='tmux new-window ss'
 
 # my commands {{{2
 alias suteneko='docker run -it uochan/suteneko'
+export BECOROOT=/Users/uochan/src/github.com/liquidz/beco

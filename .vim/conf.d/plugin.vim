@@ -187,13 +187,16 @@ let g:quickrun_config = {
 \   }
 \ }
 
-let g:quickrun_config.make = {
-    \ }
-aug RunMakeCommandByQuickRun
-    au!
-    au FileType cpp nnoremap <Leader>r :QuickRun make<CR>
-    au FileType cpp nnoremap <Leader>R :QuickRun<CR>
-aug END
+if has("unix")
+    let g:quickrun_config.markdown = {
+    \    'outputter' : 'null',
+    \    'command' : 'open',
+    \    'cmdopt' : '-a',
+    \    'args' : 'Marked',
+    \    'exec' : '%c %o %a %s',
+    \}
+endif
+
 
 " yankround {{{2
 "nmap P <Plug>(yankround-p)
@@ -289,6 +292,11 @@ if neobundle#is_installed('neocomplete')
         let g:neocomplete#keyword_patterns = {}
     endif
     let g:neocomplete#keyword_patterns._ = '\h\w*'
+
+    aug NeoCompleteLock
+        au!
+        au FileType clojure nested NeoCompleteLock
+    aug END
 endif
 
 " neosnippet {{{2

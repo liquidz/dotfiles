@@ -87,3 +87,10 @@ fi
 function cd() {
     builtin cd $@ && ls;
 }
+
+function foo() {
+    mkdir -p ~/opt
+
+    TMPFILE=~/opt/foo.$1
+    vim $TMPFILE
+}
