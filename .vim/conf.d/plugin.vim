@@ -154,6 +154,7 @@ let g:ctrlp_clear_cache_on_exit = 0   " 終了時キャッシュをクリアし�
 let g:ctrlp_mruf_max            = 500 " MRUの最大記録数
 let g:ctrlp_open_new_file       = 1   " 新規ファイル作成時にタブで開く
 let g:ctrlp_show_hidden         = 1   " 隠しファイルも表示
+let g:ctrlp_follow_symlinks     = 1
 nnoremap <Leader>ccc :CtrlPClearCache<CR>
 
 " quickrun {{{2
