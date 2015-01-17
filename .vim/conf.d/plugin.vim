@@ -206,6 +206,7 @@ nnoremap <Space>y :Unite yankround<CR>
 " vim-clojure-static {{{2
 aug MyLispWords
     au!
+	au FileType clojure set lispwords+=ns
     " compojure
 	au FileType clojure set lispwords+=defroutes,GET,POST
     " misaki

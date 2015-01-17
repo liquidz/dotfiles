@@ -47,7 +47,9 @@ if [ "${MODE}" == "full" ]; then
     ln -sfn $INSTALL_DIR/.vim $HOME/.vim
     mkdir -p $HOME/.vim/bundle
     mkdir -p $HOME/.vim/backup
+    mkdir -p $HOME/.vim/memo
     mkdir -p $HOME/.tags
+    touch $HOME/.vim/memo/default.md
 
     cecho $yellow " * cloning neobundle"
     if [ ! -e $HOME/.vim/bundle/neobundle.vim ]; then
