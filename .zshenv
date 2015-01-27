@@ -29,7 +29,7 @@ export CPLUS_INCLUDE_PATH="/Users/uochan/app/cocos2d-x-3.3rc0/cocos:/Users/uocha
 export LT_HOME=/Users/uochan/LightTable
 
 # docker {{{1
-export DOCKER_HOST=tcp://192.168.59.104:2376
+export DOCKER_HOST=tcp://192.168.59.103:2376
 export DOCKER_CERT_PATH=$HOME/.boot2docker/certs/boot2docker-vm
 export DOCKER_TLS_VERIFY=1
 
