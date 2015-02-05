@@ -42,6 +42,12 @@ for file in ${DOT_FILES[@]}; do
     ln -sfn $INSTALL_DIR/$file $HOME/$file
 done
 
+cecho $yellow " * create symbolic links to .lein/profiles.clj"
+if [ ! -e "$HOME/.lein" ]; then
+    mkdir -p ~/.lein
+fi
+ln -sfn $INSTALL_DIR/.lein/profiles.clj $HOME/.lein/profiles.clj
+
 if [ "${MODE}" == "full" ]; then
     cecho $yellow " * initializing vim"
     ln -sfn $INSTALL_DIR/.vim $HOME/.vim
