@@ -67,7 +67,7 @@ if has("unix")
     NeoBundle 'tpope/vim-classpath'
     NeoBundle 'typedclojure/vim-typedclojure'
     NeoBundle 'Shougo/unite-build'
-    NeoBundle 'venantius/vim-cljfmt'
+    "NeoBundle 'venantius/vim-cljfmt'
 endif
 
 "NeoBundle 'osyo-manga/vim-marching'
