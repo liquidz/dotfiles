@@ -52,6 +52,7 @@ NeoBundle 'osyo-manga/vim-watchdogs'
 NeoBundle 'jceb/vim-hier'
 NeoBundle 'vim-jp/vim-go-extra'
 NeoBundle 'glidenote/memolist.vim'
+NeoBundle 'ujihisa/shadow.vim'
 
 " neocomplete
 if has('lua')
