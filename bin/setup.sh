@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 
 #==================================================
-# sh ./setup.sh                    => minimal setup
-# env MODE=full sh ./setup.sh full => full setup
+# bash ./setup.sh
 #==================================================
 
 INSTALL_DIR=$HOME/src/github.com/liquidz/dotfiles
-DOT_FILES=(".vimrc" ".tmux.conf" ".zshenv" ".zshrc" ".peco" ".ctags")
+DOT_FILES=(".vimrc" ".tmux.conf" ".zshenv" ".zshrc" ".zshrc.antigen" ".peco" ".ctags")
 # colors {{{
 red=31
 green=32
@@ -24,7 +23,11 @@ if [ ! -x "`which git`" ]; then
     exit 1
 fi
 
-if [ "${MODE}" == "" ]; then
+echo -n "setup full mode? (y/N): "
+read MODE
+if [[ "$MODE" = "y" ]]; then
+    MODE="full"
+else
     MODE="minimal"
 fi
 
@@ -58,13 +61,21 @@ if [ "${MODE}" == "full" ]; then
     touch $HOME/.vim/memo/default.md
 
     cecho $yellow " * cloning neobundle"
-    if [ ! -e $HOME/.vim/bundle/neobundle.vim ]; then
-        git clone https://github.com/Shougo/neobundle.vim.git $HOME/.vim/bundle/neobundle.vim
+    DIR="$HOME/.vim/bundle/neobundle.vim"
+    if [ ! -e $DIR ]; then
+        git clone https://github.com/Shougo/neobundle.vim.git $DIR
     fi
 
     cecho $yellow " * cloning tpm"
-    if [ ! -e $HOME/.tmux/plugins/tpm ]; then
-        git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+    DIR="$HOME/.tmux/plugins/tpm"
+    if [ ! -e $DIR ]; then
+        git clone https://github.com/tmux-plugins/tpm $DIR
+    fi
+
+    cecho $yellow " * cloning antigen"
+    DIR="$HOME/src/github.com/zsh-users/antigen"
+    if [ ! -e $DIR ]; then
+        git clone https://github.com/zsh-users/antigen.git $DIR
     fi
 
     #cecho $yellow " * getting manuals for vim-ref"

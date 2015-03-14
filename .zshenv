@@ -5,6 +5,13 @@ PATH=$PATH:/opt/local/bin
 PATH="/usr/local/bin:$PATH:/usr/local/sbin"
 export PATH
 
+# history {{{1
+export HISTFILE=${HOME}/.zhistory
+# メモリに保存される履歴の件数
+export HISTSIZE=1000
+# 履歴ファイルに保存される履歴の件数
+export SAVEHIST=100000
+
 export TERM=screen-256color
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
