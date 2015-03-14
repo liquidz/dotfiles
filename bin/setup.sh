@@ -62,6 +62,11 @@ if [ "${MODE}" == "full" ]; then
         git clone https://github.com/Shougo/neobundle.vim.git $HOME/.vim/bundle/neobundle.vim
     fi
 
+    cecho $yellow " * cloning tpm"
+    if [ ! -e $HOME/.tmux/plugins/tpm ]; then
+        git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+    fi
+
     #cecho $yellow " * getting manuals for vim-ref"
     #mkdir -p $HOME/.vim/vim-ref
     #if [ ! -e $HOME/.vim/vim-ref/php-chunked-xhtml ]; then
