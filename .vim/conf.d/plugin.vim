@@ -38,6 +38,9 @@ NeoBundle 'kannokanno/previm'
 NeoBundle 'mattn/webapi-vim'
 NeoBundle 'mattn/gist-vim'
 NeoBundle 'thinca/vim-ref'
+NeoBundleLazy 'yuku-t/vim-ref-ri', {
+            \   'autoload': {'filetypes': 'ruby'},
+            \ }
 NeoBundle 't9md/vim-quickhl'
 NeoBundle 'kana/vim-operator-replace.git'
 NeoBundle 'kana/vim-operator-user.git'
@@ -53,20 +56,43 @@ NeoBundle 'jceb/vim-hier'
 NeoBundle 'vim-jp/vim-go-extra'
 NeoBundle 'glidenote/memolist.vim'
 NeoBundle 'ujihisa/shadow.vim'
+NeoBundle 'kana/vim-textobj-user'
 
 " neocomplete
 if has('lua')
-    NeoBundle 'Shougo/neocomplete'
+    NeoBundle 'Shougo/neocomplete.vim'
+    NeoBundleLazy 'marcus/rsense', {
+                \   'autoload': {'filetypes': 'ruby'},
+                \ }
+    NeoBundle 'supermomonga/neocomplete-rsense.vim', {
+                \   'depends': ['Shougo/neocomplete.vim', 'marcus/rsense'],
+                \ }
 endif
 " neosnippet
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
+
+NeoBundleLazy 'vim-scripts/ruby-matchit', {
+            \   'autoload': {'filetypes': 'ruby'},
+            \ }
+NeoBundle 'nelstrom/vim-textobj-rubyblock', {
+            \   'depends': ['vim-scripts/ruby-matchit'],
+            \ }
+NeoBundleLazy 'tpope/vim-bundler', {
+            \   'autoload': {'filetypes': 'ruby'},
+            \ }
+NeoBundleLazy 'tpope/vim-bundler', {
+            \   'autoload': {'filetypes': 'ruby'},
+            \ }
 
 if has("unix")
     NeoBundle 'tpope/vim-fireplace'
     NeoBundle 'tpope/vim-classpath'
     NeoBundle 'typedclojure/vim-typedclojure'
     NeoBundle 'Shougo/unite-build'
+    NeoBundle 'liquidz/unite_bundle_builder', {
+                \   'depends': ['Shougo/unite-build'],
+                \ }
     "NeoBundle 'venantius/vim-cljfmt'
 endif
 
@@ -187,6 +213,9 @@ let g:quickrun_config = {
 \   },
 \   "php/watchdogs_checker": {
 \       "type" : "watchdogs_checker/phpcs",
+\   },
+\   "ruby/watchdogs_checker": {
+\       "type" : "watchdogs_checker/rubocop",
 \   }
 \ }
 
@@ -284,7 +313,7 @@ aug VimRefKeyMapping
 aug END
 
 " neocomplete {{{2
-if neobundle#is_installed('neocomplete')
+if neobundle#is_installed('neocomplete.vim')
     " neocomplete用設定
     let g:neocomplete#enable_at_startup = 1
     let g:neocomplete#enable_ignore_case = 1
@@ -391,7 +420,9 @@ if !exists('g:neocomplete#force_omni_input_patterns')
   let g:neocomplete#force_omni_input_patterns = {}
 endif
 let g:neocomplete#force_omni_input_patterns.cpp =
-    \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
+            \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
+"let g:neocomplete#force_omni_input_patterns.ruby =
+"            \ '[^. *\t]\.\w*\|\h\w*::'
 " 処理のタイミングを制御する
 " 短いほうがより早く補完ウィンドウが表示される
 " ただし、marching.vim 以外の処理にも影響するので注意する
