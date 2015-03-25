@@ -183,6 +183,7 @@ let g:ctrlp_mruf_max            = 500 " MRUの最大記録数
 let g:ctrlp_open_new_file       = 1   " 新規ファイル作成時にタブで開く
 let g:ctrlp_show_hidden         = 1   " 隠しファイルも表示
 let g:ctrlp_follow_symlinks     = 1
+nnoremap <Leader>ct :CtrlPTag<CR>
 nnoremap <Leader>ccc :CtrlPClearCache<CR>
 
 " quickrun {{{2
@@ -392,9 +393,11 @@ endfunction
 nnoremap <buffer> <Space>q :Unite ghq<CR>
 
 " auto-ctags {{{2
-let g:auto_ctags = 1
-let g:auto_ctags_directory_list = [$HOME . '/.tags']
-let g:auto_ctags_filetype_mode = 1
+if has("unix")
+    let g:auto_ctags = 1
+    let g:auto_ctags_directory_list = [$HOME . '/.tags']
+    let g:auto_ctags_filetype_mode = 1
+endif
 
 " unite-tag {{{2
 nnoremap <Space>t :Unite tag<CR>
