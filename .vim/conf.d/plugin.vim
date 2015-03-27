@@ -183,6 +183,11 @@ let g:ctrlp_mruf_max            = 500 " MRUの最大記録数
 let g:ctrlp_open_new_file       = 1   " 新規ファイル作成時にタブで開く
 let g:ctrlp_show_hidden         = 1   " 隠しファイルも表示
 let g:ctrlp_follow_symlinks     = 1
+let g:ctrlp_custom_ignore = {
+\    'dir':  '\v[\/](\.git|\.hg|\.svn|cookbooks)$',
+\    'file': '\v\.(o|bk|org|exe|so|dll|skl|cgi|gitkeep)$',
+\    'link': 'some_bad_symbolic_links',
+\ }
 nnoremap <Leader>ct :CtrlPTag<CR>
 nnoremap <Leader>ccc :CtrlPClearCache<CR>
 
@@ -216,7 +221,10 @@ let g:quickrun_config = {
 \       "type" : "watchdogs_checker/phpcs",
 \   },
 \   "ruby/watchdogs_checker": {
-\       "type" : "watchdogs_checker/rubocop",
+\       "type"
+\           : executable("rubocop") ? "watchdogs_checker/rubocop"
+\           : executable("ruby") ? "watchdogs_checker/ruby"
+\           : "",
 \   }
 \ }
 
