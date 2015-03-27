@@ -5,6 +5,9 @@ PATH=$PATH:/opt/local/bin
 PATH="/usr/local/bin:$PATH:/usr/local/sbin"
 export PATH
 
+alias ll='ls -l'
+alias la='ls -a'
+
 # history {{{1
 export HISTFILE=${HOME}/.zhistory
 # メモリに保存される履歴の件数

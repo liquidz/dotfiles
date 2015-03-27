@@ -72,27 +72,15 @@ endif
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
 
-NeoBundleLazy 'vim-scripts/ruby-matchit', {
-            \   'autoload': {'filetypes': 'ruby'},
-            \ }
-NeoBundle 'nelstrom/vim-textobj-rubyblock', {
-            \   'depends': ['vim-scripts/ruby-matchit'],
-            \ }
-NeoBundleLazy 'tpope/vim-bundler', {
-            \   'autoload': {'filetypes': 'ruby'},
-            \ }
-NeoBundleLazy 'tpope/vim-bundler', {
-            \   'autoload': {'filetypes': 'ruby'},
-            \ }
+NeoBundleLazy 'vim-scripts/ruby-matchit', {'autoload': {'filetypes': 'ruby'}}
+NeoBundle 'nelstrom/vim-textobj-rubyblock', {'depends': ['vim-scripts/ruby-matchit']}
 
 if has("unix")
     NeoBundle 'tpope/vim-fireplace'
     NeoBundle 'tpope/vim-classpath'
     NeoBundle 'typedclojure/vim-typedclojure'
     NeoBundle 'Shougo/unite-build'
-    NeoBundle 'liquidz/unite_bundle_builder', {
-                \   'depends': ['Shougo/unite-build'],
-                \ }
+    NeoBundle 'liquidz/unite_bundle_builder', {'depends': ['Shougo/unite-build']}
     "NeoBundle 'venantius/vim-cljfmt'
 endif
 
