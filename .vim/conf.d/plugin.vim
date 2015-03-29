@@ -31,16 +31,13 @@ NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'LeafCage/yankround.vim'
 NeoBundle 'guns/vim-clojure-static'
 NeoBundle 'kien/rainbow_parentheses.vim'
-NeoBundle 'osyo-manga/vim-over'
 
 NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'kannokanno/previm'
 NeoBundle 'mattn/webapi-vim'
 NeoBundle 'mattn/gist-vim'
 NeoBundle 'thinca/vim-ref'
-NeoBundleLazy 'yuku-t/vim-ref-ri', {
-            \   'autoload': {'filetypes': 'ruby'},
-            \ }
+NeoBundleLazy 'yuku-t/vim-ref-ri', {'autoload': {'filetypes': 'ruby'}}
 NeoBundle 't9md/vim-quickhl'
 NeoBundle 'kana/vim-operator-replace.git'
 NeoBundle 'kana/vim-operator-user.git'
@@ -57,6 +54,7 @@ NeoBundle 'vim-jp/vim-go-extra'
 NeoBundle 'glidenote/memolist.vim'
 NeoBundle 'ujihisa/shadow.vim'
 NeoBundle 'kana/vim-textobj-user'
+NeoBundle 'kshenoy/vim-signature'
 
 " neocomplete
 if has('lua')
@@ -177,6 +175,7 @@ let g:ctrlp_custom_ignore = {
 \    'link': 'some_bad_symbolic_links',
 \ }
 nnoremap <Leader>ct :CtrlPTag<CR>
+nnoremap <Leader>cb :CtrlPBuffer<CR>
 nnoremap <Leader>ccc :CtrlPClearCache<CR>
 
 " quickrun {{{2
@@ -229,7 +228,7 @@ endif
 
 " yankround {{{2
 "nmap P <Plug>(yankround-p)
-nnoremap <Space>y :Unite yankround<CR>
+nnoremap <Space>y :Unite yankround<CR><Esc>
 
 " vim-clojure-static {{{2
 aug MyLispWords
@@ -270,12 +269,6 @@ if neobundle#is_installed('rainbow_parentheses.vim')
     aug END
 endif
 
-" vim-over {{{2
-nnoremap <silent> <Leader>m :OverCommandLine<CR>
-" カーソル下の単語をハイライト付きで置換
-nnoremap sub :OverCommandLine<CR>%s/<C-r><C-w>//g<Left><Left>
-" コピーした文字列をハイライト付きで置換
-nnoremap subp y:OverCommandLine<CR>%s!<C-r>=substitute(@0, '!', '\\!', 'g')<CR>!!gI<Left><Left><Left>
 
 " previm {{{2
 let g:previm_open_cmd = '' " set empty to use open-browser.vim
@@ -405,31 +398,6 @@ nnoremap <Space>b :Unite build<CR>
 let g:watchdogs_check_BufWritePost_enable = 1
 call watchdogs#setup(g:quickrun_config)
 
-" vim-marching {{{2
-"" clang コマンドの設定
-let g:marching_clang_command = "/usr/bin/clang"
-" オプションを追加する
-" filetype=cpp に対して設定する場合
-let g:marching#clang_command#options = {
-\   "cpp" : "-std=gnu++1y"
-\}
-" neocomplete.vim と併用して使用する場合
-let g:marching_enable_neocomplete = 1
-if !exists('g:neocomplete#force_omni_input_patterns')
-  let g:neocomplete#force_omni_input_patterns = {}
-endif
-let g:neocomplete#force_omni_input_patterns.cpp =
-            \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
-"let g:neocomplete#force_omni_input_patterns.ruby =
-"            \ '[^. *\t]\.\w*\|\h\w*::'
-" 処理のタイミングを制御する
-" 短いほうがより早く補完ウィンドウが表示される
-" ただし、marching.vim 以外の処理にも影響するので注意する
-set updatetime=400
-" オムニ補完時に補完ワードを挿入したくない場合
-imap <buffer> <C-x><C-o> <Plug>(marching_start_omni_complete)
-" キャッシュを削除してからオムに補完を行う
-imap <buffer> <C-x><C-x><C-o> <Plug>(marching_force_start_omni_complete)
 
 " memolist.vim {{{2
 let g:memolist_path = $HOME . "/.vim/memo"

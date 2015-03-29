@@ -72,6 +72,9 @@ set autoread
 let mapleader=","
 let maplocalleader="\\"
 
+" spell {{{2
+set spelllang=en,cjk " スペルチェック時に日本語は除外する
+
 " encoding {{{1
 set encoding=utf-8
 set fileencoding=utf-8
@@ -124,6 +127,7 @@ endif
 nnoremap <C-j> <Esc>
 cnoremap <C-j> <Esc>
 inoremap <C-j> <Esc>
+inoremap jj <Esc>
 vnoremap <C-j> <Esc>
 
 nnoremap ; :
@@ -148,6 +152,7 @@ nnoremap <Leader><Leader> :<C-u>Ex<CR>
 
 " go home
 nnoremap <silent> <Leader>gh :cd! $HOME<CR>
+nnoremap <silent> sss :<C-u>setlocal spell!<CR>
 
 " copy to clipboard
 if has("win32")
