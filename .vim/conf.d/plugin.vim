@@ -17,6 +17,7 @@ NeoBundle 'Shougo/vimproc.vim', {
 \     'linux' : 'make',
 \    },
 \ }
+NeoBundle 'vim-jp/vital.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimshell.vim'
 NeoBundleLazy 'Shougo/vimfiler', {'autoload': {'commands': ['VimFiler']}}
@@ -72,6 +73,8 @@ NeoBundle 'Shougo/neosnippet-snippets'
 
 NeoBundleLazy 'vim-scripts/ruby-matchit', {'autoload': {'filetypes': 'ruby'}}
 NeoBundle 'nelstrom/vim-textobj-rubyblock', {'depends': ['vim-scripts/ruby-matchit']}
+NeoBundle 'tpope/vim-endwise'
+NeoBundle 'thinca/vim-themis'
 
 if has("unix")
     NeoBundle 'tpope/vim-fireplace'

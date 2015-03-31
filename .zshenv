@@ -2,6 +2,7 @@
 PATH=$PATH:~/bin
 PATH=$PATH:~/bin/git-tasukete
 PATH=$PATH:/opt/local/bin
+PATH=$PATH:~/.vim/bundle/vim-themis/bin
 PATH="/usr/local/bin:$PATH:/usr/local/sbin"
 export PATH
 

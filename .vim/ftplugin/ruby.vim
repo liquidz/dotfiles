@@ -4,4 +4,4 @@ set shiftwidth=2
 
 let g:rsenseUseOmniFunc = 1
 
-nnoremap <Space>b :Unite build:bundle:exec:rake:test<CR><Esc><C-w>p
+nnoremap <Space>b :Unite build:bundle:exec:rake<CR><Esc>
