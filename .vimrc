@@ -78,6 +78,7 @@ set spelllang=en,cjk " スペルチェック時に日本語は除外する
 " encoding {{{1
 set encoding=utf-8
 set fileencoding=utf-8
+set fileencodings=utf-8,cp932
 if &encoding !=# 'utf-8'
     set encoding=japan
     set fileencoding=japan
