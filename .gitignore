@@ -1,7 +1,8 @@
+.vim/autoload/plug.vim
 .vim/bundle
 .vim/backup
 .vim/memo
 .vim/vim-ref
 .vim/.netrwhist
-*_localhost*
+*_local*
 Gemfile.lock

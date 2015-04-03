@@ -1,101 +1,92 @@
 " vim: foldmethod=marker
 " vim: foldlevel=0
 
-" basic {{{1
-if has('vim_starting')
-    set runtimepath+=$HOME/.vim/bundle/neobundle.vim/
-endif
+" plugins {{{
+call plug#begin('~/.vim/bundle')
 
-call neobundle#begin(expand($HOME . '/.vim/bundle/'))
-NeoBundleFetch 'Shougo/neobundle.vim'
+function! BuildVimproc(info)
+    if (a:info.status == 'installed' || a:info.force) && has('unix')
+        let uname = system("uname")
+        if uname == 'Darwin'
+            !make -f make_mac.mak
+        else
+            !make
+        end
+    endif
+endfunction
+Plug 'Shougo/vimproc.vim', { 'do': function('BuildVimproc')}
 
-" plugins {{{1
+Plug 'vim-jp/vital.vim'
+Plug 'Shougo/unite.vim'
+"Plug 'Shougo/vimshell.vim'
+Plug 'Shougo/vimfiler', {'on': ['VimFiler']}
+Plug 'thinca/vim-visualstar'
+Plug 'kana/vim-submode'
+Plug 'tpope/vim-surround'
+Plug 'w0ng/vim-hybrid'
+Plug 'rhysd/clever-f.vim'
+Plug 'fuenor/qfixgrep'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'thinca/vim-quickrun'
+Plug 'LeafCage/yankround.vim'
 
-NeoBundle 'Shougo/vimproc.vim', {
-\ 'build' : {
-\     'mac'   : 'make -f make_mac.mak',
-\     'linux' : 'make',
-\    },
-\ }
-NeoBundle 'vim-jp/vital.vim'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/vimshell.vim'
-NeoBundleLazy 'Shougo/vimfiler', {'autoload': {'commands': ['VimFiler']}}
-NeoBundle 'thinca/vim-visualstar'
-NeoBundle 'kana/vim-submode'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'w0ng/vim-hybrid'
-NeoBundle 'rhysd/clever-f.vim'
-NeoBundle 'fuenor/qfixgrep'
-NeoBundle 'ctrlpvim/ctrlp.vim'
-NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'LeafCage/yankround.vim'
-NeoBundle 'guns/vim-clojure-static'
-NeoBundle 'kien/rainbow_parentheses.vim'
-
-NeoBundle 'tyru/open-browser.vim'
-NeoBundle 'kannokanno/previm'
-NeoBundle 'mattn/webapi-vim'
-NeoBundle 'mattn/gist-vim'
-NeoBundle 'thinca/vim-ref'
-NeoBundleLazy 'yuku-t/vim-ref-ri', {'autoload': {'filetypes': 'ruby'}}
-NeoBundle 't9md/vim-quickhl'
-NeoBundle 'kana/vim-operator-replace.git'
-NeoBundle 'kana/vim-operator-user.git'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'gregsexton/gitv'
-NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'sorah/unite-ghq'
-NeoBundle 'soramugi/auto-ctags.vim'
-NeoBundle 'tsukkee/unite-tag'
-NeoBundle 'osyo-manga/shabadou.vim'
-NeoBundle 'osyo-manga/vim-watchdogs'
-NeoBundle 'jceb/vim-hier'
-NeoBundle 'vim-jp/vim-go-extra'
-NeoBundle 'glidenote/memolist.vim'
-NeoBundle 'ujihisa/shadow.vim'
-NeoBundle 'kana/vim-textobj-user'
-NeoBundle 'kshenoy/vim-signature'
+Plug 'tyru/open-browser.vim'
+Plug 'kannokanno/previm'
+Plug 'mattn/webapi-vim'
+Plug 'mattn/gist-vim'
+Plug 'thinca/vim-ref'
+Plug 'yuku-t/vim-ref-ri', {'for': 'ruby'}
+Plug 't9md/vim-quickhl'
+Plug 'kana/vim-operator-replace'
+Plug 'kana/vim-operator-user'
+Plug 'tpope/vim-fugitive'
+Plug 'gregsexton/gitv'
+Plug 'itchyny/lightline.vim'
+Plug 'soramugi/auto-ctags.vim'
+Plug 'osyo-manga/shabadou.vim'
+Plug 'osyo-manga/vim-watchdogs'
+Plug 'jceb/vim-hier'
+Plug 'vim-jp/vim-go-extra', {'for': 'go'}
+Plug 'glidenote/memolist.vim'
+Plug 'ujihisa/shadow.vim'
+Plug 'kana/vim-textobj-user'
+Plug 'kshenoy/vim-signature'
 
 " neocomplete
 if has('lua')
-    NeoBundle 'Shougo/neocomplete.vim'
-    NeoBundleLazy 'marcus/rsense', {
-                \   'autoload': {'filetypes': 'ruby'},
-                \ }
-    NeoBundle 'supermomonga/neocomplete-rsense.vim', {
-                \   'depends': ['Shougo/neocomplete.vim', 'marcus/rsense'],
-                \ }
+    Plug 'Shougo/neocomplete.vim'
+    Plug 'marcus/rsense', {'for': 'ruby'}
+    Plug 'supermomonga/neocomplete-rsense.vim', {'for': 'ruby'}
 endif
-" neosnippet
-NeoBundle 'Shougo/neosnippet'
-NeoBundle 'Shougo/neosnippet-snippets'
 
-NeoBundleLazy 'vim-scripts/ruby-matchit', {'autoload': {'filetypes': 'ruby'}}
-NeoBundle 'nelstrom/vim-textobj-rubyblock', {'depends': ['vim-scripts/ruby-matchit']}
-NeoBundle 'tpope/vim-endwise'
-NeoBundle 'thinca/vim-themis'
+" neosnippet
+Plug 'Shougo/neosnippet'
+Plug 'Shougo/neosnippet-snippets'
+
+Plug 'vim-scripts/ruby-matchit', {'for': 'ruby'}
+Plug 'nelstrom/vim-textobj-rubyblock', {'for': 'ruby'}
+Plug 'tpope/vim-endwise'
+Plug 'thinca/vim-themis'
 
 if has("unix")
-    NeoBundle 'tpope/vim-fireplace'
-    NeoBundle 'tpope/vim-classpath'
-    NeoBundle 'typedclojure/vim-typedclojure'
-    NeoBundle 'Shougo/unite-build'
-    NeoBundle 'liquidz/unite_bundle_builder', {'depends': ['Shougo/unite-build']}
-    "NeoBundle 'venantius/vim-cljfmt'
+    Plug 'guns/vim-clojure-static', {'for': 'clojure'}
+    Plug 'kien/rainbow_parentheses.vim'
+    Plug 'tpope/vim-fireplace', {'for': 'clojure'}
+    Plug 'tpope/vim-classpath', {'for': 'clojure'}
+    Plug 'typedclojure/vim-typedclojure', {'for': 'clojure'}
+
+    Plug 'Shougo/unite-build'
+    Plug 'liquidz/unite_bundle_builder'
 endif
 
-"NeoBundle 'osyo-manga/vim-marching'
+call plug#end() " }}}
 
-call neobundle#end()
-filetype plugin indent on
-NeoBundleCheck
+" VimShell {{{
+"nnoremap <Leader>ss :VimShell<CR>
+"nnoremap <Leader>sp :VimShellPop<CR>
+" }}}
 
-" VimShell {{{2
-nnoremap <Leader>ss :VimShell<CR>
-nnoremap <Leader>sp :VimShellPop<CR>
-
-" VimFiler {{{2
+" VimFiler {{{
 let g:vimfiler_safe_mode_by_default = 0
 let g:vimfiler_as_default_explorer = 1
 let g:vimfiler_sort_type = "filename"
@@ -132,14 +123,16 @@ aug VimFilerKeyMapping
         call unite#custom_default_action('source/bookmark/directory' , 'vimfiler')
     endfunction
 aug END
+" }}}
 
-" unite.vim {{{2
+" unite.vim {{{
 let g:unite_enable_start_insert = 1
 nnoremap <Space>b :Unite file buffer tab<CR>
+" }}}
 
-" submode {{{2
+" submode {{{
 let g:submode_timeout = 0
-" window {{{3
+"" window
 call submode#enter_with('window', 'n', '', '<C-w><C-w>', '<Nop>')
 call submode#leave_with('window', 'n', '', '<Esc>')
 call submode#map('window', 'n', '', 'j', '<C-w>j')
@@ -157,16 +150,18 @@ call submode#map('window', 'n', '', '>', '<C-w>5>')
 call submode#map('window', 'n', '', '<', '<C-w>5<lt>')
 call submode#map('window', 'n', '', '+', '<C-w>5+')
 call submode#map('window', 'n', '', '-', '<C-w>5-')
+" }}}
 
-" hybrid {{{2
+" hybrid {{{
 colorscheme hybrid
+" }}}
 
-" clever_f {{{2
+" clever_f {{{
 let g:clever_f_across_no_line = 1
 let g:clever_f_ignore_case = 1
+" }}}
 
-
-" ctrlp{{{2
+" ctrlp{{{
 let g:ctrlp_clear_cache_on_exit = 0   " 終了時キャッシュをクリアしない
 let g:ctrlp_mruf_max            = 500 " MRUの最大記録数
 let g:ctrlp_open_new_file       = 1   " 新規ファイル作成時にタブで開く
@@ -180,8 +175,9 @@ let g:ctrlp_custom_ignore = {
 nnoremap <Leader>ct :CtrlPTag<CR>
 nnoremap <Leader>cb :CtrlPBuffer<CR>
 nnoremap <Leader>ccc :CtrlPClearCache<CR>
+" }}}
 
-" quickrun {{{2
+" quickrun {{{
 " 結果を縦分割で表示
 let b:quickrun_config = {'_': {'split': 'vertical'}}
 " 横分割時は下､ 縦分割時は右へ新しいウィンドウを開く
@@ -227,13 +223,13 @@ if has("unix")
     \    'exec' : '%c %o %a %s',
     \}
 endif
+" }}}
 
-
-" yankround {{{2
-"nmap P <Plug>(yankround-p)
+" yankround {{{
 nnoremap <Space>y :Unite yankround<CR><Esc>
+" }}}
 
-" vim-clojure-static {{{2
+" vim-clojure-static {{{
 aug MyLispWords
     au!
 	au FileType clojure set lispwords+=ns
@@ -246,8 +242,9 @@ aug MyLispWords
     " conjure
 	au FileType clojure set lispwords+=stubbing
 aug END
+" }}}
 
-" rainbow_parentheses {{{2
+" rainbow_parentheses {{{
 let g:rbpt_colorpairs = [
     \ ['brown',       'RoyalBlue3'],
     \ ['darkgreen',   'firebrick3'],
@@ -262,32 +259,32 @@ let g:rbpt_colorpairs = [
     \ ['red',         'firebrick3'],
     \ ]
 
-if neobundle#is_installed('rainbow_parentheses.vim')
-    aug MyRainbowParentheses
-        au!
-        au VimEnter * RainbowParenthesesToggle
-        au Syntax * RainbowParenthesesLoadRound
-        au Syntax * RainbowParenthesesLoadSquare
-        au Syntax * RainbowParenthesesLoadBraces
-    aug END
-endif
+aug MyRainbowParentheses
+    au!
+    au VimEnter * RainbowParenthesesToggle
+    au Syntax * RainbowParenthesesLoadRound
+    au Syntax * RainbowParenthesesLoadSquare
+    au Syntax * RainbowParenthesesLoadBraces
+aug END
+" }}}
 
-
-" previm {{{2
+" previm {{{
 let g:previm_open_cmd = '' " set empty to use open-browser.vim
 
 aug PrevimSettings
     au!
     au BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 aug END
+" }}}
 
-" gist-vim {{{2
+" gist-vim {{{
 let g:gist_show_privates = 1
 let g:gist_post_private = 1
 let g:gist_get_multiplefile = 1
 nnoremap <Leader>todo :Gist 1ec3a489823690e31661<CR><C-w>o
+" }}}
 
-" vim-ref {{{2
+" vim-ref {{{
 let g:ref_phpmanual_path = $HOME . '/.vim/vim-ref/php-chunked-xhtml'
 let g:ref_source_webdict_sites = {
 \   'weblio' : {
@@ -304,9 +301,10 @@ aug VimRefKeyMapping
     au!
     autocmd FileType php nnoremap <Space>r :Unite ref/phpmanual<CR>
 aug END
+" }}}
 
-" neocomplete {{{2
-if neobundle#is_installed('neocomplete.vim')
+" neocomplete {{{
+if has('lua')
     " neocomplete用設定
     let g:neocomplete#enable_at_startup = 1
     let g:neocomplete#enable_ignore_case = 1
@@ -321,8 +319,9 @@ if neobundle#is_installed('neocomplete.vim')
         au FileType clojure nested NeoCompleteLock
     aug END
 endif
+" }}}
 
-" neosnippet {{{2
+" neosnippet {{{
 imap <C-k> <Plug>(neosnippet_expand_or_jump)
 smap <C-k> <Plug>(neosnippet_expand_or_jump)
 xmap <C-k> <Plug>(neosnippet_expand_target)
@@ -331,10 +330,10 @@ aug NeoSnippetIndent
     au!
     autocmd FileType neosnippet set noexpandtab
 aug END
+" }}}
 
-
-" vim-fireplace {{{2
-if neobundle#is_installed('vim-fireplace')
+" vim-fireplace {{{
+if has('unix')
     aug VimFireplaceSetting
         au!
         au Filetype clojure nnoremap <Leader>r :Require!<CR>
@@ -342,24 +341,28 @@ if neobundle#is_installed('vim-fireplace')
         au Filetype clojure nmap <buffer> K <Plug>FireplaceK
     aug END
 endif
+" }}}
 
-" vim-quickhl {{{2
+" vim-quickhl {{{
 nmap <Space>m <Plug>(quickhl-manual-this)
 xmap <Space>m <Plug>(quickhl-manual-this)
 nmap <Space>M <Plug>(quickhl-manual-reset)
 xmap <Space>M <Plug>(quickhl-manual-reset)
+" }}}
 
-" vim-operator {{{2
+" vim-operator {{{
 map - <Plug>(operator-replace)
+" }}}
 
-" vim-fugitive, gitv {{{2
+" vim-fugitive, gitv {{{
 nnoremap <Leader>gs :Gstatus<CR>
 nnoremap <Leader>gb :Glame<CR>
 nnoremap <Leader>gd :Gdiff<CR>
 nnoremap <Leader>gc :Gcommit -av<CR>
 nnoremap <Leader>gl :Gitv<CR>
+" }}}
 
-" lightline.vim {{{2
+" lightline.vim {{{
 let g:lightline = {
     \ 'colorscheme': 'wombat',
     \ 'active': {
@@ -380,29 +383,26 @@ function! MyFugitive()
     endif
     return l:branch
 endfunction
+" }}}
 
-" unite-ghq {{{2
-nnoremap <buffer> <Space>q :Unite ghq<CR>
-
-" auto-ctags {{{2
+" auto-ctags {{{
 if has("unix")
     let g:auto_ctags = 1
     let g:auto_ctags_directory_list = [$HOME . '/.tags']
     let g:auto_ctags_filetype_mode = 1
 endif
+" }}}
 
-" unite-tag {{{2
-nnoremap <Space>t :Unite tag<CR>
-
-" unite-build {{{2
+" unite-build {{{
 nnoremap <Space>b :Unite build<CR>
+" }}}
 
-" vim-watchdog {{{2
+" vim-watchdog {{{
 let g:watchdogs_check_BufWritePost_enable = 1
 call watchdogs#setup(g:quickrun_config)
+" }}}
 
-
-" memolist.vim {{{2
+" memolist.vim {{{
 let g:memolist_path = $HOME . "/.vim/memo"
 let g:memolist_memo_suffix = "md"
 let g:memolist_template_dir_path = $HOME . "/.vim/template/memolist"
@@ -410,3 +410,4 @@ let g:memolist_ex_cmd = 'CtrlP'
 nnoremap <Leader>mn :MemoNew<CR>
 nnoremap <Leader>ml :MemoList<CR>
 nnoremap <Leader>mg :MemoGrep<CR>
+" }}}

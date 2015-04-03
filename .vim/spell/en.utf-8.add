@@ -4,3 +4,7 @@ clojure
 chatbot
 docstring
 regexp
+clj-jwt
+clj
+jwt
+JsonWebSignature
