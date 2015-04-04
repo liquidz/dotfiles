@@ -1,10 +1,16 @@
 #!/usr/bin/env bash
 
-#==================================================
-# bash ./setup.sh
-#==================================================
+#   ____   __  ____  ____  __  __    ____  ____ 
+#  (    \ /  \(_  _)(  __)(  )(  )  (  __)/ ___)
+#   ) D ((  O ) )(   ) _)  )( / (_/\ ) _) \___ \
+#  (____/ \__/ (__) (__)  (__)\____/(____)(____/
+#
+# ==================================================
 
-INSTALL_DIR=$HOME/src/github.com/liquidz/dotfiles
+if [[ "$PREFIX" = "" ]]; then
+    PREFIX="$HOME"
+fi
+INSTALL_DIR=$PREFIX/src/github.com/liquidz/dotfiles
 DOT_FILES=(".vimrc" ".tmux.conf" ".zshenv" ".zshrc" ".zshrc.antigen" ".peco" ".ctags" ".gemrc" ".rubocop.yml")
 # colors {{{
 red=31
@@ -36,63 +42,65 @@ cecho $green "Start: ${MODE} setup"
 ## dotfiles レポジトリの clone
 cecho $yellow " * cloning dotfiles"
 if [ ! -e $INSTALL_DIR ]; then
-    git clone https://github.com/liquidz/dotfiles.git $INSTALL_DIR
+    git clone https://github.com/liquidz/dotfiles.git $INSTALL_DIR > /dev/null 2>&1
 else
-    (cd $INSTALL_DIR && git pull origin master)
+    (cd $INSTALL_DIR && git pull origin master > /dev/null 2>&1)
 fi
 
 ## dotfiles のシンボリックリンクを貼る
 cecho $yellow " * create symbolic links to dotfiles"
 for file in ${DOT_FILES[@]}; do
-    ln -sfn $INSTALL_DIR/$file $HOME/$file
+    ln -sfn $INSTALL_DIR/$file $PREFIX/$file
 done
 cecho $yellow " * create symbolic links to .lein/profiles.clj"
-if [ ! -e "$HOME/.lein" ]; then
-    mkdir -p ~/.lein
+if [ ! -e "$PREFIX/.lein" ]; then
+    mkdir -p $PREFIX/.lein
 fi
-ln -sfn $INSTALL_DIR/.lein/profiles.clj $HOME/.lein/profiles.clj
+ln -sfn $INSTALL_DIR/.lein/profiles.clj $PREFIX/.lein/profiles.clj
 
 ## full モードなら全設定のセットアップ
 if [ "${MODE}" == "full" ]; then
     ## vim の設定
     cecho $yellow " * initializing vim"
-    ln -sfn $INSTALL_DIR/.vim $HOME/.vim
-    mkdir -p $HOME/.vim/bundle
-    mkdir -p $HOME/.vim/backup
-    mkdir -p $HOME/.vim/memo
-    mkdir -p $HOME/.tags
-    touch $HOME/.vim/memo/default.md
+    ln -sfn $INSTALL_DIR/.vim $PREFIX/.vim
+    mkdir -p $PREFIX/.vim/bundle
+    mkdir -p $PREFIX/.vim/backup
+    mkdir -p $PREFIX/.tags
 
-    #cecho $yellow " * cloning neobundle"
-    #DIR="$HOME/.vim/bundle/neobundle.vim"
-    #if [ ! -e $DIR ]; then
-    #    git clone https://github.com/Shougo/neobundle.vim.git $DIR
-    #fi
+    cecho $yellow " * settingup vim memo"
+    if [[ -e ~/Dropbox/vim/memo ]] && [[ "$IS_TEST" = "" ]]; then
+        ln -sfn ~/Dropbox/vim/memo $PREFIX/.vim/memo
+    else
+        mkdir -p $PREFIX/.vim/memo
+        touch $PREFIX/.vim/memo/default.md
+    fi
 
     cecho $yellow " * cloning vim-plug"
-    DIR="$HOME/.vim/bundle/neobundle.vim"
-    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    DIR="$PREFIX/.vim/autoload/plug.vim"
+    if [[ ! -e $DIR ]]; then
+        curl -sfLo $DIR --create-dirs \
+            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    fi
 
     ## tmux の設定
     cecho $yellow " * cloning tpm"
-    DIR="$HOME/.tmux/plugins/tpm"
+    DIR="$PREFIX/.tmux/plugins/tpm"
     if [ ! -e $DIR ]; then
         git clone https://github.com/tmux-plugins/tpm $DIR
     fi
 
     ## zsh の設定
     cecho $yellow " * cloning antigen"
-    DIR="$HOME/src/github.com/zsh-users/antigen"
+    DIR="$PREFIX/src/github.com/zsh-users/antigen"
     if [ ! -e $DIR ]; then
         git clone https://github.com/zsh-users/antigen.git $DIR
     fi
 
     #cecho $yellow " * getting manuals for vim-ref"
-    #mkdir -p $HOME/.vim/vim-ref
-    #if [ ! -e $HOME/.vim/vim-ref/php-chunked-xhtml ]; then
+    #mkdir -p $PREFIX/.vim/vim-ref
+    #if [ ! -e $PREFIX/.vim/vim-ref/php-chunked-xhtml ]; then
     #    wget http://jp2.php.net/get/php_manual_ja.tar.gz/from/jp1.php.net/mirror -O /tmp/php-chunked-xhtml
-    #    (cd $HOME/.vim/vim-ref && tar xvf /tmp/php-chunked-xhtml)
+    #    (cd $PREFIX/.vim/vim-ref && tar xvf /tmp/php-chunked-xhtml)
     #    /bin/rm -f /tmp/php-chunked-xhtml
     #fi
 
