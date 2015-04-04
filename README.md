@@ -1,12 +1,12 @@
-# dotfiles
+# dotfiles [![Circle CI](https://circleci.com/gh/liquidz/dotfiles.svg?style=svg)](https://circleci.com/gh/liquidz/dotfiles)
 
 ## setup
 
- * full setup
+full setup
 ```
 curl -L http://bit.ly/uochan_dotfile | bash
 ```
- * minimal setup
+minimal setup
 ```
 curl -L http://bit.ly/uochan_dotfile | env MODE=min bash
 ```
