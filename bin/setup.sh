@@ -11,7 +11,12 @@ if [[ "$PREFIX" = "" ]]; then
     PREFIX="$HOME"
 fi
 INSTALL_DIR=$PREFIX/src/github.com/liquidz/dotfiles
-DOT_FILES=(".vimrc" ".tmux.conf" ".zshenv" ".zshrc" ".zshrc.antigen" ".peco" ".ctags" ".gemrc" ".rubocop.yml")
+DOT_FILES=(".vimrc"                     \
+    ".tmux.conf"                        \
+    ".zshenv" ".zshrc" ".zshrc.antigen" \
+    ".peco" ".ctags"                    \
+    ".gemrc" ".rubocop.yml"             \
+    )
 # colors {{{
 red=31
 green=32
@@ -25,7 +30,7 @@ cecho() { # {{{
 } # }}}
 
 ## git が未インストールなら終了
-if [ ! -x "`which git`" ]; then
+if [[ ! -x "`which git`" ]]; then
     cecho $red "Error: git is not installed"
     exit 1
 fi
@@ -41,9 +46,10 @@ cecho $green "Start: ${MODE} setup"
 
 ## dotfiles レポジトリの clone
 cecho $yellow " * cloning dotfiles"
-if [ ! -e $INSTALL_DIR ]; then
+if [[ ! -e $INSTALL_DIR ]]; then
     git clone https://github.com/liquidz/dotfiles.git $INSTALL_DIR > /dev/null 2>&1
 else
+    cecho $blue "   pulling origin master"
     (cd $INSTALL_DIR && git pull origin master > /dev/null 2>&1)
 fi
 
@@ -53,13 +59,13 @@ for file in ${DOT_FILES[@]}; do
     ln -sfn $INSTALL_DIR/$file $PREFIX/$file
 done
 cecho $yellow " * create symbolic links to .lein/profiles.clj"
-if [ ! -e "$PREFIX/.lein" ]; then
+if [[ ! -e "$PREFIX/.lein" ]]; then
     mkdir -p $PREFIX/.lein
 fi
 ln -sfn $INSTALL_DIR/.lein/profiles.clj $PREFIX/.lein/profiles.clj
 
 ## full モードなら全設定のセットアップ
-if [ "${MODE}" == "full" ]; then
+if [[ "$MODE" == "full" ]]; then
     ## vim の設定
     cecho $yellow " * initializing vim"
     ln -sfn $INSTALL_DIR/.vim $PREFIX/.vim
@@ -67,33 +73,39 @@ if [ "${MODE}" == "full" ]; then
     mkdir -p $PREFIX/.vim/backup
     mkdir -p $PREFIX/.tags
 
-    cecho $yellow " * settingup vim memo"
+    cecho $yellow " * setting up vim memo"
     if [[ -e ~/Dropbox/vim/memo ]] && [[ "$IS_TEST" = "" ]]; then
+        cecho $blue "   link to dropbox"
         ln -sfn ~/Dropbox/vim/memo $PREFIX/.vim/memo
     else
+        cecho $blue "  * touch plain text"
         mkdir -p $PREFIX/.vim/memo
         touch $PREFIX/.vim/memo/default.md
     fi
 
-    cecho $yellow " * cloning vim-plug"
-    DIR="$PREFIX/.vim/autoload/plug.vim"
-    if [[ ! -e $DIR ]]; then
-        curl -sfLo $DIR --create-dirs \
-            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    fi
+    cecho $yellow " * getting vim-plug"
+    curl -sfLo "$PREFIX/.vim/autoload/plug.vim" \
+        --create-dirs --retry 3                 \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
     ## tmux の設定
     cecho $yellow " * cloning tpm"
     DIR="$PREFIX/.tmux/plugins/tpm"
-    if [ ! -e $DIR ]; then
-        git clone https://github.com/tmux-plugins/tpm $DIR
+    if [[ ! -e $DIR ]]; then
+        git clone https://github.com/tmux-plugins/tpm $DIR > /dev/null 2>&1
+    else
+        cecho $blue "   pulling origin master"
+        (cd $DIR && git pull origin master > /dev/null 2>&1)
     fi
 
     ## zsh の設定
     cecho $yellow " * cloning antigen"
     DIR="$PREFIX/src/github.com/zsh-users/antigen"
-    if [ ! -e $DIR ]; then
-        git clone https://github.com/zsh-users/antigen.git $DIR
+    if [[ ! -e $DIR ]]; then
+        git clone https://github.com/zsh-users/antigen.git $DIR > /dev/null 2>&1
+    else
+        cecho $blue "   pulling origin master"
+        (cd $DIR && git pull origin master > /dev/null 2>&1)
     fi
 
     #cecho $yellow " * getting manuals for vim-ref"
@@ -111,3 +123,4 @@ if [ "${MODE}" == "full" ]; then
 fi
 
 cecho $green "Done"
+exit 0
