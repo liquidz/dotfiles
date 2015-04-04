@@ -6,3 +6,5 @@
 .vim/.netrwhist
 *_local*
 Gemfile.lock
+bats
+test/.workspace
