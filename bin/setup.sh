@@ -123,4 +123,10 @@ if [[ "$MODE" == "full" ]]; then
 fi
 
 cecho $green "Done"
+
+## PlugInstall
+if [[ "$IS_TEST" = "" ]]; then
+    vim -c "PlugInstall"
+fi
+
 exit 0
