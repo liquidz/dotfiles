@@ -26,14 +26,11 @@ fi
 
 ## インストールモードの確認
 ## full モード以外では dotfiles のシンボリックリンクのみ貼る
-echo -n "setup full mode? (y/N): "
-read MODE
-if [[ "$MODE" = "y" ]]; then
-    MODE="full"
-else
+if [[ "$MODE" = "min" ]]; then
     MODE="minimal"
+else
+    MODE="full"
 fi
-
 cecho $green "Start: ${MODE} setup"
 
 ## dotfiles レポジトリの clone
@@ -66,11 +63,16 @@ if [ "${MODE}" == "full" ]; then
     mkdir -p $HOME/.tags
     touch $HOME/.vim/memo/default.md
 
-    cecho $yellow " * cloning neobundle"
+    #cecho $yellow " * cloning neobundle"
+    #DIR="$HOME/.vim/bundle/neobundle.vim"
+    #if [ ! -e $DIR ]; then
+    #    git clone https://github.com/Shougo/neobundle.vim.git $DIR
+    #fi
+
+    cecho $yellow " * cloning vim-plug"
     DIR="$HOME/.vim/bundle/neobundle.vim"
-    if [ ! -e $DIR ]; then
-        git clone https://github.com/Shougo/neobundle.vim.git $DIR
-    fi
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
     ## tmux の設定
     cecho $yellow " * cloning tpm"
