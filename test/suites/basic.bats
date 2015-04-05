@@ -33,6 +33,8 @@ setup () {
     [ -e "$TEST_PREFIX/.vim/memo" ]
     [ -d "$TEST_PREFIX/.tags" ]
     [ -e "$TEST_PREFIX/.vim/autoload/plug.vim" ]
-    [ -d "$PREFIX/.tmux/plugins/tpm" ]
-    [ -d "$PREFIX/src/github.com/zsh-users/antigen" ]
+    [ -d "$TEST_PREFIX/.tmux/plugins/tpm" ]
+    [ -d "$TEST_PREFIX/src/github.com/zsh-users/antigen" ]
+    [ -d "$TEST_PREFIX/src/github.com/liquidz/beco" ]
+    [ -L "$TEST_PREFIX/bin/beco" ]
 }

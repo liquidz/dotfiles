@@ -108,13 +108,16 @@ if [[ "$MODE" == "full" ]]; then
         (cd $DIR && git pull origin master > /dev/null 2>&1)
     fi
 
-    #cecho $yellow " * getting manuals for vim-ref"
-    #mkdir -p $PREFIX/.vim/vim-ref
-    #if [ ! -e $PREFIX/.vim/vim-ref/php-chunked-xhtml ]; then
-    #    wget http://jp2.php.net/get/php_manual_ja.tar.gz/from/jp1.php.net/mirror -O /tmp/php-chunked-xhtml
-    #    (cd $PREFIX/.vim/vim-ref && tar xvf /tmp/php-chunked-xhtml)
-    #    /bin/rm -f /tmp/php-chunked-xhtml
-    #fi
+    ## beco
+    cecho $yellow " * cloning beco"
+    DIR="$PREFIX/src/github.com/liquidz/beco"
+    if [[ ! -e $DIR ]]; then
+        git clone https://github.com/liquidz/beco.git $DIR > /dev/null 2>&1
+    else
+        cecho $blue "   pulling origin master"
+        (cd $DIR && git pull origin master > /dev/null 2>&1)
+    fi
+    mkdir -p $PREFIX/bin && ln -sfn $DIR/bin/beco $PREFIX/bin/beco
 
     cecho $yellow " * git config"
     git config --global ghq.root ~/src
