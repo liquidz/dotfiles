@@ -1,13 +1,12 @@
-" vim: foldmethod=marker
-" vim: foldlevel=0
+scriptencoding utf-8
 
 " plugins {{{
 call plug#begin('~/.vim/bundle')
 
 function! BuildVimproc(info)
-  if (a:info.status == 'installed' || a:info.force) && has('unix')
-    let uname = system("uname")
-    if uname == 'Darwin'
+  if (a:info.status ==# 'installed' || a:info.force) && has('unix')
+    let uname = system('uname')
+    if uname ==# 'Darwin'
       !make -f make_mac.mak
     else
       !make
@@ -405,3 +404,5 @@ nnoremap <Leader>mn :MemoNew<CR>
 nnoremap <Leader>ml :MemoList<CR>
 nnoremap <Leader>mg :MemoGrep<CR>
 " }}}
+
+" vim:fdl=0

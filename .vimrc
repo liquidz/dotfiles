@@ -58,7 +58,10 @@ if has('autocmd')
       let &fileencoding=&encoding
     endif
   endfunction
-  autocmd BufReadPost * call AU_ReCheck_FENC()
+
+  augroup check_fenc
+    autocmd BufReadPost * call AU_ReCheck_FENC()
+  augroup END
 endif
 scriptencoding utf-8
 " }}}
@@ -231,21 +234,21 @@ set laststatus=2
 function InsertTabWrapper(type)
   let col = col('.') - 1
   "omni補完の場合、omini以外にも上下左右の移動もする
-  if a:type=='omni'
+  if a:type ==# 'omni'
     if pumvisible()
       return "\<c-n>"
     endif
-    if !col || getline('.')[col - 1] !~ '\k\|<\|/'
+    if !col || getline('.')[col - 1] !~# '\k\|<\|/'
       return "\<tab>"
-    elseif exists('&omnifunc') && &omnifunc == ''
+    elseif exists('&omnifunc') && &omnifunc ==# ''
       return "\<c-n>"
     else
       return "\<c-x>\<c-o>"
     endif
     "keywordの場合、該当のとき以外は何もしない
   else
-    if pumvisible() || !col || getline('.')[col - 1] !~ '\k\|<\|/'
-      return ""
+    if pumvisible() || !col || getline('.')[col - 1] !~# '\k\|<\|/'
+      return ''
     else
       return "\<c-x>\<c-p>"
     endif

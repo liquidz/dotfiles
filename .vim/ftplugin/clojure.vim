@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 setlocal iskeyword-=/
 set tags+=$HOME/.tags/clojure.tags
 
