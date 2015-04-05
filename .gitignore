@@ -8,3 +8,4 @@
 Gemfile.lock
 bats
 test/.workspace
+.beco*

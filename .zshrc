@@ -114,3 +114,4 @@ function foo() {
 }
 
 source ~/.zshrc.antigen
+source $BECOROOT/zsh/_beco.zsh

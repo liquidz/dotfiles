@@ -51,6 +51,7 @@ Plug 'glidenote/memolist.vim'
 Plug 'ujihisa/shadow.vim'
 Plug 'kana/vim-textobj-user'
 Plug 'kshenoy/vim-signature'
+Plug 'liquidz/vim-yacd'
 
 " neocomplete
 if has('lua')
