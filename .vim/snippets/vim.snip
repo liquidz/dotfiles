@@ -1,0 +1,21 @@
+snippet plugin
+abbr    if exists('g:loaded_{plugin-name}')
+options head
+	" 何かスゴイことをするプラグイン
+	" Version: 1.0
+	" Author: uochan <liquidz.uo@gmail.com>
+	" License: VIM LICENSE
+	
+	if exists('g:loaded_${1}')
+	  finish
+	endif
+	let g:loaded_$1 = 1
+	
+	let s:save_cpo = &cpo
+	set cpo&vim
+	
+	" body
+	${0}
+	
+	let &cpo = s:save_cpo
+	unlet s:save_cpo
