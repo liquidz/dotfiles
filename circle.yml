@@ -1,9 +1,15 @@
 machine:
+  python:
+    version: 2.7.6
   environment:
     TEST_ROOT: $HOME
 dependencies:
   pre:
+    - pip install vim-vint
     - git clone https://github.com/sstephenson/bats.git
 test:
   override:
     - bats/bin/bats --tap test/suites
+    - vint .vimrc
+    - vint .vim/ftplugin/*.vim
+    - vint .vim/conf.d/*.vim
