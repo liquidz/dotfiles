@@ -23,18 +23,22 @@ call add(g:ctrlp_ext_vars, {
       \ 'accept'   : 'ctrlp#dotbookmark#accept',
       \ 'lname'    : '.bookmark',
       \ 'sname'    : '.bookmark',
-      \ 'type'     : 'line',
+      \ 'type'     : 'path',
       \ 'sort'     : 0,
       \ 'specinput': 0,
       \ })
 
 function! ctrlp#dotbookmark#init() abort
-  let lines = readfile(expand(g:dotbookmark#bookmark_file))
-  return s:_.chain(lines)
-        \.map(function('s:glob_dir'))
-        \.flatten()
-        \.filter(function('s:is_dir'))
-        \.value()
+  let file = expand(g:dotbookmark#bookmark_file)
+  if filereadable(file)
+    let lines = readfile(file)
+    return s:_.chain(lines)
+          \.map(function('s:glob_dir'))
+          \.flatten()
+          \.filter(function('s:is_dir'))
+          \.value()
+  endif
+  return []
 endfunction
 
 function! ctrlp#dotbookmark#accept(mode, str) abort
