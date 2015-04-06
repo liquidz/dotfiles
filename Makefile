@@ -7,5 +7,7 @@ test:
 
 lint:
 	beco vint .vimrc
+	beco vint .vim/autoload/ctrlp/*.vim
+	beco vint .vim/plugin/*.vim
 	beco vint .vim/ftplugin/*.vim
 	beco vint .vim/conf.d/*.vim

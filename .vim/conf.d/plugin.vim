@@ -15,6 +15,7 @@ NeoBundle 'Shougo/vimproc.vim', {
 
 
 NeoBundle 'vim-jp/vital.vim'
+NeoBundle 'haya14busa/underscore.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundleLazy 'Shougo/vimfiler', {'autoload': {'commands': ['VimFiler']}}
 NeoBundle 'haya14busa/vim-asterisk'
@@ -183,14 +184,18 @@ let g:ctrlp_clear_cache_on_exit = 0   " 終了時キャッシュをクリアし�
 let g:ctrlp_mruf_max            = 500 " MRUの最大記録数
 let g:ctrlp_open_new_file       = 1   " 新規ファイル作成時にタブで開く
 let g:ctrlp_show_hidden         = 1   " 隠しファイルも表示
+let g:ctrlp_by_filename         = 1   " ファイル名で検索
 let g:ctrlp_follow_symlinks     = 1
 let g:ctrlp_custom_ignore = {
 \    'dir':  '\v[\/](\.git|\.hg|\.svn|cookbooks|target)$',
 \    'file': '\v\.(o|bk|org|exe|so|dll|skl|cgi|gitkeep)$',
 \    'link': 'some_bad_symbolic_links',
 \ }
+nnoremap <Leader>cp :CtrlP<CR>
 nnoremap <Leader>ct :CtrlPTag<CR>
 nnoremap <Leader>cb :CtrlPBuffer<CR>
+nnoremap <Leader>cf :CtrlPCurFile<CR>
+nnoremap <Leader>cd :CtrlPDotBookmark<CR>
 nnoremap <Leader>ccc :CtrlPClearCache<CR>
 " }}}
 
