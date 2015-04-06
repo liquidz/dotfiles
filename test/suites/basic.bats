@@ -32,7 +32,7 @@ setup () {
     [ -d "$TEST_PREFIX/.vim/backup" ]
     [ -e "$TEST_PREFIX/.vim/memo" ]
     [ -d "$TEST_PREFIX/.tags" ]
-    [ -e "$TEST_PREFIX/.vim/autoload/plug.vim" ]
+    [ -d "$TEST_PREFIX/.vim/bundle/neobundle.vim" ]
     [ -d "$TEST_PREFIX/.tmux/plugins/tpm" ]
     [ -d "$TEST_PREFIX/src/github.com/zsh-users/antigen" ]
     [ -d "$TEST_PREFIX/src/github.com/liquidz/beco" ]

@@ -83,10 +83,14 @@ if [[ "$MODE" == "full" ]]; then
         touch $PREFIX/.vim/memo/default.md
     fi
 
-    cecho $yellow " * getting vim-plug"
-    curl -sfLo "$PREFIX/.vim/autoload/plug.vim" \
-        --create-dirs --retry 3                 \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    cecho $yellow " * cloning neobundle.vim"
+    DIR="$PREFIX/.vim/bundle/neobundle.vim"
+    if [ ! -e $DIR ]; then
+        git clone https://github.com/Shougo/neobundle.vim.git $DIR > /dev/null 2>&1
+    else
+        cecho $blue "   pulling origin master"
+        (cd $DIR && git pull origin master > /dev/null 2>&1)
+    fi
 
     ## tmux の設定
     cecho $yellow " * cloning tpm"
@@ -126,10 +130,5 @@ if [[ "$MODE" == "full" ]]; then
 fi
 
 cecho $green "Done"
-
-## PlugInstall
-if [[ "$IS_TEST" = "" ]]; then
-    vim -c "PlugInstall"
-fi
 
 exit 0

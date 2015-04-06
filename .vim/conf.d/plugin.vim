@@ -1,88 +1,94 @@
 scriptencoding utf-8
 
+if has('vim_starting')
+  set runtimepath+=$HOME/.vim/bundle/neobundle.vim/
+endif
+call neobundle#begin(expand($HOME . '/.vim/bundle/'))
+NeoBundleFetch 'Shougo/neobundle.vim'
+
 " plugins {{{
-call plug#begin('~/.vim/bundle')
 
-function! BuildVimproc(info)
-  if (a:info.status ==# 'installed' || a:info.force) && has('unix')
-    let uname = system('uname')
-    if uname ==# 'Darwin'
-      !make -f make_mac.mak
-    else
-      !make
-    end
-  endif
-endfunction
-Plug 'Shougo/vimproc.vim', { 'do': function('BuildVimproc')}
+NeoBundle 'Shougo/vimproc.vim', {
+\ 'build' : {
+\   'mac'   : 'make -f make_mac.mak',
+\   'linux' : 'make'}}
 
-Plug 'vim-jp/vital.vim'
-Plug 'Shougo/unite.vim'
-"Plug 'Shougo/vimshell.vim'
-Plug 'Shougo/vimfiler', {'on': ['VimFiler']}
-Plug 'haya14busa/vim-asterisk'
-Plug 'kana/vim-submode'
-Plug 'tpope/vim-surround'
-Plug 'w0ng/vim-hybrid'
-Plug 'rhysd/clever-f.vim'
-Plug 'fuenor/qfixgrep'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'thinca/vim-quickrun'
-Plug 'LeafCage/yankround.vim'
 
-Plug 'tyru/open-browser.vim'
-Plug 'kannokanno/previm'
-Plug 'mattn/webapi-vim'
-Plug 'mattn/gist-vim'
-Plug 'thinca/vim-ref'
-Plug 'yuku-t/vim-ref-ri', {'for': 'ruby'}
-Plug 't9md/vim-quickhl'
-Plug 'kana/vim-operator-replace'
-Plug 'kana/vim-operator-user'
-Plug 'tpope/vim-fugitive'
-Plug 'gregsexton/gitv'
-Plug 'itchyny/lightline.vim'
-Plug 'soramugi/auto-ctags.vim'
-Plug 'osyo-manga/shabadou.vim'
-Plug 'osyo-manga/vim-watchdogs'
-Plug 'jceb/vim-hier'
-Plug 'vim-jp/vim-go-extra', {'for': 'go'}
-Plug 'glidenote/memolist.vim'
-Plug 'ujihisa/shadow.vim'
-Plug 'kana/vim-textobj-user'
-Plug 'kshenoy/vim-signature'
-Plug 'liquidz/vim-yacd'
+NeoBundle 'vim-jp/vital.vim'
+NeoBundle 'Shougo/unite.vim'
+NeoBundleLazy 'Shougo/vimfiler', {'autoload': {'commands': ['VimFiler']}}
+NeoBundle 'haya14busa/vim-asterisk'
+NeoBundle 'kana/vim-submode'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'w0ng/vim-hybrid'
+NeoBundle 'rhysd/clever-f.vim'
+NeoBundle 'fuenor/qfixgrep'
+NeoBundle 'ctrlpvim/ctrlp.vim'
+NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'LeafCage/yankround.vim'
+
+NeoBundle 'tyru/open-browser.vim'
+NeoBundle 'kannokanno/previm'
+NeoBundle 'mattn/webapi-vim'
+NeoBundle 'mattn/gist-vim'
+NeoBundle 'thinca/vim-ref'
+NeoBundleLazy 'yuku-t/vim-ref-ri', {'autoload': {'filetypes': 'ruby'}}
+NeoBundle 't9md/vim-quickhl'
+NeoBundle 'kana/vim-operator-replace'
+NeoBundle 'kana/vim-operator-user'
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'gregsexton/gitv'
+NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'soramugi/auto-ctags.vim'
+NeoBundle 'osyo-manga/shabadou.vim'
+NeoBundle 'osyo-manga/vim-watchdogs'
+NeoBundle 'jceb/vim-hier'
+NeoBundleLazy 'vim-jp/vim-go-extra', {'autoload': {'filetypes': 'go'}}
+NeoBundle 'glidenote/memolist.vim'
+NeoBundle 'ujihisa/shadow.vim'
+NeoBundle 'kana/vim-textobj-user'
+NeoBundle 'kshenoy/vim-signature'
+if has('unix')
+  NeoBundle 'liquidz/vim-yacd'
+endif
 
 " neocomplete
 if has('lua')
-  Plug 'Shougo/neocomplete.vim'
-  Plug 'marcus/rsense', {'for': 'ruby'}
-  Plug 'supermomonga/neocomplete-rsense.vim', {'for': 'ruby'}
+  NeoBundle 'Shougo/neocomplete.vim'
+  NeoBundleLazy 'marcus/rsense'
+        \, {'autoload': {'filetypes': 'ruby'}}
+  NeoBundle 'supermomonga/neocomplete-rsense.vim', {
+      \ 'depends': ['Shougo/neocomplete.vim', 'marcus/rsense']}
 endif
 
 " neosnippet
-Plug 'Shougo/neosnippet'
-Plug 'Shougo/neosnippet-snippets'
-
-Plug 'vim-scripts/ruby-matchit', {'for': 'ruby'}
-Plug 'nelstrom/vim-textobj-rubyblock', {'for': 'ruby'}
-Plug 'tpope/vim-endwise'
-Plug 'thinca/vim-themis'
+NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/neosnippet-snippets'
+NeoBundleLazy 'vim-scripts/ruby-matchit'
+      \, {'autoload': {'filetypes': 'ruby'}}
+NeoBundle 'nelstrom/vim-textobj-rubyblock'
+      \, {'depends': ['vim-scripts/ruby-matchit']}
+NeoBundle 'tpope/vim-endwise'
+NeoBundle 'thinca/vim-themis'
 
 if has('unix')
-  Plug 'guns/vim-clojure-static', {'for': 'clojure'}
-  Plug 'kien/rainbow_parentheses.vim'
-  Plug 'tpope/vim-fireplace', {'for': 'clojure'}
-  Plug 'tpope/vim-classpath', {'for': 'clojure'}
-  Plug 'typedclojure/vim-typedclojure', {'for': 'clojure'}
+  NeoBundleLazy 'guns/vim-clojure-static'
+        \, {'autoload': {'filetypes': 'clojure'}}
+  NeoBundle 'kien/rainbow_parentheses.vim'
+  NeoBundleLazy 'tpope/vim-fireplace'
+        \, {'autoload': {'filetypes': 'clojure'}}
+  NeoBundleLazy 'tpope/vim-classpath'
+        \, {'autoload': {'filetypes': 'clojure'}}
+  NeoBundleLazy 'typedclojure/vim-typedclojure'
+        \, {'autoload': {'filetypes': 'clojure'}}
 
-  Plug 'Shougo/unite-build'
-  Plug 'liquidz/unite_bundle_builder'
+  NeoBundle 'Shougo/unite-build'
+  "NeoBundleLazy 'liquidz/unite_bundle_builder', {'autoload': {'filetypes': 'ruby'}}
 endif
 
-" Unmanaged plugin
-Plug '~/opt/vim/unmanaged'
-
-call plug#end() " }}}
+call neobundle#end()
+filetype plugin indent on
+" }}}
 
 " VimShell {{{
 "nnoremap <Leader>ss :VimShell<CR>
@@ -255,13 +261,15 @@ let g:rbpt_colorpairs = [
       \ ['red',         'firebrick3'],
       \ ]
 
-aug MyRainbowParentheses
-  au!
-  au VimEnter * RainbowParenthesesToggle
-  au Syntax * RainbowParenthesesLoadRound
-  au Syntax * RainbowParenthesesLoadSquare
-  au Syntax * RainbowParenthesesLoadBraces
-aug END
+if neobundle#is_installed('rainbow_parentheses.vim')
+  aug MyRainbowParentheses
+    au!
+    au VimEnter * RainbowParenthesesToggle
+    au Syntax * RainbowParenthesesLoadRound
+    au Syntax * RainbowParenthesesLoadSquare
+    au Syntax * RainbowParenthesesLoadBraces
+  aug END
+endif
 " }}}
 
 " previm {{{
@@ -300,7 +308,7 @@ aug END
 " }}}
 
 " neocomplete {{{
-if has('lua')
+if neobundle#is_installed('neocomplete.vim')
   " neocomplete用設定
   let g:neocomplete#enable_at_startup = 1
   let g:neocomplete#enable_ignore_case = 1
@@ -326,7 +334,7 @@ nnoremap <Space>s :Unite neosnippet<CR>
 " }}}
 
 " vim-fireplace {{{
-if has('unix')
+if neobundle#is_installed('vim-fireplace')
   aug VimFireplaceSetting
     au!
     au Filetype clojure nnoremap <Leader>r :Require!<CR>
