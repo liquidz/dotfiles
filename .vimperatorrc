@@ -79,6 +79,9 @@ nnoremap <Leader>pp :<C-u>panorama pushtab<Space>
 nnoremap <Leader>pr :<C-u>panorama remove<Space>
 nnoremap <Leader>po <M-S-e>
 
+" 保存
+nnoremap <Leader>s :<C-u>saveas<CR>
+
 " R で vimperatorrcを再読み込み
 map R :source ~/.vimperatorrc<CR>
 
