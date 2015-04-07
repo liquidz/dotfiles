@@ -14,7 +14,7 @@
 
 " basic {{{
 if &compatible
-  set nocompatible
+  set nocompatible " for gvim on windows
 endif
 set modeline
 set modelines=3
