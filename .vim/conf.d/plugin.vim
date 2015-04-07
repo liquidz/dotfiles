@@ -7,12 +7,12 @@ call neobundle#begin(expand($HOME . '/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 " plugins {{{
-
-NeoBundle 'Shougo/vimproc.vim', {
-\ 'build' : {
-\   'mac'   : 'make -f make_mac.mak',
-\   'linux' : 'make'}}
-
+if has('unix')
+  NeoBundle 'Shougo/vimproc.vim', {
+        \ 'build' : {
+        \   'mac'   : 'make -f make_mac.mak',
+        \   'linux' : 'make'}}
+endif
 
 NeoBundle 'vim-jp/vital.vim'
 NeoBundle 'haya14busa/underscore.vim'
@@ -44,7 +44,7 @@ NeoBundle 'soramugi/auto-ctags.vim'
 NeoBundle 'osyo-manga/shabadou.vim'
 NeoBundle 'osyo-manga/vim-watchdogs'
 NeoBundle 'jceb/vim-hier'
-NeoBundleLazy 'vim-jp/vim-go-extra', {'autoload': {'filetypes': 'go'}}
+NeoBundleLazy 'fatih/vim-go', {'autoload': {'filetypes': 'go'}}
 NeoBundle 'glidenote/memolist.vim'
 NeoBundle 'ujihisa/shadow.vim'
 NeoBundle 'kana/vim-textobj-user'
@@ -56,8 +56,7 @@ endif
 " neocomplete
 if has('lua')
   NeoBundle 'Shougo/neocomplete.vim'
-  NeoBundleLazy 'marcus/rsense'
-        \, {'autoload': {'filetypes': 'ruby'}}
+  NeoBundleLazy 'marcus/rsense', {'autoload': {'filetypes': 'ruby'}}
   NeoBundle 'supermomonga/neocomplete-rsense.vim', {
       \ 'depends': ['Shougo/neocomplete.vim', 'marcus/rsense']}
 endif
@@ -65,30 +64,27 @@ endif
 " neosnippet
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundleLazy 'vim-scripts/ruby-matchit'
-      \, {'autoload': {'filetypes': 'ruby'}}
-NeoBundle 'nelstrom/vim-textobj-rubyblock'
-      \, {'depends': ['vim-scripts/ruby-matchit']}
+NeoBundleLazy 'vim-scripts/ruby-matchit', {'autoload': {'filetypes': 'ruby'}}
+NeoBundle 'nelstrom/vim-textobj-rubyblock', {'depends': ['vim-scripts/ruby-matchit']}
 NeoBundle 'tpope/vim-endwise'
 NeoBundle 'thinca/vim-themis'
 
 if has('unix')
-  NeoBundleLazy 'guns/vim-clojure-static'
-        \, {'autoload': {'filetypes': 'clojure'}}
+  NeoBundleLazy 'guns/vim-clojure-static', {'autoload': {'filetypes': 'clojure'}}
   NeoBundle 'kien/rainbow_parentheses.vim'
-  NeoBundleLazy 'tpope/vim-fireplace'
-        \, {'autoload': {'filetypes': 'clojure'}}
-  NeoBundleLazy 'tpope/vim-classpath'
-        \, {'autoload': {'filetypes': 'clojure'}}
-  NeoBundleLazy 'typedclojure/vim-typedclojure'
-        \, {'autoload': {'filetypes': 'clojure'}}
+  NeoBundleLazy 'tpope/vim-fireplace', {'autoload': {'filetypes': 'clojure'}}
+  NeoBundleLazy 'tpope/vim-classpath', {'autoload': {'filetypes': 'clojure'}}
+  NeoBundleLazy 'typedclojure/vim-typedclojure', {'autoload': {'filetypes': 'clojure'}}
 
   NeoBundle 'Shougo/unite-build'
   "NeoBundleLazy 'liquidz/unite_bundle_builder', {'autoload': {'filetypes': 'ruby'}}
+  NeoBundle 'majutsushi/tagbar'
 endif
 
 call neobundle#end()
 filetype plugin indent on
+
+NeoBundleCheck
 " }}}
 
 " VimShell {{{
@@ -416,6 +412,14 @@ let g:memolist_ex_cmd = 'CtrlP'
 nnoremap <Leader>mn :MemoNew<CR>
 nnoremap <Leader>ml :MemoList<CR>
 nnoremap <Leader>mg :MemoGrep<CR>
+" }}}
+
+" tagbar {{{
+let g:tagbar_foldlevel = 1
+"let g:tagbar_autofocus = 1
+"let g:tagbar_autoclose = 1
+let g:tagbar_iconchars = ['+', '-']
+nnoremap <Leader>T :<C-u>TagbarOpenAutoClose<CR>
 " }}}
 
 " vim:fdl=0

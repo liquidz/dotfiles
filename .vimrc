@@ -12,6 +12,14 @@
 " \  ; |'---" |  ,   / '---'                   \   \  /
 "  `--"        ---`-'                           `----'
 
+" basic {{{
+if &compatible
+  set nocompatible
+endif
+set modeline
+set modelines=3
+" }}}
+
 " encoding {{{
 set encoding=utf-8
 set fileencoding=utf-8
@@ -64,11 +72,6 @@ if has('autocmd')
   augroup END
 endif
 scriptencoding utf-8
-" }}}
-
-" basic {{{
-set modeline
-set modelines=3
 " }}}
 
 " color scheme {{{
