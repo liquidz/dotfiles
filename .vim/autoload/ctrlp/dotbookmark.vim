@@ -3,19 +3,16 @@ if (exists('g:loaded_ctrlp_dotbookmark') && g:loaded_ctrlp_dotbookmark ) || v:ve
 endif
 let g:loaded_ctrlp_dotbookmark = 1
 
-let s:V = vital#of('vital')
+let s:V  = vital#of('vital')
 let s:FP = s:V.import('System.Filepath')
-let s:_ = s:V.import('Underscore').import()
+let s:_  = s:V.import('Underscore').import()
 
 let g:dotbookmark#bookmark_file = '~/.bookmark'
 
-function! s:glob_dir(dir, ...) abort
-  let name = s:FP.join(a:dir, '*')
-  return split(glob(name), "\n")
-endfunction
-
-function! s:is_dir(dir, ...) abort
-  return isdirectory(a:dir)
+function! s:get_directories(dir, ...) abort
+  return [a:dir]
+        \ + split(glob(s:FP.join(a:dir, '*')), "\n")
+        \ + split(glob(s:FP.join(a:dir, '.[^.]*')), "\n")
 endfunction
 
 call add(g:ctrlp_ext_vars, {
@@ -33,9 +30,9 @@ function! ctrlp#dotbookmark#init() abort
   if filereadable(file)
     let lines = readfile(file)
     return s:_.chain(lines)
-          \.map(function('s:glob_dir'))
+          \.map(function('s:get_directories'))
           \.flatten()
-          \.filter(function('s:is_dir'))
+          \.filter('isdirectory(v:val)')
           \.value()
   endif
   return []
