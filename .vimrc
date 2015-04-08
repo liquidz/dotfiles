@@ -178,6 +178,8 @@ nnoremap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
 nnoremap <silent> <C-j><C-j> :nohlsearch<CR><Esc>
 
 nnoremap <Leader><Leader> :<C-u>Ex<CR>
+
+nnoremap QQ :<C-u>bd!<CR>
 " }}}
 
 " copy to clipboard {{{
