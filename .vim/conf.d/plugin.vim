@@ -181,6 +181,7 @@ let g:ctrlp_open_new_file       = 1   " 新規ファイル作成時にタブで�
 let g:ctrlp_show_hidden         = 1   " 隠しファイルも表示
 let g:ctrlp_by_filename         = 1   " ファイル名で検索
 let g:ctrlp_follow_symlinks     = 1
+let g:ctrlp_match_window        = 'results:30'
 let g:ctrlp_custom_ignore = {
     \   'dir' : '\v[\/](\.git|\.hg|\.svn|cookbooks|target)$',
     \   'file': '\v\.(o|bk|org|exe|so|dll|skl|cgi|gitkeep)$',
