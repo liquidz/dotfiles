@@ -18,6 +18,7 @@ if &compatible
 endif
 set modeline
 set modelines=3
+let g:vim_indent_cont = 4
 " }}}
 
 " encoding {{{

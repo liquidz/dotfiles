@@ -9,9 +9,9 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " plugins {{{
 if has('unix')
   NeoBundle 'Shougo/vimproc.vim', {
-        \ 'build' : {
-        \   'mac'   : 'make -f make_mac.mak',
-        \   'linux' : 'make'}}
+      \ 'build' : {
+      \   'mac'   : 'make -f make_mac.mak',
+      \   'linux' : 'make'}}
 endif
 
 NeoBundle 'vim-jp/vital.vim'
@@ -21,7 +21,7 @@ NeoBundleLazy 'Shougo/vimfiler', {'autoload': {'commands': ['VimFiler']}}
 NeoBundle 'haya14busa/vim-asterisk'
 NeoBundle 'kana/vim-submode'
 NeoBundle 'tpope/vim-surround'
-NeoBundle 'w0ng/vim-hybrid'
+NeoBundle 'junegunn/seoul256.vim'
 NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 'fuenor/qfixgrep'
 NeoBundle 'ctrlpvim/ctrlp.vim'
@@ -57,8 +57,8 @@ endif
 if has('lua')
   NeoBundle 'Shougo/neocomplete.vim'
   NeoBundleLazy 'supermomonga/neocomplete-rsense.vim', {
-        \ 'autoload': {'filetype': 'ruby'},
-        \ 'depends': ['Shougo/neocomplete.vim']}
+      \ 'autoload': {'filetype': 'ruby'},
+      \ 'depends': ['Shougo/neocomplete.vim']}
 endif
 
 " neosnippet
@@ -164,8 +164,9 @@ call submode#map('window', 'n', '', '+', '<C-w>5+')
 call submode#map('window', 'n', '', '-', '<C-w>5-')
 " }}}
 
-" hybrid {{{
-colorscheme hybrid
+" seoul256 {{{
+let g:seoul256_background = 236
+colorscheme seoul256
 " }}}
 
 " clever_f {{{
@@ -181,10 +182,10 @@ let g:ctrlp_show_hidden         = 1   " 隠しファイルも表示
 let g:ctrlp_by_filename         = 1   " ファイル名で検索
 let g:ctrlp_follow_symlinks     = 1
 let g:ctrlp_custom_ignore = {
-\    'dir':  '\v[\/](\.git|\.hg|\.svn|cookbooks|target)$',
-\    'file': '\v\.(o|bk|org|exe|so|dll|skl|cgi|gitkeep)$',
-\    'link': 'some_bad_symbolic_links',
-\ }
+    \   'dir' : '\v[\/](\.git|\.hg|\.svn|cookbooks|target)$',
+    \   'file': '\v\.(o|bk|org|exe|so|dll|skl|cgi|gitkeep)$',
+    \   'link': 'some_bad_symbolic_links',
+    \ }
 nnoremap <Leader>cp :CtrlP<CR>
 nnoremap <Leader>ct :CtrlPTag<CR>
 nnoremap <Leader>cb :CtrlPBuffer<CR>
@@ -201,43 +202,43 @@ set splitbelow
 set splitright
 
 let g:quickrun_config = {
-      \  '_': {
-      \    'runner'                    : 'vimproc',
-      \    'runner/vimproc/updatetime' : 60
-      \  },
-      \  'go': {
-      \    'command' : 'go',
-      \    'exec'    : '%c run %s'
-      \  },
-      \  'make': {
-      \    'command'   : 'make',
-      \    'exec'      : '%c %o',
-      \    'outputter' : 'error:buffer:quickfix'
-      \  },
-      \
-      \  'watchdogs_checker/phpcs': {
-      \    'command' : 'phpcs',
-      \    'exec'    : '%c --report=emacs %s'
-      \  },
-      \  'php/watchdogs_checker': {
-      \    'type' : 'watchdogs_checker/phpcs',
-      \  },
-      \  'ruby/watchdogs_checker': {
-      \    'type'
-      \      : executable('rubocop') ? 'watchdogs_checker/rubocop'
-      \      : executable('ruby') ? 'watchdogs_checker/ruby'
-      \      : '',
-      \  }
-      \}
+    \   '_': {
+    \     'runner'                    : 'vimproc',
+    \     'runner/vimproc/updatetime' : 60
+    \   },
+    \   'go': {
+    \     'command' : 'go',
+    \     'exec'    : '%c run %s'
+    \   },
+    \   'make': {
+    \     'command'   : 'make',
+    \     'exec'      : '%c %o',
+    \     'outputter' : 'error:buffer:quickfix'
+    \   },
+    \ 
+    \   'watchdogs_checker/phpcs': {
+    \     'command' : 'phpcs',
+    \     'exec'    : '%c --report=emacs %s'
+    \   },
+    \   'php/watchdogs_checker': {
+    \     'type' : 'watchdogs_checker/phpcs',
+    \   },
+    \   'ruby/watchdogs_checker': {
+    \     'type'
+    \       : executable('rubocop') ? 'watchdogs_checker/rubocop'
+    \       : executable('ruby') ? 'watchdogs_checker/ruby'
+    \       : '',
+    \   }
+    \ }
 
 if has('unix')
   let g:quickrun_config.markdown = {
-        \  'outputter' : 'null',
-        \  'command' : 'open',
-        \  'cmdopt' : '-a',
-        \  'args' : 'Marked',
-        \  'exec' : '%c %o %a %s',
-        \ }
+      \  'outputter' : 'null',
+      \  'command' : 'open',
+      \  'cmdopt' : '-a',
+      \  'args' : 'Marked',
+      \  'exec' : '%c %o %a %s',
+      \ }
 endif
 " }}}
 
@@ -247,18 +248,18 @@ nnoremap <Space>y :Unite yankround<CR><Esc>
 
 " rainbow_parentheses {{{
 let g:rbpt_colorpairs = [
-      \ ['brown',       'RoyalBlue3'],
-      \ ['darkgreen',   'firebrick3'],
-      \ ['darkcyan',    'RoyalBlue3'],
-      \ ['darkred',     'SeaGreen3'],
-      \ ['darkmagenta', 'DarkOrchid3'],
-      \ ['brown',       'firebrick3'],
-      \ ['darkmagenta', 'DarkOrchid3'],
-      \ ['darkgreen',   'firebrick3'],
-      \ ['darkcyan',    'SeaGreen3'],
-      \ ['darkred',     'DarkOrchid3'],
-      \ ['red',         'firebrick3'],
-      \ ]
+    \ ['brown',       'RoyalBlue3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
 
 if neobundle#is_installed('rainbow_parentheses.vim')
   aug MyRainbowParentheses
@@ -290,15 +291,15 @@ nnoremap <Leader>todo :Gist 1ec3a489823690e31661<CR><C-w>o
 " vim-ref {{{
 let g:ref_phpmanual_path = $HOME . '/.vim/vim-ref/php-chunked-xhtml'
 let g:ref_source_webdict_sites = {
-      \   'weblio' : {
-      \     'url'  : 'http://ejje.weblio.jp/content/%s',
-      \     'line' : 70
-      \   },
-      \   'chef' : {
-      \     'url'  : 'http://docs.opscode.com/resource_%s.html',
-      \     'line' : 40
-      \   }
-      \ }
+    \   'weblio' : {
+    \     'url'  : 'http://ejje.weblio.jp/content/%s',
+    \     'line' : 70
+    \   },
+    \   'chef' : {
+    \     'url'  : 'http://docs.opscode.com/resource_%s.html',
+    \     'line' : 40
+    \   }
+    \ }
 nnoremap <Leader>dic :Ref webdict
 aug VimRefKeyMapping
   au!
@@ -364,17 +365,17 @@ nnoremap <Leader>gl :Gitv<CR>
 
 " lightline.vim {{{
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \   'left': [['mode', 'paste'],
-      \            ['fugitive', 'readonly', 'filename', 'modified']]
-      \ },
-      \ 'component_function': {
-      \   'fugitive': 'MyFugitive',
-      \ },
-      \ 'separator': { 'left': '', 'right': '' },
-      \ 'subseparator': { 'left': '|', 'right': '|' }
-      \ }
+    \ 'colorscheme': 'wombat',
+    \ 'active': {
+    \   'left': [['mode', 'paste'],
+    \            ['fugitive', 'readonly', 'filename', 'modified']]
+    \ },
+    \ 'component_function': {
+    \   'fugitive': 'MyFugitive',
+    \ },
+    \ 'separator': { 'left': '', 'right': '' },
+    \ 'subseparator': { 'left': '|', 'right': '|' }
+    \ }
 
 function! MyFugitive()
   let l:branch = exists('*fugitive#head') ? fugitive#head() : ''
