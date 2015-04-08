@@ -56,9 +56,9 @@ endif
 " neocomplete
 if has('lua')
   NeoBundle 'Shougo/neocomplete.vim'
-  NeoBundleLazy 'marcus/rsense', {'autoload': {'filetypes': 'ruby'}}
-  NeoBundle 'supermomonga/neocomplete-rsense.vim', {
-      \ 'depends': ['Shougo/neocomplete.vim', 'marcus/rsense']}
+  NeoBundleLazy 'supermomonga/neocomplete-rsense.vim', {
+        \ 'autoload': {'filetype': 'ruby'},
+        \ 'depends': ['Shougo/neocomplete.vim']}
 endif
 
 " neosnippet
@@ -94,9 +94,9 @@ NeoBundleCheck
 
 " VimFiler {{{
 let g:vimfiler_safe_mode_by_default = 0
-let g:vimfiler_as_default_explorer = 1
-let g:vimfiler_sort_type = 'filename'
-let g:vimfiler_enable_auto_cd = 1
+let g:vimfiler_as_default_explorer  = 1
+let g:vimfiler_sort_type            = 'filename'
+let g:vimfiler_enable_auto_cd       = 1
 
 nnoremap <Leader><leader> :VimFiler<CR>
 
@@ -113,13 +113,11 @@ aug VimFilerKeyMapping
     nmap <buffer> D <Plug>(vimfiler_make_directory)
     nmap <buffer> h <Plug>(vimfiler_smart_h)
     nmap <buffer> F <Plug>(vimfiler_new_file)
-    " sendto呼び出し
-    nnoremap <buffer> <Leader>s :Unite sendto<CR>
 
     " 関連付け
     if has('unix')
       call vimfiler#set_execute_file('sh', 'sh')
-      call vimfiler#set_execute_file('html,htm,pdf,jpg,gif,png,svg,lzh,mp3,mpg,wmv,rm,flv', 'xdg-open')
+      call vimfiler#set_execute_file('html,htm,pdf,jpg,gif,png,svg,lzh,mp3,mpg,wmv,rm,flv', 'open')
     endif
 
     " Unite bookmark連携

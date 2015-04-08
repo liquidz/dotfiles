@@ -41,6 +41,7 @@ function! ctrlp#dotbookmark#init() abort
           \.flatten()
           \.filter('isdirectory(v:val)')
           \.filter(function('s:does_not_match_custom_ignore'))
+          \.uniq()
           \.value()
   endif
   return []
