@@ -15,6 +15,13 @@ function! s:get_directories(dir, ...) abort
         \ + split(glob(s:FP.join(a:dir, '.[^.]*')), "\n")
 endfunction
 
+function s:does_not_match_custom_ignore(dir, ...) abort
+  if exists('g:ctrlp_custom_ignore["dir"]')
+    return (match(a:dir, g:ctrlp_custom_ignore['dir']) ==# -1)
+  endif
+  return 1
+endfunction
+
 call add(g:ctrlp_ext_vars, {
       \ 'init'     : 'ctrlp#dotbookmark#init()',
       \ 'accept'   : 'ctrlp#dotbookmark#accept',
@@ -33,6 +40,7 @@ function! ctrlp#dotbookmark#init() abort
           \.map(function('s:get_directories'))
           \.flatten()
           \.filter('isdirectory(v:val)')
+          \.filter(function('s:does_not_match_custom_ignore'))
           \.value()
   endif
   return []
