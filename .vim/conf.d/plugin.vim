@@ -16,6 +16,8 @@ endif
 
 NeoBundle 'vim-jp/vital.vim'
 NeoBundle 'haya14busa/underscore.vim'
+NeoBundle 'thinca/vim-themis'
+
 NeoBundle 'Shougo/unite.vim'
 NeoBundleLazy 'Shougo/vimfiler', {'autoload': {'commands': ['VimFiler']}}
 NeoBundle 'haya14busa/vim-asterisk'
@@ -23,8 +25,10 @@ NeoBundle 'kana/vim-submode'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'junegunn/seoul256.vim'
 NeoBundle 'rhysd/clever-f.vim'
+NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'fuenor/qfixgrep'
 NeoBundle 'ctrlpvim/ctrlp.vim'
+NeoBundle 'liquidz/ctrlp-gonosen.vim'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'LeafCage/yankround.vim'
 
@@ -67,7 +71,6 @@ NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundleLazy 'vim-scripts/ruby-matchit', {'autoload': {'filetypes': 'ruby'}}
 NeoBundle 'nelstrom/vim-textobj-rubyblock', {'depends': ['vim-scripts/ruby-matchit']}
 NeoBundle 'tpope/vim-endwise'
-NeoBundle 'thinca/vim-themis'
 
 if has('unix')
   NeoBundleLazy 'guns/vim-clojure-static', {'autoload': {'filetypes': 'clojure'}}
@@ -174,24 +177,30 @@ let g:clever_f_across_no_line = 1
 let g:clever_f_ignore_case = 1
 " }}}
 
+" easymotion {{{
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+let g:EasyMotion_enter_jump_first = 1
+let g:EasyMotion_space_jump_first = 1
+nmap s <Plug>(easymotion-s2)
+" }}}
+
 " ctrlp{{{
 let g:ctrlp_clear_cache_on_exit = 0   " 終了時キャッシュをクリアしない
 let g:ctrlp_mruf_max            = 500 " MRUの最大記録数
 let g:ctrlp_open_new_file       = 1   " 新規ファイル作成時にタブで開く
 let g:ctrlp_show_hidden         = 1   " 隠しファイルも表示
-let g:ctrlp_by_filename         = 1   " ファイル名で検索
-let g:ctrlp_follow_symlinks     = 1
 let g:ctrlp_match_window        = 'results:30'
+let g:ctrlp_follow_symlinks     = 1
 let g:ctrlp_custom_ignore = {
     \   'dir' : '\v[\/](\.git|\.hg|\.svn|cookbooks|target)$',
     \   'file': '\v\.(o|bk|org|exe|so|dll|skl|cgi|gitkeep)$',
     \   'link': 'some_bad_symbolic_links',
     \ }
-nnoremap <Leader>cp :CtrlP<CR>
-nnoremap <Leader>ct :CtrlPTag<CR>
-nnoremap <Leader>cb :CtrlPBuffer<CR>
-nnoremap <Leader>cf :CtrlPCurFile<CR>
-nnoremap <Leader>cd :CtrlPDotBookmark<CR>
+nnoremap <Leader>cp  :CtrlP<CR>
+nnoremap <Leader>ct  :CtrlPTag<CR>
+nnoremap <Leader>b   :CtrlPBuffer<CR>
+nnoremap <Leader>cf  :CtrlPCurFile<CR>
+nnoremap <Leader>cd  :CtrlPGonosen<CR>
 nnoremap <Leader>ccc :CtrlPClearCache<CR>
 " }}}
 
