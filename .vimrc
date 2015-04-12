@@ -237,7 +237,7 @@ set laststatus=2
 " }}}
 
 " omni completion {{{
-function InsertTabWrapper(type)
+function! InsertTabWrapper(type)
   let col = col('.') - 1
   "omni補完の場合、omini以外にも上下左右の移動もする
   if a:type ==# 'omni'
@@ -261,6 +261,11 @@ function InsertTabWrapper(type)
   endif
 endfunction
 inoremap <tab> <c-r>=InsertTabWrapper('omni')<cr><c-r>=InsertTabWrapper('keyword')<cr>
+" }}}
+
+" matchit {{{
+source $VIMRUNTIME/macros/matchit.vim
+let b:match_ignorecase = 1
 " }}}
 
 " load conf.d {{{

@@ -52,6 +52,7 @@ NeoBundleLazy 'fatih/vim-go', {'autoload': {'filetypes': 'go'}}
 NeoBundle 'glidenote/memolist.vim'
 NeoBundle 'ujihisa/shadow.vim'
 NeoBundle 'kana/vim-textobj-user'
+NeoBundle 'osyo-manga/vim-textobj-multiblock'
 NeoBundle 'kshenoy/vim-signature'
 if has('unix')
   NeoBundle 'liquidz/vim-yacd'
@@ -429,6 +430,13 @@ let g:tagbar_foldlevel = 1
 "let g:tagbar_autoclose = 1
 let g:tagbar_iconchars = ['+', '-']
 nnoremap <Leader>T :<C-u>TagbarOpenAutoClose<CR>
+" }}}
+
+" vim-textobj-multiblock {{{
+omap ab <Plug>(textobj-multiblock-a)
+omap ib <Plug>(textobj-multiblock-i)
+xmap ab <Plug>(textobj-multiblock-a)
+xmap ib <Plug>(textobj-multiblock-i)
 " }}}
 
 " vim:fdl=0
