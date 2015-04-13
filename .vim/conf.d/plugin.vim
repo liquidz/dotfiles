@@ -23,7 +23,8 @@ NeoBundleLazy 'Shougo/vimfiler', {'autoload': {'commands': ['VimFiler']}}
 NeoBundle 'haya14busa/vim-asterisk'
 NeoBundle 'kana/vim-submode'
 NeoBundle 'tpope/vim-surround'
-NeoBundle 'junegunn/seoul256.vim'
+"NeoBundle 'junegunn/seoul256.vim'
+NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'fuenor/qfixgrep'
@@ -59,7 +60,7 @@ if has('unix')
 endif
 
 " neocomplete
-if has('lua')
+if has('lua') && has('unix')
   NeoBundle 'Shougo/neocomplete.vim'
   NeoBundleLazy 'supermomonga/neocomplete-rsense.vim', {
       \ 'autoload': {'filetype': 'ruby'},
@@ -169,8 +170,9 @@ call submode#map('window', 'n', '', '-', '<C-w>5-')
 " }}}
 
 " seoul256 {{{
-let g:seoul256_background = 236
-colorscheme seoul256
+"let g:seoul256_background = 236
+"colorscheme seoul256
+colorscheme hybrid
 " }}}
 
 " clever_f {{{
