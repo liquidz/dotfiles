@@ -1,23 +1,24 @@
-# path {{{1
+# path {{{
 PATH=$PATH:~/bin
 PATH=$PATH:~/bin/git-tasukete
 PATH=$PATH:/opt/local/bin
 PATH=$PATH:~/.vim/bundle/vim-themis/bin
 PATH="/usr/local/bin:$PATH:/usr/local/sbin"
 export PATH
+# }}}
 
 alias ll='ls -l'
 alias la='ls -a'
 
-# history {{{1
+# history {{{
 export HISTFILE=${HOME}/.zhistory
-# メモリに保存される履歴の件数
+# max history count to register in memory
 export HISTSIZE=1000
-# 履歴ファイルに保存される履歴の件数
+# max history count to register in file
 export SAVEHIST=100000
+# }}}
 
 export TERM=screen-256color
-
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 
 # Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
@@ -36,10 +37,7 @@ export PATH=$ANDROID_SDK_ROOT/tools:$ANDROID_SDK_ROOT/platform-tools:$PATH
 
 export CPLUS_INCLUDE_PATH="/Users/uochan/app/cocos2d-x-3.3rc0/cocos:/Users/uochan/app/./cocos2d-x-3.3rc0/external/glfw3/include/mac/"
 
-# lighttable {{{1
-export LT_HOME=/Users/uochan/LightTable
-
-# docker {{{1
+# docker {{{
 export DOCKER_HOST=tcp://192.168.59.103:2376
 export DOCKER_CERT_PATH=$HOME/.boot2docker/certs/boot2docker-vm
 export DOCKER_TLS_VERIFY=1
@@ -64,25 +62,29 @@ alias -g DL='$(dl)'
 alias -g DA='$(da)'
 alias -g DI='$(di)'
 alias -g DC='$(dc)'
+# }}}
 
-# heroku {{{1
+# heroku {{{
 export PATH=$PATH:/usr/local/heroku/bin
+# }}}
 
-# go {{{1
+# go {{{
 export GOROOT=/usr/local/go
 export GOPATH=$HOME
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+# }}}
 
-# ghq {{{1
+# ghq {{{
 alias ghc='cd $(ghq list --full-path | peco)'
 alias ghf='find $(git rev-parse --show-cdup) -type f | grep -v "/.git/" | peco'
 alias gho='(cd $(ghq list --full-path | peco) && git browse)'
+# }}}
 
-
-# local bookmark {{{1
+# local bookmark {{{
 alias bm='cd $(cat ~/.bookmark | peco)'
+# }}}
 
-# git {{{1
+# git {{{
 if which hub > /dev/null 2>&1; then
     alias git=hub
 fi
@@ -92,12 +94,25 @@ alias l='git log --oneline | peco | cut -d" " -f1'
 alias -g L='$(l)'
 alias s='git status -s | peco | cut -b 4-'
 alias -g S='$(s)'
+# }}}
 
-# ssh {{{1
+# ssh {{{
 alias ss='ssh $(grep "Host " ~/.ssh/config | cut -c6- | peco)'
 alias sss='tmux split-window ss'
 alias ssn='tmux new-window ss'
+# }}}
 
-# my commands {{{2
+# cakephp {{{
+# To enable these aliases, you must export CAKE_PROJECT_ROOT in /etc/zshenv
+if [[ "$CAKE_PROJECT_ROOT" != "" ]]; then
+    alias apptest='$CAKE_PROJECT_ROOT/bin/cake test app --app $CAKE_PROJECT_ROOT/app $(find $CAKE_PROJECT_ROOT/app/Test/Case -name "*Test.php" | cut -b 36- | sed "s/Test.php//g" | peco)'
+    alias Apptest="$CAKE_PROJECT_ROOT/bin/cake test app --app $CAKE_PROJECT_ROOT/app"
+    alias alltest="$CAKE_PROJECT_ROOT/bin/cake test app AllTests --app $CAKE_PROJECT_ROOT/app"
+    alias phpcs="phpcs --standard=CakePHP"
+fi
+# }}}
+
+# my commands {{{
 alias suteneko='docker run -it uochan/suteneko'
 export BECOROOT=/Users/uochan/src/github.com/liquidz/beco
+# }}}

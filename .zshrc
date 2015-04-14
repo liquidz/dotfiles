@@ -106,12 +106,16 @@ function cd() {
     builtin cd $@ && ls;
 }
 
-function foo() {
-    mkdir -p ~/opt
-
-    TMPFILE=~/opt/foo.$1
-    vim $TMPFILE
-}
+# To enable this function, you must export CAKE_PROJECT_ROOT in /etc/zshenv
+if [[ "$CAKE_PROJECT_ROOT" != "" ]]; then
+    function cake_app_test () {
+        TESTCASE=$(find $CAKE_PROJECT_ROOT/app/Test/Case -name "*Test.php" | cut -b 36- | sed "s/Test.php//g" | peco)
+        BUFFER="$CAKE_PROJECT_ROOT/bin/cake test app --app $CAKE_PROJECT_ROOT/app $TESTCASE"
+        zle accept-line
+    }
+    zle -N cake_app_test
+    bindkey '^T' cake_app_test
+fi
 
 source ~/.zshrc.antigen
 source $BECOROOT/zsh/_beco.zsh
