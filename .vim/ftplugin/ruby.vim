@@ -8,7 +8,7 @@ let g:quickrun_config.bundle_rake = {
     \ 'command'   : 'rake',
     \ 'exec'      : 'bundle exec %c',
     \ 'outputter' : 'multi:buffer:quickfix',
-    \ 'hook/cd/directory': yacd#get_root_dir(getcwd())
+    \ 'hook/cd/directory': yacd#get_root_dir(expand('%:p:h'))
     \ }
 nnoremap <Leader>t :QuickRun bundle_rake<CR>
 setlocal errorformat=%E\ %#%n)\ %.%#,%Z\ %##\ %f:%l:%.%#,%C%m,%-G%.%#
