@@ -217,10 +217,10 @@ aug MyAutoCompletion
   autocmd FileType xml,html inoremap <buffer> </ </<C-x><C-o>
 aug END
 
-aug MyAutoCd
-  au!
-  autocmd BufEnter * silent! lcd %:p:h
-aug END
+"aug MyAutoCd
+"  au!
+"  autocmd BufEnter * silent! lcd %:p:h
+"aug END
 
 aug MyAutoOpenCWindow
   au!

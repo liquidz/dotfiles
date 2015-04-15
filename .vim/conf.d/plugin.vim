@@ -55,9 +55,7 @@ NeoBundle 'ujihisa/shadow.vim'
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'osyo-manga/vim-textobj-multiblock'
 NeoBundle 'kshenoy/vim-signature'
-if has('unix')
-  NeoBundle 'liquidz/vim-yacd'
-endif
+NeoBundle 'liquidz/vim-yacd'
 
 " neocomplete
 if has('lua') && has('unix')
@@ -195,7 +193,7 @@ let g:ctrlp_show_hidden         = 1   " 隠しファイルも表示
 let g:ctrlp_match_window        = 'results:30'
 let g:ctrlp_follow_symlinks     = 1
 let g:ctrlp_custom_ignore = {
-    \   'dir' : '\v[\/](\.git|\.hg|\.svn|cookbooks|target)$',
+    \   'dir' : '\v[\/](\.git|\.hg|\.svn|cookbooks|target|Vendor)$',
     \   'file': '\v\.(o|bk|org|exe|so|dll|skl|cgi|gitkeep)$',
     \   'link': 'some_bad_symbolic_links',
     \ }
@@ -318,6 +316,11 @@ aug VimRefKeyMapping
   au!
   autocmd FileType php nnoremap <Space>r :Unite ref/phpmanual<CR>
 aug END
+" }}}
+
+" vim-yacd {{{
+let g:yacd#enable = 1
+let g:yacd#root_names = ['Rakefile', '.root', '.git']
 " }}}
 
 " neocomplete {{{
