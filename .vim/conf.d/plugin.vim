@@ -56,6 +56,7 @@ NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'osyo-manga/vim-textobj-multiblock'
 NeoBundle 'kshenoy/vim-signature'
 NeoBundle 'liquidz/vim-yacd'
+NeoBundle 'vim-jp/vimdoc-ja'
 
 " neocomplete
 if has('lua') && has('unix')
