@@ -56,6 +56,8 @@ NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'osyo-manga/vim-textobj-multiblock'
 NeoBundle 'kshenoy/vim-signature'
 NeoBundle 'liquidz/vim-yacd'
+"NeoBundle 'liquidz/vim-elastic'
+"NeoBundle 'liquidz/vim-spy'
 NeoBundle 'vim-jp/vimdoc-ja'
 
 " neocomplete
@@ -166,6 +168,15 @@ call submode#map('window', 'n', '', '>', '<C-w>5>')
 call submode#map('window', 'n', '', '<', '<C-w>5<lt>')
 call submode#map('window', 'n', '', '+', '<C-w>5+')
 call submode#map('window', 'n', '', '-', '<C-w>5-')
+
+"" tab
+call submode#enter_with('tab', 'n', '', 'tl', ':tabn<CR>')
+call submode#enter_with('tab', 'n', '', 'th', ':tabp<CR>')
+call submode#leave_with('tab', 'n', '', '<Esc>')
+call submode#map('tab', 'n', '', 'l', ':tabn<CR>')
+call submode#map('tab', 'n', '', 'h', ':tabp<CR>')
+call submode#map('tab', 'n', '', 'q', ':q<CR>')
+call submode#map('tab', 'n', '', 'Q', ':q!<CR>')
 " }}}
 
 " seoul256 {{{
@@ -323,6 +334,8 @@ aug END
 let g:yacd#enable = 1
 let g:yacd#root_names = ['Rakefile', '.root', '.git']
 " }}}
+
+"let g:vim_spy_auto_start = 1
 
 " neocomplete {{{
 if neobundle#is_installed('neocomplete.vim')
