@@ -1,0 +1,48 @@
+snippet		start
+abbr		start uml
+	@startuml
+	${1}
+	@enduml
+
+snippet		alt
+abbr		alt ... end
+	alt ${1}
+		${2}
+	end
+
+snippet		note
+abbr		note right of name
+	note ${1:right} of ${2:#:name}
+		${2}
+	end note
+
+snippet		activate
+abbr		activate ... deactivate
+	activate ${1}
+		${2}
+	deactivate $1
+
+snippet		->
+abbr		sync message
+	"${1}" -> "${2}" : ${3:FIXME}
+	activate $2
+		"$1" <-- "$2" : $3
+	deactivate $2
+
+snippet		->>
+abbr		aync message
+	"${1}" ->> "${2}" : ${3}
+
+snippet		<--
+abbr		response
+	"${1}" <-- "${2}" : ${3}
+
+snippet		<>
+abbr		message to me
+	"${1}" -> "$1" : ${2:FIXME}
+	activate $1
+	deactivate $1
+
+snippet		==
+abbr		section
+	== ${1} ==

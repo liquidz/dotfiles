@@ -59,6 +59,7 @@ NeoBundle 'liquidz/vim-yacd'
 "NeoBundle 'liquidz/vim-elastic'
 "NeoBundle 'liquidz/vim-spy'
 NeoBundle 'vim-jp/vimdoc-ja'
+NeoBundle 'aklt/plantuml-syntax'
 
 " neocomplete
 if has('lua') && has('unix')
