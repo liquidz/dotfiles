@@ -1,7 +1,11 @@
 snippet		start
 abbr		start uml
 	@startuml
-	${1}
+	autonumber "<b>0."
+	skinparam shadowing false
+	hide footbox
+	
+	title: ${1:TITLE}
 	@enduml
 
 snippet		participant
@@ -9,13 +13,25 @@ snippet		participant
 
 snippet		alt
 abbr		alt ... end
-	alt ${1}
+	alt ${1:#:condition}
+		${2}
+	end
+
+snippet		opt
+abbr		opt ... end
+	opt ${1:#:condition}
+		${2}
+	end
+
+snippet		break
+abbr		break ... end
+	break ${1:#:condition}
 		${2}
 	end
 
 snippet		note
-abbr		note right of name
-	note ${1:right} of ${2:#:name}
+abbr		note right
+	note ${1:right}
 		${2}
 	end note
 
@@ -36,16 +52,14 @@ snippet		->>
 abbr		aync message
 	"${1}" ->> "${2}" : ${3}
 
-snippet		<--
+snippet		<-
 abbr		response
 	"${1}" <-- "${2}" : ${3}
 
 snippet		<>
 abbr		message to me
 	"${1}" -> "$1" : ${2:FIXME}
-	activate $1
-	deactivate $1
 
 snippet		==
-abbr		section
-	== ${1} ==
+abbr		divider
+	== ${1:DIVIDER} ==
