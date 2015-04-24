@@ -184,6 +184,10 @@ call submode#map('tab', 'n', '', 'Q', ':q!<CR>')
 "let g:seoul256_background = 236
 "colorscheme seoul256
 colorscheme hybrid
+
+if system('uname') ==# "Darwin\n"
+  highlight Normal ctermbg=none
+endif
 " }}}
 
 " clever_f {{{

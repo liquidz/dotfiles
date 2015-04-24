@@ -1,0 +1,8 @@
+---
+name: foo
+description: "foo"
+author: uochan <liquidz.uo+vim@gmail.com>
+version: 1.0.0
+license: MIT LICENSE
+exclude:
+ - .*vital.*

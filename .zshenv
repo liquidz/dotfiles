@@ -10,6 +10,12 @@ export PATH
 alias ll='ls -l'
 alias la='ls -a'
 
+case "${OSTYPE}" in
+darwin*)
+    alias pwd='$HOME/src/github.com/liquidz/dotfiles/assets/iterm_wall_chg.sh ; pwd'
+    ;;
+esac
+
 # history {{{
 export HISTFILE=${HOME}/.zhistory
 # max history count to register in memory
