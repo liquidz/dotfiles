@@ -45,7 +45,7 @@ NeoBundle 'kana/vim-operator-user'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'gregsexton/gitv'
 NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'soramugi/auto-ctags.vim'
+"NeoBundle 'soramugi/auto-ctags.vim'
 NeoBundle 'osyo-manga/shabadou.vim'
 NeoBundle 'osyo-manga/vim-watchdogs'
 NeoBundle 'jceb/vim-hier'
@@ -56,6 +56,7 @@ NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'osyo-manga/vim-textobj-multiblock'
 NeoBundle 'kshenoy/vim-signature'
 NeoBundle 'liquidz/vim-yacd'
+NeoBundle 'liquidz/vim-oretag'
 "NeoBundle 'liquidz/vim-elastic'
 "NeoBundle 'liquidz/vim-spy'
 NeoBundle 'vim-jp/vimdoc-ja'
@@ -422,12 +423,14 @@ endfunction
 " }}}
 
 " auto-ctags {{{
-if has('unix')
-  let g:auto_ctags = 1
-  let g:auto_ctags_directory_list = [$HOME . '/.tags']
-  let g:auto_ctags_filetype_mode = 1
-endif
+"if has('unix')
+"  let g:auto_ctags = 1
+"  let g:auto_ctags_directory_list = [$HOME . '/.tags']
+"  let g:auto_ctags_filetype_mode = 1
+"endif
 " }}}
+
+let g:oretag#enable = 1
 
 " unite-build {{{
 nnoremap <Space>b :Unite build<CR>
