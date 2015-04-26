@@ -2,7 +2,11 @@
 bindkey -v
 
 # 自動補完を有効
-autoload -U compinit &&  compinit
+fpath=(~/.zsh $fpath)
+autoload -U compinit &&  compinit -u
+if which hub > /dev/null 2>&1; then
+    compdef hub=git
+fi
 
 autoload -U promptinit && promptinit
 autoload -U colors && colors

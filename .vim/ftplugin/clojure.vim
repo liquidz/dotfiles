@@ -20,3 +20,10 @@ aug MyLispWords
   " conjure
   au FileType clojure set lispwords+=stubbing
 aug END
+
+let g:quickrun_config.lein_test = {
+    \ 'command'   : 'lein',
+    \ 'exec'      : '%c test',
+    \ 'hook/cd/directory': yacd#get_root_dir(expand('%:p:h'))
+    \ }
+nnoremap <Leader>t :QuickRun lein_test<CR>

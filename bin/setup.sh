@@ -103,6 +103,12 @@ if [[ "$MODE" == "full" ]]; then
     fi
 
     ## zsh の設定
+    cecho $yellow " * downloading zsh git-completion"
+    DIR="$PREFIX/.zsh"
+    mkdir -p $DIR
+    curl -o "$DIR/_git" https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh
+    curl -o "$DIR/git-completion.bash" https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
+
     cecho $yellow " * cloning antigen"
     DIR="$PREFIX/src/github.com/zsh-users/antigen"
     if [[ ! -e $DIR ]]; then
