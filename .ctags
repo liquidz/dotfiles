@@ -1,4 +1,5 @@
 --recurse=yes
+--exclude=Vendor
 
 --langmap=PHP:+.inc
 --php-kinds=cfd

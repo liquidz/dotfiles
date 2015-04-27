@@ -106,8 +106,8 @@ if [[ "$MODE" == "full" ]]; then
     cecho $yellow " * downloading zsh git-completion"
     DIR="$PREFIX/.zsh"
     mkdir -p $DIR
-    curl -o "$DIR/_git" https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh
-    curl -o "$DIR/git-completion.bash" https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
+    curl -s -o "$DIR/_git" https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh
+    curl -s -o "$DIR/git-completion.bash" https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
 
     cecho $yellow " * cloning antigen"
     DIR="$PREFIX/src/github.com/zsh-users/antigen"

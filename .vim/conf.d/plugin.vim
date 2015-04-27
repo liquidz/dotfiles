@@ -431,6 +431,7 @@ endfunction
 " }}}
 
 let g:oretag#enable = 1
+let g:oretag#tag_dir = expand('$HOME/.tags')
 
 " unite-build {{{
 nnoremap <Space>b :Unite build<CR>
