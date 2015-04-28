@@ -9,3 +9,5 @@ Gemfile.lock
 bats
 test/.workspace
 .beco*
+.zsh/_git
+.zsh/git-completion.bash
