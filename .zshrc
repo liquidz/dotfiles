@@ -129,9 +129,4 @@ function tmpl() {
     cp -pir $HOME/src/github.com/liquidz/dotfiles/templates/$FROM $TO
 }
 
-# beco completion
-if [[ -e "$BECOROOT/zsh/_beco.zsh" ]]; then
-    source $BECOROOT/zsh/_beco.zsh
-fi
-
 source ~/.zshrc.antigen

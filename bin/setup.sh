@@ -129,6 +129,7 @@ if [[ "$MODE" == "full" ]]; then
         (cd $DIR && git pull origin master > /dev/null 2>&1)
     fi
     mkdir -p $PREFIX/bin && ln -sfn $DIR/bin/beco $PREFIX/bin/beco
+    ln -sfn $DIR/zsh/_beco $PREFIX/.zsh/_beco
 
     cecho $yellow " * git config"
     git config --global ghq.root ~/src

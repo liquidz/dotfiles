@@ -41,4 +41,5 @@ setup () {
     [ -d "$TEST_PREFIX/src/github.com/zsh-users/antigen" ]
     [ -d "$TEST_PREFIX/src/github.com/liquidz/beco" ]
     [ -L "$TEST_PREFIX/bin/beco" ]
+    [ -L "$TEST_PREFIX/.zsh/_beco" ]
 }
