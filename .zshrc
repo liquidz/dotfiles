@@ -128,14 +128,6 @@ function tmpl() {
     echo "copying $FROM template to $TO ..."
     cp -pir $HOME/src/github.com/liquidz/dotfiles/templates/$FROM $TO
 }
-function _tmpl() {
-    _arguments '1: :__tmpl_commands' '*: :_files'
-}
-function __tmpl_commands() {
-    _values 'commands' \
-        'vim-plugin'
-}
-compdef _tmpl tmpl
 
 # beco completion
 if [[ -e "$BECOROOT/zsh/_beco.zsh" ]]; then

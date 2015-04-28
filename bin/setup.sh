@@ -45,12 +45,15 @@ fi
 cecho $green "Start: ${MODE} setup"
 
 ## dotfiles レポジトリの clone
-cecho $yellow " * cloning dotfiles"
-if [[ ! -e $INSTALL_DIR ]]; then
-    git clone https://github.com/liquidz/dotfiles.git $INSTALL_DIR > /dev/null 2>&1
-else
-    cecho $blue "   pulling origin master"
-    (cd $INSTALL_DIR && git pull origin master > /dev/null 2>&1)
+## テスト時にはスキップする
+if [[ "$IS_TEST" = "" ]]; then
+    cecho $yellow " * cloning dotfiles"
+    if [[ ! -e $INSTALL_DIR ]]; then
+        git clone https://github.com/liquidz/dotfiles.git $INSTALL_DIR > /dev/null 2>&1
+    else
+        cecho $blue "   pulling origin master"
+        (cd $INSTALL_DIR && git pull origin master > /dev/null 2>&1)
+    fi
 fi
 
 ## dotfiles のシンボリックリンクを貼る
@@ -103,9 +106,10 @@ if [[ "$MODE" == "full" ]]; then
     fi
 
     ## zsh の設定
-    cecho $yellow " * downloading zsh git-completion"
+    cecho $yellow " * initializing zsh"
     DIR="$PREFIX/.zsh"
-    mkdir -p $DIR
+    ln -sfn $INSTALL_DIR/.zsh $DIR
+    cecho $yellow " * downloading zsh git-completion"
     curl -s -o "$DIR/_git" https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh
     curl -s -o "$DIR/git-completion.bash" https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
 
