@@ -17,10 +17,5 @@ initialize () {
     if [[ -e $TEST_PREFIX ]]; then
         rm -rf $TEST_PREFIX
     fi
-    mkdir -p $TEST_INSTALL_DIR
-    rsync -a $TEST_ROOT $TEST_INSTALL_DIR \
-        --exclude bundle \
-        --exclude test \
-        --exclude bats \
-        --exclude memo
+    mkdir -p $TEST_PREFIX
 }
