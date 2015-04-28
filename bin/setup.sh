@@ -45,12 +45,15 @@ fi
 cecho $green "Start: ${MODE} setup"
 
 ## dotfiles レポジトリの clone
-cecho $yellow " * cloning dotfiles"
-if [[ ! -e $INSTALL_DIR ]]; then
-    git clone https://github.com/liquidz/dotfiles.git $INSTALL_DIR > /dev/null 2>&1
-else
-    cecho $blue "   pulling origin master"
-    (cd $INSTALL_DIR && git pull origin master > /dev/null 2>&1)
+## テスト時にはスキップする
+if [[ "$IS_TEST" = "" ]]; then
+    cecho $yellow " * cloning dotfiles"
+    if [[ ! -e $INSTALL_DIR ]]; then
+        git clone https://github.com/liquidz/dotfiles.git $INSTALL_DIR > /dev/null 2>&1
+    else
+        cecho $blue "   pulling origin master"
+        (cd $INSTALL_DIR && git pull origin master > /dev/null 2>&1)
+    fi
 fi
 
 ## dotfiles のシンボリックリンクを貼る
