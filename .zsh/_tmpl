@@ -1,0 +1,9 @@
+#compdef _tmpl tmpl
+
+function _tmpl() {
+    _arguments '1: :__tmpl_commands' '*: :_files'
+}
+function __tmpl_commands() {
+    _values 'commands' \
+        'vim-plugin'
+}
