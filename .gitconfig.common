@@ -6,3 +6,12 @@
 	default = current
 [core]
 	editor = /usr/local/bin/vim
+[url "git@github.com:"]
+	pushinsteadof = https://liquidz@github.com/
+[alias]
+	st = status
+	ci = ci-status
+	co = checkout
+	ss = stash
+	pr = pull-request
+	b = branch
