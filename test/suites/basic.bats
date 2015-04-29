@@ -51,5 +51,9 @@ setup () {
     ## git config
     git config --get include.path > /dev/null 2>&1; RET=$?
     [ $RET -eq 0 ]
+    git config --get user.name > /dev/null 2>&1; RET=$?
+    [ $RET -eq 0 ]
+    git config --get user.email > /dev/null 2>&1; RET=$?
+    [ $RET -eq 0 ]
     [ -L "$TEST_PREFIX/.gitconfig.common" ]
 }
