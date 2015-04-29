@@ -20,6 +20,7 @@ setup () {
     [ -L "$TEST_PREFIX/.gemrc" ]
     [ -L "$TEST_PREFIX/.rubocop.yml" ]
     [ -L "$TEST_PREFIX/.lein/profiles.clj" ]
+    [ -L "$TEST_PREFIX/.gitconfig.common" ]
     # full モードで設定されるものがないこと
     [ ! -L "$TEST_PREFIX/.vim" ]
 }
@@ -27,19 +28,28 @@ setup () {
 @test "full setup test" {
     $SETUP > /dev/null 2>&1; RET=$?
     [ $RET -eq 0 ]
+    ## vim
     [ -L "$TEST_PREFIX/.vim" ]
     [ -d "$TEST_PREFIX/.vim/bundle" ]
     [ -d "$TEST_PREFIX/.vim/backup" ]
     [ -e "$TEST_PREFIX/.vim/memo" ]
     [ -d "$TEST_PREFIX/.tags" ]
     [ -d "$TEST_PREFIX/.vim/bundle/neobundle.vim" ]
+    ## tmux
     [ -d "$TEST_PREFIX/.tmux/plugins/tpm" ]
+    ## zsh
     [ -L "$TEST_PREFIX/.zsh" ]
     [ -e "$TEST_PREFIX/.zsh/_tmpl" ]
     [ -e "$TEST_PREFIX/.zsh/_git" ]
     [ -e "$TEST_PREFIX/.zsh/git-completion.bash" ]
     [ -d "$TEST_PREFIX/src/github.com/zsh-users/antigen" ]
+    ## beco
     [ -d "$TEST_PREFIX/src/github.com/liquidz/beco" ]
     [ -L "$TEST_PREFIX/bin/beco" ]
     [ -L "$TEST_PREFIX/.zsh/_beco" ]
+
+    ## git config
+    git config --get include.path > /dev/null 2>&1; RET=$?
+    [ $RET -eq 0 ]
+    [ -L "$TEST_PREFIX/.gitconfig.common" ]
 }

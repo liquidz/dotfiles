@@ -16,6 +16,7 @@ DOT_FILES=(".vimrc"                     \
     ".zshenv" ".zshrc" ".zshrc.antigen" \
     ".peco" ".ctags"                    \
     ".gemrc" ".rubocop.yml"             \
+    ".gitconfig.common"                 \
     )
 # colors {{{
 red=31
@@ -56,6 +57,7 @@ fi
 ## dotfiles のシンボリックリンクを貼る
 cecho $yellow " * create symbolic links to dotfiles"
 for file in ${DOT_FILES[@]}; do
+    cecho $blue "   $file"
     ln -sfn $INSTALL_DIR/$file $PREFIX/$file
 done
 cecho $yellow " * create symbolic links to .lein/profiles.clj"
@@ -131,10 +133,16 @@ if [[ "$MODE" == "full" ]]; then
     mkdir -p $PREFIX/bin && ln -sfn $DIR/bin/beco $PREFIX/bin/beco
     ln -sfn $DIR/zsh/_beco $PREFIX/.zsh/_beco
 
+    ## git config
     cecho $yellow " * git config"
-    git config --global ghq.root ~/src
-    git config --global github.user liquidz
-    git config --global push.default current
+    git config --global include.path ~/.gitconfig.common
+
+    git config --get user.name > /dev/null 2>&1
+    if [[ $? -ne 0 ]]; then
+        cecho $blue "   setting user.name and user.email"
+        git config --global user.name liquidz
+        git config --global user.email liquidz.uo@gmail.com
+    fi
 fi
 
 cecho $green "Done"

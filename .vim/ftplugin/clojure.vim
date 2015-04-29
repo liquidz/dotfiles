@@ -12,10 +12,13 @@ nnoremap <Leader>{ F{i{<Esc><Right>%a}<Esc>%a<Space><Left>
 function! s:myRunTests() abort
   let ns = fireplace#ns()
   let test_ns = ns . (match(ns, 'test$') ==# -1 ? '-test' : '')
+  execute ':Require! ' . ns
   execute ':RunTests ' . test_ns
 endfunction
 command! MyRunTests call s:myRunTests()
 nnoremap <Leader>t :<C-u>MyRunTests<CR>
+
+nnoremap <Leader>s :<C-u>Require<CR>
 
 aug MyLispWords
   au!
