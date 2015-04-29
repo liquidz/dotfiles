@@ -88,14 +88,6 @@ set hlsearch
 set incsearch
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
-
-nnoremap <expr> n <SID>search_forward_p() ? 'nzv' : 'Nzv'
-nnoremap <expr> N <SID>search_forward_p() ? 'Nzv' : 'nzv'
-vnoremap <expr> n <SID>search_forward_p() ? 'nzv' : 'Nzv'
-vnoremap <expr> N <SID>search_forward_p() ? 'Nzv' : 'nzv'
-function! s:search_forward_p()
-  return exists('v:searchforward') ? v:searchforward : 1
-endfunction
 " }}}
 
 " paste {{{

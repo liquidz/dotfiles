@@ -20,6 +20,7 @@ NeoBundle 'thinca/vim-themis'
 
 NeoBundle 'Shougo/unite.vim'
 NeoBundleLazy 'Shougo/vimfiler', {'autoload': {'commands': ['VimFiler']}}
+NeoBundle 'osyo-manga/vim-anzu'
 NeoBundle 'haya14busa/vim-asterisk'
 NeoBundle 'kana/vim-submode'
 NeoBundle 'tpope/vim-surround'
@@ -45,7 +46,6 @@ NeoBundle 'kana/vim-operator-user'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'gregsexton/gitv'
 NeoBundle 'itchyny/lightline.vim'
-"NeoBundle 'soramugi/auto-ctags.vim'
 NeoBundle 'osyo-manga/shabadou.vim'
 NeoBundle 'osyo-manga/vim-watchdogs'
 NeoBundle 'jceb/vim-hier'
@@ -53,6 +53,7 @@ NeoBundleLazy 'fatih/vim-go', {'autoload': {'filetypes': 'go'}}
 NeoBundle 'glidenote/memolist.vim'
 NeoBundle 'ujihisa/shadow.vim'
 NeoBundle 'kana/vim-textobj-user'
+NeoBundle 'kana/vim-textobj-line'
 NeoBundle 'osyo-manga/vim-textobj-multiblock'
 NeoBundle 'kshenoy/vim-signature'
 NeoBundle 'liquidz/vim-yacd'
@@ -61,6 +62,7 @@ NeoBundle 'liquidz/vim-oretag'
 "NeoBundle 'liquidz/vim-spy'
 NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'aklt/plantuml-syntax'
+NeoBundle 'tomtom/tcomment_vim'
 
 " neocomplete
 if has('lua') && has('unix')
@@ -137,11 +139,20 @@ aug VimFilerKeyMapping
 aug END
 " }}}
 
+" osyo-manga/vim-anzu {{{
+nmap n <Plug>(anzu-n)
+nmap N <Plug>(anzu-N)
+nmap * <Plug>(anzu-star)
+nmap # <Plug>(anzu-sharp)
+" }}}
+
 " vim-asterisk {{{
-map *  <Plug>(asterisk-z*)
-map #  <Plug>(asterisk-z#)
-map g* <Plug>(asterisk-gz*)
-map g# <Plug>(asterisk-gz#)
+" map *  <Plug>(asterisk-z*)
+" map #  <Plug>(asterisk-z#)
+nmap * <Plug>(asterisk-z*)<Plug>(anzu-update-search-status)
+nmap # <Plug>(asterisk-z#)<Plug>(anzu-update-search-status)
+" map g* <Plug>(asterisk-gz*)
+" map g# <Plug>(asterisk-gz#)
 let g:asterisk#keeppos = 1
 " }}}
 
@@ -404,10 +415,12 @@ let g:lightline = {
     \ 'colorscheme': 'wombat',
     \ 'active': {
     \   'left': [['mode', 'paste'],
-    \            ['fugitive', 'readonly', 'filename', 'modified']]
+    \            ['fugitive', 'readonly', 'filename', 'modified']],
+    \   'right': [['lineinfo'], ['percent'], ['fileformat', 'fileencoding', 'filetype'], ['anzu']]
     \ },
     \ 'component_function': {
     \   'fugitive': 'MyFugitive',
+    \   'anzu': 'anzu#search_status',
     \ },
     \ 'separator': { 'left': '', 'right': '' },
     \ 'subseparator': { 'left': '|', 'right': '|' }
@@ -422,16 +435,10 @@ function! MyFugitive()
 endfunction
 " }}}
 
-" auto-ctags {{{
-"if has('unix')
-"  let g:auto_ctags = 1
-"  let g:auto_ctags_directory_list = [$HOME . '/.tags']
-"  let g:auto_ctags_filetype_mode = 1
-"endif
-" }}}
-
+" oretag {{{
 let g:oretag#enable = 1
 let g:oretag#tag_dir = expand('$HOME/.tags')
+" }}}
 
 " unite-build {{{
 nnoremap <Space>b :Unite build<CR>
