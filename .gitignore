@@ -11,3 +11,4 @@ test/.workspace
 .beco*
 .zsh/_git
 .zsh/git-completion.bash
+.zsh/_beco

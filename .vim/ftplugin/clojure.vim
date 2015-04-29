@@ -8,13 +8,20 @@ nnoremap <Leader>( F(i(<Esc><Right>%a)<Esc>%a<Space><Left>
 nnoremap <Leader>[ F[i[<Esc><Right>%a]<Esc>%a<Space><Left>
 nnoremap <Leader>{ F{i{<Esc><Right>%a}<Esc>%a<Space><Left>
 
+" Requires vim-fireplace
+function! s:myRunTests() abort
+  let ns = fireplace#ns()
+  let test_ns = ns . (match(ns, 'test$') ==# -1 ? '-test' : '')
+  execute ':RunTests ' . test_ns
+endfunction
+command! MyRunTests call s:myRunTests()
+nnoremap <Leader>t :<C-u>MyRunTests<CR>
+
 aug MyLispWords
   au!
-  au FileType clojure set lispwords+=ns
+  au FileType clojure set lispwords+=ns,are
   " compojure
   au FileType clojure set lispwords+=defroutes,GET,POST
-  " misaki
-  au FileType clojure set lispwords+=defvalidate,validate,testing,defhtml,bind-config,defcompilertest
   " midje
   au FileType clojure set lispwords+=facts,fact
   " conjure
@@ -26,4 +33,4 @@ let g:quickrun_config.lein_test = {
     \ 'exec'      : '%c test',
     \ 'hook/cd/directory': yacd#get_root_dir(expand('%:p:h'))
     \ }
-nnoremap <Leader>t :QuickRun lein_test<CR>
+nnoremap <Leader>lt :QuickRun lein_test<CR>
