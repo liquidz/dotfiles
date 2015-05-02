@@ -50,11 +50,24 @@ yank							*my-yank*
 ==============================================================================
 git							*my-git*
 
+  <Leader>ga 		git add
   <Leader>gs 		git status
-  <Leader>gb 		git blame
+    D			  選択したファイルのdiff表示
+    -			  staged file なら reset
+			  unstaged file なら add
   <Leader>gd 		git diff
   <Leader>gc 		git commit -av
   <Leader>gl 		git log
+  <Leader>gb 		git branch
+    A / aa		  ブランチを作成
+    C / cc		  チェックアウト
+    D / dd		  ブランチの削除
+    M / mm		  マージ
+    rn			  ブランチ名の変更
+  :Gpush		git push (間違って実行しないようマッピング無し)
+  :Gpull		git pull (同上)
+  :Git pull-request	git pull-request (同上)
+
 
 ==============================================================================
 surround						*my-surround*

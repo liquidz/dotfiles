@@ -45,6 +45,7 @@ NeoBundle 'kana/vim-operator-replace'
 NeoBundle 'kana/vim-operator-user'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'gregsexton/gitv'
+NeoBundle 'idanarye/vim-merginal'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'osyo-manga/shabadou.vim'
 NeoBundle 'osyo-manga/vim-watchdogs'
@@ -226,6 +227,11 @@ let g:ctrlp_custom_ignore = {
     \   'file': '\v\.(o|bk|org|exe|so|dll|skl|cgi|gitkeep)$',
     \   'link': 'some_bad_symbolic_links',
     \ }
+let g:ctrlp_prompt_mappings = {
+    \ 'PrtCurLeft()'   : ['<c-b>', '<left>'],
+    \ 'PrtCurRight()'  : ['<c-f>', '<right>'],
+    \ 'PrtClearCache()': ['<c-l>'],
+    \ }
 nnoremap <Leader>cp  :CtrlP<CR>
 nnoremap <Leader>ct  :CtrlPTag<CR>
 nnoremap <Leader>b   :CtrlPBuffer<CR>
@@ -402,12 +408,16 @@ xmap <Space>M <Plug>(quickhl-manual-reset)
 map - <Plug>(operator-replace)
 " }}}
 
-" vim-fugitive, gitv {{{
-nnoremap <Leader>gs :Gstatus<CR>
-nnoremap <Leader>gb :Glame<CR>
-nnoremap <Leader>gd :Gdiff<CR>
-nnoremap <Leader>gc :Gcommit -av<CR>
-nnoremap <Leader>gl :Gitv<CR>
+" vim-fugitive, gitv, merginal {{{
+nnoremap <Leader>ga  :Gwrite<CR>
+nnoremap <Leader>gs  :Gstatus<CR>
+nnoremap <Leader>gd  :Gdiff<CR>
+nnoremap <Leader>gc  :Gcommit -av<CR>
+nnoremap <Leader>gl  :Gitv<CR>
+nnoremap <Leader>go  :Git browse<CR>
+nnoremap <Leader>gb  :Merginal<CR>
+" push, pull, pull-request は間違って実行しないよう
+" マッピングはあえてしない
 " }}}
 
 " lightline.vim {{{
