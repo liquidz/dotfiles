@@ -19,6 +19,9 @@ NeoBundle 'haya14busa/underscore.vim'
 NeoBundle 'thinca/vim-themis'
 
 NeoBundle 'Shougo/unite.vim'
+NeoBundleLazy 'tsukkee/unite-tag', {
+    \ 'autoload': {'unite_sources': ['tag']} }
+NeoBundle 'LeafCage/yankround.vim'
 NeoBundleLazy 'Shougo/vimfiler', {'autoload': {'commands': ['VimFiler']}}
 NeoBundle 'osyo-manga/vim-anzu'
 NeoBundle 'haya14busa/vim-asterisk'
@@ -29,10 +32,9 @@ NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'fuenor/qfixgrep'
-NeoBundle 'ctrlpvim/ctrlp.vim'
-NeoBundle 'liquidz/ctrlp-gonosen.vim'
+"NeoBundle 'ctrlpvim/ctrlp.vim'
+"NeoBundle 'liquidz/ctrlp-gonosen.vim'
 NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'LeafCage/yankround.vim'
 
 NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'kannokanno/previm'
@@ -64,6 +66,52 @@ NeoBundle 'liquidz/vim-oretag'
 NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'aklt/plantuml-syntax'
 NeoBundle 'tomtom/tcomment_vim'
+
+" unite.vim {{{
+let g:unite_enable_start_insert = 1
+set wildignore=*.o,*.bk,*.org,*.exe,*.so
+    \,*.dll,*.swp,*.zip,*.pyc,.gitkeep
+    \,target,cookbook,Vendor
+
+nnoremap [Unite] <Nop>
+nmap <Space> [Unite]
+nnoremap <C-p>    :<C-u>UniteWithProjectDir file_rec<CR>
+nnoremap [Unite]f :<C-u>Unite file<CR>
+nnoremap [Unite]b :<C-u>Unite buffer<CR>
+nnoremap [Unite]l :<C-u>Unite line<CR>
+nnoremap [Unite]m :<C-u>Unite output:messages<CR>
+" grep:.<CR> だとgrep結果がフルパスになるので grep<CR><CR>
+nnoremap [Unite]gg :<C-u>Unite grep<CR><CR>
+"" unite-tag
+nnoremap [Unite]t :<C-u>Unite tag<CR>
+"" yankround
+nnoremap [Unite]y :<C-u>Unite yankround<CR><Esc>
+
+if executable('pt')
+  let g:unite_source_grep_command = 'pt'
+  let g:unite_source_grep_default_opts = '--nogroup --nocolor'
+  let g:unite_source_grep_recursive_opt = ''
+  let g:unite_source_grep_encoding = 'utf-8'
+endif
+
+let g:unite_source_menu_menus = {}
+let g:unite_source_menu_menus.git = {
+    \ 'description' : 'Git commands',
+    \ }
+let g:unite_source_menu_menus.git.command_candidates = {
+    \ 'git status'      : 'Gstatus',
+    \ 'git branch'      : 'Merginal',
+    \ 'git add'         : 'Gwrite',
+    \ 'git diff'        : 'Gdiff',
+    \ 'git commit'      : 'Gcommit -av',
+    \ 'git push'        : 'Gpush',
+    \ 'git pull'        : 'Gpull',
+    \ 'git pull-request': 'Git pull-request',
+    \ 'git ci-status'   : 'Git ci-status',
+    \ }
+nnoremap [Unite]gi :Unite menu:git<CR>
+
+" }}}
 
 " neocomplete
 if has('lua') && has('unix')
@@ -157,11 +205,6 @@ nmap # <Plug>(asterisk-z#)<Plug>(anzu-update-search-status)
 let g:asterisk#keeppos = 1
 " }}}
 
-" unite.vim {{{
-let g:unite_enable_start_insert = 1
-nnoremap <Space>b :Unite file buffer tab<CR>
-" }}}
-
 " submode {{{
 let g:submode_timeout = 0
 "" window
@@ -216,28 +259,28 @@ nmap s <Plug>(easymotion-s2)
 " }}}
 
 " ctrlp{{{
-let g:ctrlp_clear_cache_on_exit = 0   " 終了時キャッシュをクリアしない
-let g:ctrlp_mruf_max            = 500 " MRUの最大記録数
-let g:ctrlp_open_new_file       = 1   " 新規ファイル作成時にタブで開く
-let g:ctrlp_show_hidden         = 1   " 隠しファイルも表示
-let g:ctrlp_match_window        = 'results:30'
-let g:ctrlp_follow_symlinks     = 1
-let g:ctrlp_custom_ignore = {
-    \   'dir' : '\v[\/](\.git|\.hg|\.svn|cookbooks|target|Vendor)$',
-    \   'file': '\v\.(o|bk|org|exe|so|dll|skl|cgi|gitkeep)$',
-    \   'link': 'some_bad_symbolic_links',
-    \ }
-let g:ctrlp_prompt_mappings = {
-    \ 'PrtCurLeft()'   : ['<c-b>', '<left>'],
-    \ 'PrtCurRight()'  : ['<c-f>', '<right>'],
-    \ 'PrtClearCache()': ['<c-l>'],
-    \ }
-nnoremap <Leader>cp  :CtrlP<CR>
-nnoremap <Leader>ct  :CtrlPTag<CR>
-nnoremap <Leader>b   :CtrlPBuffer<CR>
-nnoremap <Leader>cf  :CtrlPCurFile<CR>
-nnoremap <Leader>cd  :CtrlPGonosen<CR>
-nnoremap <Leader>ccc :CtrlPClearCache<CR>
+"let g:ctrlp_clear_cache_on_exit = 0   " 終了時キャッシュをクリアしない
+"let g:ctrlp_mruf_max            = 500 " MRUの最大記録数
+"let g:ctrlp_open_new_file       = 1   " 新規ファイル作成時にタブで開く
+"let g:ctrlp_show_hidden         = 1   " 隠しファイルも表示
+"let g:ctrlp_match_window        = 'results:30'
+"let g:ctrlp_follow_symlinks     = 1
+"let g:ctrlp_custom_ignore = {
+"    \   'dir' : '\v[\/](\.git|\.hg|\.svn|cookbooks|target|Vendor)$',
+"    \   'file': '\v\.(o|bk|org|exe|so|dll|skl|cgi|gitkeep)$',
+"    \   'link': 'some_bad_symbolic_links',
+"    \ }
+"let g:ctrlp_prompt_mappings = {
+"    \ 'PrtCurLeft()'   : ['<c-b>', '<left>'],
+"    \ 'PrtCurRight()'  : ['<c-f>', '<right>'],
+"    \ 'PrtClearCache()': ['<c-l>'],
+"    \ }
+"nnoremap <Leader>cp  :CtrlP<CR>
+"nnoremap <Leader>ct  :CtrlPTag<CR>
+"nnoremap <Leader>b   :CtrlPBuffer<CR>
+"nnoremap <Leader>cf  :CtrlPCurFile<CR>
+"nnoremap <Leader>cd  :CtrlPGonosen<CR>
+"nnoremap <Leader>ccc :CtrlPClearCache<CR>
 " }}}
 
 " quickrun {{{
@@ -286,10 +329,6 @@ if has('unix')
       \  'exec' : '%c %o %a %s',
       \ }
 endif
-" }}}
-
-" yankround {{{
-nnoremap <Space>y :Unite yankround<CR><Esc>
 " }}}
 
 " rainbow_parentheses {{{
