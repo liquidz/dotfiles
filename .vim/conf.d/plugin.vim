@@ -21,7 +21,11 @@ NeoBundle 'thinca/vim-themis'
 NeoBundle 'Shougo/unite.vim'
 NeoBundleLazy 'tsukkee/unite-tag', {
     \ 'autoload': {'unite_sources': ['tag']} }
+NeoBundleLazy 'sorah/unite-ghq', {
+    \ 'autoload': {'unite_sources': ['ghq']} }
 NeoBundle 'LeafCage/yankround.vim'
+NeoBundleLazy 'liquidz/unite-bookmark-file', {
+    \ 'autoload': {'unite_sources': ['bookmark/file']} }
 NeoBundleLazy 'Shougo/vimfiler', {'autoload': {'commands': ['VimFiler']}}
 NeoBundle 'osyo-manga/vim-anzu'
 NeoBundle 'haya14busa/vim-asterisk'
@@ -67,6 +71,36 @@ NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'aklt/plantuml-syntax'
 NeoBundle 'tomtom/tcomment_vim'
 
+" neocomplete
+if has('lua') && has('unix')
+  NeoBundle 'Shougo/neocomplete.vim'
+  NeoBundleLazy 'supermomonga/neocomplete-rsense.vim', {
+      \ 'autoload': {'filetype': 'ruby'},
+      \ 'depends': ['Shougo/neocomplete.vim']}
+endif
+
+" neosnippet
+NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/neosnippet-snippets'
+NeoBundleLazy 'vim-scripts/ruby-matchit', {'autoload': {'filetypes': 'ruby'}}
+NeoBundleLazy 'nelstrom/vim-textobj-rubyblock', {'autoload': {'filetypes': 'ruby'}}
+NeoBundle 'tpope/vim-endwise'
+
+if has('unix')
+  NeoBundleLazy 'guns/vim-clojure-static', {'autoload': {'filetypes': 'clojure'}}
+  NeoBundle 'kien/rainbow_parentheses.vim'
+  NeoBundleLazy 'tpope/vim-fireplace', {'autoload': {'filetypes': 'clojure'}}
+  NeoBundleLazy 'tpope/vim-classpath', {'autoload': {'filetypes': 'clojure'}}
+  NeoBundleLazy 'typedclojure/vim-typedclojure', {'autoload': {'filetypes': 'clojure'}}
+  NeoBundle 'majutsushi/tagbar'
+endif
+
+call neobundle#end()
+filetype plugin indent on
+
+NeoBundleCheck
+" }}}
+
 " unite.vim {{{
 let g:unite_enable_start_insert = 1
 set wildignore=*.o,*.bk,*.org,*.exe,*.so
@@ -76,10 +110,12 @@ set wildignore=*.o,*.bk,*.org,*.exe,*.so
 nnoremap [Unite] <Nop>
 nmap <Space> [Unite]
 nnoremap <C-p>    :<C-u>UniteWithProjectDir file_rec<CR>
+nnoremap [Unite]<Space> :<C-u>Unite<Space>
 nnoremap [Unite]f :<C-u>Unite file<CR>
 nnoremap [Unite]b :<C-u>Unite buffer<CR>
 nnoremap [Unite]l :<C-u>Unite line<CR>
 nnoremap [Unite]m :<C-u>Unite output:messages<CR>
+nnoremap [Unite]cd :<C-u>Unite -default-action=rec ghq bookmark bookmark/file<CR>
 " grep:.<CR> だとgrep結果がフルパスになるので grep<CR><CR>
 nnoremap [Unite]gg :<C-u>Unite grep<CR><CR>
 "" unite-tag
@@ -110,40 +146,6 @@ let g:unite_source_menu_menus.git.command_candidates = {
     \ 'git ci-status'   : 'Git ci-status',
     \ }
 nnoremap [Unite]gi :Unite menu:git<CR>
-
-" }}}
-
-" neocomplete
-if has('lua') && has('unix')
-  NeoBundle 'Shougo/neocomplete.vim'
-  NeoBundleLazy 'supermomonga/neocomplete-rsense.vim', {
-      \ 'autoload': {'filetype': 'ruby'},
-      \ 'depends': ['Shougo/neocomplete.vim']}
-endif
-
-" neosnippet
-NeoBundle 'Shougo/neosnippet'
-NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundleLazy 'vim-scripts/ruby-matchit', {'autoload': {'filetypes': 'ruby'}}
-NeoBundleLazy 'nelstrom/vim-textobj-rubyblock', {'autoload': {'filetypes': 'ruby'}}
-NeoBundle 'tpope/vim-endwise'
-
-if has('unix')
-  NeoBundleLazy 'guns/vim-clojure-static', {'autoload': {'filetypes': 'clojure'}}
-  NeoBundle 'kien/rainbow_parentheses.vim'
-  NeoBundleLazy 'tpope/vim-fireplace', {'autoload': {'filetypes': 'clojure'}}
-  NeoBundleLazy 'tpope/vim-classpath', {'autoload': {'filetypes': 'clojure'}}
-  NeoBundleLazy 'typedclojure/vim-typedclojure', {'autoload': {'filetypes': 'clojure'}}
-
-  NeoBundle 'Shougo/unite-build'
-  "NeoBundleLazy 'liquidz/unite_bundle_builder', {'autoload': {'filetypes': 'ruby'}}
-  NeoBundle 'majutsushi/tagbar'
-endif
-
-call neobundle#end()
-filetype plugin indent on
-
-NeoBundleCheck
 " }}}
 
 " VimShell {{{
@@ -487,10 +489,6 @@ endfunction
 " oretag {{{
 let g:oretag#enable = 1
 let g:oretag#tag_dir = expand('$HOME/.tags')
-" }}}
-
-" unite-build {{{
-nnoremap <Space>b :Unite build<CR>
 " }}}
 
 " vim-watchdog {{{
