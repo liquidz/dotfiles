@@ -31,7 +31,6 @@ NeoBundle 'osyo-manga/vim-anzu'
 NeoBundle 'haya14busa/vim-asterisk'
 NeoBundle 'kana/vim-submode'
 NeoBundle 'tpope/vim-surround'
-"NeoBundle 'junegunn/seoul256.vim'
 NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 'Lokaltog/vim-easymotion'
@@ -139,6 +138,7 @@ let g:unite_source_menu_menus.git.command_candidates = {
     \ 'git branch'      : 'Merginal',
     \ 'git add'         : 'Gwrite',
     \ 'git diff'        : 'Gdiff',
+    \ 'git log'         : 'Gitv',
     \ 'git commit'      : 'Gcommit -av',
     \ 'git push'        : 'Gpush',
     \ 'git pull'        : 'Gpull',
@@ -238,11 +238,8 @@ call submode#map('tab', 'n', '', 'q', ':q<CR>')
 call submode#map('tab', 'n', '', 'Q', ':q!<CR>')
 " }}}
 
-" seoul256 {{{
-"let g:seoul256_background = 236
-"colorscheme seoul256
+" hybrid {{{
 colorscheme hybrid
-
 if system('uname') ==# "Darwin\n"
   highlight Normal ctermbg=none
 endif
