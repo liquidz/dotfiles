@@ -26,6 +26,8 @@ NeoBundleLazy 'sorah/unite-ghq', {
 NeoBundle 'LeafCage/yankround.vim'
 NeoBundleLazy 'liquidz/unite-bookmark-file', {
     \ 'autoload': {'unite_sources': ['bookmark/file']} }
+NeoBundleLazy 'Shougo/unite-help', {
+    \ 'autoload': {'unite_sources': ['help']} }
 NeoBundleLazy 'Shougo/vimfiler', {'autoload': {'commands': ['VimFiler']}}
 NeoBundle 'osyo-manga/vim-anzu'
 NeoBundle 'haya14busa/vim-asterisk'
@@ -119,6 +121,8 @@ nnoremap [Unite]cd :<C-u>Unite -default-action=rec ghq bookmark bookmark/file<CR
 nnoremap [Unite]gg :<C-u>Unite grep<CR><CR>
 "" unite-tag
 nnoremap [Unite]t :<C-u>Unite tag<CR>
+" unite-help"
+nnoremap [Unite]h :<C-u>Unite help<CR>
 "" yankround
 nnoremap [Unite]y :<C-u>Unite yankround<CR><Esc>
 
@@ -144,13 +148,9 @@ let g:unite_source_menu_menus.git.command_candidates = {
     \ 'git pull'        : 'Gpull',
     \ 'git pull-request': 'Git pull-request',
     \ 'git ci-status'   : 'Git ci-status',
+    \ 'git browse'      : 'Git browse',
     \ }
 nnoremap [Unite]gi :Unite menu:git<CR>
-" }}}
-
-" VimShell {{{
-"nnoremap <Leader>ss :VimShell<CR>
-"nnoremap <Leader>sp :VimShellPop<CR>
 " }}}
 
 " VimFiler {{{
@@ -421,7 +421,7 @@ let g:neosnippet#snippets_directory = $HOME . '/.vim/snippets'
 imap <C-k> <Plug>(neosnippet_expand_or_jump)
 smap <C-k> <Plug>(neosnippet_expand_or_jump)
 xmap <C-k> <Plug>(neosnippet_expand_target)
-nnoremap <Space>s :Unite neosnippet<CR>
+nnoremap [Unite]s :Unite neosnippet<CR>
 " }}}
 
 " vim-fireplace {{{
@@ -494,10 +494,11 @@ call watchdogs#setup(g:quickrun_config)
 " }}}
 
 " memolist.vim {{{
+let g:memolist_unite = 1
 let g:memolist_path              = $HOME . '/.vim/memo'
 let g:memolist_memo_suffix       = 'md'
 let g:memolist_template_dir_path = $HOME . '/.vim/template/memolist'
-let g:memolist_ex_cmd = 'CtrlP'
+"let g:memolist_ex_cmd = 'CtrlP'
 nnoremap <Leader>mn :MemoNew<CR>
 nnoremap <Leader>ml :MemoList<CR>
 nnoremap <Leader>mg :MemoGrep<CR>
