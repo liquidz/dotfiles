@@ -5,5 +5,6 @@ function _tmpl() {
 }
 function __tmpl_commands() {
     _values 'commands' \
-        'vim-plugin'
+        'vim-plugin' \
+        'unite-plugin' \
 }
