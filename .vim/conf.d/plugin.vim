@@ -116,14 +116,27 @@ nnoremap [Unite]b :<C-u>Unite buffer<CR>
 nnoremap [Unite]l :<C-u>Unite line<CR>
 nnoremap [Unite]m :<C-u>Unite output:messages<CR>
 nnoremap [Unite]cd :<C-u>Unite -default-action=rec ghq bookmark bookmark/file<CR>
-" grep:.<CR> だとgrep結果がフルパスになるので grep<CR><CR>
-nnoremap [Unite]gg :<C-u>Unite grep<CR><CR>
+" レポジトリ配下であればルートディレクトリからgrepするようにする
+function! s:mygrep() abort
+  if exists('b:yacd_buf_root_dir') && b:yacd_buf_root_dir !=# ''
+    execute ':Unite grep:' . b:yacd_buf_root_dir
+  else
+    execute ':Unite grep:.'
+  endif
+endfunction
+nnoremap [Unite]gg :call <SID>mygrep()<CR>
 "" unite-tag
 nnoremap [Unite]t :<C-u>Unite tag<CR>
 " unite-help"
 nnoremap [Unite]h :<C-u>Unite help<CR>
 "" yankround
 nnoremap [Unite]y :<C-u>Unite yankround<CR><Esc>
+
+augroup MyUnite
+  autocmd!
+  autocmd FileType unite nnoremap <silent> <buffer> <ESC><ESC> :q<CR>
+  autocmd FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>:q<CR>
+augroup END
 
 if executable('pt')
   let g:unite_source_grep_command = 'pt'
