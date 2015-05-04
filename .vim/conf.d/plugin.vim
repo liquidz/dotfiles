@@ -104,9 +104,8 @@ NeoBundleCheck
 
 " unite.vim {{{
 let g:unite_enable_start_insert = 1
-set wildignore=*.o,*.bk,*.org,*.exe,*.so
-    \,*.dll,*.swp,*.zip,*.pyc,.gitkeep
-    \,target,cookbook,Vendor
+call unite#custom#source('file_rec', 'ignore_pattern',
+    \ '\v[\/](bundle|target|cookbook|Vendor)')
 
 nnoremap [Unite] <Nop>
 nmap <Space> [Unite]

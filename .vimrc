@@ -295,6 +295,9 @@ let b:match_ignorecase = 1
 "command! -nargs=0 Pulse call s:Pulse()
 "nnoremap <C-c> :Pulse<cr>
 
+set wildignore=*.o,*.bk,*.org,*.exe,*.so
+    \,*.dll,*.swp,*.zip,*.pyc,.gitkeep
+
 " load conf.d {{{
 set runtimepath+=$HOME/.vim/
 runtime! conf.d/*.vim
