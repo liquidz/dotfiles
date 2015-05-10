@@ -24,8 +24,8 @@ NeoBundleLazy 'tsukkee/unite-tag', {
 NeoBundleLazy 'sorah/unite-ghq', {
     \ 'autoload': {'unite_sources': ['ghq']} }
 NeoBundle 'LeafCage/yankround.vim'
-NeoBundleLazy 'liquidz/unite-bookmark-file', {
-    \ 'autoload': {'unite_sources': ['bookmark/file']} }
+"NeoBundleLazy 'liquidz/unite-bookmark-file', {
+"    \ 'autoload': {'unite_sources': ['bookmark/file']} }
 NeoBundleLazy 'Shougo/unite-help', {
     \ 'autoload': {'unite_sources': ['help']} }
 NeoBundleLazy 'Shougo/vimfiler', {'autoload': {'commands': ['VimFiler']}}
@@ -38,8 +38,8 @@ NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'fuenor/qfixgrep'
-"NeoBundle 'ctrlpvim/ctrlp.vim'
-"NeoBundle 'liquidz/ctrlp-gonosen.vim'
+NeoBundle 'ctrlpvim/ctrlp.vim'
+NeoBundle 'liquidz/ctrlp-gonosen.vim'
 NeoBundle 'thinca/vim-quickrun'
 
 NeoBundle 'tyru/open-browser.vim'
@@ -110,13 +110,13 @@ call unite#custom#source('file_rec', 'ignore_pattern',
 
 nnoremap [Unite] <Nop>
 nmap <Space> [Unite]
-nnoremap <C-p>    :<C-u>UniteWithProjectDir file_rec<CR>
+"nnoremap <C-p>    :<C-u>UniteWithProjectDir file_rec<CR>
 nnoremap [Unite]<Space> :<C-u>Unite<Space>
-nnoremap [Unite]f :<C-u>Unite file<CR>
-nnoremap [Unite]b :<C-u>Unite buffer<CR>
+"nnoremap [Unite]f :<C-u>Unite file<CR>
+"nnoremap [Unite]b :<C-u>Unite buffer<CR>
 nnoremap [Unite]l :<C-u>Unite line<CR>
 nnoremap [Unite]m :<C-u>Unite output:messages<CR>
-nnoremap [Unite]cd :<C-u>Unite -default-action=rec ghq bookmark bookmark/file<CR>
+"nnoremap [Unite]cd :<C-u>Unite -default-action=rec ghq bookmark bookmark/file<CR>
 " レポジトリ配下であればルートディレクトリからgrepするようにする
 function! s:mygrep() abort
   if exists('b:yacd_buf_root_dir') && b:yacd_buf_root_dir !=# ''
@@ -271,28 +271,27 @@ nmap s <Plug>(easymotion-s2)
 " }}}
 
 " ctrlp{{{
-"let g:ctrlp_clear_cache_on_exit = 0   " 終了時キャッシュをクリアしない
-"let g:ctrlp_mruf_max            = 500 " MRUの最大記録数
-"let g:ctrlp_open_new_file       = 1   " 新規ファイル作成時にタブで開く
-"let g:ctrlp_show_hidden         = 1   " 隠しファイルも表示
-"let g:ctrlp_match_window        = 'results:30'
-"let g:ctrlp_follow_symlinks     = 1
-"let g:ctrlp_custom_ignore = {
-"    \   'dir' : '\v[\/](\.git|\.hg|\.svn|cookbooks|target|Vendor)$',
-"    \   'file': '\v\.(o|bk|org|exe|so|dll|skl|cgi|gitkeep)$',
-"    \   'link': 'some_bad_symbolic_links',
-"    \ }
-"let g:ctrlp_prompt_mappings = {
-"    \ 'PrtCurLeft()'   : ['<c-b>', '<left>'],
-"    \ 'PrtCurRight()'  : ['<c-f>', '<right>'],
-"    \ 'PrtClearCache()': ['<c-l>'],
-"    \ }
-"nnoremap <Leader>cp  :CtrlP<CR>
-"nnoremap <Leader>ct  :CtrlPTag<CR>
-"nnoremap <Leader>b   :CtrlPBuffer<CR>
-"nnoremap <Leader>cf  :CtrlPCurFile<CR>
-"nnoremap <Leader>cd  :CtrlPGonosen<CR>
-"nnoremap <Leader>ccc :CtrlPClearCache<CR>
+let g:ctrlp_clear_cache_on_exit = 0   " 終了時キャッシュをクリアしない
+let g:ctrlp_mruf_max            = 500 " MRUの最大記録数
+let g:ctrlp_open_new_file       = 1   " 新規ファイル作成時にタブで開く
+let g:ctrlp_show_hidden         = 1   " 隠しファイルも表示
+let g:ctrlp_match_window        = 'results:50'
+let g:ctrlp_follow_symlinks     = 1
+let g:ctrlp_custom_ignore = {
+    \   'dir' : '\v[\/](\.git|\.hg|\.svn|cookbooks|target|Vendor)$',
+    \   'file': '\v\.(o|bk|org|exe|so|dll|skl|cgi|gitkeep)$',
+    \   'link': 'some_bad_symbolic_links',
+    \ }
+let g:ctrlp_prompt_mappings = {
+    \ 'PrtCurLeft()'   : ['<c-b>', '<left>'],
+    \ 'PrtCurRight()'  : ['<c-f>', '<right>'],
+    \ 'PrtClearCache()': ['<c-l>'],
+    \ }
+nnoremap <Leader>ct  :CtrlPTag<CR>
+nnoremap <Leader>b   :CtrlPBuffer<CR>
+nnoremap <Leader>f  :CtrlPCurFile<CR>
+nnoremap <Leader>cd  :CtrlPGonosen<CR>
+nnoremap <Leader>ccc :CtrlPClearCache<CR>
 " }}}
 
 " quickrun {{{
@@ -507,11 +506,11 @@ call watchdogs#setup(g:quickrun_config)
 " }}}
 
 " memolist.vim {{{
-let g:memolist_unite = 1
 let g:memolist_path              = $HOME . '/.vim/memo'
 let g:memolist_memo_suffix       = 'md'
 let g:memolist_template_dir_path = $HOME . '/.vim/template/memolist'
-"let g:memolist_ex_cmd = 'CtrlP'
+"let g:memolist_unite = 1
+let g:memolist_ex_cmd = 'CtrlP'
 nnoremap <Leader>mn :MemoNew<CR>
 nnoremap <Leader>ml :MemoList<CR>
 nnoremap <Leader>mg :MemoGrep<CR>
