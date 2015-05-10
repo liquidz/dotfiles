@@ -29,6 +29,7 @@ NeoBundleLazy 'liquidz/unite-bookmark-file', {
 NeoBundleLazy 'Shougo/unite-help', {
     \ 'autoload': {'unite_sources': ['help']} }
 NeoBundleLazy 'Shougo/vimfiler', {'autoload': {'commands': ['VimFiler']}}
+NeoBundle 'liquidz/unite-circleci'
 NeoBundle 'osyo-manga/vim-anzu'
 NeoBundle 'haya14busa/vim-asterisk'
 NeoBundle 'kana/vim-submode'

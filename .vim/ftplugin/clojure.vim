@@ -11,8 +11,13 @@ nnoremap <Leader>{ F{i{<Esc><Right>%a}<Esc>%a<Space><Left>
 " Requires vim-fireplace
 function! s:myRunTests() abort
   let ns = fireplace#ns()
-  let test_ns = ns . (match(ns, 'test$') ==# -1 ? '-test' : '')
-  execute ':Require! ' . ns
+  if match(ns, 'test$') ==# -1
+    let test_ns = ns . '-test'
+  else
+    let test_ns = ns
+    let ns = substitute(ns, '-test', '', '')
+  endif
+  execute ':Require ' . ns
   execute ':RunTests ' . test_ns
 endfunction
 command! MyRunTests call s:myRunTests()

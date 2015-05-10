@@ -6,7 +6,7 @@
             [lein-kibit "0.0.8"]
             [lein-cljfmt "0.1.5"]
             [lein-bikeshed "0.2.0"]
-            [codox "0.8.10"]
+            [codox "0.8.12"]
             ]
 
   :aliases {
@@ -16,6 +16,7 @@
             "omni" ["do"
                     ["clean"]
                     ;["with-profile" "production" "deps" ":tree"]
-                    ["ancient"] ["kibit"] ["bikeshed"]]
+                    ;["ancient"] ["kibit"] ["bikeshed"]]
+                    ["ancient"] ["kibit"] ["eastwood"]]
             }
   }}
