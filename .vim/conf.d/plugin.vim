@@ -242,8 +242,7 @@ call submode#map('window', 'n', '', '+', '<C-w>5+')
 call submode#map('window', 'n', '', '-', '<C-w>5-')
 
 "" tab
-call submode#enter_with('tab', 'n', '', 'tl', ':tabn<CR>')
-call submode#enter_with('tab', 'n', '', 'th', ':tabp<CR>')
+call submode#enter_with('tab', 'n', '', 'tt', '<Nop>')
 call submode#leave_with('tab', 'n', '', '<Esc>')
 call submode#map('tab', 'n', '', 'l', ':tabn<CR>')
 call submode#map('tab', 'n', '', 'h', ':tabp<CR>')
