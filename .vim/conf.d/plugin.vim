@@ -11,7 +11,9 @@ if has('unix')
   NeoBundle 'Shougo/vimproc.vim', {
       \ 'build' : {
       \   'mac'   : 'make -f make_mac.mak',
-      \   'linux' : 'make'}}
+      \   'linux' : 'make',
+      \   'unix'  : 'gmake'
+      \ }}
 endif
 
 NeoBundle 'vim-jp/vital.vim'
