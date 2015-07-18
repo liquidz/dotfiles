@@ -33,7 +33,7 @@ NeoBundleLazy 'Shougo/unite-help', {
 NeoBundleLazy 'Shougo/vimfiler', {'autoload': {'commands': ['VimFiler']}}
 NeoBundle 'liquidz/unite-circleci'
 NeoBundle 'osyo-manga/vim-anzu'
-NeoBundle 'haya14busa/vim-asterisk'
+NeoBundle 'thinca/vim-visualstar'
 NeoBundle 'kana/vim-submode'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'w0ng/vim-hybrid'
@@ -69,8 +69,7 @@ NeoBundle 'osyo-manga/vim-textobj-multiblock'
 NeoBundle 'kshenoy/vim-signature'
 NeoBundle 'liquidz/vim-yacd'
 NeoBundle 'liquidz/vim-oretag'
-"NeoBundle 'liquidz/vim-elastic'
-"NeoBundle 'liquidz/vim-spy'
+NeoBundle 'liquidz/vim-slack'
 NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'aklt/plantuml-syntax'
 NeoBundle 'tomtom/tcomment_vim'
@@ -210,16 +209,6 @@ nmap n <Plug>(anzu-n)
 nmap N <Plug>(anzu-N)
 nmap * <Plug>(anzu-star)
 nmap # <Plug>(anzu-sharp)
-" }}}
-
-" vim-asterisk {{{
-" map *  <Plug>(asterisk-z*)
-" map #  <Plug>(asterisk-z#)
-nmap * <Plug>(asterisk-z*)<Plug>(anzu-update-search-status)
-nmap # <Plug>(asterisk-z#)<Plug>(anzu-update-search-status)
-" map g* <Plug>(asterisk-gz*)
-" map g# <Plug>(asterisk-gz#)
-let g:asterisk#keeppos = 1
 " }}}
 
 " submode {{{
@@ -410,6 +399,10 @@ let g:yacd#root_names = ['Rakefile', '.root', '.git']
 " }}}
 
 "let g:vim_spy_auto_start = 1
+
+" vim-slack {{{
+nnoremap <Leader>sp  :SlackPost<Space>
+" }}}
 
 " neocomplete {{{
 if neobundle#is_installed('neocomplete.vim')
