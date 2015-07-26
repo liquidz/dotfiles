@@ -88,6 +88,7 @@ NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundleLazy 'vim-scripts/ruby-matchit', {'autoload': {'filetypes': 'ruby'}}
 NeoBundleLazy 'nelstrom/vim-textobj-rubyblock', {'autoload': {'filetypes': 'ruby'}}
 NeoBundle 'tpope/vim-endwise'
+NeoBundle 'elixir-lang/vim-elixir'
 
 if has('unix')
   NeoBundleLazy 'guns/vim-clojure-static', {'autoload': {'filetypes': 'clojure'}}
