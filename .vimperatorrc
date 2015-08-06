@@ -95,5 +95,6 @@ EOT
 " 無効化の定義
 ignorekeys add app\\.gistboxapp\\.com
 ignorekeys add trello\\.com
+ignorekeys add workflowy\\.com
 
 echo ".vimperatorrc sourced"

@@ -292,10 +292,14 @@ let b:quickrun_config = {'_': {'split': 'vertical'}}
 set splitbelow
 set splitright
 
+" hook/copen, hook/back で QuickFix にフォーカスを奪われないようにする
 let g:quickrun_config = {
     \   '_': {
-    \     'runner'                    : 'vimproc',
-    \     'runner/vimproc/updatetime' : 60
+    \     'runner'                         : 'vimproc',
+    \     'runner/vimproc/updatetime'      : 60,
+    \     'hook/copen/enable_exist_data'   : 1,
+    \     'hook/back_window/enable_exit'   : 1,
+    \     'hook/back_window/priority_exit' : 100,
     \   },
     \   'go': {
     \     'command' : 'go',
@@ -319,8 +323,18 @@ let g:quickrun_config = {
     \       : executable('rubocop') ? 'watchdogs_checker/rubocop'
     \       : executable('ruby') ? 'watchdogs_checker/ruby'
     \       : '',
+    \   },
+    \   'watchdogs_checker/elixir': {
+    \     'command'     : 'elixir',
+    \     'exec'        : '%c %s',
+    \     'errorformat' : '**\ (%.%#Error)\ %f:%l:\ %m,%-G%.%#',
+    \     'hook/cd/directory': yacd#get_root_dir(expand('%:p:h'))
+    \   },
+    \   'elixir/watchdogs_checker': {
+    \     'type' : 'watchdogs_checker/elixir',
     \   }
     \ }
+
 
 if has('unix')
   let g:quickrun_config.markdown = {
@@ -396,7 +410,7 @@ aug END
 
 " vim-yacd {{{
 let g:yacd#enable = 1
-let g:yacd#root_names = ['Rakefile', '.root', '.git']
+let g:yacd#root_names = ['Rakefile', 'mix.exs', '.root', '.git']
 " }}}
 
 "let g:vim_spy_auto_start = 1
