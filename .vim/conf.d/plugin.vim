@@ -37,6 +37,8 @@ NeoBundle 'thinca/vim-visualstar'
 NeoBundle 'kana/vim-submode'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'w0ng/vim-hybrid'
+NeoBundle 'pasela/edark.vim'
+NeoBundle 'tomasr/molokai'
 NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'fuenor/qfixgrep'
@@ -73,6 +75,7 @@ NeoBundle 'liquidz/vim-slack'
 NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'aklt/plantuml-syntax'
 NeoBundle 'tomtom/tcomment_vim'
+NeoBundle 'ujihisa/unite-colorscheme'
 
 " neocomplete
 if has('lua') && has('unix')
@@ -97,6 +100,10 @@ if has('unix')
   NeoBundleLazy 'tpope/vim-classpath', {'autoload': {'filetypes': 'clojure'}}
   NeoBundleLazy 'typedclojure/vim-typedclojure', {'autoload': {'filetypes': 'clojure'}}
   NeoBundle 'majutsushi/tagbar'
+endif
+
+if system('uname') ==# "Darwin\n"
+  NeoBundle 'rizzatti/dash.vim'
 endif
 
 call neobundle#end()
@@ -297,7 +304,6 @@ let g:quickrun_config = {
     \   '_': {
     \     'runner'                         : 'vimproc',
     \     'runner/vimproc/updatetime'      : 60,
-    \     'hook/copen/enable_exist_data'   : 1,
     \     'hook/back_window/enable_exit'   : 1,
     \     'hook/back_window/priority_exit' : 100,
     \   },
@@ -538,6 +544,10 @@ omap ab <Plug>(textobj-multiblock-a)
 omap ib <Plug>(textobj-multiblock-i)
 xmap ab <Plug>(textobj-multiblock-a)
 xmap ib <Plug>(textobj-multiblock-i)
+" }}}
+
+" unite-colorscheme {{{
+nnoremap <silent> [Unite]c :<C-u>Unite colorscheme<CR>
 " }}}
 
 " vim:fdl=0
