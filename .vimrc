@@ -219,7 +219,7 @@ aug MyAutoOpenCWindow
   autocmd QuickFixCmdPost *grep* cwindow
 aug END
 
-if $TMUX != ""
+if $TMUX != ''
   augroup titlesettings
     autocmd!
     autocmd BufEnter * call system("tmux rename-window " . "'[vim] " . expand("%:t") . "'")
