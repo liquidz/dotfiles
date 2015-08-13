@@ -76,6 +76,7 @@ NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'aklt/plantuml-syntax'
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'ujihisa/unite-colorscheme'
+NeoBundle 'junegunn/vim-easy-align'
 
 " neocomplete
 if has('lua') && has('unix')
@@ -548,6 +549,13 @@ xmap ib <Plug>(textobj-multiblock-i)
 
 " unite-colorscheme {{{
 nnoremap <silent> [Unite]c :<C-u>Unite colorscheme<CR>
+" }}}
+
+" vim-easy-align {{{
+vmap <Enter> <Plug>(EasyAlign)
+let g:easy_align_delimiters = {
+    \ '>': { 'pattern': '->\|=>' }
+    \ }
 " }}}
 
 " vim:fdl=0

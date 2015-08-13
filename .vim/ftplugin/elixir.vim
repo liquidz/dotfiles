@@ -8,8 +8,10 @@ let g:quickrun_config.mix_test = {
     \ }
 nnoremap <Leader>t :QuickRun mix_test<CR>
 
+" パイプを入力しやすく
+imap >> \|><Space>
+
 " dash integration
 if system('uname') ==# "Darwin\n"
   nmap <silent> K <Plug>DashSearch
 endif
-
