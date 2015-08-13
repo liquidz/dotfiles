@@ -72,7 +72,6 @@ NeoBundle 'kshenoy/vim-signature'
 NeoBundle 'liquidz/vim-yacd'
 NeoBundle 'liquidz/vim-oretag'
 NeoBundle 'liquidz/vim-slack'
-NeoBundle 'vim-jp/vimdoc-ja'
 NeoBundle 'aklt/plantuml-syntax'
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'ujihisa/unite-colorscheme'
@@ -105,6 +104,7 @@ if has('unix')
 endif
 
 if system('uname') ==# "Darwin\n"
+  NeoBundle 'vim-jp/vimdoc-ja'
   NeoBundle 'rizzatti/dash.vim'
 endif
 
