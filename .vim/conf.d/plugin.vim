@@ -77,6 +77,7 @@ NeoBundle 'aklt/plantuml-syntax'
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'junegunn/vim-easy-align'
+NeoBundle 'terryma/vim-multiple-cursors'
 
 " neocomplete
 if has('lua') && has('unix')
@@ -556,6 +557,14 @@ vmap <Enter> <Plug>(EasyAlign)
 let g:easy_align_delimiters = {
     \ '>': { 'pattern': '->\|=>' }
     \ }
+" }}}
+
+" vim-multiple-cursors {{{
+let g:multi_cursor_use_default_mapping = 0
+let g:multi_cursor_next_key='<C-n>'
+let g:multi_cursor_prev_key='<C-p>'
+let g:multi_cursor_skip_key='<C-x>'
+let g:multi_cursor_quit_key='<C-c>'
 " }}}
 
 " vim:fdl=0
