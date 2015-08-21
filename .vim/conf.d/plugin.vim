@@ -7,14 +7,12 @@ call neobundle#begin(expand($HOME . '/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 " plugins {{{
-if has('unix')
-  NeoBundle 'Shougo/vimproc.vim', {
-      \ 'build' : {
-      \   'mac'   : 'make -f make_mac.mak',
-      \   'linux' : 'make',
-      \   'unix'  : 'gmake'
-      \ }}
-endif
+NeoBundle 'Shougo/vimproc.vim', {
+    \ 'build' : {
+    \   'mac'   : 'make -f make_mac.mak',
+    \   'linux' : 'make',
+    \   'unix'  : 'gmake'
+    \ }}
 
 NeoBundle 'vim-jp/vital.vim'
 NeoBundle 'haya14busa/underscore.vim'
@@ -513,8 +511,10 @@ endfunction
 " }}}
 
 " oretag {{{
-let g:oretag#enable = 1
-let g:oretag#tag_dir = expand('$HOME/.tags')
+if executable('ctags')
+  let g:oretag#enable = 1
+  let g:oretag#tag_dir = expand('$HOME/.tags')
+endif
 " }}}
 
 " vim-watchdog {{{
