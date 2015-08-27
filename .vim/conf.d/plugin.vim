@@ -72,6 +72,7 @@ NeoBundle 'kshenoy/vim-signature'
 NeoBundle 'liquidz/vim-yacd'
 NeoBundle 'liquidz/vim-oretag'
 NeoBundle 'liquidz/vim-slack'
+NeoBundle 'liquidz/vivi.vim'
 NeoBundle 'aklt/plantuml-syntax'
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'ujihisa/unite-colorscheme'
@@ -332,15 +333,6 @@ let g:quickrun_config = {
     \       : executable('ruby') ? 'watchdogs_checker/ruby'
     \       : '',
     \   },
-    \   'watchdogs_checker/elixir': {
-    \     'command'     : 'elixir',
-    \     'exec'        : '%c %s',
-    \     'errorformat' : '**\ (%.%#Error)\ %f:%l:\ %m,%-G%.%#',
-    \     'hook/cd/directory': yacd#get_root_dir(expand('%:p:h'))
-    \   },
-    \   'elixir/watchdogs_checker': {
-    \     'type' : 'watchdogs_checker/elixir',
-    \   }
     \ }
 
 
@@ -565,6 +557,11 @@ let g:multi_cursor_next_key='<C-n>'
 let g:multi_cursor_prev_key='<C-p>'
 let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<C-c>'
+" }}}
+
+" vivi.vim {{{
+let g:vivi_enable_default_key_mappings = 1
+let g:vivi_enable_auto_syntax_checking = 1
 " }}}
 
 " vim:fdl=0

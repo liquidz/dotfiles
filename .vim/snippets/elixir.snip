@@ -1,0 +1,29 @@
+snippet		project
+abbr		project
+	@url "https://github.com/liquidz/${1}"
+	@description """
+	FIXME
+	"""
+	
+	def project do
+	  [
+	    app:          :$1,
+	    version:      "0.0.1",
+	    elixir:       "~> 1.0",
+	    name:         "$1",
+	    source_url:   @url,
+	    description:  @description,
+	    package:      package,
+	    deps:         deps
+	  ]
+	end
+
+snippet		package
+abbr		package
+	defp package do
+	  [
+	    contributors: ["Masashi Iizuka"],
+	    licenses:     ["MIT"],
+	    links:        %{"Github" => @url}
+	  ]
+	end
