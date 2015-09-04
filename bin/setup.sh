@@ -17,6 +17,7 @@ DOT_FILES=(".vimrc"                     \
     ".peco" ".ctags"                    \
     ".gemrc" ".rubocop.yml"             \
     ".gitconfig.common"                 \
+    ".cheatrc"                          \
     )
 # colors {{{
 red=31
@@ -143,6 +144,10 @@ if [[ "$MODE" == "full" ]]; then
         git config --global user.name liquidz
         git config --global user.email liquidz.uo@gmail.com
     fi
+
+    ## cheat
+    cecho $yellow " * cheat config"
+    ln -sfn $INSTALL_DIR/.cheatsheets $PREFIX/.cheatsheets
 fi
 
 cecho $green "Done"

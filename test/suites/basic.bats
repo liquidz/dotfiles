@@ -56,4 +56,8 @@ setup () {
     git config --get user.email > /dev/null 2>&1; RET=$?
     [ $RET -eq 0 ]
     [ -L "$TEST_PREFIX/.gitconfig.common" ]
+
+    ## cheat
+    [ -L "$TEST_PREFIX/.cheatrc" ]
+    [ -L "$TEST_PREFIX/.cheatsheets" ]
 }
