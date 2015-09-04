@@ -6,6 +6,7 @@ if [[ -e $ANTIGEN ]]; then
     antigen bundle lein
     antigen bundle docker
     antigen bundle zsh-users/zsh-syntax-highlighting
+    antigen bundle robbyrussell/oh-my-zsh plugins/mix
 
     antigen apply
 fi
