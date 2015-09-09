@@ -277,6 +277,7 @@ let g:ctrlp_open_new_file       = 1   " 新規ファイル作成時にタブで�
 let g:ctrlp_show_hidden         = 1   " 隠しファイルも表示
 let g:ctrlp_match_window        = 'results:50'
 let g:ctrlp_follow_symlinks     = 1
+let g:ctrlp_root_markers        = ['.root']
 let g:ctrlp_custom_ignore = {
     \   'dir' : '\v[\/](\.git|\.hg|\.svn|cookbooks|target|Vendor)$',
     \   'file': '\v\.(o|bk|org|exe|so|dll|skl|cgi|gitkeep)$',
