@@ -4,9 +4,9 @@ setlocal iskeyword-=/
 set tags+=$HOME/.tags/clojure.tags
 
 " 今いる括弧をもひとつ括弧でくくる {{{2
-nnoremap <Leader>( F(i(<Esc><Right>%a)<Esc>%a<Space><Left>
-nnoremap <Leader>[ F[i[<Esc><Right>%a]<Esc>%a<Space><Left>
-nnoremap <Leader>{ F{i{<Esc><Right>%a}<Esc>%a<Space><Left>
+nnoremap <buffer> <Leader>( F(i(<Esc><Right>%a)<Esc>%a<Space><Left>
+nnoremap <buffer> <Leader>[ F[i[<Esc><Right>%a]<Esc>%a<Space><Left>
+nnoremap <buffer> <Leader>{ F{i{<Esc><Right>%a}<Esc>%a<Space><Left>
 
 " Requires vim-fireplace
 function! s:myRunTests() abort
@@ -21,9 +21,9 @@ function! s:myRunTests() abort
   execute ':RunTests ' . test_ns
 endfunction
 command! MyRunTests call s:myRunTests()
-nnoremap <Leader>t :<C-u>MyRunTests<CR>
+nnoremap <buffer> <Leader>t :<C-u>MyRunTests<CR>
 
-nnoremap <Leader>s :<C-u>Require<CR>
+nnoremap <buffer> <Leader>s :<C-u>Require<CR>
 
 aug MyLispWords
   au!
@@ -41,4 +41,4 @@ let g:quickrun_config.lein_test = {
     \ 'exec'      : '%c test',
     \ 'hook/cd/directory': yacd#get_root_dir(expand('%:p:h'))
     \ }
-nnoremap <Leader>lt :QuickRun lein_test<CR>
+nnoremap <buffer> <Leader>lt :QuickRun lein_test<CR>

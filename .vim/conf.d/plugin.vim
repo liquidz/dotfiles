@@ -76,6 +76,7 @@ NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'terryma/vim-multiple-cursors'
+NeoBundle 'mattn/vim-cheat'
 
 " neocomplete
 if has('lua') && has('unix')

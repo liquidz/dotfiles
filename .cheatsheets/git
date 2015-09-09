@@ -15,11 +15,11 @@ git config --get foo.bar
 # To stage all changes for commit:
 git add --all
 
-# To commit staged changes
-git commit -m "Your commit message"
-
 # To edit previous commit message
 git commit --amend
+
+# WIP PR (allow-empty)
+git commit --allow-empty -m "[WIP]..."
 
 # 先頭のリビジョン番号を表示
 git rev-parse HEAD

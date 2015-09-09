@@ -18,5 +18,5 @@ let g:quickrun_config.bundle_rspec = {
     \ 'hook/cd/directory': yacd#get_root_dir(expand('%:p:h'))
     \ }
 
-nnoremap <Leader>t :QuickRun bundle_rspec<CR>
+nnoremap <buffer> <Leader>t :QuickRun bundle_rspec<CR>
 setlocal errorformat=%E\ %#%n)\ %.%#,%Z\ %##\ %f:%l:%.%#,%C%m,%-G%.%#
