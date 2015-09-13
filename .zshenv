@@ -92,7 +92,11 @@ alias gho='(cd $(ghq list --full-path | peco) && git browse)'
 # }}}
 
 # local bookmark {{{
-alias bm='cd $(cat ~/.bookmark | peco)'
+function __bookmarklist() {
+    ghq list --full-path liquidz
+    cat ~/.bookmark
+}
+alias bm='cd $(__bookmarklist | peco)'
 # }}}
 
 # git {{{
