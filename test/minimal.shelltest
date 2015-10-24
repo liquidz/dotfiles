@@ -1,0 +1,18 @@
+@require test/setup.txt
+
+# minimal setup
+$ MODE=min $SETUP
+
+$ test -d "$TEST_PREFIX/src/github.com/liquidz/dotfiles"
+$ test -L "$TEST_PREFIX/.vimrc"
+$ test -L "$TEST_PREFIX/.tmux.conf"
+$ test -L "$TEST_PREFIX/.zshenv"
+$ test -L "$TEST_PREFIX/.zshrc"
+$ test -L "$TEST_PREFIX/.zshrc.antigen"
+$ test -L "$TEST_PREFIX/.peco"
+$ test -L "$TEST_PREFIX/.ctags"
+$ test -L "$TEST_PREFIX/.gemrc"
+$ test -L "$TEST_PREFIX/.rubocop.yml"
+$ test -L "$TEST_PREFIX/.lein/profiles.clj"
+$ test -L "$TEST_PREFIX/.gitconfig.common"
+$ ! test -L "$TEST_PREFIX/.vim"

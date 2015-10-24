@@ -6,10 +6,11 @@ machine:
 dependencies:
   pre:
     - pip install vim-vint
-    - git clone https://github.com/sstephenson/bats.git
+    - curl -o shelltest https://github.com/liquidz/shelltest/releases/download/v0.1.0/shelltest_linux_amd64
+    - chmod +x shelltest
 test:
   override:
-    - bats/bin/bats --tap test/suites
+    - ./shelltest -f tap test/*.shelltest
     - vint .vimrc
     - vint .vim/ftplugin/*.vim
     - vint .vim/conf.d/*.vim

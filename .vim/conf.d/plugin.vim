@@ -77,6 +77,8 @@ NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'mattn/vim-cheat'
+NeoBundle 'liquidz/vim-shelltest'
+"NeoBundle 'mtth/scratch.vim'
 
 " neocomplete
 if has('lua') && has('unix')

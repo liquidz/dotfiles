@@ -1,0 +1,14 @@
+# default variable
+$ WORKSPACE_NAME=".workspace"
+$ export TEST_ROOT="`pwd`"
+$ export TEST_PREFIX="$TEST_ROOT/test/$WORKSPACE_NAME"
+$ export PREFIX="$TEST_PREFIX"
+$ export TEST_INSTALL_DIR="$PREFIX/src/github.com/liquidz"
+$ export IS_TEST="TRUE"
+$ export SETUP="bash ./bin/setup.sh"
+
+# setup
+$ rm -rf $TEST_PREFIX
+$ mkdir -p $TEST_PREFIX
+
+# vim: ft=shelltest
