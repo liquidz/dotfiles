@@ -6,7 +6,7 @@ machine:
 dependencies:
   pre:
     - pip install vim-vint
-    - curl -o shelltest https://github.com/liquidz/shelltest/releases/download/v0.1.0/shelltest_linux_amd64
+    - wget -O shelltest https://github.com/liquidz/shelltest/releases/download/v0.1.0/shelltest_linux_amd64
     - chmod +x shelltest
 test:
   override:
