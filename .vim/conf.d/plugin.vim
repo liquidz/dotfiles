@@ -66,7 +66,6 @@ NeoBundle 'ujihisa/shadow.vim'
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'kana/vim-textobj-line'
 NeoBundle 'osyo-manga/vim-textobj-multiblock'
-NeoBundle 'kshenoy/vim-signature'
 NeoBundle 'liquidz/vim-yacd'
 NeoBundle 'liquidz/vim-oretag'
 NeoBundle 'liquidz/vim-slack'
@@ -77,6 +76,8 @@ NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'mattn/vim-cheat'
+NeoBundle 'liquidz/vim-shelltest'
+"NeoBundle 'mtth/scratch.vim'
 
 " neocomplete
 if has('lua') && has('unix')

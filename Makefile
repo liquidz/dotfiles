@@ -3,7 +3,7 @@ all:
 
 .PHONY: test
 test:
-	env TEST_ROOT="`pwd`" bats/bin/bats --tap test/suites
+	shelltest test/*.shelltest
 
 lint:
 	beco vint .vimrc

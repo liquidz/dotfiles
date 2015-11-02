@@ -1,0 +1,32 @@
+@require test/setup.txt
+
+# full setup
+$ $SETUP
+
+## vim
+$ test -L "$TEST_PREFIX/.vim"
+$ test -d "$TEST_PREFIX/.vim/bundle" 
+$ test -d "$TEST_PREFIX/.vim/backup"
+$ test -e "$TEST_PREFIX/.vim/memo"
+$ test -d "$TEST_PREFIX/.tags"
+$ test -d "$TEST_PREFIX/.vim/bundle/neobundle.vim"
+## tmux
+$ test -d "$TEST_PREFIX/.tmux/plugins/tpm"
+## zsh
+$ test -L "$TEST_PREFIX/.zsh"
+$ test -e "$TEST_PREFIX/.zsh/_tmpl"
+$ test -e "$TEST_PREFIX/.zsh/_git"
+$ test -e "$TEST_PREFIX/.zsh/git-completion.bash"
+$ test -d "$TEST_PREFIX/src/github.com/zsh-users/antigen"
+## beco
+$ test -d "$TEST_PREFIX/src/github.com/liquidz/beco"
+$ test -L "$TEST_PREFIX/bin/beco"
+$ test -L "$TEST_PREFIX/.zsh/_beco"
+## git config
+$ git config --get include.path > /dev/null 2>&1
+$ git config --get user.name > /dev/null 2>&1
+$ git config --get user.email > /dev/null 2>&1
+$ test -L "$TEST_PREFIX/.gitconfig.common"
+## cheat
+$ test -L "$TEST_PREFIX/.cheatrc"
+$ test -L "$TEST_PREFIX/.cheatsheets"
