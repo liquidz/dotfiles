@@ -325,7 +325,10 @@ let g:quickrun_config = {
     \     'exec'    : '%c --report=emacs %s'
     \   },
     \   'php/watchdogs_checker': {
-    \     'type' : 'watchdogs_checker/phpcs',
+    \     'type'
+    \       : executable('phpsc') ? 'watchdogs_checker/phpcs'
+    \       : executable('php') ? 'watchdogs_checker/php'
+    \       : ''
     \   },
     \   'ruby/watchdogs_checker': {
     \     'type'
