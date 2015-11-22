@@ -328,7 +328,7 @@ let g:quickrun_config = {
     \   },
     \   'php/watchdogs_checker': {
     \     'type'
-    \       : executable('phpsc') ? 'watchdogs_checker/phpcs'
+    \       : executable('phpcs') ? 'watchdogs_checker/phpcs'
     \       : executable('php') ? 'watchdogs_checker/php'
     \       : ''
     \   },
