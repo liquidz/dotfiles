@@ -77,6 +77,7 @@ NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'mattn/vim-cheat'
 NeoBundle 'liquidz/vim-shelltest'
+"NeoBundle 'yuratomo/w3m.vim'
 "NeoBundle 'mtth/scratch.vim'
 
 " neocomplete

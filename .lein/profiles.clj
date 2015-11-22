@@ -7,6 +7,7 @@
             [lein-cljfmt "0.1.5"]
             [lein-bikeshed "0.2.0"]
             [codox "0.8.12"]
+            ;[lein-figwheel "0.5.0-1"]
             ]
 
   :aliases {

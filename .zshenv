@@ -49,9 +49,10 @@ alias bo='(cd ~/.vim/bundle && cd $(/bin/ls -1 | peco) && git browse)'
 # }}}
 
 # docker {{{
-export DOCKER_HOST=tcp://192.168.59.103:2376
-export DOCKER_CERT_PATH=$HOME/.boot2docker/certs/boot2docker-vm
-export DOCKER_TLS_VERIFY=1
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://192.168.99.100:2376"
+export DOCKER_CERT_PATH="$HOME/.docker/machine/machines/default"
+export DOCKER_MACHINE_NAME="default"
 
 alias dl='docker ps -ql'
 alias da='docker ps -qa'
@@ -125,6 +126,10 @@ if [[ "$CAKE_PROJECT_ROOT" != "" ]]; then
     alias alltest="$CAKE_PROJECT_ROOT/bin/cake test app AllTests --app $CAKE_PROJECT_ROOT/app"
     alias phpcs="phpcs --standard=CakePHP"
 fi
+# }}}
+
+# w3m {{{
+export WWW_HOME="google.co.jp"
 # }}}
 
 # my commands {{{

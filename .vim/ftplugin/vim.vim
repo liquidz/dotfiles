@@ -18,3 +18,5 @@ let g:quickrun_config.themis = {
     \ 'hook/cd/directory': yacd#get_root_dir(expand('%:p:h'))
     \ }
 nnoremap <buffer> <Leader>t :QuickRun themis<CR>
+
+setlocal iskeyword+=:
