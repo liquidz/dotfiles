@@ -113,7 +113,7 @@ function cd() {
 # To enable this function, you must export CAKE_PROJECT_ROOT in /etc/zshenv
 if [[ "$CAKE_PROJECT_ROOT" != "" ]]; then
     function cake_app_test () {
-        TESTCASE=$(find $CAKE_PROJECT_ROOT/app/Test/Case -name "*Test.php" | cut -b 36- | sed "s/Test.php//g" | peco)
+        TESTCASE=$(find $CAKE_PROJECT_ROOT/app/Test/Case -name "*Test.php" | cut -b 36- | sed "s/Test.php//g" | fzf)
         BUFFER="$CAKE_PROJECT_ROOT/bin/cake test app --app $CAKE_PROJECT_ROOT/app $TESTCASE"
         zle accept-line
     }

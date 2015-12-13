@@ -177,12 +177,17 @@ nnoremap <silent> <C-j><C-j> :nohlsearch<CR><Esc>
 nnoremap <Leader><Leader> :<C-u>Ex<CR>
 nnoremap <C-]> g<C-]>
 
+nnoremap <Nul> za
+
 nnoremap QQ :<C-u>bd!<CR>
 " }}}
 
 " copy to clipboard {{{
 if has('win32')
   vnoremap <C-c> "*y
+endif
+if system('uname') ==# "Darwin\n"
+  set clipboard=unnamed,autoselect
 endif
 " paste from clipboard
 nnoremap <C-y> i<C-r><C-o>+<Esc>l

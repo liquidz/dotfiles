@@ -69,7 +69,15 @@ NeoBundle 'osyo-manga/vim-textobj-multiblock'
 NeoBundle 'liquidz/vim-yacd'
 NeoBundle 'liquidz/vim-oretag'
 NeoBundle 'liquidz/vim-slack'
-NeoBundle 'liquidz/vivi.vim'
+NeoBundle 'liquidz/vivi.vim', {
+    \ 'depends': [
+    \   'elixir-lang/vim-elixir',
+    \   'Shougo/vimproc.vim',
+    \   'thinca/vim-quickrun',
+    \   'thinca/vim-ref',
+    \   'osyo-manga/shabadou.vim',
+    \   'osyo-manga/vim-watchdogs'
+    \ ]}
 NeoBundle 'aklt/plantuml-syntax'
 NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'ujihisa/unite-colorscheme'
@@ -77,8 +85,7 @@ NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'mattn/vim-cheat'
 NeoBundle 'liquidz/vim-shelltest'
-"NeoBundle 'yuratomo/w3m.vim'
-"NeoBundle 'mtth/scratch.vim'
+NeoBundle 'tacahiroy/ctrlp-funky'
 
 " neocomplete
 if has('lua') && has('unix')
@@ -292,9 +299,12 @@ let g:ctrlp_prompt_mappings = {
     \ }
 nnoremap <Leader>ct  :CtrlPTag<CR>
 nnoremap <Leader>b   :CtrlPBuffer<CR>
-nnoremap <Leader>f  :CtrlPCurFile<CR>
 nnoremap <Leader>cd  :CtrlPGonosen<CR>
 nnoremap <Leader>ccc :CtrlPClearCache<CR>
+" }}}
+
+" ctrlpfunky {{{
+nnoremap <Leader>f :CtrlPFunky<Cr>
 " }}}
 
 " quickrun {{{
@@ -569,6 +579,13 @@ let g:multi_cursor_quit_key='<C-c>'
 " vivi.vim {{{
 let g:vivi_enable_default_key_mappings = 1
 let g:vivi_enable_auto_syntax_checking = 1
+let g:vivi_enable_auto_warm_up_iex     = 1
+let g:vivi_enable_omni_completion      = 1
+
+aug MyViviVim
+  au!
+  au BufWritePost *.ex call vivi#module#reload(vivi#module#name())
+aug END
 " }}}
 
 " vim:fdl=0
