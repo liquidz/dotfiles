@@ -87,6 +87,7 @@ NeoBundle 'mattn/vim-cheat'
 NeoBundle 'liquidz/vim-shelltest'
 NeoBundle 'tacahiroy/ctrlp-funky'
 NeoBundle 'liquidz/kami.vim'
+NeoBundle 'rcmdnk/vim-markdown'
 
 " neocomplete
 if has('lua') && has('unix')
@@ -593,6 +594,10 @@ aug END
 nnoremap <Leader>ko :KamiOpen<Space>
 nnoremap <Leader>kk :KamiOpen default<CR>
 nnoremap <Leader>kl :KamiOpenFromList<CR>
+" }}}
+
+" vim-markdown {{{
+let g:vim_markdown_no_default_key_mappings = 1
 " }}}
 
 " vim:fdl=0
