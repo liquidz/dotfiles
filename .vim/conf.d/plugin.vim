@@ -86,6 +86,7 @@ NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'mattn/vim-cheat'
 NeoBundle 'liquidz/vim-shelltest'
 NeoBundle 'tacahiroy/ctrlp-funky'
+NeoBundle 'liquidz/kami.vim'
 
 " neocomplete
 if has('lua') && has('unix')
@@ -586,6 +587,12 @@ aug MyViviVim
   au!
   au BufWritePost *.ex call vivi#module#reload(vivi#module#name())
 aug END
+" }}}
+
+" kami.vim {{{
+nnoremap <Leader>ko :KamiOpen<Space>
+nnoremap <Leader>kk :KamiOpen default<CR>
+nnoremap <Leader>kl :KamiOpenFromList<CR>
 " }}}
 
 " vim:fdl=0
