@@ -178,6 +178,9 @@ nnoremap <Leader><Leader> :<C-u>Ex<CR>
 nnoremap <C-]> g<C-]>
 
 nnoremap <Nul> za
+if has('win32')
+  nnoremap <C-Space> za
+endif
 
 nnoremap QQ :<C-u>bd!<CR>
 " }}}

@@ -104,6 +104,7 @@ NeoBundleLazy 'vim-scripts/ruby-matchit', {'autoload': {'filetypes': 'ruby'}}
 NeoBundleLazy 'nelstrom/vim-textobj-rubyblock', {'autoload': {'filetypes': 'ruby'}}
 NeoBundle 'tpope/vim-endwise'
 NeoBundle 'elixir-lang/vim-elixir'
+NeoBundle 'vim-scripts/confluencewiki.vim'
 
 if has('unix')
   NeoBundleLazy 'guns/vim-clojure-static', {'autoload': {'filetypes': 'clojure'}}
@@ -209,6 +210,7 @@ aug VimFilerKeyMapping
     nmap <buffer> D <Plug>(vimfiler_make_directory)
     nmap <buffer> h <Plug>(vimfiler_smart_h)
     nmap <buffer> F <Plug>(vimfiler_new_file)
+    nunmap <buffer> t
 
     " 関連付け
     if has('unix')
@@ -592,7 +594,7 @@ aug END
 
 " kami.vim {{{
 nnoremap <Leader>ko :KamiOpen<Space>
-nnoremap <Leader>kk :KamiOpen default<CR>
+nnoremap <Leader>kk :KamiToday<CR>
 nnoremap <Leader>kl :KamiOpenFromList<CR>
 " }}}
 
