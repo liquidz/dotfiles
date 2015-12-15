@@ -593,9 +593,8 @@ aug END
 " }}}
 
 " kami.vim {{{
-nnoremap <Leader>ko :KamiOpen<Space>
-nnoremap <Leader>kk :KamiToday<CR>
-nnoremap <Leader>kl :KamiOpenFromList<CR>
+nnoremap <Leader>ko :KamiOpenFromList<CR>
+nnoremap <Leader>kk :KamiOpenToday<CR>
 " }}}
 
 " vim-markdown {{{
