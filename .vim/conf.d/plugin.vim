@@ -90,7 +90,7 @@ NeoBundle 'liquidz/kami.vim'
 NeoBundle 'rcmdnk/vim-markdown'
 
 " neocomplete
-if has('lua') && has('unix')
+if has('lua')
   NeoBundle 'Shougo/neocomplete.vim'
   NeoBundleLazy 'supermomonga/neocomplete-rsense.vim', {
       \ 'autoload': {'filetype': 'ruby'},
@@ -105,6 +105,7 @@ NeoBundleLazy 'nelstrom/vim-textobj-rubyblock', {'autoload': {'filetypes': 'ruby
 NeoBundle 'tpope/vim-endwise'
 NeoBundle 'elixir-lang/vim-elixir'
 NeoBundle 'vim-scripts/confluencewiki.vim'
+NeoBundle 'regedarek/ZoomWin'
 
 if has('unix')
   NeoBundleLazy 'guns/vim-clojure-static', {'autoload': {'filetypes': 'clojure'}}
