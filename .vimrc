@@ -119,6 +119,7 @@ set smarttab
 set shiftwidth=4
 set noequalalways
 set cursorline
+"set cursorcolumn
 augroup cch
   autocmd! cch
   autocmd WinLeave * set nocursorline

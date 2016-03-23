@@ -29,19 +29,24 @@ NeoBundle 'LeafCage/yankround.vim'
 NeoBundleLazy 'Shougo/unite-help', {
     \ 'autoload': {'unite_sources': ['help']} }
 NeoBundleLazy 'Shougo/vimfiler', {'autoload': {'commands': ['VimFiler']}}
+NeoBundle 'Shougo/vimshell.vim'
+"NeoBundle 'liquidz/ctrlp-list.vim'
 NeoBundle 'liquidz/unite-circleci'
 NeoBundle 'osyo-manga/vim-anzu'
 NeoBundle 'thinca/vim-visualstar'
 NeoBundle 'kana/vim-submode'
 NeoBundle 'tpope/vim-surround'
+NeoBundle 'tpope/vim-repeat'
 NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'pasela/edark.vim'
+NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'tomasr/molokai'
 NeoBundle 'rhysd/clever-f.vim'
 NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'fuenor/qfixgrep'
 NeoBundle 'ctrlpvim/ctrlp.vim'
 NeoBundle 'liquidz/ctrlp-gonosen.vim'
+NeoBundle 'liquidz/plantuml.vim'
 NeoBundle 'thinca/vim-quickrun'
 
 NeoBundle 'tyru/open-browser.vim'
@@ -61,11 +66,11 @@ NeoBundle 'osyo-manga/shabadou.vim'
 NeoBundle 'osyo-manga/vim-watchdogs'
 NeoBundle 'jceb/vim-hier'
 NeoBundleLazy 'fatih/vim-go', {'autoload': {'filetypes': 'go'}}
-NeoBundle 'glidenote/memolist.vim'
+"NeoBundle 'glidenote/memolist.vim'
 NeoBundle 'ujihisa/shadow.vim'
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'kana/vim-textobj-line'
-NeoBundle 'osyo-manga/vim-textobj-multiblock'
+"NeoBundle 'osyo-manga/vim-textobj-multiblock'
 NeoBundle 'liquidz/vim-yacd'
 NeoBundle 'liquidz/vim-oretag'
 NeoBundle 'liquidz/vim-slack'
@@ -88,6 +93,7 @@ NeoBundle 'liquidz/vim-shelltest'
 NeoBundle 'tacahiroy/ctrlp-funky'
 NeoBundle 'liquidz/kami.vim'
 NeoBundle 'rcmdnk/vim-markdown'
+NeoBundle 'wellle/visual-split.vim'
 
 " neocomplete
 if has('lua')
@@ -219,6 +225,8 @@ aug VimFilerKeyMapping
       call vimfiler#set_execute_file('html,htm,pdf,jpg,gif,png,svg,lzh,mp3,mpg,wmv,rm,flv', 'open')
     endif
 
+    "nnoremap <buffer> z <C-u>:CtrlPListWithAction :VimFiler %s<CR>
+
     " Unite bookmark連携
     nnoremap <buffer> z <C-u>:Unite bookmark<CR>
     nnoremap <buffer> A <C-u>:UniteBookmarkAdd<CR>
@@ -226,6 +234,23 @@ aug VimFilerKeyMapping
     call unite#custom_default_action('source/bookmark/directory' , 'vimfiler')
   endfunction
 aug END
+" }}}
+
+" vimshell.vim {{{
+nnoremap <Leader>ss :VimShell<CR>
+
+let g:vimshell_prompt = '% '
+let g:vimshell_secondary_prompt = '> '
+let g:vimshell_user_prompt = 'fnamemodify(getcwd(), ":~")'
+
+call unite#custom_default_action('source/bookmark/directory' , 'vimshell')
+call unite#custom_default_action("vimshell/history", "insert")
+" }}}
+
+" ctrlp-list {{{
+"let g:ctrlp_list_action = ':VimShell %s'
+"let g:ctrlp_list_file = '~/.bookmark'
+"nnoremap <Leader>bm :CtrlPList<CR>
 " }}}
 
 " osyo-manga/vim-anzu {{{
@@ -504,7 +529,7 @@ let g:lightline = {
     \ 'colorscheme': 'wombat',
     \ 'active': {
     \   'left': [['mode', 'paste'],
-    \            ['fugitive', 'readonly', 'filename', 'modified']],
+    \            ['fugitive', 'readonly', 'modified']],
     \   'right': [['lineinfo'], ['percent'], ['fileformat', 'fileencoding', 'filetype'], ['anzu']]
     \ },
     \ 'component_function': {
@@ -512,14 +537,16 @@ let g:lightline = {
     \   'anzu': 'anzu#search_status',
     \ },
     \ 'separator': { 'left': '', 'right': '' },
-    \ 'subseparator': { 'left': '|', 'right': '|' }
+    \ 'subseparator': { 'left': '|', 'right': '|' },
+    \ 'tabline': { 'left': [[ 'tabs' ]], 'right': [[ 'bufnum' ]] }
     \ }
 
 function! MyFugitive()
   let l:branch = exists('*fugitive#head') ? fugitive#head() : ''
   if l:branch ==# 'master'
-    let l:branch = '*' . toupper(l:branch) . '*'
+    let l:branch = printf('!! %s !!', toupper(l:branch))
   endif
+
   return l:branch
 endfunction
 " }}}
@@ -534,17 +561,6 @@ endif
 " vim-watchdog {{{
 let g:watchdogs_check_BufWritePost_enable = 1
 call watchdogs#setup(g:quickrun_config)
-" }}}
-
-" memolist.vim {{{
-let g:memolist_path              = $HOME . '/.vim/memo'
-let g:memolist_memo_suffix       = 'md'
-let g:memolist_template_dir_path = $HOME . '/.vim/template/memolist'
-"let g:memolist_unite = 1
-let g:memolist_ex_cmd = 'CtrlP'
-nnoremap <Leader>mn :MemoNew<CR>
-nnoremap <Leader>ml :MemoList<CR>
-nnoremap <Leader>mg :MemoGrep<CR>
 " }}}
 
 " tagbar {{{
@@ -596,6 +612,8 @@ aug END
 " kami.vim {{{
 nnoremap <Leader>ko :KamiOpenFromList<CR>
 nnoremap <Leader>kk :KamiOpenToday<CR>
+let g:kami#ext = 'adoc'
+let g:kami#timestamp_format = '== %s'
 " }}}
 
 " vim-markdown {{{

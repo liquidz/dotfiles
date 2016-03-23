@@ -1,0 +1,37 @@
+snippet		header
+	= ${1:title}
+	:author: ${2:author}
+	:email: ${3:email}
+	:toc: right
+	:toclevels: ${4:2}
+	:pagenums:
+	:sectanchors:
+	:sectlinks:
+
+snippet		link
+	link:${1:url}[${2:title}]
+
+snippet		code
+	[source,${1:text}]
+	----
+	${2}
+	----
+
+snippet		source
+	[source,${1:text}]
+	----
+	${2}
+	----
+
+snippet		table
+	[options="header,autowidth"]
+	|===
+	| foo | bar
+	|===
+
+snippet		note
+	[NOTE]
+	${1}
+
+snippet		include
+	include::${1:foo.adoc}[]
