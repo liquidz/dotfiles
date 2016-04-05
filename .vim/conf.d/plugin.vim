@@ -46,7 +46,7 @@ NeoBundle 'Lokaltog/vim-easymotion'
 NeoBundle 'fuenor/qfixgrep'
 NeoBundle 'ctrlpvim/ctrlp.vim'
 NeoBundle 'liquidz/ctrlp-gonosen.vim'
-NeoBundle 'liquidz/plantuml.vim'
+"NeoBundle 'liquidz/plantuml.vim'
 NeoBundle 'thinca/vim-quickrun'
 
 NeoBundle 'tyru/open-browser.vim'
@@ -355,6 +355,10 @@ let g:quickrun_config = {
     \   'go': {
     \     'command' : 'go',
     \     'exec'    : '%c run %s'
+    \   },
+    \   'matlab': {
+    \     'command' : 'octave',
+    \     'exec'    : '%c -q %s'
     \   },
     \   'make': {
     \     'command'   : 'make',
