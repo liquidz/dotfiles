@@ -1,5 +1,14 @@
 .vim/autoload/plug.vim
 .vim/bundle
+.vim/repos
+.vim/rollbacks
+.vim/merged
+.vim/state_view.vim
+.vim/state_vim.vim
+.vim/temp
+.vim/.dein
+.vim/cache*
+.vim/marged*
 .vim/backup
 .vim/memo
 .vim/vim-ref

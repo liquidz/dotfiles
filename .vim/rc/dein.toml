@@ -1,0 +1,272 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+hook_post_update = '''
+  if dein#util#_is_mac()
+    let cmd = 'make -f make_mac.mak'
+  else
+    let cmd = 'make'
+  endif
+  let g:dein#plugin.build = cmd
+'''
+
+[[plugins]]
+repo = 'vim-jp/vital.vim'
+
+[[plugins]]
+repo = 'haya14busa/underscore.vim'
+
+[[plugins]]
+repo = 'thinca/vim-themis'
+
+[[plugins]]
+repo = 'Shougo/unite.vim'
+
+[[plugins]]
+repo = 'Shougo/vimfiler'
+hook_add = '''
+  let g:vimfiler_safe_mode_by_default = 0
+  let g:vimfiler_as_default_explorer  = 1
+  let g:vimfiler_sort_type            = 'filename'
+  let g:vimfiler_enable_auto_cd       = 1
+  nnoremap <Leader><leader> :VimFiler<CR>
+'''
+
+[[plugins]]
+repo = 'osyo-manga/vim-anzu'
+hook_add = '''
+  nmap n <Plug>(anzu-n)
+  nmap N <Plug>(anzu-N)
+  nmap * <Plug>(anzu-star)
+  nmap # <Plug>(anzu-sharp)
+'''
+
+[[plugins]]
+repo = 'thinca/vim-visualstar'
+
+[[plugins]]
+repo = 'kana/vim-submode'
+hook_add = '''
+  let g:submode_timeout = 0
+  call submode#enter_with('window', 'n', '', '<C-w><C-w>', '<Nop>')
+  call submode#leave_with('window', 'n', '', '<Esc>')
+  call submode#map('window', 'n', '', 'j', '<C-w>j')
+  call submode#map('window', 'n', '', 'J', '<C-w>J')
+  call submode#map('window', 'n', '', 'k', '<C-w>k')
+  call submode#map('window', 'n', '', 'K', '<C-w>K')
+  call submode#map('window', 'n', '', 'l', '<C-w>l')
+  call submode#map('window', 'n', '', 'L', '<C-w>L')
+  call submode#map('window', 'n', '', 'h', '<C-w>h')
+  call submode#map('window', 'n', '', 'H', '<C-w>h')
+  call submode#map('window', 'n', '', 's', '<C-w>s')
+  call submode#map('window', 'n', '', 'v', '<C-w>v')
+  call submode#map('window', 'n', '', 'x', ':q<CR>')
+  call submode#map('window', 'n', '', '>', '<C-w>5>')
+  call submode#map('window', 'n', '', '<', '<C-w>5<lt>')
+  call submode#map('window', 'n', '', '+', '<C-w>5+')
+  call submode#map('window', 'n', '', '-', '<C-w>5-')
+'''
+
+[[plugins]]
+repo = 'tpope/vim-surround'
+
+[[plugins]]
+repo = 'tpope/vim-repeat'
+
+[[plugins]]
+repo = 'w0ng/vim-hybrid'
+hook_add = '''
+  colorscheme hybrid
+  if dein#util#_is_mac()
+    highlight Normal ctermbg=none
+  endif
+'''
+
+[[plugins]]
+repo = 'rhysd/clever-f.vim'
+hook_add = '''
+  let g:clever_f_across_no_line = 1
+  let g:clever_f_ignore_case = 1
+'''
+
+[[plugins]]
+repo = 'ctrlpvim/ctrlp.vim'
+hook_add = '''
+  let g:ctrlp_clear_cache_on_exit = 0   " 終了時キャッシュをクリアしない
+  let g:ctrlp_mruf_max            = 500 " MRUの最大記録数
+  let g:ctrlp_open_new_file       = 1   " 新規ファイル作成時にタブで開く
+  let g:ctrlp_show_hidden         = 1   " 隠しファイルも表示
+  let g:ctrlp_match_window        = 'results:50'
+  let g:ctrlp_follow_symlinks     = 1
+  let g:ctrlp_root_markers        = ['.root']
+  let g:ctrlp_custom_ignore = {
+      \   'dir' : '\v[\/](\.git|\.hg|\.svn|cookbooks|target|Vendor)$',
+      \   'file': '\v\.(o|bk|org|exe|so|dll|skl|cgi|gitkeep)$',
+      \   'link': 'some_bad_symbolic_links',
+      \ }
+  let g:ctrlp_prompt_mappings = {
+      \ 'PrtCurLeft()'   : ['<c-b>', '<left>'],
+      \ 'PrtCurRight()'  : ['<c-f>', '<right>'],
+      \ 'PrtClearCache()': ['<c-l>'],
+      \ }
+  nnoremap <Leader>ct  :CtrlPTag<CR>
+  nnoremap <Leader>b   :CtrlPBuffer<CR>
+  nnoremap <Leader>cd  :CtrlPGonosen<CR>
+  nnoremap <Leader>ccc :CtrlPClearCache<CR>
+'''
+
+[[plugins]]
+repo = 'tacahiroy/ctrlp-funky'
+depends = 'ctrlp.vim'
+hook_add = '''
+  nnoremap <Leader>f :CtrlPFunky<Cr>
+'''
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+hook_add = '''
+  " 結果を縦分割で表示
+  let b:quickrun_config = {'_': {'split': 'vertical'}}
+  " 横分割時は下､ 縦分割時は右へ新しいウィンドウを開く
+  set splitbelow
+  set splitright
+
+  let g:quickrun_config = {
+      \   '_': {
+      \     'runner'                         : 'vimproc',
+      \     'runner/vimproc/updatetime'      : 60,
+      \     'hook/back_window/enable_exit'   : 1,
+      \     'hook/back_window/priority_exit' : 100,
+      \   },
+      \   'go': {
+      \     'command' : 'go',
+      \     'exec'    : '%c run %s'
+      \   },
+      \   'matlab': {
+      \     'command' : 'octave',
+      \     'exec'    : '%c -q %s'
+      \   },
+      \   'make': {
+      \     'command'   : 'make',
+      \     'exec'      : '%c %o',
+      \     'outputter' : 'error:buffer:quickfix'
+      \   },
+      \
+      \   'watchdogs_checker/phpcs': {
+      \     'command' : 'phpcs',
+      \     'exec'    : '%c --report=emacs %s'
+      \   },
+      \   'php/watchdogs_checker': {
+      \     'type'
+      \       : executable('phpcs') ? 'watchdogs_checker/phpcs'
+      \       : executable('php') ? 'watchdogs_checker/php'
+      \       : ''
+      \   },
+      \   'ruby/watchdogs_checker': {
+      \     'type'
+      \       : executable('rubocop') ? 'watchdogs_checker/rubocop'
+      \       : executable('ruby') ? 'watchdogs_checker/ruby'
+      \       : '',
+      \   },
+      \ }
+'''
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+
+[[plugins]]
+repo = 'kannokanno/previm'
+hook_add = '''
+  " set empty to use open-browser.vim
+  let g:previm_open_cmd = ''
+  aug PrevimSettings
+    au!
+    au BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
+  aug END
+'''
+
+[[plugins]]
+repo = 't9md/vim-quickhl'
+hook_add = '''
+  nmap <Space>m <Plug>(quickhl-manual-this)
+  xmap <Space>m <Plug>(quickhl-manual-this)
+  nmap <Space>M <Plug>(quickhl-manual-reset)
+  xmap <Space>M <Plug>(quickhl-manual-reset)
+'''
+
+[[plugins]]
+repo = 'kana/vim-operator-replace'
+hook_add = '''
+  map - <Plug>(operator-replace)
+'''
+
+[[plugins]]
+repo = 'kana/vim-operator-user'
+
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+hook_add = '''
+  nnoremap <Leader>ga  :Gwrite<CR>
+  nnoremap <Leader>gs  :Gstatus<CR>
+  nnoremap <Leader>gd  :Gdiff<CR>
+  nnoremap <Leader>gc  :Gcommit -av<CR>
+  nnoremap <Leader>go  :Git browse<CR>
+'''
+
+[[plugins]]
+repo = 'gregsexton/gitv'
+hook_add = '''
+  nnoremap <Leader>gl  :Gitv<CR>
+'''
+
+[[plugins]]
+repo = 'idanarye/vim-merginal'
+hook_add = '''
+  nnoremap <Leader>gb  :Merginal<CR>
+'''
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+hook_add = '''
+  function! MyFugitive()
+    let l:branch = exists('*fugitive#head') ? fugitive#head() : ''
+    if l:branch ==# 'master'
+      let l:branch = printf('!! %s !!', toupper(l:branch))
+    endif
+  
+    return l:branch
+  endfunction
+
+  let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [['mode', 'paste'],
+      \            ['fugitive', 'readonly', 'modified']],
+      \   'right': [['lineinfo'], ['percent'], ['fileformat', 'fileencoding', 'filetype'], ['anzu']]
+      \ },
+      \ 'component_function': {
+      \   'fugitive': 'MyFugitive',
+      \   'anzu': 'anzu#search_status',
+      \ },
+      \ 'separator': { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '|', 'right': '|' },
+      \ 'tabline': { 'left': [[ 'tabs' ]], 'right': [[ 'bufnum' ]] }
+      \ }
+'''
+
+[[plugins]]
+repo = 'osyo-manga/shabadou.vim'
+
+[[plugins]]
+repo = 'osyo-manga/vim-watchdogs'
+depends = 'vim-quickrun'
+hook_add = '''
+  let g:watchdogs_check_BufWritePost_enable = 1
+  call watchdogs#setup(g:quickrun_config)
+'''
+
+[[plugins]]
+repo = 'jceb/vim-hier'
+

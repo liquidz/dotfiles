@@ -86,13 +86,11 @@ if [[ "$MODE" == "full" ]]; then
         touch $PREFIX/.vim/memo/default.md
     fi
 
-    cecho $yellow " * cloning neobundle.vim"
-    DIR="$PREFIX/.vim/bundle/neobundle.vim"
-    if [ ! -e $DIR ]; then
-        git clone https://github.com/Shougo/neobundle.vim.git $DIR > /dev/null 2>&1
-    else
-        cecho $blue "   pulling origin master"
-        (cd $DIR && git pull origin master > /dev/null 2>&1)
+    cecho $yellow " * installing dein.vim"
+    INSTALLER="/tmp/installer.sh"
+    if [ ! -e "$PREFIX/.vim/repos" ]; then
+        curl -s https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > /tmp/installer.sh
+        sh $INSTALLER $PREFIX/.vim > /dev/null 2>&1
     fi
 
     ## tmux の設定
