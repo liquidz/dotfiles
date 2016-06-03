@@ -32,6 +32,29 @@ hook_add = '''
   let g:vimfiler_sort_type            = 'filename'
   let g:vimfiler_enable_auto_cd       = 1
   nnoremap <Leader><leader> :VimFiler<CR>
+
+  aug VimFilerKeyMapping
+    au!
+    autocmd FileType vimfiler call s:vimfiler_local()
+  
+    function! s:vimfiler_local()
+      " キーマップのカスタマイズ
+      nmap <buffer> <C-r> <Plug>(vimfiler_rename_file)
+      nmap <buffer> a <Plug>(vimfiler_toggle_mark_all_lines)
+      nmap <buffer> m <Plug>(vimfiler_set_current_mask)
+      nmap <buffer> M <Plug>(vimfiler_move_file)
+      nmap <buffer> D <Plug>(vimfiler_make_directory)
+      nmap <buffer> h <Plug>(vimfiler_smart_h)
+      nmap <buffer> F <Plug>(vimfiler_new_file)
+      nunmap <buffer> t
+  
+      " Unite bookmark連携
+      nnoremap <buffer> z <C-u>:Unite bookmark<CR>
+      nnoremap <buffer> A <C-u>:UniteBookmarkAdd<CR>
+      " Unite bookmarkのアクションをVimFilerに
+      call unite#custom_default_action('source/bookmark/directory' , 'vimfiler')
+    endfunction
+  aug END
 '''
 
 [[plugins]]
@@ -270,3 +293,122 @@ hook_add = '''
 [[plugins]]
 repo = 'jceb/vim-hier'
 
+[[plugins]]
+repo = 'kana/vim-textobj-user'
+
+[[plugins]]
+repo = 'kana/vim-textobj-line'
+
+[[plugins]]
+repo = 'liquidz/vim-yacd'
+hook_add = '''
+  let g:yacd#enable = 1
+  let g:yacd#root_names = ['Rakefile', 'mix.exs', '.root', '.git']
+'''
+
+[[plugins]]
+repo = 'liquidz/vim-oretag'
+hook_add = '''
+  if executable('ctags')
+    let g:oretag#enable = 1
+    let g:oretag#tag_dir = expand('$HOME/.tags')
+  endif
+'''
+
+[[plugins]]
+repo = 'aklt/plantuml-syntax'
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+
+[[plugins]]
+repo = 'junegunn/vim-easy-align'
+hook_add = '''
+  vmap <Enter> <Plug>(EasyAlign)
+  let g:easy_align_delimiters = {
+      \ '>': { 'pattern': '->\|=>' }
+      \ }
+'''
+
+[[plugins]]
+repo = 'liquidz/kami.vim'
+hook_add = '''
+  nnoremap <Leader>ko :KamiOpenFromList<CR>
+  nnoremap <Leader>kk :KamiOpenToday<CR>
+  let g:kami#ext = 'adoc'
+  let g:kami#timestamp_format = '== %s'
+'''
+
+[[plugins]]
+repo = 'rcmdnk/vim-markdown'
+hook_add = '''
+  let g:vim_markdown_no_default_key_mappings = 1
+'''
+
+[[plugins]]
+repo = 'Shougo/neocomplete.vim'
+if = 'has("lua")'
+hook_add = '''
+  " neocomplete用設定
+  let g:neocomplete#enable_at_startup = 1
+  let g:neocomplete#enable_ignore_case = 1
+  let g:neocomplete#enable_smart_case = 1
+  if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+  endif
+  let g:neocomplete#keyword_patterns._ = '\h\w*'
+  
+  aug NeoCompleteLock
+    au!
+    au FileType clojure nested NeoCompleteLock
+  aug END
+'''
+
+[[plugins]]
+repo = 'Shougo/neosnippet'
+hook_add = '''
+  let g:neosnippet#snippets_directory = $HOME . '/.vim/snippets'
+  imap <C-k> <Plug>(neosnippet_expand_or_jump)
+  smap <C-k> <Plug>(neosnippet_expand_or_jump)
+  xmap <C-k> <Plug>(neosnippet_expand_target)
+  nnoremap [Unite]s :Unite neosnippet<CR>
+'''
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+
+[[plugins]]
+repo = 'tpope/vim-endwise'
+
+[[plugins]]
+repo = 'elixir-lang/vim-elixir'
+
+[[plugins]]
+repo = 'vim-scripts/confluencewiki.vim'
+
+[[plugins]]
+repo = 'kien/rainbow_parentheses.vim'
+hook_add = '''
+  let g:rbpt_colorpairs = [
+      \ ['brown',       'RoyalBlue3'],
+      \ ['darkgreen',   'firebrick3'],
+      \ ['darkcyan',    'RoyalBlue3'],
+      \ ['darkred',     'SeaGreen3'],
+      \ ['darkmagenta', 'DarkOrchid3'],
+      \ ['brown',       'firebrick3'],
+      \ ['darkmagenta', 'DarkOrchid3'],
+      \ ['darkgreen',   'firebrick3'],
+      \ ['darkcyan',    'SeaGreen3'],
+      \ ['darkred',     'DarkOrchid3'],
+      \ ['red',         'firebrick3'],
+      \ ]
+'''
+hook_source = '''
+  aug MyRainbowParentheses
+    au!
+    au VimEnter * RainbowParenthesesToggle
+    au Syntax * RainbowParenthesesLoadRound
+    au Syntax * RainbowParenthesesLoadSquare
+    au Syntax * RainbowParenthesesLoadBraces
+  aug END
+'''

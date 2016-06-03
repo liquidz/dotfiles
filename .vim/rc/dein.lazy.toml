@@ -1,0 +1,46 @@
+
+[[plugins]]
+repo = 'fatih/vim-go'
+on_ft = 'go'
+
+#[[plugins]]
+#repo = 'supermomonga/neocomplete-rsense.vim'
+#if = "has('lua')"
+#on_ft = 'ruby'
+#depends = 'neocomplete.vim'
+
+[[plugins]]
+repo = 'vim-scripts/ruby-matchit'
+on_ft = 'ruby'
+
+[[plugins]]
+repo = 'nelstrom/vim-textobj-rubyblock'
+on_ft = 'ruby'
+
+[[plugins]]
+repo = 'guns/vim-clojure-static'
+if = 'has("unix")'
+on_ft = 'clojure'
+
+[[plugins]]
+repo = 'tpope/vim-fireplace'
+if = 'has("unix")'
+on_ft = 'clojure'
+hook_source = '''
+  aug VimFireplaceSetting
+    au!
+    au Filetype clojure nnoremap <Leader>r :Require!<CR>
+    " vim-ref の K と競合するため再定義
+    au Filetype clojure nmap <buffer> K <Plug>FireplaceK
+  aug END
+'''
+
+[[plugins]]
+repo = 'tpope/vim-classpath'
+if = 'has("unix")'
+on_ft = 'clojure'
+
+[[plugins]]
+repo = 'typedclojure/vim-typedclojure'
+if = 'has("unix")'
+on_ft = 'clojure'
