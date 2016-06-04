@@ -57,7 +57,7 @@ export DOCKER_MACHINE_NAME="default"
 
 alias dl='docker ps -ql'
 alias da='docker ps -qa'
-alias di="docker images | grep -v 'REPOSITORY' | fzf | awk '{print \$1}'"
+alias di="docker images | grep -v 'REPOSITORY' | fzf | awk '{print \$3}'"
 alias dc="docker ps -a | grep -v 'CONTAINER ID' | fzf | awk '{print \$1}'"
 alias db='docker build --rm -t $(pwd | awk -F/ "{print \$(NF-1),\$NF}" | sed "s/ /\//g") .'
 alias dr='docker run --rm -it DI /bin/bash'

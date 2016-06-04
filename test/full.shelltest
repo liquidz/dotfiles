@@ -9,7 +9,7 @@ $ test -d "$TEST_PREFIX/.vim/bundle"
 $ test -d "$TEST_PREFIX/.vim/backup"
 $ test -e "$TEST_PREFIX/.vim/memo"
 $ test -d "$TEST_PREFIX/.tags"
-$ test -d "$TEST_PREFIX/.vim/bundle/neobundle.vim"
+$ test -d "$TEST_PREFIX/.vim/repos/github.com/Shougo/dein.vim"
 ## tmux
 $ test -d "$TEST_PREFIX/.tmux/plugins/tpm"
 ## zsh
