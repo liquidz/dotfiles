@@ -8,11 +8,14 @@ if &compatible
 endif
 set runtimepath^=$HOME/.vim/repos/github.com/Shougo/dein.vim
 
-if dein#load_state(s:dein_dir)
-  call dein#begin(s:dein_dir)
+let s:toml      = s:rc_dir . '/dein.toml'
+let s:toml_lazy = s:rc_dir . '/dein.lazy.toml'
 
-  call dein#load_toml(s:rc_dir . '/dein.toml', {'lazy': 0})
-  call dein#load_toml(s:rc_dir . '/dein.lazy.toml', {'lazy': 1})
+if dein#load_state(s:dein_dir)
+  call dein#begin(s:dein_dir, [$MYVIMRC, s:toml, s:toml_lazy])
+
+  call dein#load_toml(s:toml, {'lazy': 0})
+  call dein#load_toml(s:toml_lazy, {'lazy': 1})
 
   call dein#end()
   call dein#save_state()

@@ -280,24 +280,13 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'osyo-manga/shabadou.vim'
-
-[[plugins]]
-repo = 'osyo-manga/vim-watchdogs'
-depends = 'vim-quickrun'
-hook_add = '''
-  let g:watchdogs_check_BufWritePost_enable = 1
-  call watchdogs#setup(g:quickrun_config)
-'''
-
-[[plugins]]
-repo = 'jceb/vim-hier'
-
-[[plugins]]
 repo = 'kana/vim-textobj-user'
 
 [[plugins]]
 repo = 'kana/vim-textobj-line'
+
+[[plugins]]
+repo = 'liquidz/ctrlp-macro.vim'
 
 [[plugins]]
 repo = 'liquidz/vim-yacd'

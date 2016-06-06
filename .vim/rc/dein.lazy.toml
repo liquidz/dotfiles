@@ -1,5 +1,26 @@
 
 [[plugins]]
+repo = 'osyo-manga/shabadou.vim'
+
+[[plugins]]
+repo = 'jceb/vim-hier'
+
+[[plugins]]
+repo = 'osyo-manga/vim-watchdogs'
+depends = [
+  'vim-hier',
+  'shabadou.vim',
+  'vim-quickrun'
+]
+on_event = ['FocusLost', 'CursorHold']
+hook_add = '''
+  let g:watchdogs_check_BufWritePost_enable = 1
+'''
+hook_post_source = '''
+  call watchdogs#setup(g:quickrun_config)
+'''
+
+[[plugins]]
 repo = 'fatih/vim-go'
 on_ft = 'go'
 
