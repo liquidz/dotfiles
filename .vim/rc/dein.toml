@@ -285,8 +285,8 @@ repo = 'kana/vim-textobj-user'
 [[plugins]]
 repo = 'kana/vim-textobj-line'
 
-[[plugins]]
-repo = 'liquidz/ctrlp-macro.vim'
+#[[plugins]]
+#repo = 'liquidz/ctrlp-macro.vim'
 
 [[plugins]]
 repo = 'liquidz/vim-yacd'
