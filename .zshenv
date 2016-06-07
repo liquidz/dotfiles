@@ -140,7 +140,14 @@ export FZF_DEFAULT_OPTS="
     --select-1
     --cycle
 "
+# }}}
 
+# virtualenv {{{
+function activate_virtualenv() {
+    ENV_DIR="$HOME/env"
+    TARGET_ENV=$(ls -1 --color=never $ENV_DIR | sed 's/\///g' | fzf)
+    source "$ENV_DIR/$TARGET_ENV/bin/activate"
+}
 # }}}
 
 # my commands {{{

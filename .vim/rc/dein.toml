@@ -14,6 +14,9 @@ hook_post_update = '''
 
 [[plugins]]
 repo = 'vim-jp/vital.vim'
+hook_add = '''
+  let g:vitalizer#vital_dir = $HOME.'/.vim/repos/github.com/vim-jp/vital.vim'
+'''
 
 [[plugins]]
 repo = 'haya14busa/underscore.vim'
@@ -70,29 +73,6 @@ hook_add = '''
 repo = 'thinca/vim-visualstar'
 
 [[plugins]]
-repo = 'kana/vim-submode'
-hook_add = '''
-  let g:submode_timeout = 0
-  call submode#enter_with('window', 'n', '', '<C-w><C-w>', '<Nop>')
-  call submode#leave_with('window', 'n', '', '<Esc>')
-  call submode#map('window', 'n', '', 'j', '<C-w>j')
-  call submode#map('window', 'n', '', 'J', '<C-w>J')
-  call submode#map('window', 'n', '', 'k', '<C-w>k')
-  call submode#map('window', 'n', '', 'K', '<C-w>K')
-  call submode#map('window', 'n', '', 'l', '<C-w>l')
-  call submode#map('window', 'n', '', 'L', '<C-w>L')
-  call submode#map('window', 'n', '', 'h', '<C-w>h')
-  call submode#map('window', 'n', '', 'H', '<C-w>h')
-  call submode#map('window', 'n', '', 's', '<C-w>s')
-  call submode#map('window', 'n', '', 'v', '<C-w>v')
-  call submode#map('window', 'n', '', 'x', ':q<CR>')
-  call submode#map('window', 'n', '', '>', '<C-w>5>')
-  call submode#map('window', 'n', '', '<', '<C-w>5<lt>')
-  call submode#map('window', 'n', '', '+', '<C-w>5+')
-  call submode#map('window', 'n', '', '-', '<C-w>5-')
-'''
-
-[[plugins]]
 repo = 'tpope/vim-surround'
 
 [[plugins]]
@@ -101,10 +81,11 @@ repo = 'tpope/vim-repeat'
 [[plugins]]
 repo = 'w0ng/vim-hybrid'
 hook_add = '''
-  colorscheme hybrid
-  if dein#util#_is_mac()
-    highlight Normal ctermbg=none
-  endif
+  set background=dark
+  aug MyColorScheme
+    au!
+    au VimEnter * nested colorscheme hybrid
+  aug END
 '''
 
 [[plugins]]
@@ -374,30 +355,3 @@ repo = 'elixir-lang/vim-elixir'
 
 [[plugins]]
 repo = 'vim-scripts/confluencewiki.vim'
-
-[[plugins]]
-repo = 'kien/rainbow_parentheses.vim'
-hook_add = '''
-  let g:rbpt_colorpairs = [
-      \ ['brown',       'RoyalBlue3'],
-      \ ['darkgreen',   'firebrick3'],
-      \ ['darkcyan',    'RoyalBlue3'],
-      \ ['darkred',     'SeaGreen3'],
-      \ ['darkmagenta', 'DarkOrchid3'],
-      \ ['brown',       'firebrick3'],
-      \ ['darkmagenta', 'DarkOrchid3'],
-      \ ['darkgreen',   'firebrick3'],
-      \ ['darkcyan',    'SeaGreen3'],
-      \ ['darkred',     'DarkOrchid3'],
-      \ ['red',         'firebrick3'],
-      \ ]
-'''
-hook_source = '''
-  aug MyRainbowParentheses
-    au!
-    au VimEnter * RainbowParenthesesToggle
-    au Syntax * RainbowParenthesesLoadRound
-    au Syntax * RainbowParenthesesLoadSquare
-    au Syntax * RainbowParenthesesLoadBraces
-  aug END
-'''

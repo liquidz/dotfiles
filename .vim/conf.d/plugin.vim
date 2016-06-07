@@ -21,9 +21,22 @@ if dein#load_state(s:dein_dir)
   call dein#save_state()
 endif
 
+filetype plugin indent on
+
 if dein#check_install()
   call dein#install()
 endif
 
-filetype plugin indent on
+" developing plugins
+" http://www.kaoriya.net/blog/2015/12/01/vim-switch-developing-plugin/
+let dirs = [ $HOME.'/src/github.com/liquidz' ]
+for pattern in [ 'vim*', '*vim' ]
+  for path in globpath(join(dirs, ','), pattern, 0, 1)
+    if isdirectory(path) && filereadable(path . '/VIM_AUTO_RTP')
+      "echomsg "VIM_AUTO_RTP: ".path
+      let &runtimepath = &runtimepath.','.path
+    end
+  endfor
+endfor
+
 " vim:fdl=0
