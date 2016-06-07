@@ -1,18 +1,19 @@
 scriptencoding utf-8
 
-let s:dein_dir = expand('~/.vim')
-let s:rc_dir = expand('~/.vim/rc')
+let s:path = expand('~/.vim/cache')
+let s:toml_dir = expand('~/.vim/conf.d')
 
 if &compatible
   set nocompatible
 endif
-set runtimepath^=$HOME/.vim/repos/github.com/Shougo/dein.vim
+set runtimepath^=$HOME/.vim/cache/repos/github.com/Shougo/dein.vim
 
-let s:toml      = s:rc_dir . '/dein.toml'
-let s:toml_lazy = s:rc_dir . '/dein.lazy.toml'
+let s:toml      = s:toml_dir . '/dein.toml'
+let s:toml_lazy = s:toml_dir . '/dein.lazy.toml'
 
-if dein#load_state(s:dein_dir)
-  call dein#begin(s:dein_dir, [$MYVIMRC, s:toml, s:toml_lazy])
+if dein#load_state(s:path)
+  call dein#begin(s:path, [expand('<sfile>')]
+      \ + split(glob('~/.vim/conf.d/*.toml'), '\n'))
 
   call dein#load_toml(s:toml, {'lazy': 0})
   call dein#load_toml(s:toml_lazy, {'lazy': 1})

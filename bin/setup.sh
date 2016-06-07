@@ -72,7 +72,7 @@ if [[ "$MODE" == "full" ]]; then
     ## vim の設定
     cecho $yellow " * initializing vim"
     ln -sfn $INSTALL_DIR/.vim $PREFIX/.vim
-    mkdir -p $PREFIX/.vim/bundle
+    mkdir -p $PREFIX/.vim/cache
     mkdir -p $PREFIX/.vim/backup
     mkdir -p $PREFIX/.tags
 
@@ -88,9 +88,9 @@ if [[ "$MODE" == "full" ]]; then
 
     cecho $yellow " * installing dein.vim"
     INSTALLER="/tmp/installer.sh"
-    if [ ! -e "$PREFIX/.vim/repos" ]; then
+    if [ ! -e "$PREFIX/.vim/cache/repos" ]; then
         curl -s https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > /tmp/installer.sh
-        sh $INSTALLER $PREFIX/.vim > /dev/null 2>&1
+        sh $INSTALLER $PREFIX/.vim/cache > /dev/null 2>&1
     fi
 
     ## tmux の設定

@@ -13,4 +13,4 @@ lint:
 	beco vint .vim/conf.d/*.vim
 
 clean:
-	\rm -rf .vim/.dein .vim/cache_vim .vim/merged .vim/state_vim.vim
+	\rm -rf .vim/.dein .vim/cache_vim .vim/merged .vim/state_vim.vim .vim/temp .vim/rollbacks

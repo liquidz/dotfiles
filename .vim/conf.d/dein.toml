@@ -266,8 +266,13 @@ repo = 'kana/vim-textobj-user'
 [[plugins]]
 repo = 'kana/vim-textobj-line'
 
-#[[plugins]]
-#repo = 'liquidz/ctrlp-macro.vim'
+[[plugins]]
+repo = 'liquidz/ctrlme.vim'
+hook_add = '''
+  let g:ctrlme_toml_file = $HOME.'/.vim/conf.d/ctrlme.toml'
+  nnoremap <Leader>cm :CtrlMe<CR>
+  vnoremap <Leader>cm :CtrlMe<CR>
+'''
 
 [[plugins]]
 repo = 'liquidz/vim-yacd'
