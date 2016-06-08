@@ -27,3 +27,27 @@ action = '''
     execute printf(':%d,%dnormal @q', l:from, l:to)
   endif
 '''
+
+[[files]]
+name = 'ctrlme setting'
+action = '''
+  execute ":e ~/.vim/conf.d/ctrlme.toml"
+'''
+
+[[files]]
+name = 'plugin setting'
+action = '''
+  execute ":e ~/.vim/conf.d/dein.toml"
+'''
+
+[[encoding]]
+name = 'utf8 encoding'
+action = '''
+  execute "set fileencoding=utf-8"
+'''
+
+[[encoding]]
+name = 'unix line feed code'
+action = '''
+  execute "set fileformat=unix"
+'''
