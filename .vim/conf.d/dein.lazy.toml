@@ -57,6 +57,11 @@ hook_source = '''
 '''
 
 [[plugins]]
+repo = 'vim-scripts/paredit.vim'
+if = 'has("unix")'
+on_ft = 'clojure'
+
+[[plugins]]
 repo = 'tpope/vim-classpath'
 if = 'has("unix")'
 on_ft = 'clojure'

@@ -104,9 +104,9 @@ hook_add = '''
   let g:ctrlp_show_hidden         = 1   " 隠しファイルも表示
   let g:ctrlp_match_window        = 'results:50'
   let g:ctrlp_follow_symlinks     = 1
-  let g:ctrlp_root_markers        = ['.root']
+  let g:ctrlp_root_markers        = ['.root', 'project.clj']
   let g:ctrlp_custom_ignore = {
-      \   'dir' : '\v[\/](\.git|\.hg|\.svn|cookbooks|target|Vendor)$',
+      \   'dir' : '\v[\/](\.git|\.hg|\.svn|cookbooks|target|Vendor|.dein|cache)$',
       \   'file': '\v\.(o|bk|org|exe|so|dll|skl|cgi|gitkeep)$',
       \   'link': 'some_bad_symbolic_links',
       \ }
