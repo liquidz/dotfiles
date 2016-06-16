@@ -57,7 +57,8 @@ hook_source = '''
 '''
 
 [[plugins]]
-repo = 'vim-scripts/paredit.vim'
+#repo = 'vim-scripts/paredit.vim'
+repo = 'guns/vim-sexp'
 if = 'has("unix")'
 on_ft = 'clojure'
 

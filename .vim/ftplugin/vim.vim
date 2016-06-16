@@ -1,6 +1,9 @@
 set tabstop=2
 set shiftwidth=2
 
+" ダブルクオートの補完を無効化
+inoremap <buffer> " "
+
 " help {{{
 set keywordprg=:help " Open Vim internal help by K command
 augroup MyVimHelp

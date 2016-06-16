@@ -3,10 +3,13 @@ scriptencoding utf-8
 setlocal iskeyword-=/
 set tags+=$HOME/.tags/clojure.tags
 
+" シングルクオートの補完を無効化
+inoremap <buffer> ' '
+
 " 今いる括弧をもひとつ括弧でくくる {{{2
-nnoremap <buffer> <Leader>( F(i(<Esc><Right>%a)<Esc>%a<Space><Left>
-nnoremap <buffer> <Leader>[ F[i[<Esc><Right>%a]<Esc>%a<Space><Left>
-nnoremap <buffer> <Leader>{ F{i{<Esc><Right>%a}<Esc>%a<Space><Left>
+" nnoremap <buffer> <Leader>( F(i(<Esc><Right>%a)<Esc>%a<Space><Left>
+" nnoremap <buffer> <Leader>[ F[i[<Esc><Right>%a]<Esc>%a<Space><Left>
+" nnoremap <buffer> <Leader>{ F{i{<Esc><Right>%a}<Esc>%a<Space><Left>
 
 " Requires vim-fireplace
 function! s:myRunTests() abort
