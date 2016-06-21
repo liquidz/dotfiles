@@ -51,6 +51,7 @@ hook_source = '''
   aug VimFireplaceSetting
     au!
     au Filetype clojure nnoremap <Leader>r :Require!<CR>
+    au Filetype clojure nmap <buffer> cc <Plug>FireplaceCountPrint
     " vim-ref の K と競合するため再定義
     au Filetype clojure nmap <buffer> K <Plug>FireplaceK
   aug END
@@ -125,3 +126,7 @@ hook_post_source = '''
     au Syntax * RainbowParenthesesLoadBraces
   aug END
 '''
+
+[[plugins]]
+repo = 'thinca/vim-prettyprint'
+on_ft = 'vim'

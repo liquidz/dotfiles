@@ -26,6 +26,12 @@ endfunction
 command! MyRunTests call s:myRunTests()
 nnoremap <buffer> <Leader>t :<C-u>MyRunTests<CR>
 
+function! s:myRefresh() abort
+  execute ":Eval (do (require '[clojure.tools.namespace.repl :refer [refresh]]) (refresh))"
+endfunction
+command! MyRefresh call s:myRefresh()
+nnoremap <buffer> <Leader>R :<C-u>MyRefresh<CR>
+
 nnoremap <buffer> <Leader>s :<C-u>Require<CR>
 
 aug MyLispWords

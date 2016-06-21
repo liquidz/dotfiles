@@ -1,13 +1,12 @@
 {:user
  {:plugins [
-            [lein-ancient "RELEASE"]
-            [jonase/eastwood "RELEASE"]
-            [lein-cloverage "RELEASE"]
-            [lein-kibit "RELEASE"]
-            [lein-cljfmt "RELEASE"]
-            [lein-bikeshed "RELEASE"]
-            [codox "RELEASE"]
-            ;[lein-figwheel "0.5.0-1"]
+            [lein-ancient                "RELEASE"]
+            [jonase/eastwood             "RELEASE"]
+            [lein-cloverage              "RELEASE"]
+            [lein-kibit                  "RELEASE"]
+            [lein-cljfmt                 "RELEASE"]
+            [lein-bikeshed               "RELEASE"]
+            [codox                       "RELEASE"]
             ]
 
   :aliases {
@@ -21,4 +20,12 @@
                     ;["ancient"] ["kibit"] ["bikeshed"]]
                     ["ancient"] ["kibit"] ["eastwood"]]
             }
-  }}
+  :dependencies [
+                 [org.clojure/tools.namespace "RELEASE"]
+                 ]
+  :injections [
+               (require '[clojure.tools.namespace.repl :refer [refresh]])
+               ]
+
+  }
+ }
