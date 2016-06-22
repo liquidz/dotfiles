@@ -168,11 +168,11 @@ cnoremap <C-f> <Right>
 cnoremap <C-b> <Left>
 cnoremap <C-d> <Delete>
 
-inoremap ( ()<Left>
-inoremap [ []<Left>
-inoremap { {}<Left>
-inoremap " ""<Left>
-inoremap ' ''<Left>
+inoremap () ()<Left>
+inoremap [] []<Left>
+inoremap {} {}<Left>
+inoremap "" ""<Left>
+inoremap '' ''<Left>
 
 nnoremap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
 nnoremap <silent> <C-j><C-j> :nohlsearch<CR><Esc>

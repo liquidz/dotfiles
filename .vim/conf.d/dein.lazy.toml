@@ -58,10 +58,12 @@ hook_source = '''
 '''
 
 [[plugins]]
-#repo = 'vim-scripts/paredit.vim'
 repo = 'guns/vim-sexp'
 if = 'has("unix")'
 on_ft = 'clojure'
+hook_source = '''
+  let g:sexp_enable_insert_mode_mappings = 0
+'''
 
 [[plugins]]
 repo = 'tpope/vim-classpath'
