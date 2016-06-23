@@ -174,6 +174,15 @@ hook_add = '''
       \       : executable('ruby') ? 'watchdogs_checker/ruby'
       \       : '',
       \   },
+      \   'watchdogs_checker/fireplace': {
+      \     'runner'      : 'vimscript',
+      \     'exec'        : ':MyReloadWithStringException',
+      \     'outputter'   : 'quickfix',
+      \     'errorformat' : '"%m:(%.%#/%f:%l:%c)"'
+      \   },
+      \   'clojure/watchdogs_checker': {
+      \     'type': 'watchdogs_checker/fireplace'
+      \   },
       \ }
 '''
 

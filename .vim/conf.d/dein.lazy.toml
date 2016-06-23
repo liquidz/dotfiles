@@ -3,7 +3,7 @@
 repo = 'osyo-manga/shabadou.vim'
 
 [[plugins]]
-repo = 'jceb/vim-hier'
+repo = 'cohama/vim-hier'
 
 [[plugins]]
 repo = 'osyo-manga/vim-watchdogs'
@@ -12,7 +12,7 @@ depends = [
   'shabadou.vim',
   'vim-quickrun'
 ]
-on_event = ['FocusLost', 'CursorHold']
+on_i = 1
 hook_add = '''
   let g:watchdogs_check_BufWritePost_enable = 1
 '''

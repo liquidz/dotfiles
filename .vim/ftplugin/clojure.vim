@@ -26,6 +26,13 @@ endfunction
 command! MyRunTests call s:myRunTests()
 nnoremap <buffer> <Leader>t :<C-u>MyRunTests<CR>
 
+function! s:myReloadWithStringException() abort
+  let ns = fireplace#ns()
+  let expr = printf("(try (require '%s :reload-all) (catch Exception e (-> e str)))", ns)
+  execute ':Eval ' . expr
+endfunction
+command! MyReloadWithStringException call s:myReloadWithStringException()
+
 function! s:myRefresh() abort
   execute ":Eval (do (require '[clojure.tools.namespace.repl :refer [refresh]]) (refresh))"
 endfunction
