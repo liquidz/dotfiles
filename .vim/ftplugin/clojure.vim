@@ -6,11 +6,6 @@ set tags+=$HOME/.tags/clojure.tags
 " シングルクオートの補完を無効化
 inoremap <buffer> ' '
 
-" 今いる括弧をもひとつ括弧でくくる {{{2
-" nnoremap <buffer> <Leader>( F(i(<Esc><Right>%a)<Esc>%a<Space><Left>
-" nnoremap <buffer> <Leader>[ F[i[<Esc><Right>%a]<Esc>%a<Space><Left>
-" nnoremap <buffer> <Leader>{ F{i{<Esc><Right>%a}<Esc>%a<Space><Left>
-
 " Requires vim-fireplace
 function! s:myRunTests() abort
   let ns = fireplace#ns()
@@ -28,7 +23,7 @@ nnoremap <buffer> <Leader>t :<C-u>MyRunTests<CR>
 
 function! s:myReloadWithStringException() abort
   let ns = fireplace#ns()
-  let expr = printf("(try (require '%s :reload-all) (catch Exception e (-> e str)))", ns)
+  let expr = printf("(try (require '%s :reload) (catch Exception e (-> e str)))", ns)
   execute ':Eval ' . expr
 endfunction
 command! MyReloadWithStringException call s:myReloadWithStringException()
@@ -36,10 +31,10 @@ command! MyReloadWithStringException call s:myReloadWithStringException()
 function! s:myRefresh() abort
   execute ":Eval (do (require '[clojure.tools.namespace.repl :refer [refresh]]) (refresh))"
 endfunction
-command! MyRefresh call s:myRefresh()
-nnoremap <buffer> <Leader>R :<C-u>MyRefresh<CR>
+command! Refresh call s:myRefresh()
+"nnoremap <buffer> <Leader>R :<C-u>Refresh<CR>
 
-nnoremap <buffer> <Leader>s :<C-u>Require<CR>
+nnoremap <buffer> <Leader>R :<C-u>Require!<CR>
 
 aug MyLispWords
   au!

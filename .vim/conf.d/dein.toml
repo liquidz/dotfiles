@@ -165,6 +165,10 @@ hook_add = '''
       \     'exec'      : '%c %o',
       \     'outputter' : 'error:buffer:quickfix'
       \   },
+      \   'clojure': {
+      \     'runner' : 'vimscript',
+      \     'exec'   : ':Require'
+      \   },
       \
       \   'watchdogs_checker/phpcs': {
       \     'command' : 'phpcs',
