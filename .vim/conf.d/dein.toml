@@ -180,6 +180,11 @@ hook_add = '''
       \       : executable('php') ? 'watchdogs_checker/php'
       \       : ''
       \   },
+      \   'watchdogs_checker/rubocop' : {
+      \     'command'     : 'rubocop',
+      \     'exec'        : 'bundle exec %c %o %s:p',
+      \     'errorformat' : '%f:%l:%c:%m',
+      \   },
       \   'ruby/watchdogs_checker': {
       \     'type'
       \       : executable('rubocop') ? 'watchdogs_checker/rubocop'
