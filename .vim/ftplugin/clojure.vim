@@ -1,6 +1,6 @@
 scriptencoding utf-8
 
-setlocal iskeyword-=/
+"setlocal iskeyword-=/
 set tags+=$HOME/.tags/clojure.tags
 
 " シングルクオートの補完を無効化
