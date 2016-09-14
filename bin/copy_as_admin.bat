@@ -1,7 +1,7 @@
 @echo off
 
-SET VIMRC=C:\onlinesoftware\vim74-kaoriya-win64\vimrc
-SET GVIMRC=C:\onlinesoftware\vim74-kaoriya-win64\gvimrc
+SET VIMRC=C:\onlinesoftware\vim\vimrc
+SET GVIMRC=C:\onlinesoftware\vim\gvimrc
 
 if exist "%VIMRC%" (
     del /Q "%VIMRC%"
