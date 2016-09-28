@@ -23,6 +23,8 @@ let g:vim_indent_cont = 4
 if has('unix')
   set nofixendofline
 endif
+
+set cryptmethod=blowfish2
 " }}}
 
 " encoding {{{
@@ -121,6 +123,7 @@ set smarttab
 set shiftwidth=4
 set noequalalways
 set cursorline
+set breakindent
 "set cursorcolumn
 augroup cch
   autocmd! cch

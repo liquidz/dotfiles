@@ -10,7 +10,7 @@ action = '''
 
 [[macros]]
 # aaa,bbb を ('aaa', 'bbb', 0); に変換
-name = "sql unjust"
+name = "unjust sql"
 action = '''
   let @q = "I('f,i'llli'A', 0);"
   if l:from != l:to
@@ -50,4 +50,16 @@ action = '''
 name = 'unix line feed code'
 action = '''
   execute "set fileformat=unix"
+'''
+
+[[encoding]]
+name = 'dos line feed code'
+action = '''
+  execute "set fileformat=dos"
+'''
+
+[[buffer]]
+name = 'yyyymmdd'
+action = '''
+  execute printf(':normal i%s', strftime('%Y%m%d'))
 '''

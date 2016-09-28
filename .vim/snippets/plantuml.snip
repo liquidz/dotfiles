@@ -6,6 +6,11 @@ abbr		start uml
 	hide footbox
 	
 	title: ${1:TITLE}
+	actor       "ユーザー" as user
+	box "sample" #LightBlue
+		participant "foo" as foo
+	end box
+	database    "bar" as bar
 	@enduml
 
 snippet		participant
@@ -20,6 +25,12 @@ abbr		alt ... end
 snippet		opt
 abbr		opt ... end
 	opt ${1:#:condition}
+		${2}
+	end
+
+snippet		loop
+abbr		loop ... end
+	loop ${1:#:condition}
 		${2}
 	end
 
