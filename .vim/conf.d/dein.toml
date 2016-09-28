@@ -386,3 +386,11 @@ repo = 'elixir-lang/vim-elixir'
 
 [[plugins]]
 repo = 'vim-scripts/confluencewiki.vim'
+
+[[plugins]]
+repo = 'vim-scripts/gtags.vim'
+hook_add = '''
+  if executable('gtags')
+      nnoremap <Leader>gg :GtagsCursor<CR>
+  endif
+'''
