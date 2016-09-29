@@ -296,8 +296,8 @@ repo = 'kana/vim-textobj-line'
 repo = 'liquidz/ctrlme.vim'
 hook_add = '''
   let g:ctrlme_toml_file = $HOME.'/.vim/conf.d/ctrlme.toml'
-  nnoremap <Leader>cm :CtrlMe<CR>
-  vnoremap <Leader>cm :CtrlMe<CR>
+  nnoremap <C-e> :CtrlMe<CR>
+  vnoremap <C-e> :CtrlMe<CR>
 '''
 
 [[plugins]]
