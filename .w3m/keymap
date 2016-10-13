@@ -1,0 +1,51 @@
+keymap H NULL
+keymap C-h NULL
+keymap B NULL
+keymap : NULL
+keymap o NULL
+keymap r NULL
+keymap ESC-b NULL
+keymap ESC-a NULL
+keymap t NULL
+keymap T NULL
+keymap d NULL
+keymap > NULL
+keymap < NULL
+keymap } NULL
+keymap { NULL
+keymap C-d NULL
+keymap C-b NULL
+keymap ESC-w NULL
+keymap ESC-W NULL
+keymap C-e NULL
+keymap 0 NULL
+
+## Page/Cursor
+keymap C-d NEXT_PAGE
+keymap C-b PREV_PAGE
+keymap 0   LINE_BEGIN
+
+## Hyperlink
+
+
+## Miscellany
+keymap :h HELP
+keymap :o OPTIONS
+keymap :v VERSION
+
+## Tab
+keymap t  NEW_TAB
+keymap d  CLOSE_TAB
+keymap >  NEXT_TAB
+keymap <  PREV_TAB
+keymap :t TAB_MENU
+
+## Bookmark
+keymap :a ADD_BOOKMARK
+keymap :b VIEW_BOOKMARK
+
+## Dictionary
+keymap C-e DICT_WORD
+
+keymap L NEXT
+keymap H PREV

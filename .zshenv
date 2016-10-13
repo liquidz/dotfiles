@@ -130,7 +130,7 @@ fi
 # }}}
 
 # w3m {{{
-export WWW_HOME="google.co.jp"
+export WWW_HOME="duckduckgo.com"
 # }}}
 
 # fzf {{{
