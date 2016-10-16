@@ -82,7 +82,9 @@ export PATH=$PATH:/usr/local/heroku/bin
 # }}}
 
 # go {{{
-export GOROOT=/usr/local/go
+if ! uname -a | grep Android > /dev/null 2>&1; then
+  export GOROOT=/usr/local/go
+fi
 export GOPATH=$HOME
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 # }}}
@@ -130,7 +132,7 @@ fi
 # }}}
 
 # w3m {{{
-export WWW_HOME="google.co.jp"
+export WWW_HOME="duckduckgo.com"
 # }}}
 
 # fzf {{{

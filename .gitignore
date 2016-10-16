@@ -1,5 +1,5 @@
 .vim/autoload/plug.vim
-.vim/cache
+.vim/repos
 .vim/backup
 .vim/memo
 .vim/vim-ref
