@@ -1,16 +1,47 @@
-snippet		document
-abbr		vim help document
+snippet		sample
+abbr		sample
 	*${1}.txt*	${2:FIXME}
 	
 	==============================================================================
-	table of contents					*$1-content*
+	TABLE OF CONTENTS					*$1-content*
 	
 	foo							|$1-foo|
 	
 	==============================================================================
-	foo							*$1-foo*
+	FOO							*$1-foo*
 	
 	${0}
 	
 	==============================================================================
 	vim:tw=78:cc=78:ts=8:ft=help:norl:noexpandtab
+
+snippet		footer
+abbr		footer
+	==============================================================================
+	vim:tw=78:cc=78:ts=8:ft=help:norl:noexpandtab
+
+snippet		section
+abbr		section
+	==============================================================================
+
+snippet		subsection
+abbr		subsection
+	------------------------------------------------------------------------------
+
+
+snippet		header
+abbr		header
+	==============================================================================
+	${1:TITLE}										*${2:tag}*
+
+
+snippet		link
+abbr		link
+	|${1}| --> *$1*
+
+
+snippet		code
+abbr		code
+	>
+	  ${1}
+	<

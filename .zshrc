@@ -105,10 +105,10 @@ if hash ig 2>/dev/null; then
     bindkey '^g' interactive-git
 fi
 
-# cd したら ls する
-function cd() {
-    builtin cd $@ && ls;
-}
+## cd したら ls する
+#function cd() {
+#    builtin cd $@ && ls;
+#}
 
 # To enable this function, you must export CAKE_PROJECT_ROOT in /etc/zshenv
 if [[ "$CAKE_PROJECT_ROOT" != "" ]]; then
@@ -127,6 +127,26 @@ function tmpl() {
     TO=$2
     echo "copying $FROM template to $TO ..."
     cp -pir $HOME/src/github.com/liquidz/dotfiles/templates/$FROM $TO
+}
+
+function es-indexes() {
+    curl -XGET 'localhost:9200/_aliases?pretty'
+}
+
+function es-create-index() {
+    curl -XPUT "localhost:9200/${1}?pretty"
+}
+
+function es-delete-index() {
+    curl -XDELETE "localhost:9200/${1}?pretty"
+}
+
+function es-search-index() {
+    curl -XGET "localhost:9200/${1}/_search?pretty"
+}
+
+function es-get-index-mapping() {
+    curl -XGET "localhost:9200/${1}/_mapping?pretty"
 }
 
 source ~/.zshrc.antigen

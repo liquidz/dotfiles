@@ -11,11 +11,11 @@ export PATH
 alias ll='ls -l'
 alias la='ls -a'
 
-case "${OSTYPE}" in
-darwin*)
-    alias pwd='$HOME/src/github.com/liquidz/dotfiles/assets/iterm_wall_chg.sh ; pwd'
-    ;;
-esac
+#case "${OSTYPE}" in
+#darwin*)
+#    alias pwd='$HOME/src/github.com/liquidz/dotfiles/assets/iterm_wall_chg.sh ; pwd'
+#    ;;
+#esac
 
 # history {{{
 export HISTFILE=${HOME}/.zhistory
@@ -50,10 +50,10 @@ alias bo='(cd ~/.vim/bundle && cd $(/bin/ls -1 | fzf) && git browse)'
 # }}}
 
 # docker {{{
-export DOCKER_TLS_VERIFY="1"
-export DOCKER_HOST="tcp://192.168.99.100:2376"
-export DOCKER_CERT_PATH="$HOME/.docker/machine/machines/default"
-export DOCKER_MACHINE_NAME="default"
+#export DOCKER_TLS_VERIFY="1"
+#export DOCKER_HOST="tcp://192.168.99.100:2376"
+#export DOCKER_CERT_PATH="$HOME/.docker/machine/machines/default"
+#export DOCKER_MACHINE_NAME="default"
 
 alias dl='docker ps -ql'
 alias da='docker ps -qa'
@@ -95,7 +95,7 @@ alias gho='(cd $(ghq list --full-path | fzf) && git browse)'
 
 # local bookmark {{{
 function __bookmarklist() {
-    ghq list --full-path liquidz
+    ghq list --full-path
     cat ~/.bookmark
 }
 alias bm='cd $(__bookmarklist | fzf)'
