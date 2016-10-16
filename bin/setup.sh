@@ -7,16 +7,12 @@
 #
 # ==================================================
 
-if [[ "$PREFIX" = "" ]]; then
-    PREFIX="$HOME"
-fi
-INSTALL_DIR=$PREFIX/src/github.com/liquidz/dotfiles
+INSTALL_DIR=~/src/github.com/liquidz/dotfiles
 DOT_FILES=(".vimrc"                     \
     ".tmux.conf"                        \
     ".zshenv" ".zshrc" ".zshrc.antigen" \
-    ".peco" ".ctags"                    \
-    ".gemrc" ".rubocop.yml"             \
-    ".gitconfig.common"                 \
+    ".ctags" ".gemrc" ".rubocop.yml"    \
+    ".gitconfig.common" ".w3m"          \
     ".cheatrc"                          \
     )
 # colors {{{
@@ -59,60 +55,59 @@ fi
 cecho $yellow " * create symbolic links to dotfiles"
 for file in ${DOT_FILES[@]}; do
     cecho $blue "   $file"
-    ln -sfn $INSTALL_DIR/$file $PREFIX/$file
+    ln -sfn $INSTALL_DIR/$file ~/$file
 done
 cecho $yellow " * create symbolic links to .lein/profiles.clj"
-if [[ ! -e "$PREFIX/.lein" ]]; then
-    mkdir -p $PREFIX/.lein
+if [[ ! -e "~/.lein" ]]; then
+    mkdir -p ~/.lein
 fi
-ln -sfn $INSTALL_DIR/.lein/profiles.clj $PREFIX/.lein/profiles.clj
+ln -sfn $INSTALL_DIR/.lein/profiles.clj ~/.lein/profiles.clj
 
 ## full モードなら全設定のセットアップ
 if [[ "$MODE" == "full" ]]; then
     ## vim の設定
     cecho $yellow " * initializing vim"
-    ln -sfn $INSTALL_DIR/.vim $PREFIX/.vim
-    mkdir -p $PREFIX/.vim/cache
-    mkdir -p $PREFIX/.vim/backup
-    mkdir -p $PREFIX/.tags
+    ln -sfn $INSTALL_DIR/.vim ~/.vim
+    mkdir -p ~/.vim/cache
+    mkdir -p ~/.vim/backup
+    mkdir -p ~/.tags
 
     cecho $yellow " * setting up vim memo"
     if [[ -e ~/Dropbox/vim/memo ]] && [[ "$IS_TEST" = "" ]]; then
         cecho $blue "   link to dropbox"
-        ln -sfn ~/Dropbox/vim/memo $PREFIX/.vim/memo
+        ln -sfn ~/Dropbox/vim/memo ~/.vim/memo
     else
         cecho $blue "  * touch plain text"
-        mkdir -p $PREFIX/.vim/memo
-        touch $PREFIX/.vim/memo/default.md
+        mkdir -p ~/.vim/memo
+        touch ~/.vim/memo/default.md
     fi
 
-    cecho $yellow " * installing dein.vim"
-    INSTALLER="/tmp/installer.sh"
-    if [ ! -e "$PREFIX/.vim/cache/repos" ]; then
-        curl -s https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > /tmp/installer.sh
-        sh $INSTALLER $PREFIX/.vim/cache > /dev/null 2>&1
+    cecho $yellow " * installing vim-plug"
+    if [ ! -e "~/.vim/autoload/plug.vim" ]; then
+        curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     fi
 
     ## tmux の設定
-    cecho $yellow " * cloning tpm"
-    DIR="$PREFIX/.tmux/plugins/tpm"
-    if [[ ! -e $DIR ]]; then
-        git clone https://github.com/tmux-plugins/tpm $DIR > /dev/null 2>&1
-    else
-        cecho $blue "   pulling origin master"
-        (cd $DIR && git pull origin master > /dev/null 2>&1)
-    fi
+    #cecho $yellow " * cloning tpm"
+    #DIR="~/.tmux/plugins/tpm"
+    #if [[ ! -e $DIR ]]; then
+    #    git clone https://github.com/tmux-plugins/tpm $DIR > /dev/null 2>&1
+    #else
+    #    cecho $blue "   pulling origin master"
+    #    (cd $DIR && git pull origin master > /dev/null 2>&1)
+    #fi
 
     ## zsh の設定
     cecho $yellow " * initializing zsh"
-    DIR="$PREFIX/.zsh"
+    DIR="~/.zsh"
     ln -sfn $INSTALL_DIR/.zsh $DIR
     cecho $yellow " * downloading zsh git-completion"
     curl -s -o "$DIR/_git" https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh
     curl -s -o "$DIR/git-completion.bash" https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
 
     cecho $yellow " * cloning antigen"
-    DIR="$PREFIX/src/github.com/zsh-users/antigen"
+    DIR="~/src/github.com/zsh-users/antigen"
     if [[ ! -e $DIR ]]; then
         git clone https://github.com/zsh-users/antigen.git $DIR > /dev/null 2>&1
     else
@@ -122,15 +117,15 @@ if [[ "$MODE" == "full" ]]; then
 
     ## beco
     cecho $yellow " * cloning beco"
-    DIR="$PREFIX/src/github.com/liquidz/beco"
+    DIR="~/src/github.com/liquidz/beco"
     if [[ ! -e $DIR ]]; then
         git clone https://github.com/liquidz/beco.git $DIR > /dev/null 2>&1
     else
         cecho $blue "   pulling origin master"
         (cd $DIR && git pull origin master > /dev/null 2>&1)
     fi
-    mkdir -p $PREFIX/bin && ln -sfn $DIR/bin/beco $PREFIX/bin/beco
-    ln -sfn $DIR/zsh/_beco $PREFIX/.zsh/_beco
+    mkdir -p ~/bin && ln -sfn $DIR/bin/beco ~/bin/beco
+    ln -sfn $DIR/zsh/_beco ~/.zsh/_beco
 
     ## git config
     cecho $yellow " * git config"
@@ -145,7 +140,7 @@ if [[ "$MODE" == "full" ]]; then
 
     ## cheat
     cecho $yellow " * cheat config"
-    ln -sfn $INSTALL_DIR/.cheatsheets $PREFIX/.cheatsheets
+    ln -sfn $INSTALL_DIR/.cheatsheets ~/.cheatsheets
 fi
 
 cecho $green "Done"

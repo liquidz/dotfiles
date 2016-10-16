@@ -234,10 +234,12 @@ colorscheme hybrid
       \ 'colorscheme': 'wombat',
       \ 'active': {
       \   'left': [['mode', 'paste'],
+      \            ['ale'],
       \            ['fugitive', 'readonly', 'modified']],
       \   'right': [['lineinfo'], ['percent'], ['fileformat', 'fileencoding', 'filetype'], ['anzu']]
       \ },
       \ 'component_function': {
+      \   'ale': 'ALEGetStatusLine',
       \   'fugitive': 'MyFugitive',
       \   'anzu': 'anzu#search_status',
       \ },
@@ -333,5 +335,11 @@ aug END
 
 " supertab
 let g:SuperTabDefaultCompletionType = '<c-x><c-o>'
+
+
+let g:ale_set_signs = 0
+let g:ale_lint_on_save = 1
+let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
+
 
 "vim:fdm=marker
