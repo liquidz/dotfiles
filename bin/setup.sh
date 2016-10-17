@@ -43,7 +43,7 @@ fi
 cecho $green "Start: ${MODE} setup"
 
 ## dotfiles レポジトリの clone
-cecho $yellow " * cloning dotfiles"
+cecho $yellow " * dotfiles"
 if [[ ! -e $INSTALL_DIR ]]; then
     git clone https://github.com/liquidz/dotfiles.git $INSTALL_DIR > /dev/null 2>&1
 else
@@ -52,12 +52,12 @@ else
 fi
 
 ## dotfiles のシンボリックリンクを貼る
-cecho $yellow " * create symbolic links to dotfiles"
+cecho $yellow " * symbolic links to dotfiles"
 for file in ${DOT_FILES[@]}; do
     cecho $blue "   $file"
     ln -sfn $INSTALL_DIR/$file ~/$file
 done
-cecho $yellow " * create symbolic links to .lein/profiles.clj"
+cecho $yellow " * symbolic links to .lein/profiles.clj"
 if [[ ! -e "~/.lein" ]]; then
     mkdir -p ~/.lein
 fi
@@ -82,9 +82,11 @@ if [[ "$MODE" == "full" ]]; then
         touch ~/.vim/memo/default.md
     fi
 
-    cecho $yellow " * installing vim-plug"
-    if [ ! -e "~/.vim/autoload/plug.vim" ]; then
-        curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    cecho $yellow " * setting up vim-plug"
+    PLUG_VIM=~/.vim/autoload/plug.vim
+    if [ ! -e $PLUG_VIM ]; then
+        cecho $blue "   installing vim-plug"
+        curl -sfLo $PLUG_VIM --create-dirs \
             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     fi
 
@@ -100,13 +102,13 @@ if [[ "$MODE" == "full" ]]; then
 
     ## zsh の設定
     cecho $yellow " * initializing zsh"
-    DIR="~/.zsh"
+    DIR=~/.zsh
     ln -sfn $INSTALL_DIR/.zsh $DIR
-    cecho $yellow " * downloading zsh git-completion"
+    cecho $yellow " * zsh git-completion"
     curl -s -o "$DIR/_git" https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh
     curl -s -o "$DIR/git-completion.bash" https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
 
-    cecho $yellow " * cloning antigen"
+    cecho $yellow " * zsh antigen"
     DIR="~/src/github.com/zsh-users/antigen"
     if [[ ! -e $DIR ]]; then
         git clone https://github.com/zsh-users/antigen.git $DIR > /dev/null 2>&1
@@ -116,7 +118,7 @@ if [[ "$MODE" == "full" ]]; then
     fi
 
     ## beco
-    cecho $yellow " * cloning beco"
+    cecho $yellow " * beco"
     DIR="~/src/github.com/liquidz/beco"
     if [[ ! -e $DIR ]]; then
         git clone https://github.com/liquidz/beco.git $DIR > /dev/null 2>&1
