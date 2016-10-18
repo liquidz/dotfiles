@@ -35,10 +35,12 @@ Plug 'vim-jp/vital.vim'
 Plug 'vim-scripts/confluencewiki.vim'
 Plug 'vim-scripts/gtags.vim'
 Plug 'w0ng/vim-hybrid'
-Plug 'ervandew/supertab'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 if has('channel')
   Plug 'w0rp/ale'
+else
+  Plug 'ervandew/supertab'
 endif
 
 " }}}
