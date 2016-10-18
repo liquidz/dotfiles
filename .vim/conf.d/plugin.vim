@@ -5,13 +5,11 @@ call plug#begin('~/.vim/repos')
 Plug 'aklt/plantuml-syntax'
 Plug 'cespare/vim-toml'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'ervandew/supertab'
 Plug 'gregsexton/gitv'
 Plug 'idanarye/vim-merginal'
 Plug 'inside/vim-search-pulse'
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'justinmk/vim-dirvish'
 Plug 'justinmk/vim-dirvish'
 Plug 'kana/vim-operator-replace'
 Plug 'kana/vim-operator-user'
@@ -39,6 +37,7 @@ Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 if has('channel')
   Plug 'w0rp/ale'
+  Plug 'maralla/completor.vim'
 else
   Plug 'ervandew/supertab'
 endif
@@ -339,9 +338,35 @@ aug END
 let g:SuperTabDefaultCompletionType = '<c-x><c-o>'
 
 
+" ale
 let g:ale_set_signs = 0
 let g:ale_lint_on_save = 1
-let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
+let g:ale_statusline_format = ['ERR %d', 'WARN %d', 'ok']
 
+" completor
+let g:completor_go_omni_trigger = '([\w]+|\.)'
 
+" ultisnips
+
+let g:UltiSnipsExpandTrigger='<tab>'
+let g:UltiSnipsJumpForwardTrigger='<c-k>'
+"let g:UltiSnipsJumpBackwardTrigger='<c-z>'
+
+"  let g:neosnippet#snippets_directory = $HOME . '/.vim/snippets'
+"  imap <C-k> <Plug>(neosnippet_expand_or_jump)
+"  smap <C-k> <Plug>(neosnippet_expand_or_jump)
+"  xmap <C-k> <Plug>(neosnippet_expand_target)
+"  nnoremap [Unite]s :Unite neosnippet<CR>
 "vim:fdm=marker
+
+" developing plugins {{{
+" http://www.kaoriya.net/blog/2015/12/01/vim-switch-developing-plugin/
+let dirs = [ $HOME.'/src/github.com/liquidz' ]
+for pattern in [ 'vim*', '*vim' ]
+  for path in globpath(join(dirs, ','), pattern, 0, 1)
+    if isdirectory(path) && filereadable(path . '/VIM_AUTO_RTP')
+      "echomsg "VIM_AUTO_RTP: ".path
+      let &runtimepath = &runtimepath.','.path
+    end
+  endfor
+endfor " }}}
