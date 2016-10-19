@@ -34,6 +34,7 @@ Plug 'vim-scripts/gtags.vim'
 Plug 'w0ng/vim-hybrid'
 
 Plug 'neomake/neomake'
+Plug 'kassio/neoterm'
 Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 
 Plug 'fatih/vim-go',                   {'for': 'go'}
@@ -106,6 +107,65 @@ colorscheme hybrid
   xmap <Space>m <Plug>(quickhl-manual-this)
   nmap <Space>M <Plug>(quickhl-manual-reset)
   xmap <Space>M <Plug>(quickhl-manual-reset)
+
+"repo = 'itchyny/lightline.vim'
+  function! MyFugitive()
+    let l:branch = exists('*fugitive#head') ? fugitive#head() : ''
+    if l:branch ==# 'master'
+      let l:branch = printf('!! %s !!', toupper(l:branch))
+    endif
+  
+    return l:branch
+  endfunction
+
+  let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [['mode', 'paste'],
+      \            ['fugitive', 'readonly', 'modified']],
+      \   'right': [['lineinfo'], ['percent'], ['fileformat', 'fileencoding', 'filetype'], ['anzu']]
+      \ },
+      \ 'component_function': {
+      \   'ale': 'ALEGetStatusLine',
+      \   'fugitive': 'MyFugitive',
+      \   'anzu': 'anzu#search_status',
+      \ },
+      \ 'separator': { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '|', 'right': '|' },
+      \ 'tabline': { 'left': [[ 'tabs' ]], 'right': [[ 'bufnum' ]] }
+      \ }
+
+" repo = 'junegunn/vim-easy-align'
+  vmap <Enter> <Plug>(EasyAlign)
+  let g:easy_align_delimiters = {
+      \ '>': { 'pattern': '->\|=>' }
+      \ }
+
+" repo = 'kana/vim-submode'
+  let g:submode_timeout = 0
+
+  try
+    call submode#enter_with('window', 'n', '', '<C-w><C-w>', '<Nop>')
+    call submode#leave_with('window', 'n', '', '<Esc>')
+    call submode#map('window', 'n', '', 'j', '<C-w>j')
+    call submode#map('window', 'n', '', 'J', '<C-w>J')
+    call submode#map('window', 'n', '', 'k', '<C-w>k')
+    call submode#map('window', 'n', '', 'K', '<C-w>K')
+    call submode#map('window', 'n', '', 'l', '<C-w>l')
+    call submode#map('window', 'n', '', 'L', '<C-w>L')
+    call submode#map('window', 'n', '', 'h', '<C-w>h')
+    call submode#map('window', 'n', '', 'H', '<C-w>h')
+    call submode#map('window', 'n', '', 's', '<C-w>s')
+    call submode#map('window', 'n', '', 'v', '<C-w>v')
+    call submode#map('window', 'n', '', 'x', ':q<CR>')
+    call submode#map('window', 'n', '', '>', '<C-w>5>')
+    call submode#map('window', 'n', '', '<', '<C-w>5<lt>')
+    call submode#map('window', 'n', '', '+', '<C-w>5+')
+    call submode#map('window', 'n', '', '-', '<C-w>5-')
+  catch
+    echo 'submode is not installed'
+    PlugInstall vim-submode
+  endtry
 
 " deoplete
 let g:deoplete#enable_at_startup = 1

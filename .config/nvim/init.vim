@@ -187,6 +187,8 @@ if has('win32')
   nnoremap <C-Space> za
 endif
 
+tnoremap <silent> <ESC> <C-\><C-n>
+
 nnoremap QQ :<C-u>bd!<CR>
 " }}}
 
