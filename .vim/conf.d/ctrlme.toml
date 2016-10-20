@@ -40,6 +40,18 @@ action = '''
   execute ":e ~/.vim/conf.d/dein.toml"
 '''
 
+[[files]]
+name = 'memo dir'
+action = '''
+  execute ":cd ~/.vim/memo/wiki"
+'''
+
+[[ctrlp]]
+name = 'dotfiles'
+action = '''
+  execute ":CtrlP ~/dotfiles/"
+'''
+
 [[encoding]]
 name = 'utf8 encoding'
 action = '''

@@ -36,13 +36,17 @@ Plug 'w0ng/vim-hybrid'
 Plug 'neomake/neomake'
 Plug 'kassio/neoterm'
 Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+Plug 'liquidz/kami.vim'
+Plug 'liquidz/ctrlme.vim'
+
+"Plug 'bfredl/nvim-miniyank'
 
 Plug 'fatih/vim-go',                   {'for': 'go'}
-Plug 'zchee/deoplete-go', {'for': 'go', 'do': 'make'}
 Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 Plug 'nelstrom/vim-textobj-rubyblock', {'for': 'ruby'}
 Plug 'thinca/vim-prettyprint',         {'for': 'vim'}
 if has('unix')
+  Plug 'zchee/deoplete-go',            {'for': 'go', 'do': 'make'}
   Plug 'guns/vim-clojure-static',      {'for': 'clojure'}
   Plug 'tpope/vim-fireplace',          {'for': 'clojure'}
   Plug 'guns/vim-sexp',                {'for': 'clojure'}
@@ -50,7 +54,6 @@ if has('unix')
 endif
 
 call plug#end()
-
 
 set background=dark
 colorscheme hybrid
@@ -175,3 +178,20 @@ aug MyNeoMake
   au!
   au BufWritePost * Neomake
 aug END
+
+" kami
+nnoremap <Leader>ko :KamiOpenFromList<CR>
+nnoremap <Leader>kk :KamiOpenToday<CR>
+let g:kami#ext = 'adoc'
+let g:kami#timestamp_format = '== %s'
+
+" ctrlme
+  let g:ctrlme_toml_file = $HOME.'/.vim/conf.d/ctrlme.toml'
+  nnoremap <Leader>e :CtrlMe<CR>
+  vnoremap <Leader>e :CtrlMe<CR>
+
+" Plug 'bfredl/nvim-miniyank'
+"map <leader>p <Plug>(miniyank-startput)
+"map p <Plug>(miniyank-autoput)
+"map <leader>n <Plug>(miniyank-cycle)
+
