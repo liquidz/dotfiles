@@ -7,7 +7,7 @@ Plug 'idanarye/vim-merginal'
 Plug 'inside/vim-search-pulse'
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/vim-easy-align'
-"Plug 'justinmk/vim-dirvish'
+Plug 'justinmk/vim-dirvish'
 Plug 'kana/vim-operator-replace'
 Plug 'kana/vim-operator-user'
 Plug 'kana/vim-submode'
@@ -179,6 +179,13 @@ aug MyNeoMake
   au BufWritePost * Neomake
 aug END
 
+let g:neomake_go_run_maker = {
+    \ 'args': ['--verbose'],
+    \ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
+    \ }
+let g:neomake_javascript_enabled_makers = ['jshint']
+
+
 " kami
 nnoremap <Leader>ko :KamiOpenFromList<CR>
 nnoremap <Leader>kk :KamiOpenToday<CR>
@@ -194,4 +201,13 @@ let g:kami#timestamp_format = '== %s'
 "map <leader>p <Plug>(miniyank-startput)
 "map p <Plug>(miniyank-autoput)
 "map <leader>n <Plug>(miniyank-cycle)
+
+" dirvisho
+nnoremap <Leader><Leader> :Dirvish<CR>
+aug MyDirvish
+    au!
+    au BufEnter * execute ":lcd " . expand("%:p:h")
+    au FileType dirvish nmap <buffer> h 1-
+    au FileType dirvish nmap <buffer> l <CR>
+aug END
 
