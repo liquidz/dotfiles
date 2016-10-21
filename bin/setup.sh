@@ -8,7 +8,7 @@
 # ==================================================
 
 INSTALL_DIR=~/src/github.com/liquidz/dotfiles
-DOT_FILES=(".vimrc"                     \
+DOT_FILES=( \
     ".tmux.conf"                        \
     ".zshenv" ".zshrc" ".zshrc.antigen" \
     ".ctags" ".gemrc" ".rubocop.yml"    \
@@ -65,12 +65,20 @@ ln -sfn $INSTALL_DIR/.lein/profiles.clj ~/.lein/profiles.clj
 
 ## full モードなら全設定のセットアップ
 if [[ "$MODE" == "full" ]]; then
-    ## vim の設定
-    cecho $yellow " * initializing vim"
-    ln -sfn $INSTALL_DIR/.vim ~/.vim
-    mkdir -p ~/.vim/cache
+
+    ## neovimの設定
+    cecho $yellow " * symbolic links to .config/nvim"
+    if [[ ! -e "~/.config" ]]; then
+        mkdir -p ~/.config
+    fi
+    ln -sfn $INSTALL_DIR/nvim ~/.config
+
+    ### vim の設定
+    #cecho $yellow " * initializing vim"
+    #ln -sfn $INSTALL_DIR/.vim ~/.vim
+    #mkdir -p ~/.vim/cache
     mkdir -p ~/.vim/backup
-    mkdir -p ~/.tags
+    #mkdir -p ~/.tags
 
     cecho $yellow " * setting up vim memo"
     if [[ -e ~/Dropbox/vim/memo ]] && [[ "$IS_TEST" = "" ]]; then
@@ -83,7 +91,7 @@ if [[ "$MODE" == "full" ]]; then
     fi
 
     cecho $yellow " * setting up vim-plug"
-    PLUG_VIM=~/.vim/autoload/plug.vim
+    PLUG_VIM=$INSTALL_DIR/nvim/autoload/plug.vim
     if [ ! -e $PLUG_VIM ]; then
         cecho $blue "   installing vim-plug"
         curl -sfLo $PLUG_VIM --create-dirs \

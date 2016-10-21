@@ -36,6 +36,7 @@ Plug 'w0ng/vim-hybrid'
 Plug 'neomake/neomake'
 Plug 'kassio/neoterm'
 Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+Plug 'Shougo/neosnippet' | Plug 'Shougo/neosnippet-snippets'
 Plug 'liquidz/kami.vim'
 Plug 'liquidz/ctrlme.vim'
 
@@ -170,8 +171,17 @@ colorscheme hybrid
     PlugInstall vim-submode
   endtry
 
-" deoplete
+" =deoplete
 let g:deoplete#enable_at_startup = 1
+inoremap <expr><tab> pumvisible() ? "\<C-n>" :
+    \ neosnippet#expandable_or_jumpable() ?
+    \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
+
+" =neosnippet
+let g:neosnippet#snippets_directory = $HOME . '/.vim/snippets'
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+smap <C-k> <Plug>(neosnippet_expand_or_jump)
+xmap <C-k> <Plug>(neosnippet_expand_target)
 
 " neomake
 aug MyNeoMake
@@ -193,7 +203,7 @@ let g:kami#ext = 'adoc'
 let g:kami#timestamp_format = '== %s'
 
 " ctrlme
-  let g:ctrlme_toml_file = $HOME.'/.vim/conf.d/ctrlme.toml'
+  let g:ctrlme_toml_file = $HOME.'/src/github.com/liquidz/dotfiles/nvim/conf.d/ctrlme.toml'
   nnoremap <Leader>e :CtrlMe<CR>
   vnoremap <Leader>e :CtrlMe<CR>
 
@@ -211,3 +221,25 @@ aug MyDirvish
     au FileType dirvish nmap <buffer> l <CR>
 aug END
 
+" =fireplace
+aug VimFireplaceSetting
+  au!
+  au Filetype clojure nnoremap <Leader>r :Require!<CR>
+  au Filetype clojure nmap <buffer> cc <Plug>FireplaceCountPrint
+  " vim-ref の K と競合するため再定義
+  au Filetype clojure nmap <buffer> K <Plug>FireplaceK
+aug END
+
+
+
+" developing plugins {{{
+" http://www.kaoriya.net/blog/2015/12/01/vim-switch-developing-plugin/
+let dirs = [ $HOME.'/src/github.com/liquidz' ]
+for pattern in [ 'vim*', '*vim' ]
+  for path in globpath(join(dirs, ','), pattern, 0, 1)
+    if isdirectory(path) && filereadable(path . '/VIM_AUTO_RTP')
+      "echomsg "VIM_AUTO_RTP: ".path
+      let &runtimepath = &runtimepath.','.path
+    end
+  endfor
+endfor " }}}
