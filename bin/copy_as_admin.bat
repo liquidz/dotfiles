@@ -20,4 +20,4 @@ if exist "%NVIM%" (
     del /Q "%NVIM%"
 )
 
-mklink /D %NVIM% %HOMEPATH%\dotfiles\.config\nvim
+mklink /D %NVIM% %HOMEPATH%\src\github.com\liquidz\dotfiles\nvim

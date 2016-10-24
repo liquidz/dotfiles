@@ -1,3 +1,5 @@
+let g:dotfiles = $HOME.'/src/github.com/liquidz/dotfiles'
+
 call plug#begin('~/.vim/repos')
 
 Plug 'aklt/plantuml-syntax'
@@ -178,7 +180,11 @@ inoremap <expr><tab> pumvisible() ? "\<C-n>" :
     \    "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
 
 " =neosnippet
-let g:neosnippet#snippets_directory = $HOME . '/.vim/snippets'
+let g:neosnippet#snippets_directory = g:dotfiles . '/.vim/snippets'
+if has('win64')
+    let g:python3_host_prog = $HOME . '\AppData\Local\Programs\Python\Python35-32\python.exe'
+endif
+
 imap <C-k> <Plug>(neosnippet_expand_or_jump)
 smap <C-k> <Plug>(neosnippet_expand_or_jump)
 xmap <C-k> <Plug>(neosnippet_expand_target)
@@ -203,7 +209,7 @@ let g:kami#ext = 'adoc'
 let g:kami#timestamp_format = '== %s'
 
 " ctrlme
-  let g:ctrlme_toml_file = $HOME.'/src/github.com/liquidz/dotfiles/nvim/conf.d/ctrlme.toml'
+  let g:ctrlme_toml_file = g:dotfiles . '/nvim/conf.d/ctrlme.toml'
   nnoremap <Leader>e :CtrlMe<CR>
   vnoremap <Leader>e :CtrlMe<CR>
 
@@ -212,7 +218,7 @@ let g:kami#timestamp_format = '== %s'
 "map p <Plug>(miniyank-autoput)
 "map <leader>n <Plug>(miniyank-cycle)
 
-" dirvisho
+" dirvish
 nnoremap <Leader><Leader> :Dirvish<CR>
 aug MyDirvish
     au!
