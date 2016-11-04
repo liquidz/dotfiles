@@ -8,6 +8,10 @@ PATH="/usr/local/bin:$PATH:/usr/local/sbin"
 export PATH
 # }}}
 
+if [[ "$(hostname)" = "uodo" ]]; then
+  export LEIN_ROOT=1
+fi
+
 alias ll='ls -l'
 alias la='ls -a'
 
@@ -82,7 +86,7 @@ export PATH=$PATH:/usr/local/heroku/bin
 # }}}
 
 # go {{{
-if ! uname -a | grep Android > /dev/null 2>&1; then
+if [[ -e /usr/local/go ]]; then
   export GOROOT=/usr/local/go
 fi
 export GOPATH=$HOME
