@@ -31,13 +31,13 @@ action = '''
 [[files]]
 name = 'ctrlme setting'
 action = '''
-  execute ":e ~/.vim/conf.d/ctrlme.toml"
+  execute ":e ~/src/github.com/liquidz/dotfiles/nvim/conf.d/ctrlme.toml"
 '''
 
 [[files]]
 name = 'plugin setting'
 action = '''
-  execute ":e ~/.vim/conf.d/dein.toml"
+  execute ":e ~/src/github.com/liquidz/dotfiles/nvim/conf.d/plugin.vim"
 '''
 
 [[files]]
@@ -46,10 +46,16 @@ action = '''
   execute ":cd ~/.vim/memo/wiki"
 '''
 
+[[dirvish]]
+name = 'home directory'
+action = '''
+  execute ":Dirvish ~"
+'''
+
 [[ctrlp]]
 name = 'dotfiles'
 action = '''
-  execute ":CtrlP ~/dotfiles/"
+  execute ":CtrlP ~/src/github.com/liquidz/dotfiles/"
 '''
 
 [[encoding]]

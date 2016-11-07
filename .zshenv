@@ -162,4 +162,4 @@ export BECOROOT=/Users/uochan/src/github.com/liquidz/beco
 alias vint='beco vint'
 # }}}
 
-alias vim='nvim'
+#alias vim='nvim'
