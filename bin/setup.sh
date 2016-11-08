@@ -9,7 +9,7 @@
 
 INSTALL_DIR=~/src/github.com/liquidz/dotfiles
 DOT_FILES=( \
-    ".tmux.conf"                        \
+    ".vimrc" ".tmux.conf"               \
     ".zshenv" ".zshrc" ".zshrc.antigen" \
     ".ctags" ".gemrc" ".rubocop.yml"    \
     ".gitconfig.common" ".w3m"          \
@@ -119,7 +119,7 @@ if [[ "$MODE" == "full" ]]; then
     curl -s -o "$DIR/git-completion.bash" https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
 
     cecho $yellow " * zsh antigen"
-    DIR="~/src/github.com/zsh-users/antigen"
+    DIR=~/src/github.com/zsh-users/antigen
     if [[ ! -e $DIR ]]; then
         git clone https://github.com/zsh-users/antigen.git $DIR > /dev/null 2>&1
     else
@@ -129,7 +129,7 @@ if [[ "$MODE" == "full" ]]; then
 
     ## beco
     cecho $yellow " * beco"
-    DIR="~/src/github.com/liquidz/beco"
+    DIR=~/src/github.com/liquidz/beco
     if [[ ! -e $DIR ]]; then
         git clone https://github.com/liquidz/beco.git $DIR > /dev/null 2>&1
     else

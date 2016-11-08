@@ -31,13 +31,13 @@ action = '''
 [[files]]
 name = 'ctrlme setting'
 action = '''
-  execute ":e ~/src/github.com/liquidz/dotfiles/nvim/conf.d/ctrlme.toml"
+  execute ":e ~/src/github.com/liquidz/dotfiles/.vim/conf.d/ctrlme.toml"
 '''
 
 [[files]]
 name = 'plugin setting'
 action = '''
-  execute ":e ~/src/github.com/liquidz/dotfiles/nvim/conf.d/plugin.vim"
+  execute ":e ~/src/github.com/liquidz/dotfiles/.vim/conf.d/plugin.vim"
 '''
 
 [[files]]
