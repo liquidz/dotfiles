@@ -65,6 +65,11 @@ ln -sfn $INSTALL_DIR/.lein/profiles.clj ~/.lein/profiles.clj
 
 ## full モードなら全設定のセットアップ
 if [[ "$MODE" == "full" ]]; then
+    ## vim の設定
+    cecho $yellow " * initializing vim"
+    ln -sfn $INSTALL_DIR/.vim ~/.vim
+    mkdir -p ~/.vim/backup
+    mkdir -p ~/.tags
 
     ## neovimの設定
     cecho $yellow " * symbolic links to .config/nvim"
@@ -72,13 +77,6 @@ if [[ "$MODE" == "full" ]]; then
         mkdir -p ~/.config
     fi
     ln -sfn $INSTALL_DIR/nvim ~/.config
-
-    ### vim の設定
-    #cecho $yellow " * initializing vim"
-    #ln -sfn $INSTALL_DIR/.vim ~/.vim
-    #mkdir -p ~/.vim/cache
-    mkdir -p ~/.vim/backup
-    #mkdir -p ~/.tags
 
     cecho $yellow " * setting up vim memo"
     if [[ -e ~/Dropbox/vim/memo ]] && [[ "$IS_TEST" = "" ]]; then
@@ -91,12 +89,16 @@ if [[ "$MODE" == "full" ]]; then
     fi
 
     cecho $yellow " * setting up vim-plug"
-    PLUG_VIM=$INSTALL_DIR/nvim/autoload/plug.vim
+    #PLUG_VIM=$INSTALL_DIR/nvim/autoload/plug.vim
+    PLUG_VIM=$INSTALL_DIR/.vim/autoload/plug.vim
     if [ ! -e $PLUG_VIM ]; then
         cecho $blue "   installing vim-plug"
         curl -sfLo $PLUG_VIM --create-dirs \
             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     fi
+    mkdir -p $INSTALL_DIR/nvim/autoload
+    \cp -pf $INSTALL_DIR/.vim/autoload/plug.vim \
+            $INSTALL_DIR/nvim/autoload/
 
     ## tmux の設定
     #cecho $yellow " * cloning tpm"
