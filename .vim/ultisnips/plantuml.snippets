@@ -1,0 +1,92 @@
+priority -50
+
+# start uml
+snippet /^start/ "start uml" r
+@startuml
+autonumber "<b>0."
+skinparam shadowing false
+hide footbox
+
+title: ${1:TITLE}
+actor       "ユーザー" as user
+box "sample" #LightBlue
+  participant "foo" as foo
+end box
+database    "bar" as bar
+@enduml
+endsnippet
+
+# participant
+snippet participant "participant" b
+participant "${1}" as ${2}
+endsnippet
+
+# alt ... end
+snippet alt "alt ... end" b
+alt ${1:#:condition}
+	${2}
+end
+endsnippet
+
+# opt ... end
+snippet opt "opt ... end" b
+opt ${1:#:condition}
+	${2}
+end
+endsnippet
+
+# loop ... end
+snippet loop "loop ... end" b
+loop ${1:#:condition}
+	${2}
+end
+endsnippet
+
+# break ... end
+snippet break "break ... end" b
+break ${1:#:condition}
+	${2}
+end
+endsnippet
+
+# note right
+snippet note "note right" b
+note ${1:right}
+	${2}
+end note
+endsnippet
+
+# activate ... deactivate
+snippet activate "activate ... deactivate" b
+activate ${1}
+	${2}
+deactivate $1
+endsnippet
+
+# sync message
+snippet -> "sync message" b
+"${1}" -> "${2}" : ${3:FIXME}
+activate $2
+	"$1" <-- "$2" : $3
+deactivate $2
+endsnippet
+
+# aync message
+snippet ->> "aync message" b
+"${1}" ->> "${2}" : ${3}
+endsnippet
+
+# response
+snippet <- "response" b
+"${1}" <-- "${2}" : ${3}
+endsnippet
+
+# message to me
+snippet <> "message to me" b
+"${1}" -> "$1" : ${2:FIXME}
+endsnippet
+
+# divider
+snippet /^==/ "divider" r
+== ${1:DIVIDER} ==
+endsnippet

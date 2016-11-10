@@ -3,8 +3,6 @@ let g:dotfiles = $HOME.'/src/github.com/liquidz/dotfiles'
 call plug#begin('~/.vim/repos')
 " default {{{
 
-"Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-Plug 'LeafCage/foldCC.vim'
 Plug 'aklt/plantuml-syntax'
 Plug 'cespare/vim-toml'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -21,10 +19,12 @@ Plug 'kana/vim-textobj-line'
 Plug 'kana/vim-textobj-user'
 Plug 'kannokanno/previm'
 Plug 'kien/rainbow_parentheses.vim'
+Plug 'LeafCage/foldCC.vim'
 Plug 'liquidz/ctrlme.vim'
 Plug 'liquidz/kami.vim'
 Plug 'osyo-manga/vim-anzu'
 Plug 'rhysd/clever-f.vim'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 't9md/vim-quickhl'
 Plug 'tacahiroy/ctrlp-funky'
 Plug 'thinca/vim-quickrun'
@@ -217,7 +217,7 @@ xmap <Space>M <Plug>(quickhl-manual-reset)
   nnoremap <Leader>go  :Git browse<CR>
 
 " }}}
-"=gitv {{{
+" =gitv {{{
 
 nnoremap <Leader>gl  :Gitv<CR>
 
@@ -391,9 +391,10 @@ set foldtext=FoldCCtext()
 " }}}
 " =ultisnips {{{
 
-"let g:UltiSnipsExpandTrigger='<tab>'
-"let g:UltiSnipsJumpForwardTrigger='<c-k>'
+let g:UltiSnipsExpandTrigger='<c-k>'
+let g:UltiSnipsJumpForwardTrigger='<tab>'
 ""let g:UltiSnipsJumpBackwardTrigger='<c-z>'
+let g:UltiSnipsSnippetDirectories = ["ultisnips"]
 "
 ""  let g:neosnippet#snippets_directory = $HOME . '/.vim/snippets'
 ""  imap <C-k> <Plug>(neosnippet_expand_or_jump)
