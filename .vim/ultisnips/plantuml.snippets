@@ -24,42 +24,42 @@ endsnippet
 # alt ... end
 snippet alt "alt ... end" b
 alt ${1:#:condition}
-	${2}
+  ${2}
 end
 endsnippet
 
 # opt ... end
 snippet opt "opt ... end" b
 opt ${1:#:condition}
-	${2}
+  ${2}
 end
 endsnippet
 
 # loop ... end
 snippet loop "loop ... end" b
 loop ${1:#:condition}
-	${2}
+  ${2}
 end
 endsnippet
 
 # break ... end
 snippet break "break ... end" b
 break ${1:#:condition}
-	${2}
+  ${2}
 end
 endsnippet
 
 # note right
 snippet note "note right" b
 note ${1:right}
-	${2}
+  ${2}
 end note
 endsnippet
 
 # activate ... deactivate
 snippet activate "activate ... deactivate" b
 activate ${1}
-	${2}
+  ${2}
 deactivate $1
 endsnippet
 
@@ -67,7 +67,7 @@ endsnippet
 snippet -> "sync message" b
 "${1}" -> "${2}" : ${3:FIXME}
 activate $2
-	"$1" <-- "$2" : $3
+  "$1" <-- "$2" : $3
 deactivate $2
 endsnippet
 

@@ -7,6 +7,7 @@ Plug 'aklt/plantuml-syntax'
 Plug 'cespare/vim-toml'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'gregsexton/gitv'
+Plug 'haya14busa/vim-metarepeat'
 Plug 'idanarye/vim-merginal'
 Plug 'inside/vim-search-pulse'
 Plug 'itchyny/lightline.vim'
@@ -394,7 +395,7 @@ set foldtext=FoldCCtext()
 let g:UltiSnipsExpandTrigger='<c-k>'
 let g:UltiSnipsJumpForwardTrigger='<tab>'
 ""let g:UltiSnipsJumpBackwardTrigger='<c-z>'
-let g:UltiSnipsSnippetDirectories = ["ultisnips"]
+let g:UltiSnipsSnippetDirectories = ['UltiSnips', 'ultisnips']
 "
 ""  let g:neosnippet#snippets_directory = $HOME . '/.vim/snippets'
 ""  imap <C-k> <Plug>(neosnippet_expand_or_jump)

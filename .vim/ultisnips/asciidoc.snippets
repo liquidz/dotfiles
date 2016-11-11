@@ -1,0 +1,44 @@
+snippet header "header" b
+= ${1:title}
+:author: ${2:author}
+:email: ${3:email}
+:toc: right
+:toclevels: ${4:2}
+:pagenums:
+:sectanchors:
+:sectlinks:
+endsnippet
+
+snippet link "link" b
+link:${1:url}[${2:title}]
+endsnippet
+
+snippet code "code" b
+[source,${1:text}]
+----
+${2}
+----
+endsnippet
+
+snippet source "source" b
+[source,${1:text}]
+----
+${2}
+----
+endsnippet
+
+snippet table "table" b
+[options="header,autowidth"]
+|===
+| foo | bar
+|===
+endsnippet
+
+snippet note "note" b
+[NOTE]
+${1}
+endsnippet
+
+snippet include "include" b
+include::${1:foo.adoc}[]
+endsnippet

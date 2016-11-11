@@ -1,0 +1,44 @@
+snippet init "init" b
+*${1}.txt*	${2:FIXME}
+
+==============================================================================
+TABLE OF CONTENTS					*$1-content*
+
+foo							|$1-foo|
+
+==============================================================================
+FOO							*$1-foo*
+
+${0}
+
+==============================================================================
+vim:tw=78:cc=78:ts=8:ft=help:norl:noexpandtab
+endsnippet
+
+snippet footer "footer" b
+==============================================================================
+vim:tw=78:cc=78:ts=8:ft=help:norl:noexpandtab
+endsnippet
+
+snippet section "section" b
+==============================================================================
+endsnippet
+
+snippet subsection "sub section" b
+------------------------------------------------------------------------------
+endsnippet
+
+snippet header "header" b
+==============================================================================
+${1:TITLE}										*${2:tag}*
+endsnippet
+
+snippet link "link" b
+|${1}| --> *$1*
+endsnippet
+
+snippet code "code" b
+>
+  ${1}
+<
+endsnippet
