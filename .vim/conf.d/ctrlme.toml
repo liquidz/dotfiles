@@ -1,3 +1,7 @@
+include = [
+  'ctrlme_windows_local.toml'
+]
+
 [[macros]]
 # 先頭のコメント以降を削除
 name = "delete after conma"

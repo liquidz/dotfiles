@@ -18,3 +18,13 @@ ${0}
 let &cpo = s:save_cpo
 unlet s:save_cpo
 endsnippet
+
+snippet vital_new "vital new" b
+let ${1:s:V} = vital#${2:vital}#new()
+endsnippet
+
+snippet vital_import "vital import" b
+let ${1:s:M} = ${2:s:V}.import('${3:#:module_name}')
+endsnippet
+
+

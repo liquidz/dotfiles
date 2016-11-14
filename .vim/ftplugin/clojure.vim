@@ -47,9 +47,9 @@ aug MyLispWords
   au FileType clojure set lispwords+=stubbing
 aug END
 
+"    \ 'hook/cd/directory': yacd#get_root_dir(expand('%:p:h'))
 let g:quickrun_config.lein_test = {
     \ 'command'   : 'lein',
     \ 'exec'      : '%c test',
-    \ 'hook/cd/directory': yacd#get_root_dir(expand('%:p:h'))
     \ }
 nnoremap <buffer> <Leader>lt :QuickRun lein_test<CR>
