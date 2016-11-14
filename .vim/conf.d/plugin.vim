@@ -55,6 +55,7 @@ Plug 'fatih/vim-go',                   {'for': 'go'}
 Plug 'nelstrom/vim-textobj-rubyblock', {'for': 'ruby'}
 Plug 'thinca/vim-prettyprint',         {'for': 'vim'}
 Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
+Plug 'rust-lang/rust.vim',             {'for': 'rust'}
 if has('unix')
   Plug 'guns/vim-clojure-static',      {'for': 'clojure'}
   Plug 'guns/vim-sexp',                {'for': 'clojure'}
@@ -377,6 +378,8 @@ let g:kami#timestamp_format = '== %s'
 
 "let g:completor_gocode_binary = $HOME.'/bin/gocode'
 let g:completor_go_omni_trigger = '(?:\b[^\W\d]\w*|[\]\)])\.(?:[^\W\d]\w*)?'
+let g:completor_racer_binary = $HOME.'/.cargo/bin/racer'
+
 
 " }}}
 " =ctrlme {{{
@@ -403,6 +406,11 @@ let g:UltiSnipsSnippetDirectories = ['UltiSnips', 'ultisnips']
 ""  smap <C-k> <Plug>(neosnippet_expand_or_jump)
 ""  xmap <C-k> <Plug>(neosnippet_expand_target)
 ""  nnoremap [Unite]s :Unite neosnippet<CR>
+
+" }}}
+" =rust.vim {{{
+
+let g:rustfmt_autosave = 1
 
 " }}}
 " developing plugins {{{

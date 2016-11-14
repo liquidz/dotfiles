@@ -4,6 +4,7 @@ PATH=$PATH:/opt/local/bin
 PATH=$PATH:~/.vim/bundle/vim-themis/bin
 PATH=$PATH:/usr/local/octave/3.8.0/bin
 PATH=$PATH:~/.fzf/bin
+PATH=$PATH:~/.cargo/bin
 PATH="/usr/local/bin:$PATH:/usr/local/sbin"
 export PATH
 # }}}
