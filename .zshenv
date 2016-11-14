@@ -100,6 +100,10 @@ alias ghf='find $(git rev-parse --show-cdup) -type f | grep -v "/.git/" | fzf'
 alias gho='(cd $(ghq list --full-path | fzf) && git browse)'
 # }}}
 
+# rust {{
+export RUST_SRC_PATH=$HOME/src/rust/src
+# }}
+
 # local bookmark {{{
 function __bookmarklist() {
     ghq list --full-path

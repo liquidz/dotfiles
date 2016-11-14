@@ -380,7 +380,6 @@ let g:kami#timestamp_format = '== %s'
 let g:completor_go_omni_trigger = '(?:\b[^\W\d]\w*|[\]\)])\.(?:[^\W\d]\w*)?'
 let g:completor_racer_binary = $HOME.'/.cargo/bin/racer'
 
-
 " }}}
 " =ctrlme {{{
 
