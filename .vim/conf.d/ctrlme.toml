@@ -33,6 +33,12 @@ action = '''
 '''
 
 [[files]]
+name = 'vimrc'
+action = '''
+  execute ":e ~/src/github.com/liquidz/dotfiles/.vimrc"
+'''
+
+[[files]]
 name = 'ctrlme setting'
 action = '''
   execute ":e ~/src/github.com/liquidz/dotfiles/.vim/conf.d/ctrlme.toml"

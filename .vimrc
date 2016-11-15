@@ -18,6 +18,7 @@ if &compatible
 endif
 set modeline
 set modelines=3
+set textwidth=0
 let g:vim_indent_cont = 4
 
 if has('unix')
@@ -124,7 +125,7 @@ set shiftwidth=4
 set noequalalways
 set cursorline
 set breakindent
-"set cursorcolumn
+set nocursorcolumn
 augroup cch
   autocmd! cch
   autocmd WinLeave * set nocursorline
