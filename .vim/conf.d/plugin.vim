@@ -40,6 +40,7 @@ Plug 'vim-jp/vital.vim'
 Plug 'vim-scripts/confluencewiki.vim'
 Plug 'vim-scripts/gtags.vim'
 Plug 'w0ng/vim-hybrid'
+Plug 'liquidz/vim-ctrlp-help'
 
 if has('channel')
   Plug 'neomake/neomake'
@@ -410,6 +411,11 @@ let g:UltiSnipsSnippetDirectories = ['UltiSnips']
 " =rust.vim {{{
 
 let g:rustfmt_autosave = 1
+
+" }}}
+" vim-ctrlp-help {{{
+
+nnoremap <Leader>h :CtrlPHelp<CR>
 
 " }}}
 " developing plugins {{{
