@@ -10,7 +10,7 @@ dependencies:
     - chmod +x shelltest
 test:
   override:
-    - ./shelltest -f tap test/*.shelltest
+    #- ./shelltest -f tap test/*.shelltest
     - vint .vimrc
     - vint .vim/ftplugin/*.vim
     - vint .vim/conf.d/*.vim

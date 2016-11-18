@@ -1,3 +1,4 @@
+scriptencoding utf-8
 let g:dotfiles = $HOME.'/src/github.com/liquidz/dotfiles'
 
 call plug#begin('~/.vim/repos')
