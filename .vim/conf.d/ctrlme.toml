@@ -2,21 +2,13 @@ include = [
   'ctrlme_windows_local.toml'
 ]
 
+# =macros {{{
+
 [[macros]]
 # 先頭のコメント以降を削除
 name = "delete after conma"
 action = '''
   let @q = "0f,D"
-  if l:from != l:to
-    execute printf(':%d,%dnormal @q', l:from, l:to)
-  endif
-'''
-
-[[macros]]
-# aaa,bbb を ('aaa', 'bbb', 0); に変換
-name = "unjust sql"
-action = '''
-  let @q = "I('f,i'llli'A', 0);"
   if l:from != l:to
     execute printf(':%d,%dnormal @q', l:from, l:to)
   endif
@@ -31,6 +23,9 @@ action = '''
     execute printf(':%d,%dnormal @q', l:from, l:to)
   endif
 '''
+
+# }}}
+# =files {{{
 
 [[files]]
 name = 'vimrc'
@@ -56,17 +51,33 @@ action = '''
   execute ":cd ~/.vim/memo/wiki"
 '''
 
+[[files]]
+name = 'snippet'
+action = '''
+  let ft = &filetype == '' ? '_' : &filetype
+  execute printf(':e ~/src/github.com/liquidz/dotfiles/.vim/UltiSnips/%s.snippets', ft)
+'''
+
+# }}}
+# =dirvish {{{
+
 [[dirvish]]
 name = 'home directory'
 action = '''
   execute ":Dirvish ~"
 '''
 
+# }}}
+# =ctrlp {{{
+
 [[ctrlp]]
 name = 'dotfiles'
 action = '''
   execute ":CtrlP ~/src/github.com/liquidz/dotfiles/"
 '''
+
+# }}}
+# =encoding {{{
 
 [[encoding]]
 name = 'utf8 encoding'
@@ -86,8 +97,21 @@ action = '''
   execute "set fileformat=dos"
 '''
 
+# }}}
+# =buffer {{{
+
 [[buffer]]
 name = 'yyyymmdd'
 action = '''
   execute printf(':normal i%s', strftime('%Y%m%d'))
 '''
+
+[[buffer]]
+name = 'delete empty lines'
+action = '''
+  execute ':g/^$/d'
+'''
+
+# }}}
+
+# vim:foldlevel=0

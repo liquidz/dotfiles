@@ -13,6 +13,7 @@
 "  `--"        ---`-'                           `----'
 
 " basic {{{
+
 if &compatible
   set nocompatible " for gvim on windows
 endif
@@ -26,9 +27,10 @@ if has('unix')
 endif
 
 set cryptmethod=blowfish2
-" }}}
 
+" }}}
 " encoding {{{
+
 set encoding=utf-8
 set fileencodings=utf-8,euc-jp,sjis,cp932,iso-2022-jp
 
@@ -82,14 +84,16 @@ set fileencodings=utf-8,euc-jp,sjis,cp932,iso-2022-jp
 "  augroup END
 "endif
 scriptencoding utf-8
-" }}}
 
+" }}}
 " color scheme {{{
+
 syntax enable
 colorscheme desert
-" }}}
 
+" }}}
 " search {{{
+
 set ignorecase
 set smartcase
 set wrapscan
@@ -97,13 +101,15 @@ set hlsearch
 set incsearch
 cnoremap <expr> / getcmdtype() == '/' ? '\/' : '/'
 cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
-" }}}
 
+" }}}
 " paste {{{
-set pastetoggle=<C-e>
-" }}}
 
+set pastetoggle=<C-e>
+
+" }}}
 " visual {{{
+
 set showtabline=2
 set tabstop=4
 set expandtab
@@ -134,29 +140,34 @@ augroup END
 :hi clear CursorLine
 :hi CursorLine gui=underline
 highlight CursorLine ctermbg=black guibg=black
-" }}}
 
+" }}}
 " fold {{{
+
 set foldmethod=marker
 set foldlevel=2
-" }}}
 
+" }}}
 " buffer {{{
+
 set hidden
 set autoread
-" }}}
 
+" }}}
 " system {{{
+
 let mapleader=','
 let maplocalleader="\\"
-" }}}
 
+" }}}
 " spell {{{
+
 set spelllang=en,cjk " スペルチェック時に日本語は除外する
 nnoremap <silent> sss :<C-u>setlocal spell!<CR>
-" }}}
 
+" }}}
 " mapping {{{
+
 nnoremap <C-j> <Esc>
 cnoremap <C-j> <Esc>
 inoremap <C-j> <Esc>
@@ -190,9 +201,10 @@ if has('win32')
 endif
 
 nnoremap QQ :<C-u>bd!<CR>
-" }}}
 
+" }}}
 " copy to clipboard {{{
+
 if has('win32')
   vnoremap <C-c> "*y
 endif
@@ -203,25 +215,27 @@ endif
 nnoremap <C-y> i<C-r><C-o>+<Esc>l
 cnoremap <C-y> <C-r><C-o>+
 inoremap <C-y> <C-r><C-o>+
-" }}}
 
+" }}}
 " tab {{{
+
 nnoremap tn :<C-u>tabnew<CR>
 nnoremap th :<C-u>tabp<CR>
 nnoremap tl :<C-u>tabn<CR>
 nnoremap t0 :<C-u>tabfirst<CR>
 nnoremap t$ :<C-u>tablast<CR>
-" }}}
 
+" }}}
 " command {{{
+
 command! ToUTF8 set fileencoding=utf-8
 command! ToEUC  set fileencoding=euc-jp
 command! ToSJIS set fileencoding=sjis
-
 command! ToUNIX set fileformat=unix
-" }}}
 
+" }}}
 " auto command {{{
+
 aug MyAutoCompletion
   au!
   " XML, HTML補完
@@ -242,9 +256,10 @@ if $TMUX !=# ''
     autocmd BufEnter * let &titlestring = ' ' . expand("%:t")
   augroup END
 endif
-" }}}
 
+" }}}
 " status line {{{
+
 set statusline=[%n]\        " バッファ番号
 set statusline+=%f\         " 相対ファイル名
 set statusline+=%m\         " バッファ状態[+]
@@ -255,9 +270,10 @@ set statusline+=%y\         " タイプ
 set statusline+=%4l,%2c\    " 行、列
 set statusline+=%3p%%\      " 何％
 set laststatus=2
-" }}}
 
+" }}}
 " omni completion {{{
+
 function! InsertTabWrapper(type)
   let col = col('.') - 1
   "omni補完の場合、omini以外にも上下左右の移動もする
@@ -282,18 +298,23 @@ function! InsertTabWrapper(type)
   endif
 endfunction
 inoremap <tab> <c-r>=InsertTabWrapper('omni')<cr><c-r>=InsertTabWrapper('keyword')<cr>
-" }}}
 
+" }}}
 " matchit {{{
+
 source $VIMRUNTIME/macros/matchit.vim
 let b:match_ignorecase = 1
+
 " }}}
+" other {{{
 
 set wildignore=*.o,*.bk,*.org,*.exe,*.so
     \,*.dll,*.swp,*.zip,*.pyc,.gitkeep
-
+" }}}
 " load conf.d {{{
+
 set runtimepath+=$HOME/.vim/
 runtime! conf.d/*.vim
+
 " }}}
 " vim:fdl=0
