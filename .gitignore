@@ -4,6 +4,7 @@
 .vim/memo
 .vim/vim-ref
 .vim/.netrwhist
+.vim/.netrwbook
 *_local*
 Gemfile.lock
 bats
@@ -12,3 +13,4 @@ test/.workspace
 .zsh/_git
 .zsh/git-completion.bash
 .zsh/_beco
+.w3m/cgi-bin/quickcmd

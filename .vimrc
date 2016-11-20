@@ -306,6 +306,15 @@ source $VIMRUNTIME/macros/matchit.vim
 let b:match_ignorecase = 1
 
 " }}}
+" netrc {{{
+
+let g:netrw_banner = 0
+
+" show preview in split right window
+let g:netrw_preview = 1
+let g:netrw_alto = &spr
+
+" }}}
 " other {{{
 
 set wildignore=*.o,*.bk,*.org,*.exe,*.so

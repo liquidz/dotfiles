@@ -13,7 +13,7 @@ Plug 'idanarye/vim-merginal'
 Plug 'inside/vim-search-pulse'
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'justinmk/vim-dirvish'
+"Plug 'justinmk/vim-dirvish'
 Plug 'kana/vim-operator-replace'
 Plug 'kana/vim-operator-user'
 Plug 'kana/vim-submode'
@@ -280,15 +280,15 @@ endif
 " }}}
 " =dirvish {{{
 
-nnoremap <Leader><Leader> :Dirvish<CR>
-aug MyDirvish
-  au!
-  au BufEnter * execute ":lcd " . expand("%:p:h")
-  " ディレクトリが先頭になるようソート
-  au FileType dirvish silent sort r /[^\/]$/"
-  au FileType dirvish nmap <buffer> h 1-
-  au FileType dirvish nmap <buffer> l <CR>
-aug END
+"nnoremap <Leader><Leader> :Dirvish<CR>
+"aug MyDirvish
+"  au!
+"  au BufEnter * execute ":lcd " . expand("%:p:h")
+"  " ディレクトリが先頭になるようソート
+"  au FileType dirvish silent sort r /[^\/]$/"
+"  au FileType dirvish nmap <buffer> h 1-
+"  au FileType dirvish nmap <buffer> l <CR>
+"aug END
 
 " }}}
 " =fireplace {{{
