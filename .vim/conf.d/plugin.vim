@@ -25,6 +25,8 @@ Plug 'kien/rainbow_parentheses.vim'
 Plug 'LeafCage/foldCC.vim'
 Plug 'liquidz/ctrlme.vim'
 Plug 'liquidz/kami.vim'
+Plug 'liquidz/vim-ctrlp-help'
+Plug 'liquidz/vim-textobj-value'
 Plug 'osyo-manga/vim-anzu'
 Plug 'rhysd/clever-f.vim'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
@@ -41,7 +43,6 @@ Plug 'vim-jp/vital.vim'
 Plug 'vim-scripts/confluencewiki.vim'
 Plug 'vim-scripts/gtags.vim'
 Plug 'w0ng/vim-hybrid'
-Plug 'liquidz/vim-ctrlp-help'
 
 if has('channel')
   Plug 'neomake/neomake'
@@ -58,6 +59,7 @@ Plug 'nelstrom/vim-textobj-rubyblock', {'for': 'ruby'}
 Plug 'thinca/vim-prettyprint',         {'for': 'vim'}
 Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 Plug 'rust-lang/rust.vim',             {'for': 'rust'}
+Plug 'yuratomo/w3m.vim' | Plug 'rhysd/rust-doc.vim', {'for': 'rust'}
 if has('unix')
   Plug 'guns/vim-clojure-static',      {'for': 'clojure'}
   Plug 'guns/vim-sexp',                {'for': 'clojure'}
@@ -361,11 +363,16 @@ let g:rbpt_colorpairs = [
 aug MyNeoMake
   au!
   au BufWritePost * Neomake
+  au BufWritePost *.rs Neomake! cargo
 aug END
 let g:neomake_go_run_maker = {
     \ 'args': ['--verbose'],
     \ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
     \ }
+
+let g:neomake_rust_cargo_maker = neomake#makers#cargo#cargo()
+let g:neomake_rust_enabled_makers = ['cargo']
+
 
 " }}}
 " =kami {{{
@@ -417,6 +424,20 @@ let g:rustfmt_autosave = 1
 " vim-ctrlp-help {{{
 
 nnoremap <Leader>h :CtrlPHelp<CR>
+
+" }}}
+" =w3m.vim {{{
+
+function! s:w3m_local_vsplit(path) abort
+  let path = substitute(a:path, "'", '', 'g')
+  execute(printf(':W3mVSplit local %s', path))
+endfunction
+command! -nargs=1 W3mLocalVSplit call s:w3m_local_vsplit(<q-args>)
+
+" }}}
+" =rust-doc.vim {{{
+
+let g:rust_doc#vim_open_cmd = 'W3mLocalVSplit'
 
 " }}}
 " developing plugins {{{
