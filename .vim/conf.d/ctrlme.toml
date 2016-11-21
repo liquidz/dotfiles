@@ -64,7 +64,7 @@ action = '''
 [[dirvish]]
 name = 'home directory'
 action = '''
-  execute ":Dirvish ~"
+  execute ":Sex $HOME"
 '''
 
 # }}}

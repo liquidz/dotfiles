@@ -308,6 +308,12 @@ let b:match_ignorecase = 1
 " }}}
 " netrc {{{
 
+aug MyNetrw
+  au!
+  au FileType netrw nnoremap <buffer> q :q<CR>
+  "au FileType netrw nnoremap <buffer> <space> mf
+aug END
+
 let g:netrw_banner = 0
 
 " show preview in split right window
