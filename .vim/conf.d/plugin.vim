@@ -438,6 +438,7 @@ command! -nargs=1 W3mLocalVSplit call s:w3m_local_vsplit(<q-args>)
 " =rust-doc.vim {{{
 
 let g:rust_doc#vim_open_cmd = 'W3mLocalVSplit'
+let g:rust_doc#downloaded_rust_doc_dir = '~/docs/rust-docs'
 
 " }}}
 " developing plugins {{{
