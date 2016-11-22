@@ -62,6 +62,7 @@ define :dotfiles do
     to "#{install_dir}/.zsh"
   end
 
+  # git 補完
   {
     '_git'                => 'git-completion.zsh',
     'git-completion.bash' => 'git-completion.bash',
@@ -72,8 +73,20 @@ define :dotfiles do
     end
   end
 
+  # antigen
   git "#{home}/src/github.com/zsh-users/antigen" do
     repository 'https://github.com/zsh-users/antigen'
+  end
+
+  # }}}
+  # git config {{{
+
+  execute 'git config' do
+    command <<-EOT
+      git config --global include.path #{home}/.gitconfig.common
+      git config --global user.name    liquidz
+      git config --global user.email   liquidz.uo@gmail.com
+    EOT
   end
 
   # }}}
