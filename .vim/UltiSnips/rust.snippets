@@ -9,3 +9,13 @@ endsnippet
 snippet extern "extern crate" b
 extern crate $1;
 endsnippet
+
+snippet struct "struct" b
+struct ${1:Struct} {
+    $2,
+}
+endsnippet
+
+snippet println "println" i
+println!("$1")${2:;}
+endsnippet

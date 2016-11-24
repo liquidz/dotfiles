@@ -405,7 +405,7 @@ set foldtext=FoldCCtext()
 " =ultisnips {{{
 
 let g:UltiSnipsExpandTrigger='<c-k>'
-let g:UltiSnipsJumpForwardTrigger='<tab>'
+let g:UltiSnipsJumpForwardTrigger='<c-l>'
 ""let g:UltiSnipsJumpBackwardTrigger='<c-z>'
 let g:UltiSnipsSnippetDirectories = ['UltiSnips']
 "
