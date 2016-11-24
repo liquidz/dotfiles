@@ -1,5 +1,5 @@
 function! s:myRustRun() abort
-  let qrc = (findfile('Cargo.toml', '.;') == '') ? 'rust' : 'rust/cargo'
+  let qrc = (findfile('Cargo.toml', '.;') ==# '') ? 'rust' : 'rust/cargo'
   execute printf(':QuickRun %s', qrc)
 endfunction
 
