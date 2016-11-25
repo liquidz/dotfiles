@@ -58,13 +58,13 @@ Plug 'fatih/vim-go',                   {'for': 'go'}
 Plug 'nelstrom/vim-textobj-rubyblock', {'for': 'ruby'}
 Plug 'thinca/vim-prettyprint',         {'for': 'vim'}
 Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
-Plug 'rust-lang/rust.vim',             {'for': 'rust'}
-Plug 'yuratomo/w3m.vim' | Plug 'rhysd/rust-doc.vim', {'for': 'rust'}
 if has('unix')
-  Plug 'guns/vim-clojure-static',      {'for': 'clojure'}
-  Plug 'guns/vim-sexp',                {'for': 'clojure'}
-  Plug 'tpope/vim-classpath',          {'for': 'clojure'}
-  Plug 'tpope/vim-fireplace',          {'for': 'clojure'}
+  Plug 'rust-lang/rust.vim',                           {'for': 'rust'}
+  Plug 'yuratomo/w3m.vim' | Plug 'rhysd/rust-doc.vim', {'for': 'rust'}
+  Plug 'guns/vim-clojure-static',                      {'for': 'clojure'}
+  Plug 'guns/vim-sexp',                                {'for': 'clojure'}
+  Plug 'tpope/vim-classpath',                          {'for': 'clojure'}
+  Plug 'tpope/vim-fireplace',                          {'for': 'clojure'}
 endif
 
 " /filetype }}}
