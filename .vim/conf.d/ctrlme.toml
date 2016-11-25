@@ -112,6 +112,18 @@ action = '''
   execute ':g/^$/d'
 '''
 
+[[buffer]]
+name = 'text to binary'
+action = '''
+  execute ':%!xxd'
+'''
+
+[[buffer]]
+name = 'binary to text'
+action = '''
+  execute ':%!xxd -r'
+'''
+
 # }}}
 
 # vim:foldlevel=0
