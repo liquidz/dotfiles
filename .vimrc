@@ -311,7 +311,9 @@ let b:match_ignorecase = 1
 aug MyNetrw
   au!
   au FileType netrw nnoremap <buffer> q :q<CR>
-  "au FileType netrw nnoremap <buffer> <space> mf
+  au FileType netrw nmap <buffer> l <CR>
+  au FileType netrw nmap <buffer> h -
+  au FileType netrw nmap <buffer> <space> mfj
 aug END
 
 let g:netrw_banner = 0

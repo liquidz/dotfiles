@@ -4,3 +4,5 @@ function! s:myRustRun() abort
 endfunction
 
 nnoremap <buffer> <Leader>r :<C-u>call <SID>myRustRun()<CR>
+imap <buffer> ii !
+
