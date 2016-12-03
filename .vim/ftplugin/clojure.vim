@@ -34,8 +34,6 @@ endfunction
 command! Refresh call s:myRefresh()
 "nnoremap <buffer> <Leader>R :<C-u>Refresh<CR>
 
-nnoremap <buffer> <Leader>R :<C-u>Require!<CR>
-
 aug MyLispWords
   au!
   au FileType clojure set lispwords+=ns,are

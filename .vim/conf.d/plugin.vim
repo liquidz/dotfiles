@@ -295,7 +295,8 @@ endif
 
 aug VimFireplaceSetting
   au!
-  au Filetype clojure nnoremap <Leader>r :Require!<CR>
+  au Filetype clojure nnoremap <buffer> <Leader>r :Require<CR>
+  au Filetype clojure nnoremap <buffer> <Leader>R :Require!<CR>
   au Filetype clojure nmap <buffer> cc <Plug>FireplaceCountPrint
   " vim-ref の K と競合するため再定義
   au Filetype clojure nmap <buffer> K <Plug>FireplaceK
