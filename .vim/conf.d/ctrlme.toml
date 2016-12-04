@@ -58,6 +58,13 @@ action = '''
   execute printf(':e ~/src/github.com/liquidz/dotfiles/.vim/UltiSnips/%s.snippets', ft)
 '''
 
+[[files]]
+name = 'cheat'
+action = '''
+  let ft = &filetype == '' ? '_' : &filetype
+  execute printf(':e ~/src/github.com/liquidz/dotfiles/.vim/cheats/%s.txt', ft)
+'''
+
 # }}}
 # =dirvish {{{
 
