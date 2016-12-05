@@ -1,0 +1,16 @@
+env >
+  use std::env;
+  match env::var("HOME") {
+    Ok(val) => println!("{}", val),
+    Err(e) => println!("{}", e),
+  }
+
+url decode >
+  // cargo-deps: url
+  use url::percent_encoding::percent_decode;
+  match percent_decode(sample.as_bytes()).decode_utf8() {
+      Ok(res) => println!("res: {}", res),
+      Err(e) => println!("err: {}", e),
+  }
+
+vim:ft=help

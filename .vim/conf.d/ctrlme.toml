@@ -30,19 +30,22 @@ action = '''
 [[files]]
 name = 'vimrc'
 action = '''
-  execute ":e ~/src/github.com/liquidz/dotfiles/.vimrc"
+  let c = (l:mode == 't') ? 'tabe' : 'e'
+  execute printf(":%s ~/src/github.com/liquidz/dotfiles/.vimrc", c)
 '''
 
 [[files]]
 name = 'ctrlme setting'
 action = '''
-  execute ":e ~/src/github.com/liquidz/dotfiles/.vim/conf.d/ctrlme.toml"
+  let c = (l:mode == 't') ? 'tabe' : 'e'
+  execute printf(":%s ~/src/github.com/liquidz/dotfiles/.vim/conf.d/ctrlme.toml", c)
 '''
 
 [[files]]
 name = 'plugin setting'
 action = '''
-  execute ":e ~/src/github.com/liquidz/dotfiles/.vim/conf.d/plugin.vim"
+  let c = (l:mode == 't') ? 'tabe' : 'e'
+  execute printf(":%s ~/src/github.com/liquidz/dotfiles/.vim/conf.d/plugin.vim", c)
 '''
 
 [[files]]
@@ -54,15 +57,17 @@ action = '''
 [[files]]
 name = 'snippet'
 action = '''
+  let c = (l:mode == 't') ? 'tabe' : 'e'
   let ft = &filetype == '' ? '_' : &filetype
-  execute printf(':e ~/src/github.com/liquidz/dotfiles/.vim/UltiSnips/%s.snippets', ft)
+  execute printf(':%s ~/src/github.com/liquidz/dotfiles/.vim/UltiSnips/%s.snippets', c, ft)
 '''
 
 [[files]]
 name = 'cheat'
 action = '''
+  let c = (l:mode == 't') ? 'tabe' : 'e'
   let ft = &filetype == '' ? '_' : &filetype
-  execute printf(':e ~/src/github.com/liquidz/dotfiles/.vim/cheats/%s.txt', ft)
+  execute printf(':%s ~/src/github.com/liquidz/dotfiles/.vim/cheats/%s.txt', c, ft)
 '''
 
 # }}}
