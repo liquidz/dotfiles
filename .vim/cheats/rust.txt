@@ -13,4 +13,20 @@ url decode >
       Err(e) => println!("err: {}", e),
   }
 
+error >
+  use std::io::{Error, ErrorKind};
+  Error::new(ErrorKind::InvalidInput, "invalid");
+
+ok_or >
+    Option<T> の ok_or() コンビネータは Result<T,E> 型に変換してくれる
+    Some(T) は Ok(T) に、None は Err(E) になる
+
+try! >
+    Result<T,E> 型を受け取る
+    Ok(t) の場合は t を返して、Err(e) の場合はその場で Err(e) を早期リターン
+    (early return) してくれる
+
+unwrap >
+  todo
+
 vim:ft=help
