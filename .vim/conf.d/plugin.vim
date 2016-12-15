@@ -61,6 +61,7 @@ Plug 'thinca/vim-prettyprint',         {'for': 'vim'}
 Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 if has('unix')
   Plug 'rust-lang/rust.vim',                           {'for': 'rust'}
+  Plug 'racer-rust/vim-racer',                         {'for': 'rust'}
   Plug 'yuratomo/w3m.vim' | Plug 'rhysd/rust-doc.vim', {'for': 'rust'}
   Plug 'guns/vim-clojure-static',                      {'for': 'clojure'}
   Plug 'guns/vim-sexp',                                {'for': 'clojure'}
@@ -375,7 +376,6 @@ let g:neomake_go_run_maker = {
 let g:neomake_rust_cargo_maker = neomake#makers#cargo#cargo()
 let g:neomake_rust_enabled_makers = ['cargo']
 
-
 " }}}
 " =kami {{{
 
@@ -389,7 +389,7 @@ let g:kami#timestamp_format = '== %s'
 
 "let g:completor_gocode_binary = $HOME.'/bin/gocode'
 let g:completor_go_omni_trigger = '(?:\b[^\W\d]\w*|[\]\)])\.(?:[^\W\d]\w*)?'
-let g:completor_racer_binary = $HOME.'/.cargo/bin/racer'
+"let g:completor_racer_binary = $HOME.'/.cargo/bin/racer'
 
 " }}}
 " =ctrlme {{{

@@ -63,6 +63,14 @@ action = '''
 '''
 
 [[files]]
+name = 'ftplugin'
+action = '''
+  let c = (l:mode == 't') ? 'tabe' : 'e'
+  let ft = &filetype == '' ? '_' : &filetype
+  execute printf(':%s ~/src/github.com/liquidz/dotfiles/.vim/ftplugin/%s.vim', c, ft)
+'''
+
+[[files]]
 name = 'cheat'
 action = '''
   let c = (l:mode == 't') ? 'tabe' : 'e'
