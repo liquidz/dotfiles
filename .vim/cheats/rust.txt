@@ -5,6 +5,9 @@ env >
     Err(e) => println!("{}", e),
   }
 
+str <-> String >
+    "hello".to_string().as_str()
+
 url decode >
   // cargo-deps: url
   use url::percent_encoding::percent_decode;
@@ -20,6 +23,9 @@ error >
 ok_or >
     Option<T> の ok_or() コンビネータは Result<T,E> 型に変換してくれる
     Some(T) は Ok(T) に、None は Err(E) になる
+    E は ok_or の引数で指定する
+
+    opt.ok_or(Error::new(ErrorKind::InvalidInput, "invalid"))
 
 try! >
     Result<T,E> 型を受け取る
