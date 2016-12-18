@@ -44,6 +44,8 @@ Plug 'vim-jp/vital.vim'
 Plug 'vim-scripts/confluencewiki.vim'
 Plug 'vim-scripts/gtags.vim'
 Plug 'w0ng/vim-hybrid'
+Plug 'cocopon/iceberg.vim'
+Plug 'rhysd/vim-color-spring-night'
 
 if has('channel')
   Plug 'neomake/neomake'
@@ -75,7 +77,9 @@ call plug#end()
 " =colorscheme {{{
 
 set background=dark
-colorscheme hybrid
+"colorscheme hybrid
+colorscheme iceberg
+"colorscheme spring-night
 
 " }}}
 " =search puls {{{
