@@ -19,10 +19,12 @@ if 1 && (!exists('g:no_gvimrc_example') || g:no_gvimrc_example == 0)
   source $VIMRUNTIME/gvimrc_example.vim
 endif
 
-colorscheme hybrid
+colorscheme iceberg
 
 if has('win32')
   set guifont=VL_Gothic:h10
+  "set guifont=Ricty_Diminished:h10
+  "set guifont=Ubuntu_Mono:h10
   " 行間隔の設定
   set linespace=1
   " 一部のUCS文字の幅を自動計測して決める
@@ -65,3 +67,10 @@ set guioptions-=T
 set guioptions-=menu
 set guioptions+=menu
 set guioptions-=menu
+
+" DirectX
+" c.f. https://www.kaoriya.net/blog/2016/12/25/
+set rop=type:directx
+set rop=type:directx,geom:1
+set rop=type:directx,geom:1,renmode:5
+
