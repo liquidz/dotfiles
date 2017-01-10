@@ -211,6 +211,15 @@ endif
 if system('uname') ==# "Darwin\n"
   set clipboard=unnamed,autoselect
 endif
+
+" viminfo 経由でヤンクデータを共有
+" c.f. http://shirakiya.hatenablog.com/entry/2015/01/30/025257
+if system('uname') ==# "Linux\n"
+  vnoremap y y:wv<CR>
+  nnoremap yy Vy:wv<CR>
+  nnoremap p :rv!<CR>p
+endif
+
 " paste from clipboard
 nnoremap <C-y> i<C-r><C-o>+<Esc>l
 cnoremap <C-y> <C-r><C-o>+
