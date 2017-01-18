@@ -1,7 +1,26 @@
 snippet implDisplay "fmt::Description" b
+use std::fmt;
 impl fmt::Display for ${1:Struct} {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}", self.0)
+        match *self {
+            $1::${2:Enum}(ref e) => write!(f, "$2 error: {}", e),
+        }
+    }
+}
+endsnippet
+
+snippet implError "extern crate" b
+use std::error;
+impl error::Error for ${1:Struct} {
+    fn description(&self) -> &str {
+        match *self {
+            $1::${2:Enum}(ref e) => e.description(),
+        }
+    }
+    fn cause(&self) -> Option<&error::Error> {
+        match *self {
+            $1::$2(ref e) => Some(e),
+        }
     }
 }
 endsnippet
@@ -28,3 +47,4 @@ endsnippet
 snippet assert "Description" i
 assert_eq!($1, $2)
 endsnippet
+
