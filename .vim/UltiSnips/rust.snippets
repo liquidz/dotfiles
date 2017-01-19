@@ -25,6 +25,14 @@ impl error::Error for ${1:Struct} {
 }
 endsnippet
 
+snippet implFrom "extern crate" b
+impl From<${1:FromError}> for ${2:ToError} {
+    fn from(e: $1) -> $2 {
+        $2::Fixme(e)
+    }
+}
+endsnippet
+
 snippet extern "extern crate" b
 extern crate $1;
 endsnippet

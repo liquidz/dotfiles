@@ -163,7 +163,7 @@ let maplocalleader="\\"
 " spell {{{
 
 set spelllang=en,cjk " スペルチェック時に日本語は除外する
-nnoremap <silent> sss :<C-u>setlocal spell!<CR>
+nnoremap <silent> ss :<C-u>setlocal spell!<CR>
 
 " }}}
 " mapping {{{
@@ -207,6 +207,10 @@ nnoremap QQ :<C-u>bd!<CR>
 
 if has('win32')
   vnoremap <C-c> "*y
+  " paste from clipboard
+  nnoremap <C-y> i<C-r><C-o>+<Esc>l
+  cnoremap <C-y> <C-r><C-o>+
+  inoremap <C-y> <C-r><C-o>+
 endif
 if system('uname') ==# "Darwin\n"
   set clipboard=unnamed,autoselect
@@ -215,15 +219,8 @@ endif
 " viminfo 経由でヤンクデータを共有
 " c.f. http://shirakiya.hatenablog.com/entry/2015/01/30/025257
 if system('uname') ==# "Linux\n"
-  vnoremap y y:wv<CR>
-  nnoremap yy Vy:wv<CR>
-  nnoremap p :rv!<CR>p
+  nnoremap sss :wv<CR>:rv!<CR>
 endif
-
-" paste from clipboard
-nnoremap <C-y> i<C-r><C-o>+<Esc>l
-cnoremap <C-y> <C-r><C-o>+
-inoremap <C-y> <C-r><C-o>+
 
 " }}}
 " tab {{{
