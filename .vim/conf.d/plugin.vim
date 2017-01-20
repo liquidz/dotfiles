@@ -432,6 +432,15 @@ let g:rustfmt_autosave = 1
 nnoremap <Leader>h :CtrlPHelp<CR>
 
 " }}}
+" =vim-racer {{{
+"if has('unix')
+"  aug MyVimRacer
+"    au!
+"    au FileType rust nmap <C-]> <Plug>(rust-def)
+"    "au FileType rust nmap gs <Plug>(rust-def-split)
+"  aug END
+"endif
+" }}}
 " =w3m.vim {{{
 
 function! s:w3m_local_vsplit(path) abort
@@ -444,7 +453,7 @@ command! -nargs=1 W3mLocalVSplit call s:w3m_local_vsplit(<q-args>)
 " =rust-doc.vim {{{
 
 let g:rust_doc#vim_open_cmd = 'W3mLocalVSplit'
-let g:rust_doc#downloaded_rust_doc_dir = '~/docs/rust-docs'
+let g:rust_doc#downloaded_rust_doc_dir = '~/.multirust/toolchains/nightly-x86_64-unknown-linux-gnu'
 
 " }}}
 " developing plugins {{{
