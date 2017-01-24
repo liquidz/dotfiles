@@ -101,7 +101,8 @@ alias gho='(cd $(ghq list --full-path | fzf) && git browse)'
 # }}}
 
 # rust {{
-export RUST_SRC_PATH=$HOME/src/rust/src
+export RUST_SRC_PATH=$HOME/.multirust/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src
+
 # }}
 
 # local bookmark {{{
