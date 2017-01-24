@@ -24,6 +24,13 @@ action = '''
   endif
 '''
 
+[[macros]]
+# workflowy でエクスポートしたテキストを asciidoc/confluence のリスト形式に変換
+name = "workflowy"
+action = '''
+  let @q = "0f-r*V::s/  /*/g"
+'''
+
 # }}}
 # =files {{{
 
@@ -49,9 +56,11 @@ action = '''
 '''
 
 [[files]]
-name = 'memo dir'
+name = 'memo'
 action = '''
-  execute ":cd ~/.vim/memo/wiki"
+  let c = (l:mode == 't') ? 'tabe' : 'e'
+  let today = strftime('%Y%m%d')
+  execute printf(":%s ~/src/github.com/liquidz/dotfiles/.vim/memo/%s.scrapbox", c, today)
 '''
 
 [[files]]
