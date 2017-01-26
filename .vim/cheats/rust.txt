@@ -32,7 +32,10 @@ try! >
     Ok(t) の場合は t を返して、Err(e) の場合はその場で Err(e) を早期リターン
     (early return) してくれる
 
-unwrap >
-  todo
+str >
+    "hello"
+    "he\"ll\"o"
+    r#"he"ll"o"#
+
 
 vim:ft=help
