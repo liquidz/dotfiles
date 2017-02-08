@@ -46,7 +46,6 @@ Plug 'vim-jp/vital.vim'
 Plug 'vim-scripts/confluencewiki.vim'
 Plug 'vim-scripts/gtags.vim'
 Plug 'w0ng/vim-hybrid'
-Plug 'wakatime/vim-wakatime'
 
 if has('channel')
   Plug 'neomake/neomake'
@@ -63,6 +62,7 @@ Plug 'nelstrom/vim-textobj-rubyblock', {'for': 'ruby'}
 Plug 'thinca/vim-prettyprint',         {'for': 'vim'}
 Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 if has('unix')
+  Plug 'wakatime/vim-wakatime'
   Plug 'rust-lang/rust.vim',                           {'for': 'rust'}
   Plug 'racer-rust/vim-racer',                         {'for': 'rust'}
   Plug 'yuratomo/w3m.vim' | Plug 'rhysd/rust-doc.vim', {'for': 'rust'}
