@@ -4,7 +4,6 @@ let g:dotfiles = $HOME.'/src/github.com/liquidz/dotfiles'
 call plug#begin('~/.vim/repos')
 " default {{{
 
-"Plug 'justinmk/vim-dirvish'
 Plug 'LeafCage/foldCC.vim'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'aklt/plantuml-syntax'
@@ -47,6 +46,7 @@ Plug 'vim-jp/vital.vim'
 Plug 'vim-scripts/confluencewiki.vim'
 Plug 'vim-scripts/gtags.vim'
 Plug 'w0ng/vim-hybrid'
+Plug 'wakatime/vim-wakatime'
 
 if has('channel')
   Plug 'neomake/neomake'
@@ -283,19 +283,6 @@ let g:easy_align_delimiters = {
 if executable('gtags')
     nnoremap <Leader>gg :GtagsCursor<CR>
 endif
-
-" }}}
-" =dirvish {{{
-
-"nnoremap <Leader><Leader> :Dirvish<CR>
-"aug MyDirvish
-"  au!
-"  au BufEnter * execute ":lcd " . expand("%:p:h")
-"  " ディレクトリが先頭になるようソート
-"  au FileType dirvish silent sort r /[^\/]$/"
-"  au FileType dirvish nmap <buffer> h 1-
-"  au FileType dirvish nmap <buffer> l <CR>
-"aug END
 
 " }}}
 " =fireplace {{{
