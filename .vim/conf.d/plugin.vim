@@ -444,6 +444,11 @@ let g:rust_doc#vim_open_cmd = 'W3mLocalVSplit'
 let g:rust_doc#downloaded_rust_doc_dir = '~/.multirust/toolchains/nightly-x86_64-unknown-linux-gnu'
 
 " }}}
+" =vaffle.vim {{{
+
+nnoremap <Leader><Leader> :<C-u>Vaffle<CR>
+
+" }}}
 " developing plugins {{{
 " http://www.kaoriya.net/blog/2015/12/01/vim-switch-developing-plugin/
 let dirs = [ $HOME.'/src/github.com/liquidz' ]
