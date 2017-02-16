@@ -162,6 +162,9 @@ function activate_virtualenv() {
 }
 # }}}
 
+alias start='toggl start -p $(toggl project --csv | fzf | cut -d',' -f1)'
+alias stop='toggl stop'
+
 # my commands {{{
 alias suteneko='docker run -it uochan/suteneko'
 export BECOROOT=/Users/uochan/src/github.com/liquidz/beco

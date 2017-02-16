@@ -4,7 +4,8 @@ function! s:myRustRun() abort
 endfunction
 
 function! s:myRustTest() abort
-  let mod_name = expand('%:r')
+  let full_path = expand('%:p')
+  let mod_name = fnamemodify(full_path, ':t:r')
   let test_name = printf('test_%s', mod_name)
   execute quickrun#run({
       \ 'command': 'cargo',
