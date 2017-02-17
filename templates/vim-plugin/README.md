@@ -8,13 +8,8 @@ foo bar
 
 ## Installation
 
- * neobundle
-```
-NeoBundle 'fixme'
-```
-
 ## License
 
-Copyright (c) 2015 [uochan](http://twitter.com/uochan)
+Copyright (c) 2017 [uochan](http://twitter.com/uochan)
 
 Distributed under the MIT License.

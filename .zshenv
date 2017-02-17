@@ -162,7 +162,8 @@ function activate_virtualenv() {
 }
 # }}}
 
-alias start='toggl start -p $(toggl project --csv | fzf | cut -d',' -f1)'
+alias start='toggl start -p $(toggl project --csv | fzf | cut -d, -f1)'
+alias restart='toggl restart --id $(toggl list --csv | fzf | cut -d, -f1)'
 alias stop='toggl stop'
 
 # my commands {{{
