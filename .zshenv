@@ -5,6 +5,7 @@ PATH=$PATH:~/.vim/bundle/vim-themis/bin
 PATH=$PATH:/usr/local/octave/3.8.0/bin
 PATH=$PATH:~/.fzf/bin
 PATH=$PATH:~/.cargo/bin
+PATH=$PATH:~/.skim/bin
 PATH="/usr/local/bin:$PATH:/usr/local/sbin"
 export PATH
 # }}}
@@ -101,16 +102,21 @@ alias gho='(cd $(ghq list --full-path | fzf) && git browse)'
 # }}}
 
 # rust {{
-export RUST_SRC_PATH=$HOME/.multirust/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src
 
+# https://internals.rust-lang.org/t/incremental-compilation-beta/4721
+export CARGO_INCREMENTAL=1
+
+export RUST_SRC_PATH=$HOME/.multirust/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src
 # }}
 
 # local bookmark {{{
 function __bookmarklist() {
-    ghq list --full-path
+    find ~/src/github.com    -maxdepth 2 -type d
+    find ~/src/bitbucket.org -maxdepth 2 -type d
+    find ~/.vim/repos        -maxdepth 1 -type d
     cat ~/.bookmark
 }
-alias bm='cd $(__bookmarklist | fzf)'
+alias bm='cd $(__bookmarklist | sk)'
 # }}}
 
 # git {{{
@@ -162,14 +168,8 @@ function activate_virtualenv() {
 }
 # }}}
 
-alias start='toggl start -p $(toggl project --csv | fzf | cut -d, -f1)'
-alias restart='toggl restart --id $(toggl list --csv | fzf | cut -d, -f1)'
-alias stop='toggl stop'
-
 # my commands {{{
 alias suteneko='docker run -it uochan/suteneko'
 export BECOROOT=/Users/uochan/src/github.com/liquidz/beco
 alias vint='beco vint'
 # }}}
-
-#alias vim='nvim'

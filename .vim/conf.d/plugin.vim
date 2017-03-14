@@ -4,8 +4,6 @@ let g:dotfiles = $HOME.'/src/github.com/liquidz/dotfiles'
 call plug#begin('~/.vim/repos')
 " default {{{
 
-Plug 'LeafCage/foldCC.vim'
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'aklt/plantuml-syntax'
 Plug 'cespare/vim-toml'
 Plug 'cocopon/iceberg.vim'
@@ -25,6 +23,7 @@ Plug 'kana/vim-textobj-line'
 Plug 'kana/vim-textobj-user'
 Plug 'kannokanno/previm'
 Plug 'kien/rainbow_parentheses.vim'
+Plug 'LeafCage/foldCC.vim'
 Plug 'liquidz/ctrlme.vim'
 Plug 'liquidz/kami.vim'
 Plug 'liquidz/vim-ctrlp-help'
@@ -32,6 +31,7 @@ Plug 'liquidz/vim-textobj-value'
 Plug 'osyo-manga/vim-anzu'
 Plug 'rhysd/clever-f.vim'
 Plug 'rhysd/vim-color-spring-night'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 't9md/vim-quickhl'
 Plug 'tacahiroy/ctrlp-funky'
 Plug 'thinca/vim-quickrun'
@@ -62,7 +62,7 @@ Plug 'nelstrom/vim-textobj-rubyblock', {'for': 'ruby'}
 Plug 'thinca/vim-prettyprint',         {'for': 'vim'}
 Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 if has('unix')
-  Plug 'wakatime/vim-wakatime'
+  "Plug 'wakatime/vim-wakatime'
   Plug 'rust-lang/rust.vim',                           {'for': 'rust'}
   Plug 'racer-rust/vim-racer',                         {'for': 'rust'}
   Plug 'yuratomo/w3m.vim' | Plug 'rhysd/rust-doc.vim', {'for': 'rust'}
