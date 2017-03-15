@@ -3,7 +3,6 @@ PATH=$PATH:~/bin
 PATH=$PATH:/opt/local/bin
 PATH=$PATH:~/.vim/bundle/vim-themis/bin
 PATH=$PATH:/usr/local/octave/3.8.0/bin
-PATH=$PATH:~/.fzf/bin
 PATH=$PATH:~/.cargo/bin
 PATH=$PATH:~/.skim/bin
 PATH="/usr/local/bin:$PATH:/usr/local/sbin"
@@ -52,7 +51,6 @@ export CPLUS_INCLUDE_PATH="/Users/uochan/app/cocos2d-x-3.3rc0/cocos:/Users/uocha
 
 # vim {{{
 alias rebuild_vim='(cd /usr/local/src/vim && sudo ./rebuild.sh)'
-alias bo='(cd ~/.vim/bundle && cd $(/bin/ls -1 | fzf) && git browse)'
 # }}}
 
 # docker {{{
@@ -63,8 +61,8 @@ alias bo='(cd ~/.vim/bundle && cd $(/bin/ls -1 | fzf) && git browse)'
 
 alias dl='docker ps -ql'
 alias da='docker ps -qa'
-alias di="docker images | grep -v 'REPOSITORY' | fzf | awk '{print \$3}'"
-alias dc="docker ps -a | grep -v 'CONTAINER ID' | fzf | awk '{print \$1}'"
+alias di="docker images | grep -v 'REPOSITORY' | sk | awk '{print \$2}'"
+alias dc="docker ps -a | grep -v 'CONTAINER ID' | sk | awk '{print \$1}'"
 alias db='docker build --rm -t $(pwd | awk -F/ "{print \$(NF-1),\$NF}" | sed "s/ /\//g") .'
 alias dr='docker run --rm -it DI /bin/bash'
 alias docker-rm='docker rm $(dc)'
@@ -95,12 +93,6 @@ export GOPATH=$HOME
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 # }}}
 
-# ghq {{{
-alias ghc='cd $(ghq list --full-path | fzf)'
-alias ghf='find $(git rev-parse --show-cdup) -type f | grep -v "/.git/" | fzf'
-alias gho='(cd $(ghq list --full-path | fzf) && git browse)'
-# }}}
-
 # rust {{
 
 # https://internals.rust-lang.org/t/incremental-compilation-beta/4721
@@ -123,16 +115,16 @@ alias bm='cd $(__bookmarklist | sk)'
 if which hub > /dev/null 2>&1; then
     alias git=hub
 fi
-alias b='git branch -a | fzf | sed "s/\* *//g"'
+alias b='git branch -a | sk | sed "s/\* *//g"'
 alias -g B='$(b)'
-alias l='git log --oneline | fzf | cut -d" " -f1'
+alias l='git log --oneline | sk | cut -d" " -f1'
 alias -g L='$(l)'
-alias s='git status -s | fzf | cut -b 4-'
+alias s='git status -s | sk | cut -b 4-'
 alias -g S='$(s)'
 # }}}
 
 # ssh {{{
-alias ss='ssh $(grep "Host " ~/.ssh/config | cut -c6- | fzf)'
+alias ss='ssh $(grep "Host " ~/.ssh/config | cut -c6- | sk)'
 alias sss='tmux split-window ss'
 alias ssn='tmux new-window ss'
 # }}}
@@ -140,7 +132,7 @@ alias ssn='tmux new-window ss'
 # cakephp {{{
 # To enable these aliases, you must export CAKE_PROJECT_ROOT in /etc/zshenv
 if [[ "$CAKE_PROJECT_ROOT" != "" ]]; then
-    alias apptest='$CAKE_PROJECT_ROOT/bin/cake test app --app $CAKE_PROJECT_ROOT/app $(find $CAKE_PROJECT_ROOT/app/Test/Case -name "*Test.php" | cut -b 36- | sed "s/Test.php//g" | fzf)'
+    alias apptest='$CAKE_PROJECT_ROOT/bin/cake test app --app $CAKE_PROJECT_ROOT/app $(find $CAKE_PROJECT_ROOT/app/Test/Case -name "*Test.php" | cut -b 36- | sed "s/Test.php//g" | sk)'
     alias Apptest="$CAKE_PROJECT_ROOT/bin/cake test app --app $CAKE_PROJECT_ROOT/app"
     alias alltest="$CAKE_PROJECT_ROOT/bin/cake test app AllTests --app $CAKE_PROJECT_ROOT/app"
     alias phpcs="phpcs --standard=CakePHP"
@@ -151,21 +143,16 @@ fi
 export WWW_HOME="duckduckgo.com"
 # }}}
 
-# fzf {{{
-export FZF_DEFAULT_OPTS="
-    --ansi
-    --multi
-    --select-1
-    --cycle
-"
-# }}}
-
 # virtualenv {{{
 function activate_virtualenv() {
     ENV_DIR="$HOME/env"
-    TARGET_ENV=$(ls -1 --color=never $ENV_DIR | sed 's/\///g' | fzf)
+    TARGET_ENV=$(ls -1 --color=never $ENV_DIR | sed 's/\///g' | sk)
     source "$ENV_DIR/$TARGET_ENV/bin/activate"
 }
+# }}}
+
+# skim {{{
+alias sk='sk --ansi -m'
 # }}}
 
 # my commands {{{
