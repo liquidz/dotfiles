@@ -2,7 +2,8 @@
 PATH=$PATH:~/bin
 PATH=$PATH:/opt/local/bin
 PATH=$PATH:~/.vim/bundle/vim-themis/bin
-PATH=$PATH:/usr/local/octave/3.8.0/bin
+PATH=$PATH:/usr/local/nodejs/bin
+PATH=$PATH:/usr/local/cmake/bin
 PATH=$PATH:~/.cargo/bin
 PATH=$PATH:~/.skim/bin
 PATH="/usr/local/bin:$PATH:/usr/local/sbin"
@@ -152,7 +153,8 @@ function activate_virtualenv() {
 # }}}
 
 # skim {{{
-alias sk='sk --ansi -m'
+export SKIM_DEFAULT_OPTIONS='--ansi -m'
+alias gg='sk -i -c "git grep -i \"{}\""'
 # }}}
 
 # my commands {{{
