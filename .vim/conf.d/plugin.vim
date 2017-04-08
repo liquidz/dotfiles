@@ -4,9 +4,10 @@ let g:dotfiles = $HOME.'/src/github.com/liquidz/dotfiles'
 call plug#begin('~/.vim/repos')
 " default {{{
 
-"Plug 'justinmk/vim-dirvish'
 Plug 'aklt/plantuml-syntax'
 Plug 'cespare/vim-toml'
+Plug 'cocopon/iceberg.vim'
+Plug 'cocopon/vaffle.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'gregsexton/gitv'
 Plug 'haya14busa/vim-metarepeat'
@@ -29,6 +30,7 @@ Plug 'liquidz/vim-ctrlp-help'
 Plug 'liquidz/vim-textobj-value'
 Plug 'osyo-manga/vim-anzu'
 Plug 'rhysd/clever-f.vim'
+Plug 'rhysd/vim-color-spring-night'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 't9md/vim-quickhl'
 Plug 'tacahiroy/ctrlp-funky'
@@ -44,8 +46,6 @@ Plug 'vim-jp/vital.vim'
 Plug 'vim-scripts/confluencewiki.vim'
 Plug 'vim-scripts/gtags.vim'
 Plug 'w0ng/vim-hybrid'
-Plug 'cocopon/iceberg.vim'
-Plug 'rhysd/vim-color-spring-night'
 
 if has('channel')
   Plug 'neomake/neomake'
@@ -62,6 +62,7 @@ Plug 'nelstrom/vim-textobj-rubyblock', {'for': 'ruby'}
 Plug 'thinca/vim-prettyprint',         {'for': 'vim'}
 Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 if has('unix')
+  "Plug 'wakatime/vim-wakatime'
   Plug 'rust-lang/rust.vim',                           {'for': 'rust'}
   Plug 'racer-rust/vim-racer',                         {'for': 'rust'}
   Plug 'yuratomo/w3m.vim' | Plug 'rhysd/rust-doc.vim', {'for': 'rust'}
@@ -284,19 +285,6 @@ if executable('gtags')
 endif
 
 " }}}
-" =dirvish {{{
-
-"nnoremap <Leader><Leader> :Dirvish<CR>
-"aug MyDirvish
-"  au!
-"  au BufEnter * execute ":lcd " . expand("%:p:h")
-"  " ディレクトリが先頭になるようソート
-"  au FileType dirvish silent sort r /[^\/]$/"
-"  au FileType dirvish nmap <buffer> h 1-
-"  au FileType dirvish nmap <buffer> l <CR>
-"aug END
-
-" }}}
 " =fireplace {{{
 
 aug VimFireplaceSetting
@@ -432,6 +420,15 @@ let g:rustfmt_autosave = 1
 nnoremap <Leader>h :CtrlPHelp<CR>
 
 " }}}
+" =vim-racer {{{
+"if has('unix')
+"  aug MyVimRacer
+"    au!
+"    au FileType rust nmap <C-]> <Plug>(rust-def)
+"    "au FileType rust nmap gs <Plug>(rust-def-split)
+"  aug END
+"endif
+" }}}
 " =w3m.vim {{{
 
 function! s:w3m_local_vsplit(path) abort
@@ -444,7 +441,12 @@ command! -nargs=1 W3mLocalVSplit call s:w3m_local_vsplit(<q-args>)
 " =rust-doc.vim {{{
 
 let g:rust_doc#vim_open_cmd = 'W3mLocalVSplit'
-let g:rust_doc#downloaded_rust_doc_dir = '~/docs/rust-docs'
+let g:rust_doc#downloaded_rust_doc_dir = '~/.multirust/toolchains/nightly-x86_64-unknown-linux-gnu'
+
+" }}}
+" =vaffle.vim {{{
+
+nnoremap <Leader><Leader> :<C-u>Vaffle<CR>
 
 " }}}
 " developing plugins {{{
