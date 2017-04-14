@@ -1,3 +1,10 @@
+args >
+  use std::env::args;
+  match args().last() {
+    Some(v) => println1("v = {}", v),
+    None => println!("nothing"),
+  }
+
 env >
   use std::env;
   match env::var("HOME") {
