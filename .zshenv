@@ -32,7 +32,8 @@ export SAVEHIST=100000
 # }}}
 
 export TERM=screen-256color
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib:$HOME/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib
+export RLS_ROOT=$HOME/src/github.com/rust-lang-nursery/rls
 
 # Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
 export COCOS_CONSOLE_ROOT=/Users/uochan/app/cocos2d-x-3.3rc0/tools/cocos2d-console/bin
@@ -155,6 +156,7 @@ function activate_virtualenv() {
 # skim {{{
 export SKIM_DEFAULT_OPTIONS='--ansi -m'
 alias gg='sk -i -c "git grep -i \"{}\""'
+alias sq='sk -i -c "scrapq search {}" | cut -f1 | xargs -i scrapq get {} | vim -R -c "setf scrapbox" -'
 # }}}
 
 # my commands {{{
