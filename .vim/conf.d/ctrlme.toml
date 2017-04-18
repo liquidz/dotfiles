@@ -105,6 +105,12 @@ action = '''
   execute ":CtrlP ~/src/github.com/liquidz/dotfiles/"
 '''
 
+[[ctrlp]]
+name = 'mru'
+action = '''
+  execute ":CtrlPMRUFiles"
+'''
+
 # }}}
 # =encoding {{{
 
