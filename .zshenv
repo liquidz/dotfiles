@@ -159,6 +159,10 @@ alias gg='sk -i -c "git grep -i \"{}\""'
 alias sq='sk -i -c "scrapq search {}" | cut -f1 | xargs -i scrapq get {} | vim -R -c "setf scrapbox" -'
 # }}}
 
+# vlime {{{
+alias vlime-start='ros run -- --load ~/.vim/repos/vlime/lisp/start-vlime.lisp'
+# }}}
+
 # my commands {{{
 alias suteneko='docker run -it uochan/suteneko'
 export BECOROOT=/Users/uochan/src/github.com/liquidz/beco
