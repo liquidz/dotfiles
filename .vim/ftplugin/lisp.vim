@@ -4,8 +4,9 @@ nnoremap <Leader>cs :call VlimeSelectCurConnection()<CR>
 nnoremap <Leader>ss :call VlimeSendCurThingToREPL("thing")<CR>
 nnoremap K          :call VlimeDocumentationSymbol("atom")<CR>
 nnoremap <Leader>xc :call VlimeXRefCurSymbol("atom", "CALLS")<CR>
-
 nnoremap <Leader>of :call VlimeCompileCurFile()<CR>
+nnoremap <Leader>wa :call VlimeCloseWindow("")<CR>
+nnoremap <Leader>i  :call VlimeInteractionMode()<CR>
 
 aug MyVlime
   au!
