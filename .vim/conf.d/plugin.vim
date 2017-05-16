@@ -63,6 +63,7 @@ Plug 'thinca/vim-prettyprint',         {'for': 'vim'}
 Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 if has('unix')
   "Plug 'wakatime/vim-wakatime'
+  Plug 'l04m33/vlime',                                 {'for': 'lisp'}
   Plug 'rust-lang/rust.vim',                           {'for': 'rust'}
   Plug 'racer-rust/vim-racer',                         {'for': 'rust'}
   Plug 'yuratomo/w3m.vim' | Plug 'rhysd/rust-doc.vim', {'for': 'rust'}
@@ -355,18 +356,18 @@ let g:rbpt_colorpairs = [
 " }}}
 " =neomake {{{
 
-aug MyNeoMake
-  au!
-  au BufWritePost * Neomake
-  au BufWritePost *.rs Neomake! cargo
-aug END
-let g:neomake_go_run_maker = {
-    \ 'args': ['--verbose'],
-    \ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
-    \ }
-
-let g:neomake_rust_cargo_maker = neomake#makers#cargo#cargo()
-let g:neomake_rust_enabled_makers = ['cargo']
+"aug MyNeoMake
+"  au!
+"  au BufWritePost * Neomake
+"  au BufWritePost *.rs Neomake! cargo
+"aug END
+"let g:neomake_go_run_maker = {
+"    \ 'args': ['--verbose'],
+"    \ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
+"    \ }
+"
+"let g:neomake_rust_cargo_maker = neomake#makers#cargo#cargo()
+"let g:neomake_rust_enabled_makers = ['cargo']
 
 " }}}
 " =kami {{{
