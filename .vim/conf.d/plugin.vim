@@ -68,7 +68,7 @@ if has('unix')
   Plug 'racer-rust/vim-racer',                         {'for': 'rust'}
   Plug 'yuratomo/w3m.vim' | Plug 'rhysd/rust-doc.vim', {'for': 'rust'}
   Plug 'guns/vim-clojure-static',                      {'for': 'clojure'}
-  Plug 'guns/vim-sexp',                                {'for': 'clojure'}
+  Plug 'guns/vim-sexp',                                {'for': ['lisp', 'clojure']}
   Plug 'tpope/vim-classpath',                          {'for': 'clojure'}
   Plug 'tpope/vim-fireplace',                          {'for': 'clojure'}
 endif
@@ -217,10 +217,10 @@ aug END
 " }}}
 " =quickhl {{{
 
-nmap <Space>m <Plug>(quickhl-manual-this)
-xmap <Space>m <Plug>(quickhl-manual-this)
-nmap <Space>M <Plug>(quickhl-manual-reset)
-xmap <Space>M <Plug>(quickhl-manual-reset)
+nmap <LocalLeader>m <Plug>(quickhl-manual-this)
+xmap <LocalLeader>m <Plug>(quickhl-manual-this)
+nmap <LocalLeader>M <Plug>(quickhl-manual-reset)
+xmap <LocalLeader>M <Plug>(quickhl-manual-reset)
 
 " }}}
 " =vim-fugitive {{{
@@ -448,6 +448,15 @@ let g:rust_doc#downloaded_rust_doc_dir = '~/.multirust/toolchains/nightly-x86_64
 " =vaffle.vim {{{
 
 nnoremap <Leader><Leader> :<C-u>Vaffle<CR>
+
+" }}}
+" =vlime {{{
+
+let g:vlime_window_settings = {
+    \ 'repl':      { -> {'pos': 'botright', 'size': winwidth('.') / 3, 'vertical': v:true}},
+    \ 'sldb':      { -> {'pos': 'belowright', 'size': winheight('.') / 4}},
+    \ 'inspector': { -> {'pos': 'belowright', 'size': winheight('.') / 2}}
+    \ }
 
 " }}}
 " developing plugins {{{

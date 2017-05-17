@@ -157,7 +157,7 @@ set autoread
 " system {{{
 
 let mapleader=','
-let maplocalleader="\\"
+let maplocalleader=' ' "<space>
 
 " }}}
 " spell {{{

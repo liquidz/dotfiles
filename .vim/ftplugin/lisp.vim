@@ -1,12 +1,5 @@
 " vlime
-nnoremap <Leader>cc :call VlimeConnectREPL()<CR>
-nnoremap <Leader>cs :call VlimeSelectCurConnection()<CR>
-nnoremap <Leader>ss :call VlimeSendCurThingToREPL("thing")<CR>
-nnoremap K          :call VlimeDocumentationSymbol("atom")<CR>
-nnoremap <Leader>xc :call VlimeXRefCurSymbol("atom", "CALLS")<CR>
-nnoremap <Leader>of :call VlimeCompileCurFile()<CR>
-nnoremap <Leader>wa :call VlimeCloseWindow("")<CR>
-nnoremap <Leader>i  :call VlimeInteractionMode()<CR>
+nnoremap K :call VlimeDocumentationSymbol("atom")<CR>
 
 aug MyVlime
   au!
@@ -17,10 +10,30 @@ aug MyVlime
   au FileType vlime_inspector nnoremap <buffer> q :<C-u>q<CR>
 
   " repl
-  au FileType vlime_repl nnoremap <buffer> <Leader>I :call vlime#ui#repl#InspectCurREPLPresentation()<CR>
-  au FileType vlime_repl nnoremap <buffer> <Leader>y :call vlime#ui#repl#YankCurREPLPresentation()<CR>
-  " inspector
-  au FileType vlime_inspector nnoremap <buffer> R :call b:vlime_conn.InspectorReinspect({c, r -> c.ui.OnInspect(c, r, v:null, v:null)})<CR>
-
+  au FileType vlime_repl nnoremap <buffer> <LocalLeader>i :call vlime#ui#repl#InspectCurREPLPresentation()<CR>
+  au FileType vlime_repl nnoremap <buffer> <LocalLeader>c :call vlime#ui#repl#ClearREPLBuffer()<CR>
 aug END
 
+
+" c.f. VlimeSendCurThingToREPL
+" https://github.com/l04m33/vlime/blob/master/vim/plugin/vlime.vim#L114
+function! VlimeSendStringToREPL(str) abort
+  let conn = VlimeGetConnection()
+  if type(conn) == type(v:null)
+    return
+  endif
+
+  call conn.ui.OnWriteString(conn, "--\n", {'name': 'REPL-SEP', 'package': 'KEYWORD'})
+  call conn.WithThread({'name': 'REPL-THREAD', 'package': 'KEYWORD'},
+      \ function(conn.ListenerEval, [a:str]))
+endfunction
+
+command! -nargs=1 VlimeSendString call VlimeSendStringToREPL(<q-args>)
+command! -nargs=1 QuickLispLoad
+    \ call VlimeSendStringToREPL(printf("(ql:quickload \"%s\")", <q-args>))
+command! -nargs=1 QuickLispSearch
+    \ call VlimeSendStringToREPL(printf("(ql:system-apropos \"%s\")", <q-args>))
+command! -nargs=1 ClMakeProject
+    \ call VlimeSendStringToREPL(printf("(cl-project:make-project #p\"%s\")", <q-args>))
+command! QuickLispRegisterLocalProjects
+    \ call VlimeSendStringToREPL("(ql:register-local-projects)")

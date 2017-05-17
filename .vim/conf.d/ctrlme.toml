@@ -111,6 +111,12 @@ action = '''
   execute ":CtrlPMRUFiles"
 '''
 
+[[ctrlp]]
+name = 'cl-projects'
+action = '''
+  execute ":CtrlP ~/.roswell/local-projects/"
+'''
+
 # }}}
 # =encoding {{{
 
