@@ -3,22 +3,32 @@
 #| <Put a one-line description here>
 exec ros -Q -- $0 "$@"
 |#
-(progn ;;init forms
+(progn
   (ros:ensure-asdf)
-  ;;#+quicklisp (ql:quickload '() :silent t)
-  )
+  (ql:quickload '(:cl-ppcre) :silent t))
 
-(defpackage :ros.script.foo.3704078134
-  (:use :cl))
-(in-package :ros.script.foo.3704078134)
+(defpackage :ros.script.quickcmd
+  (:use :cl
+        :ppcre))
 
+(in-package :ros.script.quickcmd)
+
+(defconstant +default-action+ "g")
 
 (defun main (&rest argv)
   (declare (ignorable argv))
   (let ((qs (sb-unix::posix-getenv "QUERY_STRING")))
 
     (format t "Content-type: text/plain~%~%")
+    ;(format t "qs = ~A" (ppcre:split "b" qs))
     (format t "qs = ~A" qs)
+
+    (setq qs "abc")
+    (let ((x (reverse (ppcre:split "\\++" qs :limit 2))))
+      (let ((query  (first x))
+            (action (or (second x) +default-action+)))
+        )
+      )
     )
   )
 ;;; vim: set ft=lisp lisp:

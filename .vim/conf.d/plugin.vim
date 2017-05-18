@@ -345,13 +345,13 @@ let g:rbpt_colorpairs = [
     \ ['darkred',     'DarkOrchid3'],
     \ ['red',         'firebrick3'],
     \ ]
-"  aug MyRainbowParentheses
-"    au!
-"    au VimEnter * RainbowParenthesesToggle
-"    au Syntax * RainbowParenthesesLoadRound
-"    au Syntax * RainbowParenthesesLoadSquare
-"    au Syntax * RainbowParenthesesLoadBraces
-"  aug END
+aug MyRainbowParentheses
+  au!
+  au VimEnter * RainbowParenthesesToggle
+  au Syntax * RainbowParenthesesLoadRound
+  au Syntax * RainbowParenthesesLoadSquare
+  au Syntax * RainbowParenthesesLoadBraces
+aug END
 
 " }}}
 " =neomake {{{
