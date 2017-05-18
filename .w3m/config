@@ -122,7 +122,7 @@ fold_textarea 0
 graphic_char 0
 alt_entity 0
 multicol 0
-dictcommand file:///cgi-bin/quickcmd
+dictcommand file:///cgi-bin/quickcmd.ros
 use_dictcommand 1
 dirlist_cmd file://.w3m/cgi-bin/search.cgi
 ext_dirlist 1

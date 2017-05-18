@@ -105,9 +105,10 @@ export RUST_SRC_PATH=$HOME/.multirust/toolchains/nightly-x86_64-unknown-linux-gn
 
 # local bookmark {{{
 function __bookmarklist() {
-    find ~/src/github.com    -maxdepth 2 -type d
-    find ~/src/bitbucket.org -maxdepth 2 -type d
-    find ~/.vim/repos        -maxdepth 1 -type d
+    find ~/src/github.com          -maxdepth 2 -type d
+    find ~/src/bitbucket.org       -maxdepth 2 -type d
+    find ~/.vim/repos              -maxdepth 1 -type d
+    find ~/.roswell/local-projects -maxdepth 1 -type d
     cat ~/.bookmark
 }
 alias bm='cd $(__bookmarklist | sk)'

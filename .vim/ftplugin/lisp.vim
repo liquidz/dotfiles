@@ -1,5 +1,6 @@
 " vlime
 nnoremap K :call VlimeDocumentationSymbol("atom")<CR>
+"vnoremap I :call VlimeInspectCurThing("selection")<CR>
 
 aug MyVlime
   au!
@@ -26,6 +27,14 @@ function! VlimeSendStringToREPL(str) abort
   call conn.ui.OnWriteString(conn, "--\n", {'name': 'REPL-SEP', 'package': 'KEYWORD'})
   call conn.WithThread({'name': 'REPL-THREAD', 'package': 'KEYWORD'},
       \ function(conn.ListenerEval, [a:str]))
+endfunction
+
+function! VlimeGetCurrentPackage() abort
+  let conn = VlimeGetConnection()
+  if type(conn) == type(v:null)
+    return
+  endif
+  return conn.GetCurrentPackage()
 endfunction
 
 command! -nargs=1 VlimeSendString call VlimeSendStringToREPL(<q-args>)
