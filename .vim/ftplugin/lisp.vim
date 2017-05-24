@@ -1,5 +1,7 @@
 " vlime
 nnoremap K :call VlimeDocumentationSymbol("atom")<CR>
+nnoremap L :call VlimeLoadCurFile()<CR>
+
 "vnoremap I :call VlimeInspectCurThing("selection")<CR>
 
 aug MyVlime
