@@ -13,22 +13,30 @@ exec ros -Q -- $0 "$@"
 
 (in-package :ros.script.quickcmd)
 
-(defconstant +default-action+ "g")
+(defconstant +default-command+ "_")
+
+(defvar *commands*
+  '(("_" . "https://www.google.co.jp/search?q=~A")
+    ("g" . "https://www.google.co.jp/search?q=~A")
+    ("d" . "https://duckduckgo.com?q=~A")
+    ("w" . "http://ejje.weblio.jp/content_find?query=~A&x=0&y=0")
+    ("q" . "http://quickdocs.org/search?q=~A")))
+
+(defun find-command (key)
+  (let ((c (find key *commands* :test #'equal :key #'car)))
+    (if c (cdr c) (find-command +default-command+))))
+
+(defun tab-goto (url)
+  (format t "Content-type: text/plain~%")
+  (format t "W3m-control: PREV~%")
+  (format t "W3m-control: TAB_GOTO ~A~%~%" url))
 
 (defun main (&rest argv)
   (declare (ignorable argv))
   (let ((qs (sb-unix::posix-getenv "QUERY_STRING")))
-
-    (format t "Content-type: text/plain~%~%")
-    ;(format t "qs = ~A" (ppcre:split "b" qs))
-    (format t "qs = ~A" qs)
-
-    (setq qs "abc")
     (let ((x (reverse (ppcre:split "\\++" qs :limit 2))))
-      (let ((query  (first x))
-            (action (or (second x) +default-action+)))
-        )
-      )
-    )
-  )
+      (let* ((query  (first x))
+             (command (find-command (second x)))
+             (url (format () command query)))
+        (tab-goto url)))))
 ;;; vim: set ft=lisp lisp:
