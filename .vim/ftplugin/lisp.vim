@@ -44,7 +44,7 @@ command! -nargs=1 QuickLispLoad
     \ call VlimeSendStringToREPL(printf("(ql:quickload \"%s\")", <q-args>))
 command! -nargs=1 QuickLispSearch
     \ call VlimeSendStringToREPL(printf("(ql:system-apropos \"%s\")", <q-args>))
-command! -nargs=1 ClMakeProject
-    \ call VlimeSendStringToREPL(printf("(cl-project:make-project #p\"%s\")", <q-args>))
+command! -nargs=1 ClProjectMake
+    \ call VlimeSendStringToREPL(printf("(cl-project:make-project #p\"~/.roswell/local-projects/%s\")", <q-args>))
 command! QuickLispRegisterLocalProjects
     \ call VlimeSendStringToREPL("(ql:register-local-projects)")
