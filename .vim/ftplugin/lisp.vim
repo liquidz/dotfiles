@@ -40,6 +40,18 @@ function! VlimeGetCurrentPackage() abort
   return conn.GetCurrentPackage()
 endfunction
 
+function! s:myClTest() abort
+  let s:V = vital#of('vital')
+  let s:S = s:V.import('Data.String')
+
+  let current_file = expand('%:p')
+  let test_file = s:S.reverse(s:S.replace_first(s:S.reverse(current_file), '/crs/', '/t/'))
+
+  "let sexpr = printf('(prove:run #P"%s")', test_file)
+  let sexpr = printf('(prove:run #P"%s" :reporter :tap)', test_file)
+  call VlimeSendStringToREPL(sexpr)
+endfunction
+
 command! -nargs=1 VlimeSendString call VlimeSendStringToREPL(<q-args>)
 command! -nargs=1 QuickLispLoad
     \ call VlimeSendStringToREPL(printf("(ql:quickload \"%s\")", <q-args>))
@@ -49,3 +61,10 @@ command! -nargs=1 ClProjectMake
     \ call VlimeSendStringToREPL(printf("(cl-project:make-project #p\"~/.roswell/local-projects/%s\")", <q-args>))
 command! QuickLispRegisterLocalProjects
     \ call VlimeSendStringToREPL("(ql:register-local-projects)")
+command! QuickLispRegisterLocalProjects
+    \ call VlimeSendStringToREPL("(ql:register-local-projects)")
+command! ProveDisableColor
+    \ call VlimeSendStringToREPL("(setf prove:*enable-colors* ())")
+
+command! MyClTest call s:myClTest()
+nnoremap <buffer> <Leader>t :<C-u>MyClTest<CR>

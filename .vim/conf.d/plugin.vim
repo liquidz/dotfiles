@@ -63,14 +63,15 @@ Plug 'thinca/vim-prettyprint',         {'for': 'vim'}
 Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 if has('unix')
   "Plug 'wakatime/vim-wakatime'
-  Plug 'l04m33/vlime',                                 {'for': 'lisp'}
-  Plug 'rust-lang/rust.vim',                           {'for': 'rust'}
-  Plug 'racer-rust/vim-racer',                         {'for': 'rust'}
-  Plug 'yuratomo/w3m.vim' | Plug 'rhysd/rust-doc.vim', {'for': 'rust'}
-  Plug 'guns/vim-clojure-static',                      {'for': 'clojure'}
-  Plug 'guns/vim-sexp',                                {'for': ['lisp', 'clojure']}
-  Plug 'tpope/vim-classpath',                          {'for': 'clojure'}
-  Plug 'tpope/vim-fireplace',                          {'for': 'clojure'}
+  Plug 'l04m33/vlime',            {'for': 'lisp'}
+  Plug 'rust-lang/rust.vim',      {'for': 'rust'}
+  Plug 'racer-rust/vim-racer',    {'for': 'rust'}
+  Plug 'yuratomo/w3m.vim',        {'for': ['lisp', 'rust']}
+  Plug 'rhysd/rust-doc.vim',      {'for': 'rust'}
+  Plug 'guns/vim-clojure-static', {'for': 'clojure'}
+  Plug 'guns/vim-sexp',           {'for': ['lisp', 'clojure']}
+  Plug 'tpope/vim-classpath',     {'for': 'clojure'}
+  Plug 'tpope/vim-fireplace',     {'for': 'clojure'}
 endif
 
 " /filetype }}}
