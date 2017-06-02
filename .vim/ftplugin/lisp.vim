@@ -15,7 +15,7 @@ aug MyVlime
 
   " repl
   au FileType vlime_repl nnoremap <buffer> <LocalLeader>i :call vlime#ui#repl#InspectCurREPLPresentation()<CR>
-  au FileType vlime_repl nnoremap <buffer> <LocalLeader>c :call vlime#ui#repl#ClearREPLBuffer()<CR>
+  au FileType vlime_repl nnoremap <buffer> <C-l> :call vlime#ui#repl#ClearREPLBuffer()<CR>
 aug END
 
 
