@@ -18,20 +18,6 @@ aug MyVlime
   au FileType vlime_repl nnoremap <buffer> <C-l> :call vlime#ui#repl#ClearREPLBuffer()<CR>
 aug END
 
-
-" c.f. VlimeSendCurThingToREPL
-" https://github.com/l04m33/vlime/blob/master/vim/plugin/vlime.vim#L114
-function! VlimeSendStringToREPL(str) abort
-  let conn = VlimeGetConnection()
-  if type(conn) == type(v:null)
-    return
-  endif
-
-  call conn.ui.OnWriteString(conn, "--\n", {'name': 'REPL-SEP', 'package': 'KEYWORD'})
-  call conn.WithThread({'name': 'REPL-THREAD', 'package': 'KEYWORD'},
-      \ function(conn.ListenerEval, [a:str]))
-endfunction
-
 function! VlimeGetCurrentPackage() abort
   let conn = VlimeGetConnection()
   if type(conn) == type(v:null)
@@ -49,22 +35,22 @@ function! s:myClTest() abort
 
   "let sexpr = printf('(prove:run #P"%s")', test_file)
   let sexpr = printf('(prove:run #P"%s" :reporter :tap)', test_file)
-  call VlimeSendStringToREPL(sexpr)
+  call vlime#plugin#SendToREPL(sexpr)
 endfunction
 
-command! -nargs=1 VlimeSendString call VlimeSendStringToREPL(<q-args>)
+command! -nargs=1 VlimeSendString call vlime#plugin#SendToREPL(<q-args>)
 command! -nargs=1 QuickLispLoad
-    \ call VlimeSendStringToREPL(printf("(ql:quickload \"%s\")", <q-args>))
+    \ call vlime#plugin#SendToREPL(printf("(ql:quickload \"%s\")", <q-args>))
 command! -nargs=1 QuickLispSearch
-    \ call VlimeSendStringToREPL(printf("(ql:system-apropos \"%s\")", <q-args>))
+    \ call vlime#plugin#SendToREPL(printf("(ql:system-apropos \"%s\")", <q-args>))
 command! -nargs=1 ClProjectMake
-    \ call VlimeSendStringToREPL(printf("(cl-project:make-project #p\"~/.roswell/local-projects/%s\")", <q-args>))
+    \ call vlime#plugin#SendToREPL(printf("(cl-project:make-project #p\"~/.roswell/local-projects/%s\")", <q-args>))
 command! QuickLispRegisterLocalProjects
-    \ call VlimeSendStringToREPL("(ql:register-local-projects)")
+    \ call vlime#plugin#SendToREPL("(ql:register-local-projects)")
 command! QuickLispRegisterLocalProjects
-    \ call VlimeSendStringToREPL("(ql:register-local-projects)")
+    \ call vlime#plugin#SendToREPL("(ql:register-local-projects)")
 command! ProveDisableColor
-    \ call VlimeSendStringToREPL("(setf prove:*enable-colors* ())")
+    \ call vlime#plugin#SendToREPL("(setf prove:*enable-colors* ())")
 
 command! MyClTest call s:myClTest()
 nnoremap <buffer> <Leader>t :<C-u>MyClTest<CR>
