@@ -1,7 +1,6 @@
 " vlime
 nnoremap K :call VlimeDocumentationSymbol("atom")<CR>
-nnoremap L :call VlimeLoadFile(expand("%:p"))<CR>
-
+nnoremap L :call vlime#plugin#LoadFile(expand("%:p"))<CR>
 
 "vnoremap I :call VlimeInspectCurThing("selection")<CR>
 
