@@ -18,22 +18,35 @@ aug MyVlime
 aug END
 
 function! VlimeGetCurrentPackage() abort
-  let conn = VlimeGetConnection()
+  let conn = vlime#connection#Get()
   if type(conn) == type(v:null)
     return
   endif
+
   return conn.GetCurrentPackage()
 endfunction
 
-function! s:myClTest() abort
-  let s:V = vital#of('vital')
-  let s:S = s:V.import('Data.String')
+let s:V = vital#of('vital')
+let s:S = s:V.import('Data.String')
 
+function! s:myClTest() abort
   let current_file = expand('%:p')
   let test_file = s:S.reverse(s:S.replace_first(s:S.reverse(current_file), '/crs/', '/t/'))
 
   "let sexpr = printf('(prove:run #P"%s")', test_file)
   let sexpr = printf('(prove:run #P"%s" :reporter :tap)', test_file)
+  call vlime#plugin#SendToREPL(sexpr)
+endfunction
+
+function! s:myClTestAll() abort
+  let pkg = VlimeGetCurrentPackage()
+  let pkg = split(pkg[0], '\.')
+  let pkg = tolower(pkg[0])
+  if stridx(pkg, '-test') == -1
+    let pkg = printf('%s-test', pkg)
+  endif
+
+  let sexpr = printf('(prove:run :%s :reporter :fiveam)', pkg)
   call vlime#plugin#SendToREPL(sexpr)
 endfunction
 
@@ -53,3 +66,5 @@ command! ProveDisableColor
 
 command! MyClTest call s:myClTest()
 nnoremap <buffer> <Leader>t :<C-u>MyClTest<CR>
+command! MyClTestAll call s:myClTestAll()
+nnoremap <buffer> <Leader>T :<C-u>MyClTestAll<CR>
