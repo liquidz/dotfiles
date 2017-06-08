@@ -182,6 +182,8 @@ nnoremap < %
 cnoremap <C-f> <Right>
 cnoremap <C-b> <Left>
 cnoremap <C-d> <Delete>
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
 
 inoremap () ()<Left>
 inoremap [] []<Left>

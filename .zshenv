@@ -162,6 +162,7 @@ alias sq='sk -i -c "scrapq search {}" | cut -f1 | xargs -i scrapq get {} | vim -
 
 # vlime {{{
 alias vlime-start='ros run -- --load ~/.vim/repos/vlime/lisp/start-vlime.lisp'
+alias kill-vlime='sudo kill -9 $(ps -ef | grep sbcl | grep -v grep | awk "{print \$2}")'
 # }}}
 
 # my commands {{{
