@@ -1,3 +1,8 @@
+if exists('g:loaded_lisp_ftplugin')
+  finish
+endif
+let g:loaded_lisp_ftplugin = 1
+
 " vlime
 nnoremap K :call VlimeDocumentationSymbol("atom")<CR>
 nnoremap L :call vlime#plugin#LoadFile(expand("%:p"))<CR>
@@ -28,6 +33,16 @@ endfunction
 
 let s:V = vital#of('vital')
 let s:S = s:V.import('Data.String')
+
+function! s:myToggleSourceTest() abort
+  let current_file = expand('%:p')
+  if stridx(current_file, '/t/') == -1
+    let target = s:S.reverse(s:S.replace_first(s:S.reverse(current_file), '/crs/', '/t/'))
+  else
+    let target = s:S.reverse(s:S.replace_first(s:S.reverse(current_file), '/t/', '/crs/'))
+  endif
+  execute printf(':e %s', target)
+endfunction
 
 function! s:myClTest() abort
   let current_file = expand('%:p')
@@ -65,6 +80,12 @@ command! ProveDisableColor
     \ call vlime#plugin#SendToREPL("(setf prove:*enable-colors* ())")
 
 command! MyClTest call s:myClTest()
-nnoremap <buffer> <Leader>t :<C-u>MyClTest<CR>
 command! MyClTestAll call s:myClTestAll()
-nnoremap <buffer> <Leader>T :<C-u>MyClTestAll<CR>
+command! MyToggleSourceTest call s:myToggleSourceTest()
+
+aug MyLisp
+  au!
+  au FileType lisp nnoremap <buffer> <Leader>t :<C-u>MyClTest<CR>
+  au FileType lisp nnoremap <buffer> <Leader>T :<C-u>MyClTestAll<CR>
+  au FileType lisp nnoremap <buffer> tt :<C-u>MyToggleSourceTest<CR>
+aug END
