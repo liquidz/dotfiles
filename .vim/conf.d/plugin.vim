@@ -62,8 +62,7 @@ Plug 'nelstrom/vim-textobj-rubyblock', {'for': 'ruby'}
 Plug 'thinca/vim-prettyprint',         {'for': 'vim'}
 Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 if has('unix')
-  "Plug 'wakatime/vim-wakatime'
-  Plug 'l04m33/vlime',            {'for': 'lisp'}
+  Plug 'l04m33/vlime',            {'for': 'lisp', 'rtp': 'vim'}
   Plug 'rust-lang/rust.vim',      {'for': 'rust'}
   Plug 'racer-rust/vim-racer',    {'for': 'rust'}
   Plug 'yuratomo/w3m.vim',        {'for': ['lisp', 'rust']}
