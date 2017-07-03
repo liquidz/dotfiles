@@ -129,6 +129,11 @@ function tmpl() {
     TO=$2
     echo "copying $FROM template to $TO ..."
     cp -pir $HOME/src/github.com/liquidz/dotfiles/templates/$FROM $TO
+    if [[ -e $HOME/src/github.com/liquidz/dotfiles/templates/$FROM/setup.sh ]]; then
+        echo "setting up $TO ..."
+        (cd $TO && ./setup.sh)
+        \rm -f $TO/setup.sh
+    fi
 }
 
 function es-indexes() {

@@ -6,6 +6,7 @@ PATH=$PATH:/usr/local/nodejs/bin
 PATH=$PATH:/usr/local/cmake/bin
 PATH=$PATH:~/.cargo/bin
 PATH=$PATH:~/.skim/bin
+PATH=$PATH:~/.roswell/bin
 PATH="/usr/local/bin:$PATH:/usr/local/sbin"
 export PATH
 # }}}
@@ -170,6 +171,7 @@ alias kill-vlime='sudo kill -9 $(ps -ef | grep sbcl | grep -v grep | awk "{print
 # }}}
 
 # my commands {{{
+alias server='python ~/src/github.com/liquidz/dotfiles/bin/server.py'
 alias suteneko='docker run -it uochan/suteneko'
 export BECOROOT=/Users/uochan/src/github.com/liquidz/beco
 alias vint='beco vint'

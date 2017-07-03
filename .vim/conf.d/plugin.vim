@@ -458,6 +458,8 @@ let g:vlime_window_settings = {
     \ 'inspector': { -> {'pos': 'belowright', 'size': winheight('.') / 2}}
     \ }
 
+let g:vlime_compiler_policy = { "DEBUG": 3 }
+
 " }}}
 " developing plugins {{{
 " http://www.kaoriya.net/blog/2015/12/01/vim-switch-developing-plugin/
