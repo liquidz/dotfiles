@@ -36,20 +36,24 @@ let s:S = s:V.import('Data.String')
 
 function! s:myToggleSourceTest() abort
   let current_file = expand('%:p')
-  if stridx(current_file, '/t/') == -1
-    let target = s:S.reverse(s:S.replace_first(s:S.reverse(current_file), '/crs/', '/t/'))
+  if stridx(current_file, '/test/') == -1
+    let target = s:S.reverse(s:S.replace_first(s:S.reverse(current_file), '/crs/', '/tset/'))
   else
-    let target = s:S.reverse(s:S.replace_first(s:S.reverse(current_file), '/t/', '/crs/'))
+    let target = s:S.reverse(s:S.replace_first(s:S.reverse(current_file), '/tset/', '/crs/'))
   endif
   execute printf(':e %s', target)
 endfunction
 
 function! s:myClTest() abort
-  let current_file = expand('%:p')
-  let test_file = s:S.reverse(s:S.replace_first(s:S.reverse(current_file), '/crs/', '/t/'))
+  "let current_file = expand('%:p')
+  let system_name = expand('%:p:h:h:t')
+  let file_name = expand('%:t:r')
+  "let test_file = s:S.reverse(s:S.replace_first(s:S.reverse(current_file), '/crs/', '/tset/'))
 
   "let sexpr = printf('(prove:run #P"%s")', test_file)
-  let sexpr = printf('(prove:run #P"%s" :reporter :tap)', test_file)
+  "let sexpr = printf('(prove:run #P"%s" :reporter :tap)', test_file)
+  let sexpr = printf('(rove:run :%s/test/%s)', system_name, file_name)
+  "echo sexpr
   call vlime#plugin#SendToREPL(sexpr)
 endfunction
 
@@ -88,4 +92,7 @@ aug MyLisp
   au FileType lisp nnoremap <buffer> <Leader>t :<C-u>MyClTest<CR>
   au FileType lisp nnoremap <buffer> <Leader>T :<C-u>MyClTestAll<CR>
   au FileType lisp nnoremap <buffer> tt :<C-u>MyToggleSourceTest<CR>
+  au FileType lisp nnoremap <buffer> tt :<C-u>MyToggleSourceTest<CR>
+  au Filetype lisp setl lispwords+=deftest
+  au Filetype lisp setl lispwords+=testing
 aug END
