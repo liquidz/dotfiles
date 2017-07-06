@@ -7,7 +7,6 @@
             [lein-cljfmt       "RELEASE"]
             [lein-bikeshed     "RELEASE"]
             [codox             "RELEASE"]
-            [lein-swank        "RELEASE"]
             [refactor-nrepl    "RELEASE"]
             [cider/cider-nrepl "RELEASE"]
             ]
