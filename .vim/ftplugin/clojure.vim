@@ -19,7 +19,7 @@ function! s:myRunTests() abort
   execute ':RunTests ' . test_ns
 endfunction
 command! MyRunTests call s:myRunTests()
-nnoremap <buffer> <Leader>t :<C-u>MyRunTests<CR>
+"nnoremap <buffer> <Leader>t :<C-u>MyRunTests<CR>
 
 function! s:myReloadWithStringException() abort
   let ns = fireplace#ns()

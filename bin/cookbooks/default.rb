@@ -20,7 +20,7 @@ define :dotfiles do
   # }}}
   # 必要なディレクトリを作成 {{{
 
-  %w( .tags .lein ).each do |dir|
+  %w( .tags .lein .config/nvim ).each do |dir|
     directory "#{home}/#{dir}"
   end
 
@@ -53,6 +53,13 @@ define :dotfiles do
   curl 'vim-plug' do
     path "#{home}/.vim/autoload/plug.vim"
     url "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+  end
+
+  # }}}
+  # neovim の設定 {{{
+
+  link "#{home}/.config/nvim/init.vim" do
+    to "#{install_dir}/.vimrc"
   end
 
   # }}}

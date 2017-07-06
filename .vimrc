@@ -26,7 +26,9 @@ if has('unix')
   set nofixendofline
 endif
 
-set cryptmethod=blowfish2
+if !has('nvim')
+  set cryptmethod=blowfish2
+endif
 
 " }}}
 " encoding {{{

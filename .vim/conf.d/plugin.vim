@@ -47,7 +47,10 @@ Plug 'vim-scripts/confluencewiki.vim'
 Plug 'vim-scripts/gtags.vim'
 Plug 'w0ng/vim-hybrid'
 
-if has('channel')
+if has('nvim')
+  Plug 'roxma/nvim-completion-manager'
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+elseif has('channel')
   Plug 'neomake/neomake'
   Plug 'maralla/completor.vim'
 else
@@ -62,15 +65,23 @@ Plug 'nelstrom/vim-textobj-rubyblock', {'for': 'ruby'}
 Plug 'thinca/vim-prettyprint',         {'for': 'vim'}
 Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 if has('unix')
-  Plug 'l04m33/vlime',            {'for': 'lisp', 'rtp': 'vim'}
+
+  "" clojure
+  Plug 'guns/vim-sexp',           {'for': ['lisp', 'clojure']}
+  Plug 'tpope/vim-fireplace',     {'for': 'clojure'}
+  if has('nvim')
+    Plug 'clojure-vim/async-clj-omni', {'for': 'clojure'}
+  "else
+  "  Plug 'kovisoft/slimv',          {'for': ['lisp', 'clojure']}
+  endif
+
+  "Plug 'l04m33/vlime',            {'for': 'lisp', 'rtp': 'vim'}
   Plug 'rust-lang/rust.vim',      {'for': 'rust'}
   Plug 'racer-rust/vim-racer',    {'for': 'rust'}
   Plug 'yuratomo/w3m.vim',        {'for': ['lisp', 'rust']}
   Plug 'rhysd/rust-doc.vim',      {'for': 'rust'}
-  Plug 'guns/vim-clojure-static', {'for': 'clojure'}
-  Plug 'guns/vim-sexp',           {'for': ['lisp', 'clojure']}
-  Plug 'tpope/vim-classpath',     {'for': 'clojure'}
-  Plug 'tpope/vim-fireplace',     {'for': 'clojure'}
+  "Plug 'guns/vim-clojure-static', {'for': 'clojure'}
+  "Plug 'tpope/vim-classpath',     {'for': 'clojure'}
 endif
 
 " /filetype }}}
@@ -384,6 +395,15 @@ let g:kami#timestamp_format = '== %s'
 let g:completor_go_omni_trigger = '(?:\b[^\W\d]\w*|[\]\)])\.(?:[^\W\d]\w*)?'
 "let g:completor_racer_binary = $HOME.'/.cargo/bin/racer'
 
+"" to use slimv for completion
+let g:completor_disable_filename = ['clj']
+
+" }}}
+" =deoplete {{{
+
+let g:deoplete#keyword_patterns = {}
+let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
+
 " }}}
 " =ctrlme {{{
 
@@ -452,13 +472,35 @@ nnoremap <Leader><Leader> :<C-u>Vaffle<CR>
 " }}}
 " =vlime {{{
 
-let g:vlime_window_settings = {
-    \ 'repl':      { -> {'pos': 'botright', 'size': winwidth('.') / 3, 'vertical': v:true}},
-    \ 'sldb':      { -> {'pos': 'belowright', 'size': winheight('.') / 4}},
-    \ 'inspector': { -> {'pos': 'belowright', 'size': winheight('.') / 2}}
-    \ }
+if !has('nvim')
+  let g:vlime_window_settings = {
+      \ 'repl':      { -> {'pos': 'botright', 'size': winwidth('.') / 3, 'vertical': v:true}},
+      \ 'sldb':      { -> {'pos': 'belowright', 'size': winheight('.') / 4}},
+      \ 'inspector': { -> {'pos': 'belowright', 'size': winheight('.') / 2}}
+      \ }
+  
+  let g:vlime_compiler_policy = { "DEBUG": 3 }
+endif
 
-let g:vlime_compiler_policy = { "DEBUG": 3 }
+" }}}
+" =slimv {{{
+
+"let g:slimv_lisp = 'ros run'
+"let g:silmv_impl = 'sbcl'
+
+let g:slimv_repl_split = 4 " vertical split right
+let g:paredit_mode     = 0
+let g:lisp_rainbow     = 1
+let g:slimv_keybindings = 0
+
+aug MySlimvKeyBind
+  au!
+  au FileType clojure set lispwords+=ns,are
+  au FileType clojure nnoremap <buffer> <LocalLeader>d :<C-u>call SlimvEvalDefun()<CR>
+  au FileType clojure nnoremap <buffer> <LocalLeader>e :<C-u>call SlimvEvalExp()<CR>
+  au FileType clojure nnoremap <buffer> <LocalLeader>b :<C-u>call SlimvEvalBuffer()<CR>
+  au FileType clojure nnoremap <buffer> <LocalLeader>u :<C-u>call SlimvUndefineFunction()<CR>
+aug END
 
 " }}}
 " developing plugins {{{

@@ -54,6 +54,9 @@ export CPLUS_INCLUDE_PATH="/Users/uochan/app/cocos2d-x-3.3rc0/cocos:/Users/uocha
 
 # vim {{{
 alias rebuild_vim='(cd /usr/local/src/vim && sudo ./rebuild.sh)'
+if which nvim > /dev/null 2>&1; then
+    alias vim=nvim
+fi
 # }}}
 
 # docker {{{
