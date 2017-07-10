@@ -1,9 +1,10 @@
+scriptencoding utf-8
+
 if exists('g:loaded_clojure_ftplugin')
   finish
 endif
 let g:loaded_clojure_ftplugin = 1
 
-"scriptencoding utf-8
 
 "setlocal iskeyword-=/
 "set tags+=$HOME/.tags/clojure.tags
@@ -49,7 +50,7 @@ endfunction
 command! MyReloadWithStringException call s:myReloadWithStringException()
 
 function! s:myRefresh() abort
-  execute ":Eval (refresh)"
+  execute ':Eval (refresh)'
 endfunction
 command! Refresh call s:myRefresh()
 "nnoremap <buffer> <Leader>R :<C-u>Refresh<CR>
