@@ -63,7 +63,7 @@ aug MyClojure
   au FileType clojure nmap <buffer> <LocalLeader>ss <Plug>FireplacePrint<Plug>(sexp_outer_list)``
   au FileType clojure nmap <buffer> <LocalLeader>st <Plug>FireplacePrint<Plug>(sexp_outer_top_list)``
 
-  "au Filetype clojure setl lispwords+=deftest
+  au Filetype clojure setl lispwords+=doseq,testing
   "au Filetype clojure setl lispwords+=testing
   "au FileType clojure setl lispwords+=ns,are
   "" compojure
