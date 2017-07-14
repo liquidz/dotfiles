@@ -50,21 +50,24 @@ endfunction
 command! MyReloadWithStringException call s:myReloadWithStringException()
 
 function! s:myRefresh() abort
-  execute ':Eval (refresh)'
+  execute ":Eval (do (require '[clojure.tools.namespace.repl :refer [refresh]]) (refresh))"
 endfunction
 command! Refresh call s:myRefresh()
 "nnoremap <buffer> <Leader>R :<C-u>Refresh<CR>
 
 command! MyToggleSourceTest call s:myToggleSourceTest()
+command! FigwheelConnect execute ':Piggieback (figwheel-sidecar.repl-api/repl-env)'
 
 aug MyClojure
   au!
   au FileType clojure nnoremap <buffer> tt :<C-u>MyToggleSourceTest<CR>
+  au FileType clojure nnoremap <buffer> HH :lprevious<CR>
+  au FileType clojure nnoremap <buffer> LL :lnext<CR>
   au FileType clojure nmap <buffer> <LocalLeader>si <Plug>FireplacePrint<Plug>(sexp_inner_element)``
   au FileType clojure nmap <buffer> <LocalLeader>ss <Plug>FireplacePrint<Plug>(sexp_outer_list)``
   au FileType clojure nmap <buffer> <LocalLeader>st <Plug>FireplacePrint<Plug>(sexp_outer_top_list)``
 
-  au Filetype clojure setl lispwords+=doseq,testing
+  au Filetype clojure setl lispwords+=doseq,testing,fn,loop,if-let
   "au Filetype clojure setl lispwords+=testing
   "au FileType clojure setl lispwords+=ns,are
   "" compojure
@@ -74,12 +77,3 @@ aug MyClojure
   "" conjure
   "au FileType clojure setl lispwords+=stubbing
 aug END
-
-
-
-"    \ 'hook/cd/directory': yacd#get_root_dir(expand('%:p:h'))
-let g:quickrun_config.lein_test = {
-    \ 'command'   : 'lein',
-    \ 'exec'      : '%c test',
-    \ }
-nnoremap <buffer> <Leader>lt :QuickRun lein_test<CR>

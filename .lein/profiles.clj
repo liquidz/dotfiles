@@ -32,5 +32,8 @@
                    :coordinates '[[~pkg "RELEASE"]]
                    :repositories (merge cemerick.pomegranate.aether/maven-central
                                         {"clojars" "https://clojars.org/repo"})))
+               (defmacro start-figwheel []
+                 `(do (require 'figwheel-sidecar.repl-api)
+                      (figwheel-sidecar.repl-api/start-figwheel!)))
                ]
   }}
