@@ -66,8 +66,11 @@ aug MyClojure
   au FileType clojure nmap <buffer> <LocalLeader>si <Plug>FireplacePrint<Plug>(sexp_inner_element)``
   au FileType clojure nmap <buffer> <LocalLeader>ss <Plug>FireplacePrint<Plug>(sexp_outer_list)``
   au FileType clojure nmap <buffer> <LocalLeader>st <Plug>FireplacePrint<Plug>(sexp_outer_top_list)``
+  au FileType clojure nmap <buffer> <LocalLeader>m1 <Plug>FireplaceCount1MacroExpand
+  au FileType clojure nmap <buffer> <LocalLeader>cs <Plug>FireplaceCountEdit
+  au FileType clojure nmap <buffer> <LocalLeader>cc <Plug>FireplacePrompt
 
-  au Filetype clojure setl lispwords+=doseq,testing,fn,loop,if-let
+  au Filetype clojure setl lispwords+=doseq,testing,fn,loop,if-let,for
   "au Filetype clojure setl lispwords+=testing
   "au FileType clojure setl lispwords+=ns,are
   "" compojure
