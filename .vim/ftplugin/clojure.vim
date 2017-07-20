@@ -72,5 +72,15 @@ aug MyClojure
   au FileType clojure nmap <buffer> <LocalLeader>ci <Plug>FireplacePrompt
   au FileType clojure nmap <buffer> <LocalLeader>cl <LocalLeader>ci<C-p><CR>
 
+  "" vim-sayid
+  au FileType clojure nnoremap <buffer> <LocalLeader>yq :SayidQueryUnderCursor<CR>
+  au FileType clojure nnoremap <buffer> <LocalLeader>yc :SayidClearLog<CR>
+  au FileType clojure nnoremap <buffer> <LocalLeader>yw :SayidGetWorkspace<CR>
+  au FileType clojure nnoremap <buffer> <LocalLeader>ys :SayidShowTraced<CR>
+  au FileType clojure nnoremap <buffer> <LocalLeader>yt :SayidTraceNsInFile<CR>
+  au FileType clojure nnoremap <buffer> <LocalLeader>yi :SayidTraceFnInner<CR>
+  au FileType clojure nnoremap <buffer> <LocalLeader>yo :SayidTraceFnOuter<CR>
+
+
   au Filetype clojure setl lispwords+=doseq,testing,fn,loop,if-let,for,binding
 aug END

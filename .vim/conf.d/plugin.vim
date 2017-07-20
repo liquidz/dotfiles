@@ -69,6 +69,7 @@ if has('unix')
   "" clojure
   Plug 'guns/vim-sexp',           {'for': ['lisp', 'clojure']}
   Plug 'tpope/vim-fireplace',     {'for': 'clojure'}
+  Plug 'arsenerei/vim-sayid',     {'for': 'clojure'}
   if has('nvim')
     Plug 'clojure-vim/async-clj-omni', {'for': 'clojure'}
   "else
@@ -307,6 +308,12 @@ aug VimFireplaceSetting
   " vim-ref の K と競合するため再定義
   au Filetype clojure nmap <buffer> K <Plug>FireplaceK
 aug END
+
+" }}}
+" =vim-sayid {{{
+
+let g:enable_sayid_mappings = 0
+
 
 " }}}
 " =vim-sexp {{{
