@@ -1,14 +1,15 @@
 {:user
  {:plugins [
-            [lein-ancient      "RELEASE"]
-            [jonase/eastwood   "RELEASE"]
-            [lein-cloverage    "RELEASE"]
-            [lein-kibit        "RELEASE"]
-            [lein-cljfmt       "RELEASE"]
-            [lein-bikeshed     "RELEASE"]
-            [codox             "RELEASE"]
-            [refactor-nrepl    "RELEASE"]
-            [cider/cider-nrepl "RELEASE"]
+            [lein-ancient       "RELEASE"]
+            [jonase/eastwood    "RELEASE"]
+            [lein-cloverage     "RELEASE"]
+            [lein-kibit         "RELEASE"]
+            [lein-cljfmt        "RELEASE"]
+            [lein-bikeshed      "RELEASE"]
+            [codox              "RELEASE"]
+            [refactor-nrepl     "RELEASE"]
+            [com.billpiel/sayid "RELEASE"]
+            [cider/cider-nrepl  "RELEASE"]
             ]
 
   :aliases {
