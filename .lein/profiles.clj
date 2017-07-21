@@ -8,8 +8,9 @@
             [lein-bikeshed      "RELEASE"]
             [codox              "RELEASE"]
             [refactor-nrepl     "RELEASE"]
-            [com.billpiel/sayid "RELEASE"]
-            [cider/cider-nrepl  "RELEASE"]
+            [com.billpiel/sayid "0.0.15"]
+            ; sayid 0.0.15 が cider-nrepl 0.14.0 に依存
+            [cider/cider-nrepl  "0.14.0"]
             ]
 
   :aliases {
@@ -23,6 +24,7 @@
   :dependencies [
                  [org.clojure/tools.namespace "RELEASE"]
                  [com.cemerick/pomegranate    "RELEASE"]
+                 [com.taoensso/tufte          "RELEASE"]
                  ]
 
   :injections [

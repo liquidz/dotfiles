@@ -55,7 +55,13 @@ endfunction
 command! Refresh call s:myRefresh()
 "nnoremap <buffer> <Leader>R :<C-u>Refresh<CR>
 
+function! s:requireTufteProfiler() abort
+  execute ":Eval (require '[taoensso.tufte :as tufte :refer [defnp p profiled profile]])"
+  execute ":Eval (tufte/add-basic-println-handler! {})"
+endfunction
+
 command! MyToggleSourceTest call s:myToggleSourceTest()
+command! RequireTufteProfiler call s:requireTufteProfiler()
 command! FigwheelConnect execute ':Piggieback (figwheel-sidecar.repl-api/repl-env)'
 
 aug MyClojure
@@ -80,7 +86,7 @@ aug MyClojure
   au FileType clojure nnoremap <buffer> <LocalLeader>yt :SayidTraceNsInFile<CR>
   au FileType clojure nnoremap <buffer> <LocalLeader>yi :SayidTraceFnInner<CR>
   au FileType clojure nnoremap <buffer> <LocalLeader>yo :SayidTraceFnOuter<CR>
-
+  au FileType sayid   nnoremap <silent> <buffer> q :<C-u>q<CR>
 
   au Filetype clojure setl lispwords+=doseq,testing,fn,loop,if-let,for,binding
 aug END
