@@ -50,6 +50,7 @@ Plug 'w0ng/vim-hybrid'
 if has('nvim')
   Plug 'roxma/nvim-completion-manager'
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'neomake/neomake'
 elseif has('channel')
   Plug 'neomake/neomake'
   Plug 'maralla/completor.vim'
@@ -374,18 +375,20 @@ aug END
 " }}}
 " =neomake {{{
 
-"aug MyNeoMake
-"  au!
-"  au BufWritePost * Neomake
-"  au BufWritePost *.rs Neomake! cargo
-"aug END
-"let g:neomake_go_run_maker = {
-"    \ 'args': ['--verbose'],
-"    \ 'errorformat': '%A%f: line %l\, col %v\, %m \(%t%*\d\)',
-"    \ }
-"
-"let g:neomake_rust_cargo_maker = neomake#makers#cargo#cargo()
-"let g:neomake_rust_enabled_makers = ['cargo']
+let g:neomake_clojure_joker_maker = {
+    \ 'exe': 'joker',
+    \ 'args': ['--lint', '%:p'],
+    \ 'errorformat': '%f:%l:%c: %m'
+    \ }
+
+if executable('joker')
+	let g:neomake_clojure_enabled_makers = ['joker']
+
+	aug MyNeoMake
+		au!
+		au BufWritePost *.clj Neomake
+	aug END
+endif
 
 " }}}
 " =kami {{{

@@ -256,6 +256,7 @@ aug END
 aug MyAutoOpenCWindow
   au!
   autocmd QuickFixCmdPost *grep* cwindow
+  "autocmd QuickFixCmdPost l* lopen
 aug END
 
 if $TMUX !=# ''
