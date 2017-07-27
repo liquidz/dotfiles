@@ -1,20 +1,20 @@
 {:user
  {:plugins [
             [lein-ancient       "RELEASE"]
-            [jonase/eastwood    "RELEASE"]
+            ;[jonase/eastwood    "RELEASE"]
             [lein-cloverage     "RELEASE"]
             [lein-kibit         "RELEASE"]
             [lein-cljfmt        "RELEASE"]
             [lein-bikeshed      "RELEASE"]
             [codox              "RELEASE"]
-            [refactor-nrepl     "RELEASE"]
+            ;[refactor-nrepl     "RELEASE"]
             [com.billpiel/sayid "0.0.15"]
             ; sayid 0.0.15 が cider-nrepl 0.14.0 に依存
             [cider/cider-nrepl  "0.14.0"]
             ]
 
   :aliases {
-            "lint"  ["eastwood"]
+            ;"lint"  ["eastwood"]
             "fmt"   ["cljfmt", "check"]
             "check" ["kibit"]
             "cover" ["cloverage"]
@@ -24,12 +24,15 @@
   :dependencies [
                  [org.clojure/tools.namespace "RELEASE"]
                  [com.cemerick/pomegranate    "RELEASE"]
+                 [alembic                     "0.3.2"]
                  [com.taoensso/tufte          "RELEASE"]
+                 [jonase/eastwood             "0.2.4" :exclusions [org.clojure/clojure]]
                  ]
 
   :injections [
                (require '[clojure.tools.namespace.repl :refer [refresh]])
                (require 'cemerick.pomegranate)
+               (require '[alembic.still :refer [load-project]])
                (defmacro add-dep [pkg]
                  `(cemerick.pomegranate/add-dependencies
                    :coordinates '[[~pkg "RELEASE"]]

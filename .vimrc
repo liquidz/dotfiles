@@ -206,6 +206,10 @@ endif
 
 nnoremap QQ :<C-u>bd!<CR>
 
+if has('nvim')
+  tnoremap <silent> <ESC> <C-\><C-n>
+endif
+
 " }}}
 " copy to clipboard {{{
 

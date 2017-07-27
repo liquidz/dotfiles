@@ -57,7 +57,7 @@ command! Refresh call s:myRefresh()
 
 function! s:requireTufteProfiler() abort
   execute ":Eval (require '[taoensso.tufte :as tufte :refer [defnp p profiled profile]])"
-  execute ":Eval (tufte/add-basic-println-handler! {})"
+  execute ':Eval (tufte/add-basic-println-handler! {})'
 endfunction
 
 command! MyToggleSourceTest call s:myToggleSourceTest()
@@ -89,4 +89,6 @@ aug MyClojure
   au FileType sayid   nnoremap <silent> <buffer> q :<C-u>q<CR>
 
   au Filetype clojure setl lispwords+=doseq,testing,fn,loop,if-let,for,binding
+  "" duct
+  au Filetype clojure setl lispwords+=context,GET,POST,PUT,DELETE
 aug END

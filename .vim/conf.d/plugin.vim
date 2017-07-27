@@ -73,17 +73,16 @@ if has('unix')
   Plug 'arsenerei/vim-sayid',     {'for': 'clojure'}
   if has('nvim')
     Plug 'clojure-vim/async-clj-omni', {'for': 'clojure'}
-  "else
-  "  Plug 'kovisoft/slimv',          {'for': ['lisp', 'clojure']}
   endif
 
-  "Plug 'l04m33/vlime',            {'for': 'lisp', 'rtp': 'vim'}
+  "" common lisp
+  Plug 'l04m33/vlime',            {'for': 'lisp', 'rtp': 'vim'}
+
+  "" rust
   Plug 'rust-lang/rust.vim',      {'for': 'rust'}
   Plug 'racer-rust/vim-racer',    {'for': 'rust'}
   Plug 'yuratomo/w3m.vim',        {'for': ['lisp', 'rust']}
   Plug 'rhysd/rust-doc.vim',      {'for': 'rust'}
-  "Plug 'guns/vim-clojure-static', {'for': 'clojure'}
-  "Plug 'tpope/vim-classpath',     {'for': 'clojure'}
 endif
 
 " /filetype }}}
@@ -375,13 +374,13 @@ aug END
 " }}}
 " =neomake {{{
 
-let g:neomake_clojure_joker_maker = {
-    \ 'exe': 'joker',
-    \ 'args': ['--lint', '%:p'],
-    \ 'errorformat': '%f:%l:%c: %m'
-    \ }
-
 if executable('joker')
+  let g:neomake_clojure_joker_maker = {
+      \ 'exe': 'joker',
+      \ 'args': ['--lint', '%:p'],
+      \ 'errorformat': '%f:%l:%c: %m'
+      \ }
+
 	let g:neomake_clojure_enabled_makers = ['joker']
 
 	aug MyNeoMake
