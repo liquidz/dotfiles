@@ -206,10 +206,6 @@ endif
 
 nnoremap QQ :<C-u>bd!<CR>
 
-if has('nvim')
-  tnoremap <silent> <ESC> <C-\><C-n>
-endif
-
 " }}}
 " copy to clipboard {{{
 
@@ -246,6 +242,7 @@ command! ToUTF8 set fileencoding=utf-8
 command! ToEUC  set fileencoding=euc-jp
 command! ToSJIS set fileencoding=sjis
 command! ToUNIX set fileformat=unix
+command! ReloadVimrc source $HOME/src/github.com/liquidz/dotfiles/.vimrc
 
 " }}}
 " auto command {{{

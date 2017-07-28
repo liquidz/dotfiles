@@ -492,26 +492,6 @@ nnoremap <Leader><Leader> :<C-u>Vaffle<CR>
 "endif
 
 " }}}
-" =slimv {{{
-
-"let g:slimv_lisp = 'ros run'
-"let g:silmv_impl = 'sbcl'
-
-let g:slimv_repl_split = 4 " vertical split right
-let g:paredit_mode     = 0
-let g:lisp_rainbow     = 1
-let g:slimv_keybindings = 0
-
-aug MySlimvKeyBind
-  au!
-  au FileType clojure set lispwords+=ns,are
-  au FileType clojure nnoremap <buffer> <LocalLeader>d :<C-u>call SlimvEvalDefun()<CR>
-  au FileType clojure nnoremap <buffer> <LocalLeader>e :<C-u>call SlimvEvalExp()<CR>
-  au FileType clojure nnoremap <buffer> <LocalLeader>b :<C-u>call SlimvEvalBuffer()<CR>
-  au FileType clojure nnoremap <buffer> <LocalLeader>u :<C-u>call SlimvUndefineFunction()<CR>
-aug END
-
-" }}}
 " developing plugins {{{
 " http://www.kaoriya.net/blog/2015/12/01/vim-switch-developing-plugin/
 let dirs = [ $HOME.'/src/github.com/liquidz' ]

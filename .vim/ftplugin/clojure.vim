@@ -14,6 +14,7 @@ inoremap <buffer> ' '
 
 let s:V = vital#of('vital')
 let s:S = s:V.import('Data.String')
+let s:P = s:V.import('Process')
 
 function! s:myToggleSourceTest() abort
   let current_file = expand('%:p')
@@ -60,9 +61,16 @@ function! s:requireTufteProfiler() abort
   execute ':Eval (tufte/add-basic-println-handler! {})'
 endfunction
 
+"function! TmuxSendKeys(keys) abort
+function! s:tmux_send_keys(keys) abort
+  call s:P.system(printf('tmux send-keys -t 1 %s', a:keys))
+  call s:P.system('tmux send-keys -t 1 Enter')
+endfunction
+
 command! MyToggleSourceTest call s:myToggleSourceTest()
 command! RequireTufteProfiler call s:requireTufteProfiler()
 command! FigwheelConnect execute ':Piggieback (figwheel-sidecar.repl-api/repl-env)'
+command! -nargs=1 TmuxSendKeys call s:tmux_send_keys(<q-args>)
 
 aug MyClojure
   au!
@@ -88,6 +96,10 @@ aug MyClojure
   au FileType clojure nnoremap <buffer> <LocalLeader>yo :SayidTraceFnOuter<CR>
   au FileType sayid   nnoremap <silent> <buffer> q :<C-u>q<CR>
 
+  "" tmux
+  au FileType clojure nnoremap <buffer> <LocalLeader>tr :<C-u>TmuxSendKeys '(reset)'<CR>
+
+  "" lisp words
   au Filetype clojure setl lispwords+=doseq,testing,fn,loop,if-let,for,binding
   "" duct
   au Filetype clojure setl lispwords+=context,GET,POST,PUT,DELETE
