@@ -58,7 +58,6 @@ if which nvim > /dev/null 2>&1; then
     alias vim=nvim
 fi
 # }}}
-
 # docker {{{
 #export DOCKER_TLS_VERIFY="1"
 #export DOCKER_HOST="tcp://192.168.99.100:2376"
@@ -86,11 +85,9 @@ alias -g DA='$(da)'
 alias -g DI='$(di)'
 alias -g DC='$(dc)'
 # }}}
-
 # heroku {{{
 export PATH=$PATH:/usr/local/heroku/bin
 # }}}
-
 # go {{{
 if [[ -e /usr/local/go ]]; then
   export GOROOT=/usr/local/go
@@ -98,15 +95,13 @@ fi
 export GOPATH=$HOME
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 # }}}
-
-# rust {{
+# rust {{{
 
 # https://internals.rust-lang.org/t/incremental-compilation-beta/4721
 export CARGO_INCREMENTAL=1
 
 export RUST_SRC_PATH=$HOME/.multirust/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src
-# }}
-
+# }}}
 # local bookmark {{{
 function __bookmarklist() {
     find ~/src/github.com -maxdepth 2 -type d
@@ -121,7 +116,6 @@ function __bookmarklist() {
 }
 alias bm='cd $(__bookmarklist | sk)'
 # }}}
-
 # git {{{
 if which hub > /dev/null 2>&1; then
     alias git=hub
@@ -133,13 +127,11 @@ alias -g L='$(l)'
 alias s='git status -s | sk | cut -b 4-'
 alias -g S='$(s)'
 # }}}
-
 # ssh {{{
 alias ss='ssh $(grep "Host " ~/.ssh/config | cut -c6- | sk)'
 alias sss='tmux split-window ss'
 alias ssn='tmux new-window ss'
 # }}}
-
 # cakephp {{{
 # To enable these aliases, you must export CAKE_PROJECT_ROOT in /etc/zshenv
 if [[ "$CAKE_PROJECT_ROOT" != "" ]]; then
@@ -149,11 +141,9 @@ if [[ "$CAKE_PROJECT_ROOT" != "" ]]; then
     alias phpcs="phpcs --standard=CakePHP"
 fi
 # }}}
-
 # w3m {{{
 export WWW_HOME="duckduckgo.com"
 # }}}
-
 # virtualenv {{{
 function activate_virtualenv() {
     ENV_DIR="$HOME/env"
@@ -161,16 +151,17 @@ function activate_virtualenv() {
     source "$ENV_DIR/$TARGET_ENV/bin/activate"
 }
 # }}}
-
 # skim {{{
 export SKIM_DEFAULT_OPTIONS='--ansi -m'
 alias gg='sk -i -c "git grep -i \"{}\""'
 alias sq='sk -i -c "scrapq search {}" | cut -f1 | xargs -i scrapq get {} | vim -R -c "setf scrapbox" -'
 # }}}
-
 # vlime {{{
 alias vlime-start='ros run -- --load ~/.vim/repos/vlime/lisp/start-vlime.lisp'
 alias kill-vlime='sudo kill -9 $(ps -ef | grep sbcl | grep -v grep | awk "{print \$2}")'
+# }}}
+# mitamae {{{
+alias mita='sudo mitamae local -y ~/src/github.com/liquidz/cookbooks/nodes/$(hostname).yaml'
 # }}}
 
 # my commands {{{

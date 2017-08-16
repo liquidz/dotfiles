@@ -481,15 +481,13 @@ nnoremap <Leader><Leader> :<C-u>Vaffle<CR>
 " }}}
 " =vlime {{{
 
-"if !has('nvim')
-"  let g:vlime_window_settings = {
-"      \ 'repl':      { -> {'pos': 'botright', 'size': winwidth('.') / 3, 'vertical': v:true}},
-"      \ 'sldb':      { -> {'pos': 'belowright', 'size': winheight('.') / 4}},
-"      \ 'inspector': { -> {'pos': 'belowright', 'size': winheight('.') / 2}}
-"      \ }
-"  
-"  let g:vlime_compiler_policy = { "DEBUG": 3 }
-"endif
+let g:vlime_window_settings = {
+    \ 'repl':      { 'pos': 'botright',   'size': 60, 'vertical': v:true},
+    \ 'sldb':      { 'pos': 'belowright', 'size': 20},
+    \ 'inspector': { 'pos': 'belowright', 'size': 10}
+    \ }
+
+let g:vlime_compiler_policy = { "DEBUG": 3 }
 
 " }}}
 " developing plugins {{{
