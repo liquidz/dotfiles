@@ -71,6 +71,7 @@ if has('unix')
   Plug 'guns/vim-sexp',           {'for': ['lisp', 'clojure']}
   Plug 'tpope/vim-fireplace',     {'for': 'clojure'}
   Plug 'arsenerei/vim-sayid',     {'for': 'clojure'}
+  Plug 'guns/vim-slamhound',      {'for': 'clojure'}
   if has('nvim')
     Plug 'clojure-vim/async-clj-omni', {'for': 'clojure'}
   endif
@@ -314,7 +315,6 @@ aug END
 
 let g:enable_sayid_mappings = 0
 
-
 " }}}
 " =vim-sexp {{{
 
@@ -476,6 +476,7 @@ let g:rust_doc#downloaded_rust_doc_dir = '~/.multirust/toolchains/nightly-x86_64
 " }}}
 " =vaffle.vim {{{
 
+let g:vaffle_auto_cd = 1
 nnoremap <Leader><Leader> :<C-u>Vaffle<CR>
 
 " }}}

@@ -1,10 +1,10 @@
 {:user
  {:plugins [
-            [lein-ancient       "RELEASE"]
+            ;[lein-ancient       "RELEASE"]
             ;[jonase/eastwood    "RELEASE"]
-            [lein-cloverage     "RELEASE"]
+            ;[lein-cloverage     "RELEASE"]
             [lein-kibit         "RELEASE"]
-            [lein-cljfmt        "RELEASE"]
+            ;[lein-cljfmt        "RELEASE"]
             [lein-bikeshed      "RELEASE"]
             [codox              "RELEASE"]
             ;[refactor-nrepl     "RELEASE"]
@@ -27,6 +27,7 @@
                  [alembic                     "0.3.2"]
                  [com.taoensso/tufte          "RELEASE"]
                  [jonase/eastwood             "0.2.4" :exclusions [org.clojure/clojure]]
+                 [slamhound                   "1.5.5"]
                  ]
 
   :injections [
@@ -35,9 +36,9 @@
                (require '[alembic.still :refer [load-project]])
                (defmacro add-dep [pkg]
                  `(cemerick.pomegranate/add-dependencies
-                   :coordinates '[[~pkg "RELEASE"]]
-                   :repositories (merge cemerick.pomegranate.aether/maven-central
-                                        {"clojars" "https://clojars.org/repo"})))
+                    :coordinates '[[~pkg "RELEASE"]]
+                    :repositories (merge cemerick.pomegranate.aether/maven-central
+                                         {"clojars" "https://clojars.org/repo"})))
                (defmacro start-figwheel []
                  `(do (require 'figwheel-sidecar.repl-api)
                       (figwheel-sidecar.repl-api/start-figwheel!)))
