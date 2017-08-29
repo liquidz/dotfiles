@@ -85,6 +85,8 @@ aug MyClojure
   au FileType clojure nmap <buffer> <LocalLeader>st <Plug>FireplacePrint<Plug>(sexp_outer_top_list)``
   au FileType clojure nmap <buffer> <LocalLeader>m1 <Plug>FireplaceCount1MacroExpand
   au FileType clojure nmap <buffer> <LocalLeader>cc <Plug>FireplaceCountEdit
+  au FileType clojure nnoremap <buffer> <LocalLeader>r :Require<CR>
+  au FileType clojure nnoremap <buffer> <LocalLeader>tt :<C-u>MyRunTest<CR>
 
   au FileType clojure nmap <buffer> <LocalLeader>ci <Plug>FireplacePrompt
   au FileType clojure nmap <buffer> <LocalLeader>cl <LocalLeader>ci<C-p><CR>
