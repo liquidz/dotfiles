@@ -41,7 +41,6 @@ function! s:myRunTests() abort
   execute ':RunTests ' . test_ns
 endfunction
 command! MyRunTests call s:myRunTests()
-"nnoremap <buffer> <Leader>t :<C-u>MyRunTests<CR>
 
 function! s:myReloadWithStringException() abort
   let ns = fireplace#ns()
@@ -77,6 +76,10 @@ aug MyClojure
   au FileType clojure nnoremap <buffer> tt :<C-u>MyToggleSourceTest<CR>
   au FileType clojure nnoremap <buffer> HH :lprevious<CR>
   au FileType clojure nnoremap <buffer> LL :lnext<CR>
+
+  au FileType clojure nnoremap <buffer> <LocalLeader>r :<C-u>Require<CR>
+  au FileType clojure nnoremap <buffer> <Leader>t :<C-u>MyRunTests<CR>
+
   au FileType clojure nmap <buffer> <LocalLeader>si <Plug>FireplacePrint<Plug>(sexp_inner_element)``
   au FileType clojure nmap <buffer> <LocalLeader>ss <Plug>FireplacePrint<Plug>(sexp_outer_list)``
   au FileType clojure nmap <buffer> <LocalLeader>st <Plug>FireplacePrint<Plug>(sexp_outer_top_list)``
@@ -94,6 +97,7 @@ aug MyClojure
   au FileType clojure nnoremap <buffer> <LocalLeader>yt :SayidTraceNsInFile<CR>
   au FileType clojure nnoremap <buffer> <LocalLeader>yi :SayidTraceFnInner<CR>
   au FileType clojure nnoremap <buffer> <LocalLeader>yo :SayidTraceFnOuter<CR>
+  au FileType clojure nnoremap <buffer> <LocalLeader>yu :SayidDisableAllTraces<CR>
   au FileType sayid   nnoremap <silent> <buffer> q :<C-u>q<CR>
 
   "" tmux

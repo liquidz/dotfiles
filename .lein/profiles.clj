@@ -8,9 +8,7 @@
             [lein-bikeshed      "RELEASE"]
             [codox              "RELEASE"]
             ;[refactor-nrepl     "RELEASE"]
-            [com.billpiel/sayid "0.0.15"]
-            ; sayid 0.0.15 が cider-nrepl 0.14.0 に依存
-            [cider/cider-nrepl  "0.14.0"]
+            [cider/cider-nrepl  "0.15.0"]
             ]
 
   :aliases {
@@ -23,6 +21,7 @@
 
   :dependencies [
                  [org.clojure/tools.namespace "RELEASE"]
+                 [org.clojure/tools.trace     "0.7.9"]
                  [com.cemerick/pomegranate    "RELEASE"]
                  [alembic                     "0.3.2"]
                  [com.taoensso/tufte          "RELEASE"]
@@ -32,14 +31,14 @@
 
   :injections [
                (require '[clojure.tools.namespace.repl :refer [refresh]])
-               (require 'cemerick.pomegranate)
                (require '[alembic.still :refer [load-project]])
-               (defmacro add-dep [pkg]
-                 `(cemerick.pomegranate/add-dependencies
-                    :coordinates '[[~pkg "RELEASE"]]
-                    :repositories (merge cemerick.pomegranate.aether/maven-central
-                                         {"clojars" "https://clojars.org/repo"})))
-               (defmacro start-figwheel []
+               (defmacro my-add-dep [pkg]
+                 `(do (require 'cemerick.pomegranate)
+                      (cemerick.pomegranate/add-dependencies
+                        :coordinates '[[~pkg "RELEASE"]]
+                        :repositories (merge cemerick.pomegranate.aether/maven-central
+                                             {"clojars" "https://clojars.org/repo"}))))
+               (defmacro my-start-figwheel []
                  `(do (require 'figwheel-sidecar.repl-api)
                       (figwheel-sidecar.repl-api/start-figwheel!)))
                ]
