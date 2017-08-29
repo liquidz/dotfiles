@@ -488,7 +488,7 @@ let g:vlime_window_settings = {
     \ 'inspector': { 'pos': 'belowright', 'size': 10}
     \ }
 
-let g:vlime_compiler_policy = { "DEBUG": 3 }
+let g:vlime_compiler_policy = { 'DEBUG': 3 }
 
 " }}}
 " developing plugins {{{
