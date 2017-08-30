@@ -70,8 +70,7 @@ if has('unix')
   "" clojure
   Plug 'guns/vim-sexp',           {'for': ['lisp', 'clojure']}
   Plug 'tpope/vim-fireplace',     {'for': 'clojure'}
-  "Plug 'arsenerei/vim-sayid',     {'for': 'clojure'}
-  Plug 'liquidz/vim-sayid',     {'for': 'clojure'}
+  Plug 'liquidz/vim-clj-trace',   {'for': 'clojure'}
   Plug 'guns/vim-slamhound',      {'for': 'clojure'}
   if has('nvim')
     Plug 'clojure-vim/async-clj-omni', {'for': 'clojure'}

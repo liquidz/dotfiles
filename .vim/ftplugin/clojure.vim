@@ -91,16 +91,10 @@ aug MyClojure
   au FileType clojure nmap <buffer> <LocalLeader>ci <Plug>FireplacePrompt
   au FileType clojure nmap <buffer> <LocalLeader>cl <LocalLeader>ci<C-p><CR>
 
-  "" vim-sayid
-  au FileType clojure nnoremap <buffer> <LocalLeader>yq :SayidQueryUnderCursor<CR>
-  au FileType clojure nnoremap <buffer> <LocalLeader>yc :SayidClearLog<CR>
-  au FileType clojure nnoremap <buffer> <LocalLeader>yw :SayidGetWorkspace<CR>
-  au FileType clojure nnoremap <buffer> <LocalLeader>ys :SayidShowTraced<CR>
-  au FileType clojure nnoremap <buffer> <LocalLeader>yt :SayidTraceNsInFile<CR>
-  au FileType clojure nnoremap <buffer> <LocalLeader>yi :SayidTraceFnInner<CR>
-  au FileType clojure nnoremap <buffer> <LocalLeader>yo :SayidTraceFnOuter<CR>
-  au FileType clojure nnoremap <buffer> <LocalLeader>yu :SayidDisableAllTraces<CR>
-  au FileType sayid   nnoremap <silent> <buffer> q :<C-u>q<CR>
+  "" vim-clj-trace
+  au FileType clojure nmap <buffer> <LocalLeader>ti <Plug>CljTraceVars
+  au FileType clojure nmap <buffer> <LocalLeader>tn <Plug>CljTraceNs
+  au FileType clojure nmap <buffer> <LocalLeader>uu <Plug>CljUntraceNs
 
   "" tmux
   au FileType clojure nnoremap <buffer> <LocalLeader>tr :<C-u>TmuxSendKeys '(reset)'<CR>
