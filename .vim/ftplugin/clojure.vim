@@ -77,15 +77,17 @@ aug MyClojure
   au FileType clojure nnoremap <buffer> HH :lprevious<CR>
   au FileType clojure nnoremap <buffer> LL :lnext<CR>
 
-  au FileType clojure nnoremap <buffer> <LocalLeader>r :<C-u>Require<CR>
-  au FileType clojure nnoremap <buffer> <Leader>t :<C-u>MyRunTests<CR>
+  "" vim-fiace-repl
+  au FileType clojure nmap <buffer> <LocalLeader>si <Plug>FreplEval<Plug>(sexp_inner_element)``
+  au FileType clojure nmap <buffer> <LocalLeader>ss <Plug>FreplEval<Plug>(sexp_outer_list)``
 
-  au FileType clojure nmap <buffer> <LocalLeader>si <Plug>FireplacePrint<Plug>(sexp_inner_element)``
-  au FileType clojure nmap <buffer> <LocalLeader>ss <Plug>FireplacePrint<Plug>(sexp_outer_list)``
+  "" vim-fireplace
+  "au FileType clojure nmap <buffer> <LocalLeader>si <Plug>FireplacePrint<Plug>(sexp_inner_element)``
+  "au FileType clojure nmap <buffer> <LocalLeader>ss <Plug>FireplacePrint<Plug>(sexp_outer_list)``
   au FileType clojure nmap <buffer> <LocalLeader>st <Plug>FireplacePrint<Plug>(sexp_outer_top_list)``
   au FileType clojure nmap <buffer> <LocalLeader>m1 <Plug>FireplaceCount1MacroExpand
   au FileType clojure nmap <buffer> <LocalLeader>cc <Plug>FireplaceCountEdit
-  au FileType clojure nnoremap <buffer> <LocalLeader>r :Require<CR>
+  au FileType clojure nnoremap <buffer> <LocalLeader>r :<C-u>Require<CR>
   au FileType clojure nnoremap <buffer> <LocalLeader>tt :<C-u>MyRunTest<CR>
 
   au FileType clojure nmap <buffer> <LocalLeader>ci <Plug>FireplacePrompt
@@ -94,7 +96,8 @@ aug MyClojure
   "" vim-clj-trace
   au FileType clojure nmap <buffer> <LocalLeader>ti <Plug>CljTraceVars
   au FileType clojure nmap <buffer> <LocalLeader>tn <Plug>CljTraceNs
-  au FileType clojure nmap <buffer> <LocalLeader>uu <Plug>CljUntraceNs
+  au FileType clojure nmap <buffer> <LocalLeader>tu <Plug>CljUntraceNs
+
 
   "" tmux
   au FileType clojure nnoremap <buffer> <LocalLeader>tr :<C-u>TmuxSendKeys '(reset)'<CR>

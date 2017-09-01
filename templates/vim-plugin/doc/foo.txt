@@ -1,0 +1,72 @@
+*PLUGIN_NAME.txt*	DESCRIPTION
+
+Version: 0.0.1
+Author : uochan <liquidz.uo+vim@gmail.com>
+License: MIT LICENSE
+
+==============================================================================
+CONTENTS                                                  *PLUGIN_NAME-contents*
+
+Introduction                                          |PLUGIN_NAME-introduction|
+Interface                                                |PLUGIN_NAME-interface|
+  Commands                                                |PLUGIN_NAME-commands|
+  Functions                                              |PLUGIN_NAME-functions|
+  Key Mappings                                        |PLUGIN_NAME-key-mappings|
+Customizing                                            |PLUGIN_NAME-customizing|
+Changelog                                                |PLUGIN_NAME-changelog|
+
+==============================================================================
+Introduction                                          *PLUGIN_NAME-introduction*
+
+Sper greate *PLUGIN_NAME* for vim.
+
+Requirement:
+ - Vim 7.3.885 or later with Lua enabled
+ - foobar
+   https://github.com/foo/bar
+
+Lateste Version:
+ - https://github.com/liquidz/PLUGIN_NAME
+
+==============================================================================
+Interface                                                *PLUGIN_NAME-interface*
+
+------------------------------------------------------------------------------
+Commands                                                  *PLUGIN_NAME-commands*
+
+                                                                  *:DoSomething*
+:DoSomething
+	aaa bbb ccc
+
+------------------------------------------------------------------------------
+Functions                                                *PLUGIN_NAME-functions*
+
+                                                                  *foo#bar#func*
+foo#bar#func(args1, arg2)
+	aaa bbb ccc
+
+------------------------------------------------------------------------------
+Key Mappings                                          *PLUGIN_NAME-key-mappings*
+
+                                                               *<Plug>(foo_bar)*
+<Plug>(foo_bar)
+	aaa bbb ccc
+
+==============================================================================
+Customizing                                            *PLUGIN_NAME-customizing*
+
+                                                                     *g:foo_bar*
+g:foo_bar
+	aaa bbb ccc
+
+                                                                     *g:foo#bar*
+g:foo#bar
+	aaa bbb ccc
+
+==============================================================================
+Changelog                                                *PLUGIN_NAME-changelog*
+
+See git-log.
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:noet:fen:fdl=0:

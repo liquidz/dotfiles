@@ -11,10 +11,6 @@ all:
 test:
 	themis
 
-.PHONY: doc
-doc:
-	vimdoc .
-
 .PHONY: lint
 lint:
 	find . -name "*.vim" | grep -v vital | xargs beco vint

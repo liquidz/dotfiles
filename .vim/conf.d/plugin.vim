@@ -182,10 +182,9 @@ let g:quickrun_config = {
     \     'outputter' : 'error:buffer:quickfix'
     \   },
     \   'clojure': {
-    \     'runner' : 'vimscript',
-    \     'exec'   : ':Require'
+    \     'command': 'lumo',
+    \     'exec'   : '%c %s'
     \   },
-    \
     \   'watchdogs_checker/phpcs': {
     \     'command' : 'phpcs',
     \     'exec'    : '%c --report=emacs %s'
@@ -303,12 +302,14 @@ endif
 
 aug VimFireplaceSetting
   au!
-  au Filetype clojure nnoremap <buffer> <Leader>r :Require<CR>
-  au Filetype clojure nnoremap <buffer> <Leader>R :Require!<CR>
-  au Filetype clojure nmap <buffer> cc <Plug>FireplaceCountPrint
   " vim-ref の K と競合するため再定義
   au Filetype clojure nmap <buffer> K <Plug>FireplaceK
 aug END
+
+" }}}
+" =fiace-repl {{{
+
+let frepl#buffer#mods = 'vertical'
 
 " }}}
 " =vim-sayid {{{
