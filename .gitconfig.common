@@ -9,13 +9,42 @@
 [url "git@github.com:"]
 	pushinsteadof = https://liquidz@github.com/
 [alias]
-	st = status
-	ci = ci-status
-	co = checkout
-	ss = stash
-	pr = pull-request
-	b = branch
+	st   = status
+	ci   = ci-status
+	co   = checkout
+	ss   = stash
+	pr   = pull-request
+	b    = branch
 	open = browse
 	undo = reset --soft HEAD^
 	glog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
 
+[tig]
+	ignore-case = true
+    main-view   = id date author:email-user commit-title:graph=yes,refs=yes
+[tig "bind"]
+	diff    = R       !git rebase -i %(commit)
+	generic = <Esc>s  ?git stash save "%(promptStashComment:)"
+	generic = B       view-blame
+	generic = G       move-last-line
+	generic = P       ?git push -u %(remote) %(repo:head)
+	generic = U       ?git pull %(remote) %(repo:head)
+	generic = b       view-refs
+	generic = g       move-first-line
+	main    = <Esc>b  ?git checkout -b %(promptBranchName:)
+	main    = G       move-last-line
+	main    = R       !git rebase -i %(commit)
+	main    = W       !git commit --allow-empty -m 'Work In Progress'
+	main    = ^       ?git reset --soft HEAD^
+	refs    = !       none
+	refs    = <Esc>b  ?git checkout -b %(promptBranchName:)
+	refs    = C       ?git checkout -b %(branch) origin/%(branch)
+	refs    = c       ?git checkout %(branch)
+	refs    = d       ?git branch -D %(branch)
+	stash   = !       none
+	stash   = P       none
+	stash   = d       ?git stash drop %(stash)
+	stash   = p       ?git stash pop %(stash)
+	status  = -       status-update
+	status  = c       ?git checkout %(file)
+	status  = u       none
