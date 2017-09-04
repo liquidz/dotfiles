@@ -28,20 +28,6 @@ function! s:myToggleSourceTest() abort
   execute printf(':e %s', target)
 endfunction
 
-" Requires vim-fireplace
-function! s:myRunTests() abort
-  let ns = fireplace#ns()
-  if match(ns, 'test$') ==# -1
-    let test_ns = ns . '-test'
-  else
-    let test_ns = ns
-    let ns = substitute(ns, '-test', '', '')
-  endif
-  execute ':Require ' . ns
-  execute ':RunTests ' . test_ns
-endfunction
-command! MyRunTests call s:myRunTests()
-
 function! s:myReloadWithStringException() abort
   let ns = fireplace#ns()
   let expr = printf("(try (require '%s :reload) (catch Exception e (-> e str)))", ns)
@@ -78,8 +64,10 @@ aug MyClojure
   au FileType clojure nnoremap <buffer> LL :lnext<CR>
 
   "" vim-fiace-repl
-  au FileType clojure nmap <buffer> <LocalLeader>si <Plug>FreplEval<Plug>(sexp_inner_element)``
-  au FileType clojure nmap <buffer> <LocalLeader>ss <Plug>FreplEval<Plug>(sexp_outer_list)``
+  au FileType clojure nmap <buffer> <LocalLeader>si <Plug>(cljbuf_eval)<Plug>(sexp_inner_element)``
+  au FileType clojure nmap <buffer> <LocalLeader>ss <Plug>(cljbuf_eval)<Plug>(sexp_outer_list)``
+  au FileType clojure nmap <buffer> <LocalLeader>sl <Plug>(cljbuf_repeat_last)
+  au FileType clojure nmap <buffer> <LocalLeader>tt <Plug>(cljbuf_test_file)
 
   "" vim-fireplace
   "au FileType clojure nmap <buffer> <LocalLeader>si <Plug>FireplacePrint<Plug>(sexp_inner_element)``
@@ -88,16 +76,11 @@ aug MyClojure
   au FileType clojure nmap <buffer> <LocalLeader>m1 <Plug>FireplaceCount1MacroExpand
   au FileType clojure nmap <buffer> <LocalLeader>cc <Plug>FireplaceCountEdit
   au FileType clojure nnoremap <buffer> <LocalLeader>r :<C-u>Require<CR>
-  au FileType clojure nnoremap <buffer> <LocalLeader>tt :<C-u>MyRunTest<CR>
-
-  au FileType clojure nmap <buffer> <LocalLeader>ci <Plug>FireplacePrompt
-  au FileType clojure nmap <buffer> <LocalLeader>cl <LocalLeader>ci<C-p><CR>
 
   "" vim-clj-trace
   au FileType clojure nmap <buffer> <LocalLeader>ti <Plug>CljTraceVars
   au FileType clojure nmap <buffer> <LocalLeader>tn <Plug>CljTraceNs
   au FileType clojure nmap <buffer> <LocalLeader>tu <Plug>CljUntraceNs
-
 
   "" tmux
   au FileType clojure nnoremap <buffer> <LocalLeader>tr :<C-u>TmuxSendKeys '(reset)'<CR>
