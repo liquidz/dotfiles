@@ -311,6 +311,7 @@ aug END
 " =vim-clj-buffer {{{
 
 let cljbuf#buffer#mods = 'vertical'
+let cljbuf#test#runner = 'eftest.runner'
 
 " }}}
 " =vim-sayid {{{

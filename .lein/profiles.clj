@@ -26,7 +26,7 @@
                  [alembic                     "0.3.2"]
                  [com.taoensso/tufte          "RELEASE"]
                  [jonase/eastwood             "0.2.4" :exclusions [org.clojure/clojure]]
-                 [slamhound                   "1.5.5"]
+                 [eftest                      "0.3.1"]
                  ]
 
   :injections [
