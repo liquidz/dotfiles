@@ -68,6 +68,8 @@ aug MyClojure
   au FileType clojure nmap <buffer> <LocalLeader>ss <Plug>(cljbuf_eval)<Plug>(sexp_outer_list)``
   au FileType clojure nmap <buffer> <LocalLeader>sl <Plug>(cljbuf_repeat_last)
   au FileType clojure nmap <buffer> <LocalLeader>tt <Plug>(cljbuf_test_file)
+  au FileType clojure nmap <buffer> <LocalLeader>ta <Plug>(cljbuf_test_all)
+  au FileType clojure nmap <buffer> <LocalLeader>l  <Plug>(cljbuf_clear)
 
   "" vim-fireplace
   "au FileType clojure nmap <buffer> <LocalLeader>si <Plug>FireplacePrint<Plug>(sexp_inner_element)``
