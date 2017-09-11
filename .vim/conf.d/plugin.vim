@@ -39,6 +39,7 @@ Plug 'thinca/vim-themis'
 Plug 'thinca/vim-visualstar'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
+Plug 'lambdalisue/gina.vim'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tyru/open-browser.vim'
@@ -236,23 +237,38 @@ nmap <LocalLeader>M <Plug>(quickhl-manual-reset)
 xmap <LocalLeader>M <Plug>(quickhl-manual-reset)
 
 " }}}
+" =gina.vim {{{
+
+nnoremap <Leader>gs  :Gina status<CR>
+nnoremap <Leader>gd  :Gina diff<CR>
+nnoremap <Leader>gc  :Gina commit<CR>
+nnoremap <Leader>gb  :Gina branch<CR>
+nnoremap <Leader>gl  :Gina log<CR>
+
+aug MyGinaMapping
+  au!
+  au Filetype gina-* nnoremap <silent> <buffer> q :<C-u>q<CR>
+  au Filetype gina-status nnoremap <buffer> c :Gina commit<CR>
+aug END
+
+" }}}
 " =vim-fugitive {{{
 
-  nnoremap <Leader>ga  :Gwrite<CR>
-  nnoremap <Leader>gs  :Gstatus<CR>
-  nnoremap <Leader>gd  :Gdiff<CR>
-  nnoremap <Leader>gc  :Gcommit -av<CR>
-  nnoremap <Leader>go  :Git browse<CR>
+"  nnoremap <Leader>ga  :Gwrite<CR>
+"  nnoremap <Leader>gs  :Gstatus<CR>
+"  nnoremap <Leader>gd  :Gdiff<CR>
+"  nnoremap <Leader>gc  :Gcommit -av<CR>
+"  nnoremap <Leader>go  :Git browse<CR>
 
 " }}}
 " =gitv {{{
 
-nnoremap <Leader>gl  :Gitv<CR>
+"nnoremap <Leader>gl  :Gitv<CR>
 
 " }}}
 " =vim-merginal {{{
 
-nnoremap <Leader>gb  :Merginal<CR>
+"nnoremap <Leader>gb  :Merginal<CR>
 
 " }}}
 " =lightline.vim {{{

@@ -8,7 +8,7 @@
             [lein-bikeshed      "RELEASE"]
             [codox              "RELEASE"]
             ;[refactor-nrepl     "RELEASE"]
-            [cider/cider-nrepl  "0.15.0"]
+            [cider/cider-nrepl  "0.15.1-SNAPSHOT"]
             ]
 
   :aliases {

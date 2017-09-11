@@ -11,3 +11,15 @@ snippet testns "test namespace" b
     [midje.sweet    :refer :all]
     [conjure.core   :refer :all]))
 endsnippet
+
+snippet duct-boundary "duct boundary" b
+(ns ${1:namespace}.boundary.tables
+  (:require [clojure.java.jdbc :as jdbc]
+            duct.database.sql))
+ 
+(defprotocol Tables (get-tables [db]))
+(extend-protocol Tables
+  duct.database.sql.Boundary
+  (get-tables [{:keys [spec]}]
+    (jdbc/query spec ["select name from sqlite_master where type = 'table'"])))
+endsnippet
