@@ -163,6 +163,9 @@ alias kill-vlime='sudo kill -9 $(ps -ef | grep sbcl | grep -v grep | awk "{print
 # mitamae {{{
 alias mita='sudo mitamae local -y ~/src/github.com/liquidz/cookbooks/nodes/$(hostname).yaml'
 # }}}
+# spacemacs {{{
+alias vil='emacs --insecure'
+# }}}
 
 # my commands {{{
 alias server='python ~/src/github.com/liquidz/dotfiles/bin/server.py'
