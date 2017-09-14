@@ -34,7 +34,7 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      helm
-     ;; auto-completion
+     ;auto-completion
      ;; better-defaults
      emacs-lisp
      ;; git
@@ -54,6 +54,7 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
                                       ;sourcerer-theme
+                                      evil-tabs
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -121,7 +122,8 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-                         tsdh-dark
+                         spacemacs-dark
+                         ;tsdh-dark
                          ;sourcerer
                          )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
