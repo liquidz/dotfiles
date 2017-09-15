@@ -34,7 +34,7 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      helm
-     ;auto-completion
+     auto-completion
      ;; better-defaults
      emacs-lisp
      ;; git
@@ -53,8 +53,7 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
-                                      ;sourcerer-theme
-                                      evil-tabs
+                                      sourcerer-theme
                                       )
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -122,9 +121,9 @@ values."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(
-                         spacemacs-dark
+                         ;spacemacs-dark
                          ;tsdh-dark
-                         ;sourcerer
+                         sourcerer
                          )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
@@ -275,6 +274,7 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
+  (global-evil-tabs-mode t)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
