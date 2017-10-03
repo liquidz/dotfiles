@@ -19,6 +19,8 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     javascript
+     ruby
      helm
      auto-completion
      ;; better-defaults
@@ -90,7 +92,12 @@ values."
                          sourcerer
                          )
    dotspacemacs-colorize-cursor-according-to-state t
-   dotspacemacs-default-font '("Source Code Pro"
+   dotspacemacs-default-font '(
+                               ;"Nota "
+                               ;"Ubuntu Mono"
+                               ;"Open Sans"
+                               "Ricty Diminished"
+                               ;"Source Code Pro"
                                :size 13
                                :weight normal
                                :width normal
@@ -148,10 +155,40 @@ values."
 (defun dotspacemacs/user-init ()
   )
 
-;(defun nothing ())
-;(define-key evil-normal-state-map (kbd "<down-mouse-1>") 'nothing)
+
+(defun copy-to-clipboard ()
+  (interactive)
+  (if (display-graphic-p)
+    (progn
+      (message "Yanked region to x-clipboard")
+      (call-interactively 'clipboard-kill-ring-save))
+    (if (region-active-p)
+      (progn
+        (shell-command-on-region (region-beginning) (region-end) "xsel --clipboard --input")
+        (message "Yanked region to xsel")
+        (deactivate-input-method)))))
+
+;; 日本語
+;; あいうえお
+(defun paste-from-clipboard ()
+  (interactive)
+  (if (display-graphic-p)
+    (clipboard-yank)
+    (insert (shell-command-to-string "xsel --clipboard --output"))))
 
 (defun dotspacemacs/user-config ()
+  ;; Font
+  ;(set-fontset-font nil 'japanese-jisx0208
+  ;                  (font-spec :family "Ricty Diminished"))
+  ;(set-face-font 'default "Ricty Diminished-15")
+
+  ;; bind <C-h> as Backspace in INSERT mode
+  (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char)
+  ;; clipboard setting
+  (evil-leader/set-key "o y" 'copy-to-clipboard)
+  (evil-leader/set-key "o p" 'paste-from-clipboard)
+
+
   ;(global-unset-key (kbd "C-p"))
   ;(global-set-key (kbd "C-p") 'helm-projectile-find-file)
 
@@ -164,8 +201,24 @@ values."
     "mei" 'cider-eval-sexp-at-point)
   )
 
-(defun clojure/init-cider ()
-  )
+;(defun clojure/init-cider ()
+;  )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-names-vector
+   ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
+ '(package-selected-packages
+   (quote
+    (web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc company-tern dash-functional tern coffee-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc markdown-mode macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gh-md fuzzy flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree elisp-slime-nav dumb-jump f dash diminish define-word company-statistics company column-enforce-mode clojure-snippets clj-refactor hydra inflections edn multiple-cursors paredit s peg clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu highlight cider seq spinner queue pkg-info clojure-mode epl bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup sourcerer-theme))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((((class color) (min-colors 89)) (:foreground "#c2c2b0" :background "#222222")))))
