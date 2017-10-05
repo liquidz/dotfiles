@@ -25,15 +25,15 @@ values."
      auto-completion
      ;; better-defaults
      emacs-lisp
-     ;; git
+     git
      markdown
-     ;; org
+     org
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
      ;;spell-checking
      ;; syntax-checking
-     ;; version-control
+     version-control
      clojure
      )
 
@@ -43,6 +43,8 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(
                                       sourcerer-theme
+                                      mozc
+                                      evil-snipe
                                       )
 
    ;; A list of packages that cannot be updated.
@@ -88,17 +90,13 @@ values."
    dotspacemacs-scratch-mode 'text-mode
    dotspacemacs-themes '(
                          ;spacemacs-dark
-                         ;tsdh-dark
                          sourcerer
                          )
    dotspacemacs-colorize-cursor-according-to-state t
    dotspacemacs-default-font '(
-                               ;"Nota "
-                               ;"Ubuntu Mono"
-                               ;"Open Sans"
-                               "Ricty Diminished"
                                ;"Source Code Pro"
-                               :size 13
+                               "Source Han Code JP R"
+                               :size 11
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -155,43 +153,25 @@ values."
 (defun dotspacemacs/user-init ()
   )
 
-
-(defun copy-to-clipboard ()
-  (interactive)
-  (if (display-graphic-p)
-    (progn
-      (message "Yanked region to x-clipboard")
-      (call-interactively 'clipboard-kill-ring-save))
-    (if (region-active-p)
-      (progn
-        (shell-command-on-region (region-beginning) (region-end) "xsel --clipboard --input")
-        (message "Yanked region to xsel")
-        (deactivate-input-method)))))
-
-;; 日本語
-;; あいうえお
-(defun paste-from-clipboard ()
-  (interactive)
-  (if (display-graphic-p)
-    (clipboard-yank)
-    (insert (shell-command-to-string "xsel --clipboard --output"))))
-
 (defun dotspacemacs/user-config ()
-  ;; Font
-  ;(set-fontset-font nil 'japanese-jisx0208
-  ;                  (font-spec :family "Ricty Diminished"))
-  ;(set-face-font 'default "Ricty Diminished-15")
+  (load-file "~/.spacemacs.d/common.el")
 
-  ;; bind <C-h> as Backspace in INSERT mode
-  (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char)
-  ;; clipboard setting
-  (evil-leader/set-key "o y" 'copy-to-clipboard)
-  (evil-leader/set-key "o p" 'paste-from-clipboard)
+  (cond
+   ;; for Windows
+   ((eq system-type 'windows-nt)
+    )
 
+   ;; for Mac
+   ((eq system-type 'darwin)
+    )
 
-  ;(global-unset-key (kbd "C-p"))
-  ;(global-set-key (kbd "C-p") 'helm-projectile-find-file)
+   ;; for Linux
+   ((eq system-type 'gnu/linux)
+    (load-file "~/.spacemacs.d/linux.el")
+    )
+   )
 
+  ;; Disable mouse control
   ;(dolist (mouse '("<down-mouse-1>" "<mouse-1>"))
   ;  (global-unset-key (kbd mouse)))
 
@@ -200,9 +180,6 @@ values."
   (spacemacs/set-leader-keys-for-minor-mode 'clojure-mode
     "mei" 'cider-eval-sexp-at-point)
   )
-
-;(defun clojure/init-cider ()
-;  )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -215,7 +192,7 @@ values."
    ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
  '(package-selected-packages
    (quote
-    (web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc company-tern dash-functional tern coffee-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc markdown-mode macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gh-md fuzzy flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree elisp-slime-nav dumb-jump f dash diminish define-word company-statistics company column-enforce-mode clojure-snippets clj-refactor hydra inflections edn multiple-cursors paredit s peg clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu highlight cider seq spinner queue pkg-info clojure-mode epl bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup sourcerer-theme))))
+    (evil-snipe org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot smeargle orgit magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter evil-magit magit magit-popup git-commit with-editor diff-hl mozc web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc company-tern dash-functional tern coffee-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc markdown-mode macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gh-md fuzzy flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree elisp-slime-nav dumb-jump f dash diminish define-word company-statistics company column-enforce-mode clojure-snippets clj-refactor hydra inflections edn multiple-cursors paredit s peg clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu highlight cider seq spinner queue pkg-info clojure-mode epl bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup sourcerer-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
