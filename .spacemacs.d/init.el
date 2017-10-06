@@ -156,6 +156,18 @@ values."
 (defun dotspacemacs/user-config ()
   (load-file "~/.spacemacs.d/common.el")
 
+  (evil-define-text-object evil-inner-line (count &optional beg end type)
+    "Select inner line."
+    (let ((begin (save-excursion
+                   (back-to-indentation)
+                   (point)))
+          (end (save-excursion
+                 (goto-char (line-end-position))
+                 (skip-syntax-backward " " (line-beginning-position))
+                 (point))))
+      (evil-range begin end)))
+  (define-key evil-inner-text-objects-map "l" 'evil-inner-line)
+
   (cond
    ;; for Windows
    ((eq system-type 'windows-nt)
