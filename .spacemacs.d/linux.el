@@ -1,4 +1,4 @@
-(defun copy-to-clipboard ()
+(defun my/copy-to-clipboard ()
   (interactive)
   (if (display-graphic-p)
       (progn
@@ -10,7 +10,7 @@
           (message "Yanked region to xsel")
           (deactivate-input-method)))))
 
-(defun paste-from-clipboard ()
+(defun my/paste-from-clipboard ()
   (interactive)
   (if (display-graphic-p)
       (clipboard-yank)
@@ -23,5 +23,5 @@
 (setq mozc-candidate-style 'echo-area)
 
 ;; clipboard setting
-(evil-leader/set-key "o y" 'copy-to-clipboard)
-(evil-leader/set-key "o p" 'paste-from-clipboard)
+(evil-leader/set-key "o y" 'my/copy-to-clipboard)
+(evil-leader/set-key "o p" 'my/paste-from-clipboard)
