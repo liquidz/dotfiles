@@ -1,4 +1,7 @@
 ;; -*- mode: emacs-lisp -*-
+(setq my-user-configs
+      '("common" "clojure"))
+
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
 You should not put any user code in this function besides modifying the variable
@@ -19,6 +22,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     japanese
      javascript
      ruby
      helm
@@ -47,7 +51,11 @@ values."
                                       evil-snipe
                                       quickrun
                                       migemo
+                                      perspeen
+                                      hydra
+                                      (evil-textobj-line :location (recipe :fetcher github :repo "syohex/evil-textobj-line"))
                                       )
+
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -154,61 +162,112 @@ values."
 (defun dotspacemacs/user-init ()
   )
 
+(defmacro ilambda (bindings &rest body)
+  "lambda with (interactive)"
+  `(lambda ,bindings
+     (interactive) ,@body))
+
+
 (defun dotspacemacs/user-config ()
-  (load-file "~/.spacemacs.d/common.el")
+  (dolist (name my-user-configs)
+    (load-file
+     (format "~/.spacemacs.d/%s.el" name)))
 
-  (evil-define-text-object evil-inner-line (count &optional beg end type)
-    "Select inner line."
-    (let ((begin (save-excursion
-                   (back-to-indentation)
-                   (point)))
-          (end (save-excursion
-                 (goto-char (line-end-position))
-                 (skip-syntax-backward " " (line-beginning-position))
-                 (point))))
-      (evil-range begin end)))
-  (define-key evil-inner-text-objects-map "l" 'evil-inner-line)
+  ;; perspeen
+  (use-package perspeen
+    :ensure t
+    :init (setq perspeen-use-tab t)
+    :config (progn
+              (perspeen-mode)
+              (spacemacs/set-leader-keys "tn"
+                (ilambda () (perspeen-tab-create-tab (current-buffer))))
+              (spacemacs/set-leader-keys "th"
+                'perspeen-tab-prev)
+              (spacemacs/set-leader-keys "tl"
+                'perspeen-tab-next)
+              (spacemacs/set-leader-keys "td"
+                'perspeen-tab-del)
 
-  (cond
-   ;; for Windows
-   ((eq system-type 'windows-nt)
-    )
+              ;; (define-prefix-command 'my/perspeen-tab-map)
+              ;; (define-key my/perspeen-tab-map "n" 'perspeen-tab-create-tab)
+              ;; (define-key my/perspeen-tab-map "l" 'perspeen-tab-next)
+              ;; (define-key my/perspeen-tab-map "h" 'perspeen-tab-prev)
+              ;; (define-key my/perspeen-tab-map "d" 'perspeen-tab-del)
+              ;; (define-key evil-motion-state-map "t" 'my/perspeen-tab-map)
+              ))
 
-   ;; for Mac
-   ((eq system-type 'darwin)
-    )
+  ;; ウインドウ分割後のフォーカスをデフォルトにする
+  (define-key evil-window-map "v" 'split-window-right-and-focus)
+  (define-key evil-window-map "V" 'split-window-right)
+  (define-key evil-window-map "s" 'split-window-below-and-focus)
+  (define-key evil-window-map "S" 'split-window-below)
 
-   ;; for Linux
-   ((eq system-type 'gnu/linux)
-    (load-file "~/.spacemacs.d/linux.el")
-    )
-   )
+  ;; (defun my/mark-word ()
+  ;;   (evil-inner-symbol)
+  ;;   )
+
+
+  ;; hydra
+  ;; vim-submode 的なことができる
+  (require 'hydra)
+  (defhydra hydra-control-window ()
+    "control window"
+    ("l" evil-window-right)
+    ("h" evil-window-left)
+    ("k" evil-window-up)
+    ("j" evil-window-down)
+    (">" (ilambda () (evil-window-increase-width 5)))
+    ("<" (ilambda () (evil-window-decrease-width 5)))
+    ("+" (ilambda () (evil-window-increase-height 5)))
+    ("-" (ilambda () (evil-window-decrease-height 5))))
+  ;; C-w C-w でウインドウ操作モード
+  (define-key evil-window-map "\C-w" 'hydra-control-window/body)
+
+  ;(buffer-list)
+  ;(current-buffer)
+
+  ;(cider-switch-to-repl-buffer)
+  ;(cider--swi)
+
+  ;(defhydra hydra-zoom (global-map "<f2>")
+  ;  "zoom"
+  ;  ("k" text-scale-increase "in")
+  ;  ("j" text-scale-decrease "out")
+  ;  )
+
 
   ;; Disable mouse control
   ;(dolist (mouse '("<down-mouse-1>" "<mouse-1>"))
   ;  (global-unset-key (kbd mouse)))
 
-  ;; Clojure
-  ; eval inner list
-  (spacemacs/set-leader-keys-for-minor-mode
-    'clojure-mode "ei"
-    'eval-sexp-fu-cider-eval-sexp-inner-list)
-  ; paredit
-  (add-hook 'clojure-mode-hook #'paredit-mode)
-  (add-hook 'cider-repl-mode-hook #'paredit-mode)
-  ; zou
-  (defun my/zou-go ()
-    (interactive)
-    (with-current-buffer (cider-current-connection "clj")
-      (if current-prefix-arg
-          (progn
-            (save-some-buffers)
-            (cider-interactive-eval "(zou.framework.repl/reset)"))
-        (cider-interactive-eval "(zou.framework.repl/go)"))))
+  ;; helm
+  (require 'helm-projectile)
+  ; ctrlp の再現
+  (define-key evil-normal-state-map "\C-p"
+    'helm-projectile-find-file)
+  ; helm 上でも C-h でバックスペース
+  (define-key helm-map "\C-h"
+    'delete-backward-char)
+  (define-key helm-find-files-map "\C-w"
+    'helm-ff-run-switch-other-window)
+  (define-key helm-projectile-find-file-map "\C-w"
+    'helm-ff-run-switch-other-window)
+  ;(define-key helm-buffer-map (kbd "C-w")
+  ;  'helm-buffer-switch-other-window)
+  ; swoop
+  (setq helm-swoop-use-fuzzy-match t)
+  ;(defun my/clear-line ()
+  ;  (goto-char 1)
+  ;  ;; (delete-region (line-beginning-position) (line-end-position))
+  ;  )
+  ;;(define-key helm-map (kbd "C-u") 'my/clear-line)
 
-  (spacemacs/set-leader-keys-for-minor-mode
-    'clojure-mode "zo"
-    'my/zou-go)
+  ;; Company
+  ; 補完候補が表示されている場合でも C-h でバックスペース
+  (require 'company)
+  (define-key company-active-map "\C-h" 'delete-backward-char)
+  (define-key company-search-map "\C-h" 'delete-backward-char)
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -222,10 +281,11 @@ values."
    ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
  '(package-selected-packages
    (quote
-    (avy-migemo pangu-spacing japanese-holidays evil-tutor-ja ddskk cdb ccc migemo quickrun evil-snipe org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot smeargle orgit magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter evil-magit magit magit-popup git-commit with-editor diff-hl mozc web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc company-tern dash-functional tern coffee-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc markdown-mode macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gh-md fuzzy flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree elisp-slime-nav dumb-jump f dash diminish define-word company-statistics company column-enforce-mode clojure-snippets clj-refactor hydra inflections edn multiple-cursors paredit s peg clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu highlight cider seq spinner queue pkg-info clojure-mode epl bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup sourcerer-theme))))
+    (evil-textobj-line perspeen avy-migemo pangu-spacing japanese-holidays evil-tutor-ja ddskk cdb ccc migemo quickrun evil-snipe org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot smeargle orgit magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter evil-magit magit magit-popup git-commit with-editor diff-hl mozc web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc company-tern dash-functional tern coffee-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc markdown-mode macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gh-md fuzzy flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree elisp-slime-nav dumb-jump f dash diminish define-word company-statistics company column-enforce-mode clojure-snippets clj-refactor hydra inflections edn multiple-cursors paredit s peg clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu highlight cider seq spinner queue pkg-info clojure-mode epl bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup sourcerer-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((((class color) (min-colors 89)) (:foreground "#c2c2b0" :background "#222222")))))
+ '(default ((((class color) (min-colors 89)) (:foreground "#c2c2b0" :background "#222222"))))
+ '(perspeen-tab--header-line-active ((t (:inherit default :background "deep sky blue" :foreground "black")))))

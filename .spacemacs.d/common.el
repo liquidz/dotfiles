@@ -1,9 +1,13 @@
 ;; bind <C-h> as Backspace
-(global-set-key (kbd "C-h") 'delete-backward-char)
-(global-set-key (kbd "<F1>") help-map)
+(global-set-key "\C-h" 'delete-backward-char)
+(global-set-key (kbd"<F1>") help-map)
 
-;(global-set-key (kbd "C-p") 'helm-projectile-find-file)
-;(global-set-key (kbd "<F2>") 'evil-paste-pop)
+;; https://github.com/syl20bnr/spacemacs/pull/9547
+;; https://github.com/syl20bnr/spacemacs/issues/9549
+(require 'helm-bookmark)
+
+;; vim-textobj-line 互換
+(require 'evil-textobj-line)
 
 ;; magit
 (setq-default git-magit-status-fullscreen t)
@@ -13,13 +17,12 @@
 (require 'evil-snipe)
 (evil-snipe-override-mode 1)
 
-;; migemo
-;; これをいれると日本語の文字化けがなぜか直る
-(require 'migemo)
-(setq migemo-command "cmigemo")
-(setq migemo-options '("-q" "--emacs"))
-(setq migemo-dictionary "/usr/local/share/migemo/utf-8/migemo-dict")
-(setq migemo-user-dictionary nil)
-(setq migemo-regex-dictionary nil)
-(setq migemo-coding-system 'utf-8-unix)
-(migemo-init)
+;; 環境毎の設定
+(cond
+ ;; for Windows
+ ((eq system-type 'windows-nt))
+ ;; for Mac
+ ((eq system-type 'darwin))
+ ;; for Linux
+ ((eq system-type 'gnu/linux)
+  (load-file "~/.spacemacs.d/linux.el")))

@@ -18,9 +18,11 @@
 
 ;; mozc setting
 ;; C-\ で mozc モード
-(set-language-environment  "Japanese")
 (setq default-input-method "japanese-mozc")
 (setq mozc-candidate-style 'echo-area)
+;; これがあると一部のファイルで文字化けする
+;; c.f. https://masutaka.net/chalow/2009-07-09-1.html
+;; (set-language-environment  "Japanese")
 
 ;; clipboard setting
 (evil-leader/set-key "o y" 'my/copy-to-clipboard)
