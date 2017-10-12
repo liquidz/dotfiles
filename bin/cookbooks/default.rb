@@ -1,3 +1,4 @@
+# coding: utf-8
 define :curl, path: nil, url: nil do # {{{
   execute "curl #{params[:name]}" do
     command <<-EOT
@@ -63,6 +64,12 @@ define :dotfiles do
   end
 
   # }}}
+
+  # spacemacs の設定
+  link "#{home}/.spacemacs.d" do
+    to "#{install_dir}/.spacemacs.d"
+  end
+
   # zsh の設定 {{{
 
   link "#{home}/.zsh" do
