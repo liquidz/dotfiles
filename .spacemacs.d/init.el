@@ -20,26 +20,27 @@ values."
    ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
-   dotspacemacs-configuration-layers
-   '(
-     japanese
-     javascript
-     ruby
-     helm
-     auto-completion
-     ;; better-defaults
-     emacs-lisp
-     git
-     markdown
-     org
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
-     ;;spell-checking
-     ;; syntax-checking
-     version-control
-     clojure
-     )
+
+   dotspacemacs-configuration-layers '(
+                                       japanese
+                                       javascript
+                                       ruby
+                                       helm
+                                       auto-completion
+                                       ;; better-defaults
+                                       emacs-lisp
+                                       git
+                                       markdown
+                                       plantuml
+                                       org
+                                       (shell :variables
+                                              shell-default-height 30
+                                              shell-default-position 'bottom)
+                                       ;;spell-checking
+                                       syntax-checking
+                                       version-control
+                                       clojure
+                                       )
 
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -167,7 +168,6 @@ values."
   `(lambda ,bindings
      (interactive) ,@body))
 
-
 (defun dotspacemacs/user-config ()
   (dolist (name my-user-configs)
     (load-file
@@ -241,6 +241,8 @@ values."
   ;  (global-unset-key (kbd mouse)))
 
   ;; helm
+  (require 'helm)
+  (require 'helm-types)
   (require 'helm-projectile)
   ; ctrlp の再現
   (define-key evil-normal-state-map "\C-p"
@@ -262,6 +264,23 @@ values."
   ;  )
   ;;(define-key helm-map (kbd "C-u") 'my/clear-line)
 
+  ;; (defun my/do-something (filename)
+  ;;   (interactive "Foo Bar: ")
+  ;;   (shell-command (format "stat %s" (shell-quote-argument filename))
+  ;;                  "*Stat*"))
+  ;; (setq helm-type-file-actions
+  ;;       (append helm-type-file-actions '(("Stat" . my/do-something))))
+
+  ;; (setq my/zoufu-prefixes '(handler view service))
+  ;; (defn my/switch-zoufu-files ()
+  ;;   )
+  ;; (helm :sources
+  ;;       (helm-build-sync-source "test1"
+  ;;         :candidates '(aaa bbb ccc ddd))
+  ;;       :buffer
+  ;;       "*helm sync source test*")
+
+
   ;; Company
   ; 補完候補が表示されている場合でも C-h でバックスペース
   (require 'company)
@@ -281,7 +300,7 @@ values."
    ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
  '(package-selected-packages
    (quote
-    (evil-textobj-line perspeen avy-migemo pangu-spacing japanese-holidays evil-tutor-ja ddskk cdb ccc migemo quickrun evil-snipe org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot smeargle orgit magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter evil-magit magit magit-popup git-commit with-editor diff-hl mozc web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc company-tern dash-functional tern coffee-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc markdown-mode macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gh-md fuzzy flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree elisp-slime-nav dumb-jump f dash diminish define-word company-statistics company column-enforce-mode clojure-snippets clj-refactor hydra inflections edn multiple-cursors paredit s peg clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu highlight cider seq spinner queue pkg-info clojure-mode epl bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup sourcerer-theme))))
+    (xterm-color shell-pop multi-term eshell-z eshell-prompt-extras esh-help flycheck-pos-tip pos-tip flycheck plantuml-mode evil-textobj-line perspeen avy-migemo pangu-spacing japanese-holidays evil-tutor-ja ddskk cdb ccc migemo quickrun evil-snipe org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot smeargle orgit magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter evil-magit magit magit-popup git-commit with-editor diff-hl mozc web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc company-tern dash-functional tern coffee-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc markdown-mode macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gh-md fuzzy flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree elisp-slime-nav dumb-jump f dash diminish define-word company-statistics company column-enforce-mode clojure-snippets clj-refactor hydra inflections edn multiple-cursors paredit s peg clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu highlight cider seq spinner queue pkg-info clojure-mode epl bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup sourcerer-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
