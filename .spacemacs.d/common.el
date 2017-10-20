@@ -19,6 +19,10 @@
 (require 'evil-snipe)
 (evil-snipe-override-mode 1)
 
+;; magit
+;; デフォルトの status が "gs" でちょっと押しづらいので
+(spacemacs/set-leader-keys "gg" 'magit-status)
+
 ;; 環境毎の設定
 (cond
  ;; for Windows
