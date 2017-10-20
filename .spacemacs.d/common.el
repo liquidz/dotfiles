@@ -1,7 +1,3 @@
-;; bind <C-h> as Backspace
-(global-set-key "\C-h" 'delete-backward-char)
-(global-set-key (kbd"<F1>") help-map)
-
 ;; https://github.com/syl20bnr/spacemacs/pull/9547
 ;; https://github.com/syl20bnr/spacemacs/issues/9549
 (require 'helm-bookmark)
@@ -11,6 +7,12 @@
 
 ;; magit
 (setq-default git-magit-status-fullscreen t)
+
+;; ウインドウ分割後のフォーカスをデフォルトにする
+(define-key evil-window-map "v" 'split-window-right-and-focus)
+(define-key evil-window-map "V" 'split-window-right)
+(define-key evil-window-map "s" 'split-window-below-and-focus)
+(define-key evil-window-map "S" 'split-window-below)
 
 ;; evil-snipe
 ;; clever-f と同じような挙動を提供してくれる

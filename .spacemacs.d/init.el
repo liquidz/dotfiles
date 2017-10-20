@@ -1,6 +1,6 @@
 ;; -*- mode: emacs-lisp -*-
 (setq my-user-configs
-      '("common" "clojure"))
+      '("common" "clojure" "backspace"))
 
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
@@ -174,38 +174,28 @@ values."
      (format "~/.spacemacs.d/%s.el" name)))
 
   ;; perspeen
+  (defun my/create-tab ()
+    (interactive)
+    ;; MARKER に 0 をセットすることで、ウインドウ分割している状態でも
+    ;; タブを作った際にウインドウの分割状態が新しいタブに引き継がれない
+    ;; なぜかはよくわからない
+    (perspeen-tab-create-tab (current-buffer) 0))
+
   (use-package perspeen
     :ensure t
     :init (setq perspeen-use-tab t)
     :config (progn
               (perspeen-mode)
-              (spacemacs/set-leader-keys "tn"
-                (ilambda () (perspeen-tab-create-tab (current-buffer))))
-              (spacemacs/set-leader-keys "th"
-                'perspeen-tab-prev)
-              (spacemacs/set-leader-keys "tl"
-                'perspeen-tab-next)
-              (spacemacs/set-leader-keys "td"
-                'perspeen-tab-del)
-
-              ;; (define-prefix-command 'my/perspeen-tab-map)
-              ;; (define-key my/perspeen-tab-map "n" 'perspeen-tab-create-tab)
-              ;; (define-key my/perspeen-tab-map "l" 'perspeen-tab-next)
-              ;; (define-key my/perspeen-tab-map "h" 'perspeen-tab-prev)
-              ;; (define-key my/perspeen-tab-map "d" 'perspeen-tab-del)
-              ;; (define-key evil-motion-state-map "t" 'my/perspeen-tab-map)
-              ))
-
-  ;; ウインドウ分割後のフォーカスをデフォルトにする
-  (define-key evil-window-map "v" 'split-window-right-and-focus)
-  (define-key evil-window-map "V" 'split-window-right)
-  (define-key evil-window-map "s" 'split-window-below-and-focus)
-  (define-key evil-window-map "S" 'split-window-below)
+              (define-prefix-command 'my/perspeen-tab-map)
+              (define-key my/perspeen-tab-map "n" 'my/create-tab)
+              (define-key my/perspeen-tab-map "l" 'perspeen-tab-next)
+              (define-key my/perspeen-tab-map "h" 'perspeen-tab-prev)
+              (define-key my/perspeen-tab-map "q" 'perspeen-tab-del)
+              (define-key evil-normal-state-map "t" 'my/perspeen-tab-map)))
 
   ;; (defun my/mark-word ()
   ;;   (evil-inner-symbol)
   ;;   )
-
 
   ;; hydra
   ;; vim-submode 的なことができる
@@ -244,16 +234,30 @@ values."
   (require 'helm)
   (require 'helm-types)
   (require 'helm-projectile)
+
+  ;; (defun my/helm-switch-other-window-vertically ()
+  ;;   (interactive)
+  ;;   (with-helm-alive-p
+  ;;     (helm-exit-and-execute-action
+  ;;      (lambda (candidate)
+  ;;        (let ((split-height-threshold nil)
+  ;;              (split-width-threshold 0))
+  ;;          (helm-find-files-other-window candidate))))))
+
+  (defun my/helm-switch-other-window-vertically ()
+    (interactive)
+    (setq-local split-height-threshold nil)
+    (setq-local split-width-threshold 0)
+    (helm-ff-run-switch-other-window))
+
   ; ctrlp の再現
   (define-key evil-normal-state-map "\C-p"
     'helm-projectile-find-file)
-  ; helm 上でも C-h でバックスペース
-  (define-key helm-map "\C-h"
-    'delete-backward-char)
   (define-key helm-find-files-map "\C-w"
-    'helm-ff-run-switch-other-window)
+    'my/helm-switch-other-window-vertically)
+
   (define-key helm-projectile-find-file-map "\C-w"
-    'helm-ff-run-switch-other-window)
+    'my/helm-switch-other-window-vertically)
   ;(define-key helm-buffer-map (kbd "C-w")
   ;  'helm-buffer-switch-other-window)
   ; swoop
@@ -279,14 +283,6 @@ values."
   ;;         :candidates '(aaa bbb ccc ddd))
   ;;       :buffer
   ;;       "*helm sync source test*")
-
-
-  ;; Company
-  ; 補完候補が表示されている場合でも C-h でバックスペース
-  (require 'company)
-  (define-key company-active-map "\C-h" 'delete-backward-char)
-  (define-key company-search-map "\C-h" 'delete-backward-char)
-
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -298,6 +294,7 @@ values."
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
+ '(open-junk-file-format "/home/uochan/.emacs.d/.cache/junk/%Y/%m/%d." t)
  '(package-selected-packages
    (quote
     (xterm-color shell-pop multi-term eshell-z eshell-prompt-extras esh-help flycheck-pos-tip pos-tip flycheck plantuml-mode evil-textobj-line perspeen avy-migemo pangu-spacing japanese-holidays evil-tutor-ja ddskk cdb ccc migemo quickrun evil-snipe org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot smeargle orgit magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter evil-magit magit magit-popup git-commit with-editor diff-hl mozc web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc company-tern dash-functional tern coffee-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc markdown-mode macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gh-md fuzzy flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree elisp-slime-nav dumb-jump f dash diminish define-word company-statistics company column-enforce-mode clojure-snippets clj-refactor hydra inflections edn multiple-cursors paredit s peg clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu highlight cider seq spinner queue pkg-info clojure-mode epl bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup sourcerer-theme))))

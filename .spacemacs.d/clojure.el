@@ -14,51 +14,53 @@
 (add-hook 'cider-repl-mode-hook #'paredit-mode)
 
 ;; zou
-;; (setq my/zoufu-prefixes '(handler view service))
+(setq my/zoufu-prefixes '(handler view service schema view))
+(defun my/zoufu-select-prefix ()
+  (helm :sources
+        (helm-build-sync-source "zoufu prefixes"
+          :candidates my/zoufu-prefixes)
+        :buffer
+        "*zoufu prefixes*"))
 
-;; (defun my/zoufu--select-prefix ()
-;;   (helm :sources
-;;         (helm-build-sync-source "zoufu prefixes"
-;;           :candidates my/zoufu-prefixes)
-;;         :buffer
-;;         "*zoufu prefixes*"))
+(defun my/replace-namespace (ns prefix)
+  (if (string-match "^\\([^.]+\\)\.\\([^.]+\\)\.\\(.+\\)$" ns)
+      (let ((head (match-string 1 ns))
+            (tail (match-string 3 ns)))
+        (format "%s.%s.%s" head prefix tail))))
 
+(defun my/zoufu-switch-files ()
+  (interactive)
+  (let ((prefix (my/zoufu-select-prefix)))
+    (cider-find-ns "" (my/replace-namespace (cider-current-ns) prefix))))
 
-;; (defun my/replace-namespace (ns prefix)
-;;   (if (string-match "^\\([^.]+\\)\.\\([^.]+\\)\.\\(.+\\)$" ns)
-;;       (let ((head (match-string 1 ns))
-;;             (tail (match-string 3 ns)))
-;;         (format "%s.%s.%s" head prefix tail))))
-
-;; (defun my/namespace-to-path (ns)
-;;   (format "%s%s.clj"
-;;           (projectile-project-root)
-;;           (replace-regexp-in-string "\\." "/" ns))
-;;   )
-
-;; (projectile-project-root)
-;; ;; (setq s "foo.handler.iizuka")
-;; ;; (my/replace-namespace "foo.handler.iizuka" "view")
-;; (my/namespace-to-path "foo.handler.iizuka")
-
-;; (defun my/zoufu-switch-files ()
+;; (defun my/zoufu-go ()
 ;;   (interactive)
-;;   (let ((prefix (my/zoufu--select-prefix)))
-;;     (message "[%s]"
-;;              (my/namespace-to-path
-;;               (my/replace-namespace
-;;                (cider-current-ns) prefix)))
-;;     )
-;;   )
+;;   (with-current-buffer (cider-current-connection "clj")
+;;     (if current-prefix-arg
+;;         (progn
+;;           (save-some-buffers)
+;;           (cider-interactive-eval "(zou.framework.repl/reset)"))
+;;       (cider-interactive-eval "(zou.framework.repl/go)"))))
+
 
 (defun my/zoufu-go ()
   (interactive)
   (with-current-buffer (cider-current-connection "clj")
-    (if current-prefix-arg
-        (progn
-          (save-some-buffers)
-          (cider-interactive-eval "(zou.framework.repl/reset)"))
-      (cider-interactive-eval "(zou.framework.repl/go)"))))
+    (cider-interactive-eval "(zou.framework.repl/go)")))
+
+(defun my/zoufu-reset ()
+  (interactive)
+  (with-current-buffer (cider-current-connection "clj")
+    (save-some-buffers)
+    (cider-interactive-eval "(zou.framework.repl/reset)")))
 
 (spacemacs/set-leader-keys-for-minor-mode
   'clojure-mode "zo" 'my/zoufu-go)
+(spacemacs/set-leader-keys-for-minor-mode
+  'clojure-mode "zO" 'my/zoufu-reset)
+
+(spacemacs/set-leader-keys-for-minor-mode
+  'clojure-mode "zz" 'my/zoufu-switch-files)
+
+(spacemacs/set-leader-keys-for-minor-mode
+  'clojure-mode "rsn" 'clojure-sort-ns)
