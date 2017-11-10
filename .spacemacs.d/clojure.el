@@ -13,6 +13,24 @@
 (add-hook 'clojure-mode-hook #'paredit-mode)
 (add-hook 'cider-repl-mode-hook #'paredit-mode)
 
+;; aggressive indent
+(add-hook 'clojure-mode-hook #'aggressive-indent-mode)
+(add-hook 'cider-repl-mode-hook #'aggressive-indent-mode)
+
+;; toggle src/test code rapidly
+(defun my/toggle-src-test-file ()
+  (interactive)
+  (let ((ns (cider-current-ns)))
+    (let ((toggled-ns (if (string-match "-test$" ns)
+                          (replace-regexp-in-string "-test$" "" ns)
+                        (format "%s-test" ns))))
+      (message "DEBUG: %s" toggled-ns)
+      ;; (cider-find-ns "" toggled-ns)
+      )))
+
+(spacemacs/set-leader-keys-for-minor-mode
+  'clojure-mode "gt" 'my/toggle-src-test-file)
+
 ;; zou
 (setq my/zoufu-prefixes '(handler view service schema view))
 (defun my/zoufu-select-prefix ()
@@ -32,16 +50,6 @@
   (interactive)
   (let ((prefix (my/zoufu-select-prefix)))
     (cider-find-ns "" (my/replace-namespace (cider-current-ns) prefix))))
-
-;; (defun my/zoufu-go ()
-;;   (interactive)
-;;   (with-current-buffer (cider-current-connection "clj")
-;;     (if current-prefix-arg
-;;         (progn
-;;           (save-some-buffers)
-;;           (cider-interactive-eval "(zou.framework.repl/reset)"))
-;;       (cider-interactive-eval "(zou.framework.repl/go)"))))
-
 
 (defun my/zoufu-go ()
   (interactive)

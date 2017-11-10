@@ -1,6 +1,6 @@
 ;; -*- mode: emacs-lisp -*-
 (setq my-user-configs
-      '("common" "clojure" "backspace"))
+      '("common" "clojure" "backspace" "helm"))
 
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
@@ -22,11 +22,17 @@ values."
    ;; List of configuration layers to load.
 
    dotspacemacs-configuration-layers '(
+                                       sql
+                                       html
+                                       vimscript
+                                       yaml
                                        japanese
                                        javascript
                                        ruby
                                        helm
-                                       auto-completion
+                                       ;; ivy
+                                       (auto-completion :variables
+                                                        auto-completion-enable-snippets-in-popup t)
                                        ;; better-defaults
                                        emacs-lisp
                                        git
@@ -52,7 +58,7 @@ values."
                                       evil-snipe
                                       quickrun
                                       migemo
-                                      perspeen
+                                      ;; perspeen
                                       hydra
                                       (evil-textobj-line :location (recipe :fetcher github :repo "syohex/evil-textobj-line"))
                                       )
@@ -173,25 +179,26 @@ values."
     (load-file
      (format "~/.spacemacs.d/%s.el" name)))
 
-  ;; perspeen
-  (defun my/create-tab ()
-    (interactive)
-    ;; MARKER に 0 をセットすることで、ウインドウ分割している状態でも
-    ;; タブを作った際にウインドウの分割状態が新しいタブに引き継がれない
-    ;; なぜかはよくわからない
-    (perspeen-tab-create-tab (current-buffer) 0))
+  ;; ;; perspeen
+  ;; (defun my/create-tab ()
+  ;;   (interactive)
+  ;;   ;; MARKER に 0 をセットすることで、ウインドウ分割している状態でも
+  ;;   ;; タブを作った際にウインドウの分割状態が新しいタブに引き継がれない
+  ;;   ;; なぜかはよくわからない
+  ;;   (perspeen-tab-create-tab (current-buffer) 0))
 
-  (use-package perspeen
-    :ensure t
-    :init (setq perspeen-use-tab t)
-    :config (progn
-              (perspeen-mode)
-              (define-prefix-command 'my/perspeen-tab-map)
-              (define-key my/perspeen-tab-map "n" 'my/create-tab)
-              (define-key my/perspeen-tab-map "l" 'perspeen-tab-next)
-              (define-key my/perspeen-tab-map "h" 'perspeen-tab-prev)
-              (define-key my/perspeen-tab-map "q" 'perspeen-tab-del)
-              (define-key evil-normal-state-map "t" 'my/perspeen-tab-map)))
+  ;; (use-package perspeen
+  ;;   :ensure t
+  ;;   :init (setq perspeen-use-tab t)
+  ;;   :config (progn
+  ;;             (perspeen-mode)
+  ;;             (setq perspeen-)
+  ;;             (define-prefix-command 'my/perspeen-tab-map)
+  ;;             (define-key my/perspeen-tab-map "n" 'my/create-tab)
+  ;;             (define-key my/perspeen-tab-map "l" 'perspeen-tab-next)
+  ;;             (define-key my/perspeen-tab-map "h" 'perspeen-tab-prev)
+  ;;             (define-key my/perspeen-tab-map "q" 'perspeen-tab-del)
+  ;;             (define-key evil-normal-state-map "t" 'my/perspeen-tab-map)))
 
   ;; (defun my/mark-word ()
   ;;   (evil-inner-symbol)
@@ -206,18 +213,12 @@ values."
     ("h" evil-window-left)
     ("k" evil-window-up)
     ("j" evil-window-down)
-    (">" (ilambda () (evil-window-increase-width 5)))
-    ("<" (ilambda () (evil-window-decrease-width 5)))
-    ("+" (ilambda () (evil-window-increase-height 5)))
-    ("-" (ilambda () (evil-window-decrease-height 5))))
+    (">" (lambda () (interactive) (evil-window-increase-width 5)))
+    ("<" (lambda () (interactive) (evil-window-decrease-width 5)))
+    ("+" (lambda () (interactive) (evil-window-increase-height 5)))
+    ("-" (lambda () (interactive) (evil-window-decrease-height 5))))
   ;; C-w C-w でウインドウ操作モード
   (define-key evil-window-map "\C-w" 'hydra-control-window/body)
-
-  ;(buffer-list)
-  ;(current-buffer)
-
-  ;(cider-switch-to-repl-buffer)
-  ;(cider--swi)
 
   ;(defhydra hydra-zoom (global-map "<f2>")
   ;  "zoom"
@@ -230,59 +231,24 @@ values."
   ;(dolist (mouse '("<down-mouse-1>" "<mouse-1>"))
   ;  (global-unset-key (kbd mouse)))
 
-  ;; helm
-  (require 'helm)
-  (require 'helm-types)
-  (require 'helm-projectile)
-
-  ;; (defun my/helm-switch-other-window-vertically ()
-  ;;   (interactive)
-  ;;   (with-helm-alive-p
-  ;;     (helm-exit-and-execute-action
-  ;;      (lambda (candidate)
-  ;;        (let ((split-height-threshold nil)
-  ;;              (split-width-threshold 0))
-  ;;          (helm-find-files-other-window candidate))))))
-
-  (defun my/helm-switch-other-window-vertically ()
-    (interactive)
-    (setq-local split-height-threshold nil)
-    (setq-local split-width-threshold 0)
-    (helm-ff-run-switch-other-window))
-
-  ; ctrlp の再現
-  (define-key evil-normal-state-map "\C-p"
-    'helm-projectile-find-file)
-  (define-key helm-find-files-map "\C-w"
-    'my/helm-switch-other-window-vertically)
-
-  (define-key helm-projectile-find-file-map "\C-w"
-    'my/helm-switch-other-window-vertically)
-  ;(define-key helm-buffer-map (kbd "C-w")
-  ;  'helm-buffer-switch-other-window)
-  ; swoop
-  (setq helm-swoop-use-fuzzy-match t)
-  ;(defun my/clear-line ()
-  ;  (goto-char 1)
-  ;  ;; (delete-region (line-beginning-position) (line-end-position))
-  ;  )
-  ;;(define-key helm-map (kbd "C-u") 'my/clear-line)
-
-  ;; (defun my/do-something (filename)
-  ;;   (interactive "Foo Bar: ")
-  ;;   (shell-command (format "stat %s" (shell-quote-argument filename))
-  ;;                  "*Stat*"))
-  ;; (setq helm-type-file-actions
-  ;;       (append helm-type-file-actions '(("Stat" . my/do-something))))
-
-  ;; (setq my/zoufu-prefixes '(handler view service))
-  ;; (defn my/switch-zoufu-files ()
-  ;;   )
-  ;; (helm :sources
-  ;;       (helm-build-sync-source "test1"
-  ;;         :candidates '(aaa bbb ccc ddd))
-  ;;       :buffer
-  ;;       "*helm sync source test*")
+  (define-generic-mode scrapbox-mode
+    ;; COMMENT-LIST
+    '()
+    ;; KEYWORD-LIST
+    '()
+    ;; FONT-LOCK-LIST
+    '(
+      ("\\[[*]+ .+?\\]" . font-lock-string-face)
+      ("\\[.+?\\]" . font-lock-reference-face)
+      ("#[^ \r\n]+" . font-lock-reference-face)
+      ("`.+?`" . font-lock-keyword-face)
+      ("^code:[[:print:]]+[\r\n]\{2\}" . font-lock-keyword-face)
+      )
+    ;; AUTO-MODE-LIST
+    '("\\.scrapbox$")
+    ;; FUNCTION-LIST
+    nil
+    "Major mode for ScrapBox")
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -294,10 +260,14 @@ values."
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#0a0814" "#f2241f" "#67b11d" "#b1951d" "#4f97d7" "#a31db1" "#28def0" "#b2b2b2"])
+ '(open-junk-file-directory "/home/uochan/.emacs.d/.cache/junk/%Y/%m/%d." t)
  '(open-junk-file-format "/home/uochan/.emacs.d/.cache/junk/%Y/%m/%d." t)
  '(package-selected-packages
    (quote
-    (xterm-color shell-pop multi-term eshell-z eshell-prompt-extras esh-help flycheck-pos-tip pos-tip flycheck plantuml-mode evil-textobj-line perspeen avy-migemo pangu-spacing japanese-holidays evil-tutor-ja ddskk cdb ccc migemo quickrun evil-snipe org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot smeargle orgit magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter evil-magit magit magit-popup git-commit with-editor diff-hl mozc web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc company-tern dash-functional tern coffee-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc markdown-mode macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gh-md fuzzy flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree elisp-slime-nav dumb-jump f dash diminish define-word company-statistics company column-enforce-mode clojure-snippets clj-refactor hydra inflections edn multiple-cursors paredit s peg clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu highlight cider seq spinner queue pkg-info clojure-mode epl bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup sourcerer-theme))))
+    (helm-css-scss sql-indent web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode haml-mode emmet-mode company-web web-completion-data vimrc-mode dactyl-mode wgrep smex ivy-hydra counsel-projectile counsel swiper ivy yaml-mode xterm-color shell-pop multi-term eshell-z eshell-prompt-extras esh-help flycheck-pos-tip pos-tip flycheck plantuml-mode evil-textobj-line perspeen avy-migemo pangu-spacing japanese-holidays evil-tutor-ja ddskk cdb ccc migemo quickrun evil-snipe org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-download htmlize gnuplot smeargle orgit magit-gitflow helm-gitignore gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter evil-magit magit magit-popup git-commit with-editor diff-hl mozc web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc company-tern dash-functional tern coffee-mode rvm ruby-tools ruby-test-mode rubocop rspec-mode robe rbenv rake minitest chruby bundler inf-ruby ws-butler which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text mmm-mode markdown-toc markdown-mode macrostep lorem-ipsum linum-relative link-hint info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gh-md fuzzy flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree elisp-slime-nav dumb-jump f dash diminish define-word company-statistics company column-enforce-mode clojure-snippets clj-refactor hydra inflections edn multiple-cursors paredit s peg clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu highlight cider seq spinner queue pkg-info clojure-mode epl bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup sourcerer-theme)))
+ '(safe-local-variable-values
+   (quote
+    ((cider-cljs-lein-repl . "(zou.framework.repl/cljs-repl)")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
