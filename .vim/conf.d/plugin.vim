@@ -69,6 +69,7 @@ Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 if has('unix')
 
   "" clojure
+  "Plug 'kovisoft/paredit',           {'for': ['lisp', 'clojure']}
   Plug 'guns/vim-sexp',           {'for': ['lisp', 'clojure']}
   Plug 'tpope/vim-fireplace',     {'for': 'clojure'}
   Plug 'liquidz/vim-clj-trace',   {'for': 'clojure'}
@@ -337,7 +338,13 @@ let g:enable_sayid_mappings = 0
 " }}}
 " =vim-sexp {{{
 
-let g:sexp_enable_insert_mode_mappings = 0
+"let g:sexp_enable_insert_mode_mappings = 0
+
+let g:sexp_enable_insert_mode_mappings = 1
+let g:sexp_mappings = {
+    \ 'sexp_capture_next_element':      '<LocalLeader>ks',
+    \ 'sexp_emit_tail_element':         '<LocalLeader>kb'
+    \ }
 
 " }}}
 " =vim-submode {{{

@@ -173,3 +173,7 @@ alias suteneko='docker run -it uochan/suteneko'
 export BECOROOT=/Users/uochan/src/github.com/liquidz/beco
 alias vint='beco vint'
 # }}}
+
+if [[ -e ~/.zshenv.local ]]; then
+    source ~/.zshenv.local
+fi

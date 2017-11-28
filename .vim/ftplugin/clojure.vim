@@ -63,6 +63,14 @@ aug MyClojure
   au FileType clojure nnoremap <buffer> HH :lprevious<CR>
   au FileType clojure nnoremap <buffer> LL :lnext<CR>
 
+  au FileType clojure nmap <buffer> <Leader>ei <Plug>FireplacePrint<Plug>(sexp_inner_element)``
+  au FileType clojure nmap <buffer> <Leader>ee <Plug>FireplacePrint<Plug>(sexp_outer_list)``
+  au FileType clojure nmap <buffer> <Leader>et <Plug>FireplacePrint<Plug>(sexp_outer_top_list)``
+  au FileType clojure nmap <buffer> <Leader>eb :<C-u>Require<CR>
+
+  " run test under cursor
+  au FileType clojure nmap <buffer> <Leader>tt :<C-u>.RunTests<CR>
+
   "" vim-fiace-repl
   au FileType clojure nmap <buffer> <LocalLeader>si <Plug>(cljbuf_eval)<Plug>(sexp_inner_element)``
   au FileType clojure nmap <buffer> <LocalLeader>ss <Plug>(cljbuf_eval)<Plug>(sexp_outer_list)``
