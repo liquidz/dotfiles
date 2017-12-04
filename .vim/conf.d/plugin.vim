@@ -4,6 +4,7 @@ let g:dotfiles = $HOME.'/src/github.com/liquidz/dotfiles'
 call plug#begin('~/.vim/repos')
 " default {{{
 
+
 Plug 'aklt/plantuml-syntax'
 Plug 'cespare/vim-toml'
 Plug 'cocopon/iceberg.vim'
@@ -23,6 +24,7 @@ Plug 'kana/vim-textobj-line'
 Plug 'kana/vim-textobj-user'
 Plug 'kannokanno/previm'
 Plug 'kien/rainbow_parentheses.vim'
+Plug 'lambdalisue/gina.vim'
 Plug 'LeafCage/foldCC.vim'
 Plug 'liquidz/ctrlme.vim'
 Plug 'liquidz/kami.vim'
@@ -39,15 +41,14 @@ Plug 'thinca/vim-themis'
 Plug 'thinca/vim-visualstar'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
-Plug 'lambdalisue/gina.vim'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
+Plug 'tyru/caw.vim'
 Plug 'tyru/open-browser.vim'
 Plug 'vim-jp/vital.vim'
 Plug 'vim-scripts/confluencewiki.vim'
 Plug 'vim-scripts/gtags.vim'
 Plug 'w0ng/vim-hybrid'
-
 if has('nvim')
   Plug 'roxma/nvim-completion-manager'
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -341,6 +342,7 @@ let g:enable_sayid_mappings = 0
 "let g:sexp_enable_insert_mode_mappings = 0
 
 let g:sexp_enable_insert_mode_mappings = 1
+"let g:sexp_maxlines = 100
 let g:sexp_mappings = {
     \ 'sexp_capture_next_element':      '<LocalLeader>ks',
     \ 'sexp_emit_tail_element':         '<LocalLeader>kb'
@@ -515,6 +517,12 @@ let g:vlime_window_settings = {
     \ }
 
 let g:vlime_compiler_policy = { 'DEBUG': 3 }
+
+" }}}
+" =caw {{{
+
+nmap <LocalLeader>g <Plug>(caw:prefix)
+xmap <LocalLeader>g <Plug>(caw:prefix)
 
 " }}}
 " developing plugins {{{
