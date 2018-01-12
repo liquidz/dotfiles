@@ -1,0 +1,1 @@
+imap <buffer> >> \|><Space>

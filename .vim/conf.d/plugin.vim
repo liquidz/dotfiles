@@ -38,6 +38,7 @@ Plug 't9md/vim-quickhl'
 Plug 'tacahiroy/ctrlp-funky'
 Plug 'thinca/vim-quickrun'
 Plug 'thinca/vim-themis'
+Plug 'JuliaEditorSupport/julia-vim'
 Plug 'thinca/vim-visualstar'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
@@ -56,6 +57,9 @@ if has('nvim')
 elseif has('channel')
   Plug 'neomake/neomake'
   Plug 'maralla/completor.vim'
+  " Plug 'Shougo/deoplete.nvim'
+  "     \ | Plug 'roxma/nvim-yarp'
+  "     \ | Plug 'roxma/vim-hug-neovim-rpc'
 else
   Plug 'ervandew/supertab'
 endif
@@ -70,7 +74,6 @@ Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 if has('unix')
 
   "" clojure
-  "Plug 'kovisoft/paredit',           {'for': ['lisp', 'clojure']}
   Plug 'guns/vim-sexp',           {'for': ['lisp', 'clojure']}
   Plug 'tpope/vim-fireplace',     {'for': 'clojure'}
   Plug 'liquidz/vim-clj-trace',   {'for': 'clojure'}
@@ -187,6 +190,10 @@ let g:quickrun_config = {
     \   },
     \   'clojure': {
     \     'command': 'lumo',
+    \     'exec'   : '%c %s'
+    \   },
+    \   'julia': {
+    \     'command': 'julia',
     \     'exec'   : '%c %s'
     \   },
     \   'watchdogs_checker/phpcs': {
@@ -339,9 +346,9 @@ let g:enable_sayid_mappings = 0
 " }}}
 " =vim-sexp {{{
 
-"let g:sexp_enable_insert_mode_mappings = 0
-
-let g:sexp_enable_insert_mode_mappings = 1
+let g:sexp_enable_insert_mode_mappings = 0
+"let g:sexp_filetypes = 'clojure,lisp'
+"let g:sexp_enable_insert_mode_mappings = 1
 "let g:sexp_maxlines = 100
 let g:sexp_mappings = {
     \ 'sexp_capture_next_element':      '<LocalLeader>ks',
@@ -428,16 +435,17 @@ let g:kami#timestamp_format = '== %s'
 " }}}
 " =completor {{{
 
-"let g:completor_gocode_binary = $HOME.'/bin/gocode'
-let g:completor_go_omni_trigger = '(?:\b[^\W\d]\w*|[\]\)])\.(?:[^\W\d]\w*)?'
-"let g:completor_racer_binary = $HOME.'/.cargo/bin/racer'
-
-"" to use slimv for completion
-let g:completor_disable_filename = ['clj']
+""let g:completor_gocode_binary = $HOME.'/bin/gocode'
+"let g:completor_go_omni_trigger = '(?:\b[^\W\d]\w*|[\]\)])\.(?:[^\W\d]\w*)?'
+""let g:completor_racer_binary = $HOME.'/.cargo/bin/racer'
+"
+""" to use slimv for completion
+"let g:completor_disable_filename = ['clj']
 
 " }}}
 " =deoplete {{{
 
+"let g:deoplete#enable_at_startup = 1
 let g:deoplete#keyword_patterns = {}
 let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
 

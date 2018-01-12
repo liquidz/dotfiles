@@ -4,6 +4,7 @@ PATH=$PATH:/opt/local/bin
 PATH=$PATH:~/.vim/bundle/vim-themis/bin
 PATH=$PATH:/usr/local/nodejs/bin
 PATH=$PATH:/usr/local/cmake/bin
+PATH=$PATH:/usr/local/julia/bin
 PATH=$PATH:~/.cargo/bin
 PATH=$PATH:~/.skim/bin
 PATH=$PATH:~/.roswell/bin
@@ -18,11 +19,11 @@ fi
 alias ll='ls -l'
 alias la='ls -a'
 
-#case "${OSTYPE}" in
-#darwin*)
-#    alias pwd='$HOME/src/github.com/liquidz/dotfiles/assets/iterm_wall_chg.sh ; pwd'
-#    ;;
-#esac
+case "${OSTYPE}" in
+linux*)
+    alias open=xdg-open
+    ;;
+esac
 
 # history {{{
 export HISTFILE=${HOME}/.zhistory
@@ -109,6 +110,9 @@ function __bookmarklist() {
         find ~/src/bitbucket.org -maxdepth 2 -type d
     fi
     find ~/.vim/repos -maxdepth 1 -type d
+    if [[ -d ~/src/gitlab.com ]]; then
+        find ~/src/gitlab.com -maxdepth 2 -type d
+    fi
     if [[ -d ~/.roswell/local-projects ]]; then
         find ~/.roswell/local-projects -maxdepth 1 -type d
     fi

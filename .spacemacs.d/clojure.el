@@ -1,13 +1,14 @@
-;; eval inner list
-(spacemacs/set-leader-keys-for-minor-mode
-  'clojure-mode "ei"
-  'eval-sexp-fu-cider-eval-sexp-inner-list)
+(dolist (mode-name '(clojure-mode clojurescript-mode))
+  ;; eval inner list
+  (spacemacs/set-leader-keys-for-minor-mode
+    mode-name "ei"
+    'eval-sexp-fu-cider-eval-sexp-inner-list)
 
-;; eval outer list
-;; 元々の ,ef が慣れないのでエイリアス
-(spacemacs/set-leader-keys-for-minor-mode
-  'clojure-mode "et"
-  'cider-eval-defun-at-point)
+  ;; eval outer list
+  ;; 元々の ,ef が慣れないのでエイリアス
+  (spacemacs/set-leader-keys-for-minor-mode
+    mode-name "et"
+    'cider-eval-defun-at-point))
 
 ;; paredit
 (add-hook 'clojure-mode-hook #'paredit-mode)
@@ -16,6 +17,13 @@
 ;; aggressive indent
 (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
 (add-hook 'cider-repl-mode-hook #'aggressive-indent-mode)
+
+;;(setq cider-cljs-lein-repl
+;;      (concat
+;;        "" ;; cider-cljs-lein-repl
+;;        "(do (require 'figwheel-sidecar.repl-api)
+;;         (figwheel-sidecar.repl-api/start-figwheel!)
+;;         (figwheel-sidecar.repl-api/cljs-repl))"))
 
 ;; toggle src/test code rapidly
 (defun my/toggle-src-test-file ()

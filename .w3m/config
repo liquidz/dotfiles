@@ -61,7 +61,7 @@ extbrowser2
 extbrowser gnome-open
 mailer gnome-open mailto:%s
 mailto_options 1
-editor /bin/vi
+editor /usr/local/bin/vim
 urimethodmap ~/.w3m/urimethodmap, /etc/w3m/urimethodmap
 mailcap ~/.w3m/mailcap, /etc/w3m/mailcap, /etc/mailcap
 mime_types ~/.w3m/mime.types, /etc/mime.types
