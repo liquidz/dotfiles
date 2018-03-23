@@ -63,34 +63,37 @@ aug MyClojure
   au FileType clojure nnoremap <buffer> HH :lprevious<CR>
   au FileType clojure nnoremap <buffer> LL :lnext<CR>
 
-  au FileType clojure nmap <buffer> <Leader>ei <Plug>FireplacePrint<Plug>(sexp_inner_element)``
-  au FileType clojure nmap <buffer> <Leader>ee <Plug>FireplacePrint<Plug>(sexp_outer_list)``
-  au FileType clojure nmap <buffer> <Leader>et <Plug>FireplacePrint<Plug>(sexp_outer_top_list)``
-  au FileType clojure nmap <buffer> <Leader>eb :<C-u>Require<CR>
+  au FileType clojure nmap <buffer> <Leader>ei <Plug>(vimpire_eval)<Plug>(sexp_inner_element)``
+  au FileType clojure nmap <buffer> <Leader>ee <Plug>(vimpire_eval)<Plug>(sexp_outer_list)``
+  au FileType clojure nmap <buffer> <Leader>et <Plug>(vimpire_eval)<Plug>(sexp_outer_top_list)``
+  au FileType clojure nmap <buffer> <Leader>eb <Plug>(vimpire_require_file)
+  au FileType clojure nmap <buffer> <Leader>ss :<C-u>VimpireRepl<CR>
+
+  au FileType clojure nmap <buffer> <Leader>tn <Plug>(vimpire_run_tests)
 
   " run test under cursor
-  au FileType clojure nmap <buffer> <Leader>tt :<C-u>.RunTests<CR>
+  "au FileType clojure nmap <buffer> <Leader>tt :<C-u>.RunTests<CR>
 
   "" vim-fiace-repl
-  au FileType clojure nmap <buffer> <LocalLeader>si <Plug>(cljbuf_eval)<Plug>(sexp_inner_element)``
-  au FileType clojure nmap <buffer> <LocalLeader>ss <Plug>(cljbuf_eval)<Plug>(sexp_outer_list)``
-  au FileType clojure nmap <buffer> <LocalLeader>sl <Plug>(cljbuf_repeat_last)
-  au FileType clojure nmap <buffer> <LocalLeader>tt <Plug>(cljbuf_test_file)
-  au FileType clojure nmap <buffer> <LocalLeader>ta <Plug>(cljbuf_test_all)
-  au FileType clojure nmap <buffer> <LocalLeader>l  <Plug>(cljbuf_clear)
+  "au FileType clojure nmap <buffer> <LocalLeader>si <Plug>(cljbuf_eval)<Plug>(sexp_inner_element)``
+  "au FileType clojure nmap <buffer> <LocalLeader>ss <Plug>(cljbuf_eval)<Plug>(sexp_outer_list)``
+  "au FileType clojure nmap <buffer> <LocalLeader>sl <Plug>(cljbuf_repeat_last)
+  "au FileType clojure nmap <buffer> <LocalLeader>tt <Plug>(cljbuf_test_file)
+  "au FileType clojure nmap <buffer> <LocalLeader>ta <Plug>(cljbuf_test_all)
+  "au FileType clojure nmap <buffer> <LocalLeader>l  <Plug>(cljbuf_clear)
 
   "" vim-fireplace
   "au FileType clojure nmap <buffer> <LocalLeader>si <Plug>FireplacePrint<Plug>(sexp_inner_element)``
   "au FileType clojure nmap <buffer> <LocalLeader>ss <Plug>FireplacePrint<Plug>(sexp_outer_list)``
-  au FileType clojure nmap <buffer> <LocalLeader>st <Plug>FireplacePrint<Plug>(sexp_outer_top_list)``
-  au FileType clojure nmap <buffer> <LocalLeader>m1 <Plug>FireplaceCount1MacroExpand
-  au FileType clojure nmap <buffer> <LocalLeader>cc <Plug>FireplaceCountEdit
-  au FileType clojure nnoremap <buffer> <LocalLeader>r :<C-u>Require<CR>
+  "au FileType clojure nmap <buffer> <LocalLeader>st <Plug>FireplacePrint<Plug>(sexp_outer_top_list)``
+  "au FileType clojure nmap <buffer> <LocalLeader>m1 <Plug>FireplaceCount1MacroExpand
+  "au FileType clojure nmap <buffer> <LocalLeader>cc <Plug>FireplaceCountEdit
+  "au FileType clojure nnoremap <buffer> <LocalLeader>r :<C-u>Require<CR>
 
   "" vim-clj-trace
-  au FileType clojure nmap <buffer> <LocalLeader>ti <Plug>CljTraceVars
-  au FileType clojure nmap <buffer> <LocalLeader>tn <Plug>CljTraceNs
-  au FileType clojure nmap <buffer> <LocalLeader>tu <Plug>CljUntraceNs
+  "au FileType clojure nmap <buffer> <LocalLeader>ti <Plug>CljTraceVars
+  "au FileType clojure nmap <buffer> <LocalLeader>tn <Plug>CljTraceNs
+  "au FileType clojure nmap <buffer> <LocalLeader>tu <Plug>CljUntraceNs
 
   "" tmux
   au FileType clojure nnoremap <buffer> <LocalLeader>tr :<C-u>TmuxSendKeys '(reset)'<CR>

@@ -1,0 +1,14 @@
+{
+ :paths ["src"]
+ :deps
+ {com.taoensso/nippy {:mvn/version "2.14.0"}
+  ;; local-lib {:local/root "/path/to/local-lib"}
+  ;; username/lib {:git/url "https://github.com/user/lib" :sha "git rev-parse HEAD"}
+  }
+
+ :aliases
+ {:dev
+  {:extra-paths ["test"]
+   :extra-deps {fudje {:mvn/version "0.9.7"}}}}
+}
+

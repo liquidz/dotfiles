@@ -7,4 +7,5 @@ function __tmpl_commands() {
     _values 'commands' \
         'vim-plugin' \
         'cl-project' \
+        'deps.edn' \
 }

@@ -28,3 +28,4 @@ function! TestErrFmt(errfmt,lines)
     let &errorformat = temp_errorfomat
   endtry
 endfunction
+

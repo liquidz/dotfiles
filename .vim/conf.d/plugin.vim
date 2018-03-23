@@ -75,13 +75,15 @@ if has('unix')
 
   "" clojure
   Plug 'guns/vim-sexp',           {'for': ['lisp', 'clojure']}
-  Plug 'tpope/vim-fireplace',     {'for': 'clojure'}
-  Plug 'liquidz/vim-clj-trace',   {'for': 'clojure'}
-  Plug 'liquidz/vim-clj-buffer',  {'for': 'clojure'}
-  Plug 'guns/vim-slamhound',      {'for': 'clojure'}
-  if has('nvim')
-    Plug 'clojure-vim/async-clj-omni', {'for': 'clojure'}
-  endif
+  Plug 'kotarak/vimpire', {'for': 'clojure'}
+  "Plug 'tpope/vim-fireplace',     {'for': 'clojure'}
+  "Plug 'liquidz/vim-clj-trace',   {'for': 'clojure'}
+  "Plug 'liquidz/vim-clj-buffer',  {'for': 'clojure'}
+  "Plug 'guns/vim-slamhound',      {'for': 'clojure'}
+  "Plug 'venantius/vim-cljfmt',    {'for': 'clojure'}
+  "if has('nvim')
+  "  Plug 'clojure-vim/async-clj-omni', {'for': 'clojure'}
+  "endif
 
   "" common lisp
   Plug 'l04m33/vlime',            {'for': 'lisp', 'rtp': 'vim'}
@@ -333,6 +335,15 @@ aug VimFireplaceSetting
 aug END
 
 " }}}
+" =vimpire {{{
+
+aug VimFireplaceSetting
+  au!
+  " vim-ref の K と競合するため再定義
+  au Filetype clojure nmap <buffer> K <Plug>FireplaceK
+aug END
+
+" }}}
 " =vim-clj-buffer {{{
 
 let cljbuf#buffer#mods = 'vertical'
@@ -346,9 +357,9 @@ let g:enable_sayid_mappings = 0
 " }}}
 " =vim-sexp {{{
 
-let g:sexp_enable_insert_mode_mappings = 0
-"let g:sexp_filetypes = 'clojure,lisp'
-"let g:sexp_enable_insert_mode_mappings = 1
+"let g:sexp_enable_insert_mode_mappings = 0
+let g:sexp_filetypes = 'clojure,lisp'
+let g:sexp_enable_insert_mode_mappings = 1
 "let g:sexp_maxlines = 100
 let g:sexp_mappings = {
     \ 'sexp_capture_next_element':      '<LocalLeader>ks',

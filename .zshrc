@@ -131,7 +131,7 @@ function tmpl() {
     cp -pir $HOME/src/github.com/liquidz/dotfiles/templates/$FROM $TO
     if [[ -e $HOME/src/github.com/liquidz/dotfiles/templates/$FROM/setup.sh ]]; then
         echo "setting up $TO ..."
-        (cd $TO && ./setup.sh)
+        (cd $TO && ./setup.sh "$TO")
         \rm -f $TO/setup.sh
     fi
 }
