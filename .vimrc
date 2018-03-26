@@ -176,8 +176,10 @@ inoremap <C-j> <Esc>
 inoremap jj <Esc>
 vnoremap <C-j> <Esc>
 
-nnoremap ; :
-nnoremap : ;
+if system('uname') !=# "Linux\n"
+  nnoremap ; :
+  nnoremap : ;
+endif
 nnoremap > %
 nnoremap < %
 

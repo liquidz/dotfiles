@@ -33,7 +33,7 @@ define :dotfiles do
     .zshenv .zshrc .zshrc.antigen
     .ctags .gemrc .rubocop.yml
     .gitconfig.common .w3m .cheatrc
-    .lein/profiles.clj .joker
+    .lein/profiles.clj .joker .xkb
   ).each do |file|
     link "#{home}/#{file}" do
       to "#{install_dir}/#{file}"

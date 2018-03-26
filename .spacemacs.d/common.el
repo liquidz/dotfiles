@@ -14,16 +14,16 @@
 (define-key evil-window-map "s" 'split-window-below-and-focus)
 (define-key evil-window-map "S" 'split-window-below)
 
-(setq my-translation-map
-      '(("1" . "!") ("2" . "@") ("3" . "#") ("4" . "$") ("5" . "%")
-        ("6" . "^") ("7" . "&") ("8" . "*") ("9" . "(") (";" . ":")))
-
-(dolist (pair my-translation-map)
-  (let ((from-key (kbd (car pair)))
-        (to-key (kbd (cdr pair)))
-        )
-    (define-key key-translation-map from-key to-key)
-    (define-key key-translation-map to-key from-key)))
+;;(setq my-translation-map
+;;      '(("1" . "!") ("2" . "@") ("3" . "#") ("4" . "$") ("5" . "%")
+;;        ("6" . "^") ("7" . "&") ("8" . "*") ("9" . "(") (";" . ":")))
+;;
+;;(dolist (pair my-translation-map)
+;;  (let ((from-key (kbd (car pair)))
+;;        (to-key (kbd (cdr pair)))
+;;        )
+;;    (define-key key-translation-map from-key to-key)
+;;    (define-key key-translation-map to-key from-key)))
 
 ;; evil-snipe
 ;; clever-f と同じような挙動を提供してくれる
