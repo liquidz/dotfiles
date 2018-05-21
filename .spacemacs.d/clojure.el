@@ -1,4 +1,6 @@
-(dolist (mode-name '(clojure-mode clojurescript-mode))
+(require 'clojure-mode)
+
+(dolist (mode-name '(clojure-mode clojurescript-mode clojurec-mode))
   ;; eval inner list
   (spacemacs/set-leader-keys-for-minor-mode
     mode-name "ei"
@@ -12,11 +14,16 @@
 
 ;; paredit
 (add-hook 'clojure-mode-hook #'paredit-mode)
+(add-hook 'clojurescript-mode-hook #'paredit-mode)
 (add-hook 'cider-repl-mode-hook #'paredit-mode)
 
 ;; aggressive indent
 (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
+(add-hook 'clojurescript-mode-hook #'aggressive-indent-mode)
 (add-hook 'cider-repl-mode-hook #'aggressive-indent-mode)
+
+(define-clojure-indent
+  (go-loop-sub 3))
 
 ;;(setq cider-cljs-lein-repl
 ;;      (concat

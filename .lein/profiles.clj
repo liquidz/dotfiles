@@ -8,8 +8,8 @@
   ;          ;[lein-bikeshed      "RELEASE"]
   ;          ;[codox              "RELEASE"]
 
-  ;          [cider/cider-nrepl "0.16.0-SNAPSHOT"]
-  ;          [refactor-nrepl "2.4.0-SNAPSHOT"]
+            ;[cider/cider-nrepl "0.16.0-SNAPSHOT"]
+            ;[refactor-nrepl "2.4.0-SNAPSHOT"]
             ]
 
   ;:aliases {
@@ -29,6 +29,7 @@
                  ; [com.taoensso/tufte          "RELEASE"]
                  ; [jonase/eastwood             "0.2.4" :exclusions [org.clojure/clojure]]
                  ; [eftest                      "0.3.1"]
+                 ; [compliment "0.3.6"]
                  ]
 
 

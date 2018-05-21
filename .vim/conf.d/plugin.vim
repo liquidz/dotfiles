@@ -4,7 +4,6 @@ let g:dotfiles = $HOME.'/src/github.com/liquidz/dotfiles'
 call plug#begin('~/.vim/repos')
 " default {{{
 
-
 Plug 'aklt/plantuml-syntax'
 Plug 'cespare/vim-toml'
 Plug 'cocopon/iceberg.vim'
@@ -15,6 +14,7 @@ Plug 'haya14busa/vim-metarepeat'
 Plug 'idanarye/vim-merginal'
 Plug 'inside/vim-search-pulse'
 Plug 'itchyny/lightline.vim'
+Plug 'JuliaEditorSupport/julia-vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'kana/vim-operator-replace'
 Plug 'kana/vim-operator-user'
@@ -38,7 +38,6 @@ Plug 't9md/vim-quickhl'
 Plug 'tacahiroy/ctrlp-funky'
 Plug 'thinca/vim-quickrun'
 Plug 'thinca/vim-themis'
-Plug 'JuliaEditorSupport/julia-vim'
 Plug 'thinca/vim-visualstar'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
@@ -47,19 +46,20 @@ Plug 'tpope/vim-surround'
 Plug 'tyru/caw.vim'
 Plug 'tyru/open-browser.vim'
 Plug 'vim-jp/vital.vim'
+"Plug 'vim-scripts/camelcasemotion'
 Plug 'vim-scripts/confluencewiki.vim'
 Plug 'vim-scripts/gtags.vim'
 Plug 'w0ng/vim-hybrid'
+
 if has('nvim')
   Plug 'roxma/nvim-completion-manager'
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
   Plug 'neomake/neomake'
 elseif has('channel')
-  Plug 'neomake/neomake'
   Plug 'maralla/completor.vim'
-  " Plug 'Shougo/deoplete.nvim'
-  "     \ | Plug 'roxma/nvim-yarp'
-  "     \ | Plug 'roxma/vim-hug-neovim-rpc'
+  "Plug 'Shougo/deoplete.nvim'
+  "Plug 'roxma/nvim-yarp'
+  "Plug 'roxma/vim-hug-neovim-rpc'
 else
   Plug 'ervandew/supertab'
 endif
@@ -72,18 +72,17 @@ Plug 'nelstrom/vim-textobj-rubyblock', {'for': 'ruby'}
 Plug 'thinca/vim-prettyprint',         {'for': 'vim'}
 Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 if has('unix')
-
   "" clojure
   Plug 'guns/vim-sexp',           {'for': ['lisp', 'clojure']}
-  Plug 'kotarak/vimpire', {'for': 'clojure'}
-  "Plug 'tpope/vim-fireplace',     {'for': 'clojure'}
+  "Plug 'kotarak/vimpire', {'for': 'clojure'}
+  Plug 'tpope/vim-fireplace',     {'for': 'clojure'}
   "Plug 'liquidz/vim-clj-trace',   {'for': 'clojure'}
   "Plug 'liquidz/vim-clj-buffer',  {'for': 'clojure'}
   "Plug 'guns/vim-slamhound',      {'for': 'clojure'}
   "Plug 'venantius/vim-cljfmt',    {'for': 'clojure'}
-  "if has('nvim')
-  "  Plug 'clojure-vim/async-clj-omni', {'for': 'clojure'}
-  "endif
+  if has('nvim')
+    Plug 'clojure-vim/async-clj-omni', {'for': 'clojure'}
+  endif
 
   "" common lisp
   Plug 'l04m33/vlime',            {'for': 'lisp', 'rtp': 'vim'}
@@ -332,16 +331,19 @@ aug VimFireplaceSetting
   au!
   " vim-ref の K と競合するため再定義
   au Filetype clojure nmap <buffer> K <Plug>FireplaceK
+  " 補完候補を切り替える度に doc を表示するのを無効化する
+  " チカチカして気持ち悪いため
+  au Filetype clojure setl completeopt-=preview
 aug END
 
 " }}}
 " =vimpire {{{
 
-aug VimFireplaceSetting
-  au!
-  " vim-ref の K と競合するため再定義
-  au Filetype clojure nmap <buffer> K <Plug>FireplaceK
-aug END
+"aug VimFireplaceSetting
+"  au!
+"  " vim-ref の K と競合するため再定義
+"  au Filetype clojure nmap <buffer> K <Plug>FireplaceK
+"aug END
 
 " }}}
 " =vim-clj-buffer {{{
@@ -360,10 +362,11 @@ let g:enable_sayid_mappings = 0
 "let g:sexp_enable_insert_mode_mappings = 0
 let g:sexp_filetypes = 'clojure,lisp'
 let g:sexp_enable_insert_mode_mappings = 1
-"let g:sexp_maxlines = 100
+let g:sexp_maxlines = 50
 let g:sexp_mappings = {
-    \ 'sexp_capture_next_element':      '<LocalLeader>ks',
-    \ 'sexp_emit_tail_element':         '<LocalLeader>kb'
+    \ 'sexp_capture_prev_element':  '<LocalLeader>kk',
+    \ 'sexp_capture_next_element':  '<LocalLeader>ks',
+    \ 'sexp_emit_tail_element':     '<LocalLeader>kb'
     \ }
 
 " }}}
@@ -446,12 +449,9 @@ let g:kami#timestamp_format = '== %s'
 " }}}
 " =completor {{{
 
-""let g:completor_gocode_binary = $HOME.'/bin/gocode'
-"let g:completor_go_omni_trigger = '(?:\b[^\W\d]\w*|[\]\)])\.(?:[^\W\d]\w*)?'
-""let g:completor_racer_binary = $HOME.'/.cargo/bin/racer'
-"
-""" to use slimv for completion
-"let g:completor_disable_filename = ['clj']
+let g:completor_auto_trigger = 0
+let g:completor_disable_filename = ['clojure']
+let g:completor_clojure_omni_trigger = '[\w!$%&*+/:<=>?@\^_~\-\.#]{2,}'
 
 " }}}
 " =deoplete {{{

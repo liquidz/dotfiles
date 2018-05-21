@@ -18,7 +18,7 @@ action = '''
 # xmind のテキストを asciidoc/confluence のリスト形式に変換
 name = "xmind"
 action = '''
-  let @q = "V::s/\t/*/g0wi "
+  let @q = "V::s/\t/  /g0wi* "
   if l:from != l:to
     execute printf(':%d,%dnormal @q', l:from, l:to)
   endif
