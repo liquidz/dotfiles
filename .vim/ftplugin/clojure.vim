@@ -46,7 +46,10 @@ command! MyToggleSourceTest call uochan#clojure#toggle_source_test()
 command! RequireTufteProfiler call s:requireTufteProfiler()
 command! FigwheelConnect execute ':Piggieback (figwheel-sidecar.repl-api/repl-env)'
 command! -nargs=1 TmuxSendKeys call s:tmux_send_keys(<q-args>)
+
 command! StartRepl call s:my_start_repl()
+command! MyDeepSlurp call uochan#slurp#deep_slurp()
+command! MyRunTestUnderCursor call uochan#clojure#run_test_under_cursor()
 
 aug MyClojure
   au!
@@ -62,8 +65,6 @@ aug MyClojure
   "au FileType clojure nmap <buffer> <Leader>ss :<C-u>VimpireRepl<CR>
   "au FileType clojure nmap <buffer> <Leader>tn <Plug>(vimpire_run_tests)
 
-  " run test under cursor
-  "au FileType clojure nmap <buffer> <Leader>tt :<C-u>.RunTests<CR>
 
   "" vim-fiace-repl
   "au FileType clojure nmap <buffer> <LocalLeader>si <Plug>(cljbuf_eval)<Plug>(sexp_inner_element)``
@@ -80,7 +81,8 @@ aug MyClojure
   au FileType clojure nmap <buffer> <Leader>eb :<C-u>Require<CR>
   au FileType clojure nmap <buffer> <Leader>m1 <Plug>FireplaceCount1MacroExpand
   au FileType clojure nmap <buffer> <Leader>cc <Plug>FireplaceCountEdit
-  "au FileType clojure nnoremap <buffer> <LocalLeader>r :<C-u>Require<CR>
+  au FileType clojure nmap <buffer> <Leader>tn :<C-u>RunTests<CR>
+  au FileType clojure nmap <buffer> <Leader>tt :<C-u>MyRunTestUnderCursor<CR>
 
   "" vim-clj-trace
   "au FileType clojure nmap <buffer> <LocalLeader>ti <Plug>CljTraceVars

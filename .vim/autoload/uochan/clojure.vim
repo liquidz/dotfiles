@@ -13,3 +13,17 @@ function! uochan#clojure#toggle_source_test() abort
   endif
   execute printf(':e %s', target)
 endfunction
+
+function! uochan#clojure#run_test_under_cursor() abort
+  let current_pos = getcurpos()
+  " move to prev top element
+  call sexp#move_to_adjacent_element('n', 1, 0, 0, 1)
+  " move right
+  execute ':normal l'
+  " move to next element head
+  call sexp#move_to_adjacent_element('n', 2, 1, 0, 0)
+  " eval outer list
+  execute ':normal ,ee'
+  " restore cursor position
+  call cursor(current_pos[1], current_pos[2])
+endfunction

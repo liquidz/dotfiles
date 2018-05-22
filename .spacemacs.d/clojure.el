@@ -22,8 +22,8 @@
 (add-hook 'clojurescript-mode-hook #'aggressive-indent-mode)
 (add-hook 'cider-repl-mode-hook #'aggressive-indent-mode)
 
-(define-clojure-indent
-  (go-loop-sub 3))
+;;(define-clojure-indent
+;;  (go-loop-sub 3))
 
 ;;(setq cider-cljs-lein-repl
 ;;      (concat
