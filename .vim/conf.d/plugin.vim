@@ -10,6 +10,7 @@ Plug 'cocopon/iceberg.vim'
 Plug 'cocopon/vaffle.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'gregsexton/gitv'
+Plug 'mattn/sonictemplate-vim'
 Plug 'haya14busa/vim-metarepeat'
 Plug 'idanarye/vim-merginal'
 Plug 'inside/vim-search-pulse'
@@ -364,9 +365,6 @@ let g:sexp_filetypes = 'clojure,lisp'
 let g:sexp_enable_insert_mode_mappings = 1
 " let g:sexp_maxlines = 50
 " let g:sexp_mappings = {
-"     \ 'sexp_move_to_next_bracket':  '<LocalLeader>kj',
-"     \ 'sexp_move_to_prev_bracket':  '<LocalLeader>kk',
-"     \ 'sexp_capture_next_element':  '<LocalLeader>ks',
 "     \ 'sexp_emit_tail_element':     '<LocalLeader>kb'
 "     \ }
 
@@ -395,8 +393,11 @@ try
 
   " c.f. ftplugin/clojure.vim
   call submode#enter_with('slurp', 'n', '', '<LocalLeader>ks', ':<C-u>MyDeepSlurp<CR>')
+  call submode#enter_with('slurp', 'n', '', '<LocalLeader>kb', ':<C-u>MyBarf<CR>')
   call submode#leave_with('slurp', 'n', '', '<Esc>')
   call submode#map('slurp', 'n', '', 's', ':<C-u>MyDeepSlurp<CR>')
+  call submode#map('slurp', 'n', '', 'b', ':<C-u>MyBarf<CR>')
+
 catch
   echo 'submode is not installed'
   PlugInstall vim-submode
@@ -548,6 +549,11 @@ let g:vlime_compiler_policy = { 'DEBUG': 3 }
 
 nmap <LocalLeader>g <Plug>(caw:prefix)
 xmap <LocalLeader>g <Plug>(caw:prefix)
+
+" }}}
+" =sonictemplate {{{
+
+let g:sonictemplate_vim_template_dir = '$HOME/.vim/template'
 
 " }}}
 " developing plugins {{{

@@ -24,3 +24,8 @@ function! uochan#slurp#deep_slurp() abort
   call s:slurp(current_pos, 1)
 endfunction
 
+function! uochan#slurp#barf() abort
+  let current_pos = getcurpos()
+  call sexp#stackop('n', 1, 0)
+  call cursor(current_pos[1], current_pos[2])
+endfunction

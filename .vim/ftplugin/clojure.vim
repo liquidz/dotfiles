@@ -49,7 +49,12 @@ command! -nargs=1 TmuxSendKeys call s:tmux_send_keys(<q-args>)
 
 command! StartRepl call s:my_start_repl()
 command! MyDeepSlurp call uochan#slurp#deep_slurp()
+command! MyBarf call uochan#slurp#barf()
 command! MyRunTestUnderCursor call uochan#clojure#run_test_under_cursor()
+command! MyRunAllTests call uochan#clojure#run_all_tests()
+nnoremap <silent> <Plug>(my_eval) :<C-u>set opfunc=uochan#clojure#eval_operation<CR>g@
+command! MyDJumpWithStack call uochan#clojure#jump()
+command! MyDBackWithStack call uochan#clojure#back()
 
 aug MyClojure
   au!
@@ -75,14 +80,23 @@ aug MyClojure
   "au FileType clojure nmap <buffer> <LocalLeader>l  <Plug>(cljbuf_clear)
 
   "" vim-fireplace
-  au FileType clojure nmap <buffer> <Leader>ei <Plug>FireplacePrint<Plug>(sexp_inner_element)``
-  au FileType clojure nmap <buffer> <Leader>ee <Plug>FireplacePrint<Plug>(sexp_outer_list)``
-  au FileType clojure nmap <buffer> <Leader>et <Plug>FireplacePrint<Plug>(sexp_outer_top_list)``
+  "au FileType clojure nmap <buffer> <Leader>ei <Plug>FireplacePrint<Plug>(sexp_inner_element)``
+  "au FileType clojure nmap <buffer> <Leader>ee <Plug>FireplacePrint<Plug>(sexp_outer_list)``
+  "au FileType clojure nmap <buffer> <Leader>et <Plug>FireplacePrint<Plug>(sexp_outer_top_list)``
+  au FileType clojure nmap <buffer> <Leader>ei <Plug>(my_eval)<Plug>(sexp_inner_element)``
+  au FileType clojure nmap <buffer> <Leader>ee <Plug>(my_eval)<Plug>(sexp_outer_list)``
+  au FileType clojure nmap <buffer> <Leader>et <Plug>(my_eval)<Plug>(sexp_outer_top_list)``
   au FileType clojure nmap <buffer> <Leader>eb :<C-u>Require<CR>
   au FileType clojure nmap <buffer> <Leader>m1 <Plug>FireplaceCount1MacroExpand
   au FileType clojure nmap <buffer> <Leader>cc <Plug>FireplaceCountEdit
   au FileType clojure nmap <buffer> <Leader>tn :<C-u>RunTests<CR>
   au FileType clojure nmap <buffer> <Leader>tt :<C-u>MyRunTestUnderCursor<CR>
+  au FileType clojure nmap <buffer> <Leader>tp :<C-u>MyRunAllTests<CR>
+
+  " C-] で定義元へジャンプ
+  au FileType clojure nmap <buffer> <C-]> :<C-u>MyDJumpWithStack<CR>
+  " C-t で戻る
+  au FileType clojure nmap <buffer> <C-t> :<C-u>MyDBackWithStack<CR>
 
   "" vim-clj-trace
   "au FileType clojure nmap <buffer> <LocalLeader>ti <Plug>CljTraceVars

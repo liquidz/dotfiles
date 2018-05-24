@@ -1,4 +1,4 @@
-PLUGIN_NAME = foo
+PLUGIN_NAME = __dummy__
 VITAL_MODULES = System.Filepath \
 				Process \
 				Underscore
