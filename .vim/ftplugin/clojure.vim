@@ -14,17 +14,17 @@ let s:V = vital#of('vital')
 let s:S = s:V.import('Data.String')
 let s:P = s:V.import('Process')
 
-function! s:myReloadWithStringException() abort
-  let ns = fireplace#ns()
-  let expr = printf("(try (require '%s :reload) (catch Exception e (-> e str)))", ns)
-  execute ':Eval ' . expr
-endfunction
-command! MyReloadWithStringException call s:myReloadWithStringException()
-
-function! s:myRefresh() abort
-  execute ":Eval (do (require '[clojure.tools.namespace.repl :refer [refresh]]) (refresh))"
-endfunction
-command! Refresh call s:myRefresh()
+" function! s:myReloadWithStringException() abort
+"   let ns = fireplace#ns()
+"   let expr = printf("(try (require '%s :reload) (catch Exception e (-> e str)))", ns)
+"   execute ':Eval ' . expr
+" endfunction
+" command! MyReloadWithStringException call s:myReloadWithStringException()
+"
+" function! s:myRefresh() abort
+"   execute ":Eval (do (require '[clojure.tools.namespace.repl :refer [refresh]]) (refresh))"
+" endfunction
+" command! Refresh call s:myRefresh()
 "nnoremap <buffer> <Leader>R :<C-u>Refresh<CR>
 
 function! s:requireTufteProfiler() abort
@@ -56,11 +56,14 @@ nnoremap <silent> <Plug>(my_eval) :<C-u>set opfunc=uochan#clojure#eval_operation
 command! MyDJumpWithStack call uochan#clojure#jump()
 command! MyDBackWithStack call uochan#clojure#back()
 
+let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let', '^\w\+-let']
+
 aug MyClojure
   au!
   au FileType clojure nnoremap <buffer> tt :<C-u>MyToggleSourceTest<CR>
   au FileType clojure nnoremap <buffer> HH :lprevious<CR>
   au FileType clojure nnoremap <buffer> LL :lnext<CR>
+  au FileType clojure imap <silent><buffer> <C-h> <Plug>(sexp_insert_backspace)
 
   "" vimpire
   "au FileType clojure nmap <buffer> <Leader>ei <Plug>(vimpire_eval)<Plug>(sexp_inner_element)``
@@ -98,16 +101,6 @@ aug MyClojure
   " C-t で戻る
   au FileType clojure nmap <buffer> <C-t> :<C-u>MyDBackWithStack<CR>
 
-  "" vim-clj-trace
-  "au FileType clojure nmap <buffer> <LocalLeader>ti <Plug>CljTraceVars
-  "au FileType clojure nmap <buffer> <LocalLeader>tn <Plug>CljTraceNs
-  "au FileType clojure nmap <buffer> <LocalLeader>tu <Plug>CljUntraceNs
-
   "" tmux
   au FileType clojure nnoremap <buffer> <LocalLeader>tr :<C-u>TmuxSendKeys '(reset)'<CR>
-
-  "" lisp words
-  au Filetype clojure setl lispwords+=doseq,testing,fn,loop,if-let,for,binding
-  "" duct
-  au Filetype clojure setl lispwords+=context,GET,POST,PUT,DELETE
 aug END

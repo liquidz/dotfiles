@@ -1,9 +1,18 @@
 let s:V = vital#of('vital')
 let s:S = s:V.import('Data.String')
 let s:L = s:V.import("Data.List")
+let s:Promise = s:V.import('Async.Promise')
 
 let s:tempname = tempname()
 let s:tagstack = []
+
+function! s:next_tick()
+  return s:Promise.new({resolve -> timer_start(0, resolve)})
+endfunction
+
+function! uochan#clojure#project_root() abort
+  return ''
+endfunction
 
 function! uochan#clojure#toggle_source_test() abort
   let current_file = expand('%:p')
@@ -21,14 +30,20 @@ function! s:eval(sexp) abort
   execute(':redir! > ' . s:tempname)
   silent execute printf(':Eval %s', a:sexp)
   execute(':redir END')
+  execute printf(':pedit %s', s:tempname)
+endfunction
+
+function! uochan#clojure#eval(sexp) abort
+  call s:next_tick()
+      \.then({-> s:eval(a:sexp)})
+      \.catch({err -> execute('echom ' . string(err), '')})
 endfunction
 
 function! uochan#clojure#eval_operation(type) abort
   let reg_save = @@
   try
     silent exe "normal! `[v`]y"
-    call s:eval(@@)
-    execute printf(':pedit %s', s:tempname)
+    call uochan#clojure#eval(@@)
   finally
     let @@ = reg_save
   endtry
@@ -46,8 +61,7 @@ function! uochan#clojure#run_test_under_cursor() abort
   let reg_save = @@
   try
     silent exe "normal! gvy"
-    call s:eval(printf('(do %s)', @@))
-    execute printf(':pedit %s', s:tempname)
+    call uochan#clojure#eval(printf('(do %s)', @@))
   finally
     let @@ = reg_save
   endtry
