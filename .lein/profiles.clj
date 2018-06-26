@@ -6,7 +6,7 @@
   ;          ;[lein-kibit         "RELEASE"]
   ;          ;[lein-cljfmt        "RELEASE"]
   ;          ;[lein-bikeshed      "RELEASE"]
-  ;          ;[codox              "RELEASE"]
+             [lein-codox         "0.10.4"]
 
             ;[cider/cider-nrepl "0.16.0-SNAPSHOT"]
             ;[refactor-nrepl "2.4.0-SNAPSHOT"]

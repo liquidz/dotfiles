@@ -133,6 +133,9 @@ function tmpl() {
         echo "setting up $TO ..."
         (cd $TO && ./setup.sh "$TO")
         \rm -f $TO/setup.sh
+        if [[ $(find $TO -type f | wc -l) = 0 ]]; then
+            rmdir $TO
+        fi
     fi
 }
 

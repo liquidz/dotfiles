@@ -22,8 +22,10 @@
 (add-hook 'clojurescript-mode-hook #'aggressive-indent-mode)
 (add-hook 'cider-repl-mode-hook #'aggressive-indent-mode)
 
-;;(define-clojure-indent
-;;  (go-loop-sub 3))
+;;  (define-clojure-indent
+;;    (go-loop-sub 3))
+
+(define-clojure-indent (core-let 1))
 
 ;;(setq cider-cljs-lein-repl
 ;;      (concat
@@ -87,3 +89,19 @@
 
 (spacemacs/set-leader-keys-for-minor-mode
   'clojure-mode "rsn" 'clojure-sort-ns)
+
+(defun my/go ()
+  (interactive)
+  (with-current-buffer (cider-current-connection "clj")
+    (cider-interactive-eval "(go)")))
+
+(defun my/reset ()
+  (interactive)
+  (with-current-buffer (cider-current-connection "clj")
+    (save-some-buffers)
+    (cider-interactive-eval "(reset)")))
+
+(spacemacs/set-leader-keys-for-minor-mode
+  'clojure-mode "go" 'my/go)
+(spacemacs/set-leader-keys-for-minor-mode
+  'clojure-mode "gO" 'my/reset)
