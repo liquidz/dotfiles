@@ -56,7 +56,9 @@ nnoremap <silent> <Plug>(my_eval) :<C-u>set opfunc=uochan#clojure#eval_operation
 command! MyDJumpWithStack call uochan#clojure#jump()
 command! MyDBackWithStack call uochan#clojure#back()
 
-let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let', '^\w\+-let']
+let g:clojure_fuzzy_indent_patterns = [
+    \ '^with', '^def', '^let', '^\w\+-let'
+    \ ]
 
 aug MyClojure
   au!

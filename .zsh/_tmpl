@@ -10,4 +10,5 @@ function __tmpl_commands() {
         'deps.edn' \
         'ragtime' \
         'clj-web' \
+        'cljs' \
 }

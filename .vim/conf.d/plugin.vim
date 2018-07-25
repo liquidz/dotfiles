@@ -4,13 +4,14 @@ let g:dotfiles = $HOME.'/src/github.com/liquidz/dotfiles'
 call plug#begin('~/.vim/repos')
 " default {{{
 
+" Plug 'prabirshrestha/async.vim'
+" Plug 'prabirshrestha/vim-lsp'
 Plug 'aklt/plantuml-syntax'
 Plug 'cespare/vim-toml'
 Plug 'cocopon/iceberg.vim'
 Plug 'cocopon/vaffle.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'gregsexton/gitv'
-Plug 'mattn/sonictemplate-vim'
 Plug 'haya14busa/vim-metarepeat'
 Plug 'idanarye/vim-merginal'
 Plug 'inside/vim-search-pulse'
@@ -23,15 +24,17 @@ Plug 'kana/vim-submode'
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-line'
 Plug 'kana/vim-textobj-user'
-Plug 'kannokanno/previm'
-Plug 'kien/rainbow_parentheses.vim'
 Plug 'lambdalisue/gina.vim'
 Plug 'LeafCage/foldCC.vim'
+Plug 'LeafCage/lastmess.vim'
 Plug 'liquidz/ctrlme.vim'
 Plug 'liquidz/kami.vim'
 Plug 'liquidz/vim-ctrlp-help'
 Plug 'liquidz/vim-textobj-value'
+Plug 'luochen1990/rainbow'
+Plug 'mattn/sonictemplate-vim'
 Plug 'osyo-manga/vim-anzu'
+Plug 'previm/previm'
 Plug 'rhysd/clever-f.vim'
 Plug 'rhysd/vim-color-spring-night'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
@@ -47,7 +50,6 @@ Plug 'tpope/vim-surround'
 Plug 'tyru/caw.vim'
 Plug 'tyru/open-browser.vim'
 Plug 'vim-jp/vital.vim'
-"Plug 'vim-scripts/camelcasemotion'
 Plug 'vim-scripts/confluencewiki.vim'
 Plug 'vim-scripts/gtags.vim'
 Plug 'w0ng/vim-hybrid'
@@ -58,9 +60,9 @@ if has('nvim')
   Plug 'neomake/neomake'
 elseif has('channel')
   Plug 'maralla/completor.vim'
-  "Plug 'Shougo/deoplete.nvim'
-  "Plug 'roxma/nvim-yarp'
-  "Plug 'roxma/vim-hug-neovim-rpc'
+  " Plug 'Shougo/deoplete.nvim'
+  " Plug 'roxma/nvim-yarp'
+  " Plug 'roxma/vim-hug-neovim-rpc'
 else
   Plug 'ervandew/supertab'
 endif
@@ -75,8 +77,10 @@ Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 if has('unix')
   "" clojure
   Plug 'guns/vim-sexp',           {'for': ['lisp', 'clojure']}
-  "Plug 'kotarak/vimpire', {'for': 'clojure'}
   Plug 'tpope/vim-fireplace',     {'for': 'clojure'}
+  Plug 'gberenfield/cljfold.vim', {'for': 'clojure'}
+
+  "Plug 'kotarak/vimpire', {'for': 'clojure'}
   "Plug 'liquidz/vim-clj-trace',   {'for': 'clojure'}
   "Plug 'liquidz/vim-clj-buffer',  {'for': 'clojure'}
   "Plug 'guns/vim-slamhound',      {'for': 'clojure'}
@@ -404,28 +408,13 @@ catch
 endtry
 
 " }}}
-" =rainbow_parentheses.vim {{{
+" =rainbow {{{
 
-let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ['red',         'firebrick3'],
-    \ ]
-aug MyRainbowParentheses
-  au!
-  au VimEnter * RainbowParenthesesToggle
-  au Syntax * RainbowParenthesesLoadRound
-  au Syntax * RainbowParenthesesLoadSquare
-  au Syntax * RainbowParenthesesLoadBraces
-aug END
+let g:rainbow_active = 1
+let g:rainbow_conf = {
+		\  'ctermfgs': ['darkmagenta', 'red', 'darkcyan', 'brown', 'darkgreen', 'darkred', 'darkblue'],
+		\  'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+		\  'separately': {'*': 0, 'clojure': {}}}
 
 " }}}
 " =neomake {{{
@@ -463,7 +452,7 @@ let g:completor_clojure_omni_trigger = '[\w!$%&*+/:<=>?@\^_~\-\.#]{2,}'
 " }}}
 " =deoplete {{{
 
-"let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_at_startup = 1
 let g:deoplete#keyword_patterns = {}
 let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
 
@@ -554,6 +543,14 @@ xmap <LocalLeader>g <Plug>(caw:prefix)
 " =sonictemplate {{{
 
 let g:sonictemplate_vim_template_dir = '$HOME/.vim/template'
+
+" }}}
+" =lastmess {{{
+
+let g:lastmess_default_count = 10
+nmap mz <Plug>(lastmess)
+nmap <Leader>mz <Plug>(lastmess)
+
 
 " }}}
 " developing plugins {{{

@@ -27,10 +27,18 @@ function! uochan#clojure#toggle_source_test() abort
 endfunction
 
 function! s:eval(sexp) abort
-  execute(':redir! > ' . s:tempname)
+  redir => res
   silent execute printf(':Eval %s', a:sexp)
-  execute(':redir END')
-  execute printf(':pedit %s', s:tempname)
+  redir END
+  for line in split(res, '\r\?\n')
+    if line == '該当するautocommandは存在しません'
+      continue
+    elseif line == 'No matching autocommands'
+      continue
+    endif
+
+    echomsg line
+  endfor
 endfunction
 
 function! uochan#clojure#eval(sexp) abort
