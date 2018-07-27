@@ -30,6 +30,7 @@ function! s:eval(sexp) abort
   redir => res
   silent execute printf(':Eval %s', a:sexp)
   redir END
+  let result = []
   for line in split(res, '\r\?\n')
     if line == '該当するautocommandは存在しません'
       continue
@@ -38,7 +39,10 @@ function! s:eval(sexp) abort
     endif
 
     echomsg line
+    call add(result, line)
   endfor
+  echomsg " "
+  echo join(result, "\n")
 endfunction
 
 function! uochan#clojure#eval(sexp) abort
@@ -61,17 +65,17 @@ function! uochan#clojure#run_test_under_cursor() abort
   let current_pos = getcurpos()
   " move to prev top element
   execute "normal \<Plug>(sexp_move_to_prev_top_element)"
-  " select test bodies
-  execute ':normal lvibo'
-  execute search('(')
-
-  " run selected s-exps
+  " move to var name
+  call search(' \+[^\^]')
+  " test var
   let reg_save = @@
   try
-    silent exe "normal! gvy"
-    call uochan#clojure#eval(printf('(do %s)', @@))
+    silent exe "normal! wviwy"
+    let var = printf("#'%s/%s", fireplace#ns(), @@)
+    call uochan#clojure#eval(printf('(clojure.test/test-var %s)', var))
   finally
     let @@ = reg_save
+    call cursor(current_pos[1], current_pos[2])
   endtry
 endfunction
 
@@ -94,5 +98,30 @@ function! uochan#clojure#back() abort
     let last_position = s:L.pop(s:tagstack)
     execute printf(':buffer %d', last_position[0])
     call cursor(last_position[1], last_position[2])
+  endif
+endfunction
+
+function! s:replace_namespace(ns) abort
+  let current_pos = getcurpos()
+  call cursor(1, 1)
+  call search('(ns')
+  let reg_save = @@
+  try
+    silent exe 'normal dab'
+    let lnum = line('.') - 1
+    call append(lnum, split(a:ns, '\n'))
+  finally
+    let @@ = reg_save
+    call cursor(current_pos[1], current_pos[2])
+  endtry
+endfunction
+
+function! uochan#clojure#clean_ns() abort
+  let path = expand('%:p')
+  let result = fireplace#message({'op': 'clean-ns', 'path': path})[0]
+  if result['status'] == ['done']
+    call s:replace_namespace(result['ns'])
+  else
+    echo "FAILED"
   endif
 endfunction

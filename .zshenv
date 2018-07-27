@@ -1,7 +1,7 @@
 # path {{{
 PATH=$PATH:~/bin
 PATH=$PATH:/opt/local/bin
-PATH=$PATH:~/.vim/bundle/vim-themis/bin
+PATH=$PATH:~/.vim/repos/vim-themis/bin
 PATH=$PATH:/usr/local/nodejs/bin
 PATH=$PATH:/usr/local/cmake/bin
 PATH=$PATH:/usr/local/julia/bin

@@ -77,7 +77,8 @@ Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 if has('unix')
   "" clojure
   Plug 'guns/vim-sexp',           {'for': ['lisp', 'clojure']}
-  Plug 'tpope/vim-fireplace',     {'for': 'clojure'}
+  Plug 'liquidz/vim-nrepl', {'for': 'clojure'}
+  "Plug 'tpope/vim-fireplace',     {'for': 'clojure'}
   Plug 'gberenfield/cljfold.vim', {'for': 'clojure'}
 
   "Plug 'kotarak/vimpire', {'for': 'clojure'}
@@ -396,11 +397,11 @@ try
   call submode#map('window', 'n', '', '-', '<C-w>5-')
 
   " c.f. ftplugin/clojure.vim
-  call submode#enter_with('slurp', 'n', '', '<LocalLeader>ks', ':<C-u>MyDeepSlurp<CR>')
-  call submode#enter_with('slurp', 'n', '', '<LocalLeader>kb', ':<C-u>MyBarf<CR>')
+  call submode#enter_with('slurp', 'n', '', '<LocalLeader>ks', ':<C-u>CljstackDeepSlurp<CR>')
+  call submode#enter_with('slurp', 'n', '', '<LocalLeader>kb', ':<C-u>CljstackBarf<CR>')
   call submode#leave_with('slurp', 'n', '', '<Esc>')
-  call submode#map('slurp', 'n', '', 's', ':<C-u>MyDeepSlurp<CR>')
-  call submode#map('slurp', 'n', '', 'b', ':<C-u>MyBarf<CR>')
+  call submode#map('slurp', 'n', '', 's', ':<C-u>CljstackDeepSlurp<CR>')
+  call submode#map('slurp', 'n', '', 'b', ':<C-u>CljstackBarf<CR>')
 
 catch
   echo 'submode is not installed'
