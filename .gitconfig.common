@@ -23,7 +23,10 @@
 	ignore-case = true
     main-view   = id date author:email-user commit-title:graph=yes,refs=yes
 [tig "bind"]
-	diff    = R       !git rebase -i %(commit)
+	diff    = F       ?!git commit --fixup %(commit)
+	main    = F       ?!git commit --fixup %(commit)
+	diff    = R       !git rebase -i %(commit) --autosquash --keep-empty
+	main    = R       !git rebase -i %(commit) --autosquash --keep-empty
 	generic = <Esc>s  ?git stash save "%(promptStashComment:)"
 	generic = B       view-blame
 	generic = G       move-last-line
@@ -33,7 +36,6 @@
 	generic = g       move-first-line
 	main    = <Esc>b  ?git checkout -b %(promptBranchName:)
 	main    = G       move-last-line
-	main    = R       !git rebase -i %(commit)
 	main    = W       !git commit --allow-empty -m 'Work In Progress'
 	main    = ^       ?git reset --soft HEAD^
 	refs    = !       none

@@ -176,7 +176,6 @@ inoremap <C-j> <Esc>
 inoremap jj <Esc>
 vnoremap <C-j> <Esc>
 
-
 if !has('nvim')
   tnoremap <Esc> <C-\><C-n>
 else
@@ -217,6 +216,8 @@ if has('win32')
 endif
 
 nnoremap QQ :<C-u>bd!<CR>
+
+nnoremap <LocalLeader>gg :terminal ++close tig<CR>
 
 " }}}
 " copy to clipboard {{{

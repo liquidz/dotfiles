@@ -77,18 +77,18 @@ Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 if has('unix')
   "" clojure
   Plug 'guns/vim-sexp',           {'for': ['lisp', 'clojure']}
-  Plug 'liquidz/vim-nrepl', {'for': 'clojure'}
+  Plug 'liquidz/vim-iced',        {'for': 'clojure'}
   "Plug 'tpope/vim-fireplace',     {'for': 'clojure'}
-  Plug 'gberenfield/cljfold.vim', {'for': 'clojure'}
+  "Plug 'gberenfield/cljfold.vim', {'for': 'clojure'}
 
   "Plug 'kotarak/vimpire', {'for': 'clojure'}
   "Plug 'liquidz/vim-clj-trace',   {'for': 'clojure'}
   "Plug 'liquidz/vim-clj-buffer',  {'for': 'clojure'}
   "Plug 'guns/vim-slamhound',      {'for': 'clojure'}
   "Plug 'venantius/vim-cljfmt',    {'for': 'clojure'}
-  if has('nvim')
-    Plug 'clojure-vim/async-clj-omni', {'for': 'clojure'}
-  endif
+  "if has('nvim')
+  "  Plug 'clojure-vim/async-clj-omni', {'for': 'clojure'}
+  "endif
 
   "" common lisp
   Plug 'l04m33/vlime',            {'for': 'lisp', 'rtp': 'vim'}
@@ -230,9 +230,6 @@ let g:quickrun_config = {
     \     'outputter'   : 'quickfix',
     \     'errorformat' : '"%m:(%.%#/%f:%l:%c)"'
     \   },
-    \   'clojure/watchdogs_checker': {
-    \     'type': 'watchdogs_checker/fireplace'
-    \   },
     \ }
 
 " }}}
@@ -333,14 +330,14 @@ endif
 " }}}
 " =fireplace {{{
 
-aug VimFireplaceSetting
-  au!
-  " vim-ref の K と競合するため再定義
-  au Filetype clojure nmap <buffer> K <Plug>FireplaceK
-  " 補完候補を切り替える度に doc を表示するのを無効化する
-  " チカチカして気持ち悪いため
-  au Filetype clojure setl completeopt-=preview
-aug END
+"aug VimFireplaceSetting
+"  au!
+"  " vim-ref の K と競合するため再定義
+"  au Filetype clojure nmap <buffer> K <Plug>FireplaceK
+"  " 補完候補を切り替える度に doc を表示するのを無効化する
+"  " チカチカして気持ち悪いため
+"  au Filetype clojure setl completeopt-=preview
+"aug END
 
 " }}}
 " =vimpire {{{
@@ -365,13 +362,12 @@ let g:enable_sayid_mappings = 0
 " }}}
 " =vim-sexp {{{
 
-"let g:sexp_enable_insert_mode_mappings = 0
 let g:sexp_filetypes = 'clojure,lisp'
 let g:sexp_enable_insert_mode_mappings = 1
-" let g:sexp_maxlines = 50
-" let g:sexp_mappings = {
-"     \ 'sexp_emit_tail_element':     '<LocalLeader>kb'
-"     \ }
+let g:sexp_mappings = {
+    \ 'sexp_indent': '',
+    \ 'sexp_indent_top': '',
+    \ }
 
 " }}}
 " =vim-submode {{{
@@ -397,12 +393,11 @@ try
   call submode#map('window', 'n', '', '-', '<C-w>5-')
 
   " c.f. ftplugin/clojure.vim
-  call submode#enter_with('slurp', 'n', '', '<LocalLeader>ks', ':<C-u>CljstackDeepSlurp<CR>')
-  call submode#enter_with('slurp', 'n', '', '<LocalLeader>kb', ':<C-u>CljstackBarf<CR>')
+  call submode#enter_with('slurp', 'n', '', '<LocalLeader>ks', ':<C-u>IcedSlurp<CR>')
+  call submode#enter_with('slurp', 'n', '', '<LocalLeader>kb', ':<C-u>IcedBarf<CR>')
   call submode#leave_with('slurp', 'n', '', '<Esc>')
-  call submode#map('slurp', 'n', '', 's', ':<C-u>CljstackDeepSlurp<CR>')
-  call submode#map('slurp', 'n', '', 'b', ':<C-u>CljstackBarf<CR>')
-
+  call submode#map('slurp', 'n', '', 's', ':<C-u>IcedSlurp<CR>')
+  call submode#map('slurp', 'n', '', 'b', ':<C-u>IcedBarf<CR>')
 catch
   echo 'submode is not installed'
   PlugInstall vim-submode
@@ -420,20 +415,20 @@ let g:rainbow_conf = {
 " }}}
 " =neomake {{{
 
-if executable('joker')
-  let g:neomake_clojure_joker_maker = {
-      \ 'exe': 'joker',
-      \ 'args': ['--lint', '%:p'],
-      \ 'errorformat': '%f:%l:%c: %m'
-      \ }
-
-	let g:neomake_clojure_enabled_makers = ['joker']
-
-	aug MyNeoMake
-		au!
-		au BufWritePost *.clj Neomake
-	aug END
-endif
+"if executable('joker')
+"  let g:neomake_clojure_joker_maker = {
+"      \ 'exe': 'joker',
+"      \ 'args': ['--lint', '%:p'],
+"      \ 'errorformat': '%f:%l:%c: %m'
+"      \ }
+"
+"	let g:neomake_clojure_enabled_makers = ['joker']
+"
+"	aug MyNeoMake
+"		au!
+"		au BufWritePost *.clj Neomake
+"	aug END
+"endif
 
 " }}}
 " =kami {{{
