@@ -35,6 +35,7 @@
 	generic = <Esc>u  ?git pull %(remote) %(repo:head)
 	generic = b       view-refs
 	generic = g       move-first-line
+	generic = <C-l>   refresh
 	main    = <Esc>b  ?git checkout -b %(promptBranchName:)
 	main    = G       move-last-line
 	main    = W       !git commit --allow-empty -m 'Work In Progress'
