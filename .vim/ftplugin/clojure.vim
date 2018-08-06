@@ -41,7 +41,7 @@ let g:clojure_fuzzy_indent_patterns = [
     \ '^with', '^def', '^let', '^\w\+-let'
     \ ]
 
-let g:iced#nrepl#format#rule = {
+let g:iced#format#rule = {
     \ 'core-let': '[[:block 1]]',
     \ 'merr/let': '[[:block 2] [:inner 1]]',
     \ }
