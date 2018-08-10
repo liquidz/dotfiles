@@ -138,7 +138,7 @@ let g:ctrlp_match_window        = 'results:50'
 let g:ctrlp_follow_symlinks     = 1
 let g:ctrlp_root_markers        = ['.root', 'project.clj', 'Cargo.toml', 'pom.xml', 'README.md']
 let g:ctrlp_custom_ignore = {
-  \   'dir' : '\v[\/](\.git|\.hg|\.svn|cookbooks|target|Vendor|.dein|cache)$',
+  \   'dir' : '\v[\/](\.git|\.hg|\.svn|cookbooks|target|Vendor|.dein|cache|node_modules|.vim-themis)$',
   \   'file': '\v\.(o|bk|org|exe|so|dll|skl|cgi|gitkeep)$',
   \   'link': 'some_bad_symbolic_links',
   \ }
@@ -300,12 +300,13 @@ let g:lightline = {
     \ 'active': {
     \   'left': [['mode', 'paste'],
     \            ['fugitive', 'readonly', 'modified']],
-    \   'right': [['lineinfo'], ['percent'], ['fileformat', 'fileencoding', 'filetype'], ['anzu']]
+    \   'right': [['lineinfo'], ['percent'], ['fileformat', 'fileencoding', 'filetype'], ['anzu'], ['iced']]
     \ },
     \ 'component_function': {
     \   'ale': 'ALEGetStatusLine',
     \   'fugitive': 'MyFugitive',
     \   'anzu': 'anzu#search_status',
+    \   'iced': 'iced#status',
     \ },
     \ 'separator': { 'left': '', 'right': '' },
     \ 'subseparator': { 'left': '|', 'right': '|' },

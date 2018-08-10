@@ -176,12 +176,12 @@ inoremap <C-j> <Esc>
 inoremap jj <Esc>
 vnoremap <C-j> <Esc>
 
-if !has('nvim')
-  tnoremap <Esc> <C-\><C-n>
-else
-  tnoremap <Esc> <C-W>N
-  set notimeout ttimeout timeoutlen=100
-endif
+" if !has('nvim')
+"   tnoremap <Esc> <C-\><C-n>
+" else
+"   tnoremap <Esc> <C-W>N
+"   set notimeout ttimeout timeoutlen=100
+" endif
 
 " Linux 上では xkb を使って入れ替えているため
 if system('uname') !=# "Linux\n"
@@ -217,7 +217,9 @@ endif
 
 nnoremap QQ :<C-u>bd!<CR>
 
-nnoremap <LocalLeader>gg :terminal ++close tig<CR>
+if executable('tig')
+  nnoremap <LocalLeader>gg :vs\|:terminal ++curwin ++close tig status<CR>
+endif
 
 " }}}
 " copy to clipboard {{{
