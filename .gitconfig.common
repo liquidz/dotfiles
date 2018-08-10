@@ -58,3 +58,4 @@
 	stash   = P       none
 	stash   = x       ?git stash drop %(stash)
 	status  = c       ?git checkout %(file)
+	status  = d       enter
