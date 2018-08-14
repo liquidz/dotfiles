@@ -1,9 +1,8 @@
-.PHONY: all test lint xkb clean
+.PHONY: setup test lint xkb clean
 
-all:
+setup:
 	bash bin/setup.sh
 
-.PHONY: test
 test:
 	shelltest test/*.shelltest
 

@@ -21,7 +21,7 @@ define :dotfiles do
   # }}}
   # 必要なディレクトリを作成 {{{
 
-  %w( .tags .lein .config/nvim ).each do |dir|
+  %w( .tags .lein .boot .config/nvim ).each do |dir|
     directory "#{home}/#{dir}"
   end
 
@@ -33,7 +33,8 @@ define :dotfiles do
     .zshenv .zshrc .zshrc.antigen
     .ctags .gemrc .rubocop.yml
     .gitconfig.common .w3m .cheatrc
-    .lein/profiles.clj .joker .xkb
+    .lein/profiles.clj .boot/profile.boot
+    .joker .xkb
   ).each do |file|
     link "#{home}/#{file}" do
       to "#{install_dir}/#{file}"

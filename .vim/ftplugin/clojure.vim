@@ -56,6 +56,9 @@ aug MyClojureSetting
   au FileType clojure nmap <buffer> <Leader>jss :<C-u>IcedStartCljsRepl<CR>
   au FileType clojure nmap <buffer> <Leader>jsq :<C-u>IcedQuitCljsRepl<CR>
 
+  au FileType clojure setl completeopt=menuone
   au FileType clojure setl updatetime=1000
-  au CursorHoldI <buffer> execute "normal \<Plug>(iced_echo_form_document)"
+  au CursorHoldI <buffer> call iced#nrepl#document#echo_current_form()
+
+  au FileType qf nnoremap <buffer> q :<C-u>q<CR>
 aug END
