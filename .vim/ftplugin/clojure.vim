@@ -58,7 +58,17 @@ aug MyClojureSetting
 
   au FileType clojure setl completeopt=menuone
   au FileType clojure setl updatetime=1000
-  au CursorHoldI <buffer> call iced#nrepl#document#echo_current_form()
+  au CursorHoldI <buffer> call iced#nrepl#document#current_form()
 
   au FileType qf nnoremap <buffer> q :<C-u>q<CR>
+
+  "" vim-sexp
+  au FileType clojure nmap <silent><buffer> <LocalLeader>kk <Plug>(sexp_swap_list_backward)
+  au FileType clojure xmap <silent><buffer> <LocalLeader>kk <Plug>(sexp_swap_list_backward)
+  au FileType clojure nmap <silent><buffer> <LocalLeader>kj <Plug>(sexp_swap_list_forward)
+  au FileType clojure xmap <silent><buffer> <LocalLeader>kj <Plug>(sexp_swap_list_forward)
+  au FileType clojure nmap <silent><buffer> <LocalLeader>kh <Plug>(sexp_swap_element_backward)
+  au FileType clojure xmap <silent><buffer> <LocalLeader>kh <Plug>(sexp_swap_element_backward)
+  au FileType clojure nmap <silent><buffer> <LocalLeader>kl <Plug>(sexp_swap_element_forward)
+  au FileType clojure xmap <silent><buffer> <LocalLeader>kl <Plug>(sexp_swap_element_forward)
 aug END

@@ -40,6 +40,7 @@
 	main    = S       ?git stash save %(promptStashMessage:)
 	main    = W       ?git commit --allow-empty -m 'Work In Progress'
 	refs    = !       none
+	refs    = B       ?git checkout -b %(promptBranchName:)
 	refs    = c       ?git checkout %(branch)
 	refs    = C       ?git checkout -b %(branch) origin/%(branch)
 	refs    = F       ?git fetch %(remote)
@@ -47,7 +48,7 @@
 	refs    = p       ?!git push -u %(remote) %(branch)
 	refs    = r       ?git rebase %(branch)
 	refs    = R       ?git rebase %(remote)/%(branch)
-	refs    = x       ?!git branch %(branch)
+	refs    = x       ?!git branch -d %(branch)
 	refs    = X       ?!git branch -D %(branch)
 	stage   = v       stage-update-line
 	stage   = x       status-revert
