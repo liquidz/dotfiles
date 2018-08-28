@@ -29,7 +29,7 @@ let g:clojure_fuzzy_indent_patterns = [
     \ '^with', '^def', '^let', '^\w\+-let'
     \ ]
 
-let g:iced#buffer#mods = 'vertical'
+let g:iced#buffer#stdout#mods = 'vertical'
 let g:iced#nrepl#cljs#default_env = 'custom'
 let g:iced#nrepl#cljs#custom#start_code = '(cljs-repl)'
 let g:iced#format#rule = {
@@ -56,9 +56,10 @@ aug MyClojureSetting
   au FileType clojure nmap <buffer> <Leader>jss :<C-u>IcedStartCljsRepl<CR>
   au FileType clojure nmap <buffer> <Leader>jsq :<C-u>IcedQuitCljsRepl<CR>
 
-  au FileType clojure setl completeopt=menuone
+  au FileType clojure setl completeopt=menu
   au FileType clojure setl updatetime=1000
-  au CursorHoldI <buffer> call iced#nrepl#document#current_form()
+  au CursorHoldI *.clj,*.cljs,*.cljc call iced#nrepl#document#current_form()
+  "au CursorHoldI <buffer> call iced#nrepl#document#current_form()
 
   au FileType qf nnoremap <buffer> q :<C-u>q<CR>
 

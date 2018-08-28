@@ -4,7 +4,7 @@
        concat '[[cider/cider-nrepl "0.18.0"]
                 [cider/orchard "0.3.0"]
                 [cljfmt "0.6.0"]
-                [refactor-nrepl "2.4.0-SNAPSHOT"]])
+                [refactor-nrepl "2.4.0"]])
 
 (swap! boot.repl/*default-middleware*
        concat '[cider.nrepl/wrap-complete

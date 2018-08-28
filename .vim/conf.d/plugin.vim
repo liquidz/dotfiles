@@ -443,6 +443,7 @@ let g:kami#timestamp_format = '== %s'
 " =completor {{{
 
 let g:completor_auto_trigger = 0
+let g:completor_set_options = 0
 let g:completor_disable_filename = ['clojure']
 let g:completor_clojure_omni_trigger = '[\w!$%&*+/:<=>?@\^_~\-\.#]{2,}'
 
@@ -468,7 +469,7 @@ set foldtext=FoldCCtext()
 " }}}
 " =ultisnips {{{
 
-let g:UltiSnipsExpandTrigger='<c-k>'
+let g:UltiSnipsExpandTrigger='<c-tab>'
 let g:UltiSnipsJumpForwardTrigger='<c-l>'
 ""let g:UltiSnipsJumpBackwardTrigger='<c-z>'
 let g:UltiSnipsSnippetDirectories = ['UltiSnips']
@@ -516,8 +517,14 @@ let g:rust_doc#downloaded_rust_doc_dir = '~/.multirust/toolchains/nightly-x86_64
 " }}}
 " =vaffle.vim {{{
 
-let g:vaffle_auto_cd = 1
-nnoremap <Leader><Leader> :<C-u>Vaffle<CR>
+function! s:open_vaffle_current_dir() abort
+  let dir = expand('%:h')
+  execute printf(':Vaffle %s', dir)
+endfunction
+command! VaffleCurrentDir call s:open_vaffle_current_dir()
+
+"let g:vaffle_auto_cd = 1
+nnoremap <Leader><Leader> :<C-u>VaffleCurrentDir<CR>
 
 " }}}
 " =vlime {{{
