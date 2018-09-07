@@ -20,7 +20,6 @@ endif
 set modeline
 set modelines=3
 set textwidth=0
-let g:vim_indent_cont = 4
 
 if has('unix')
   set nofixendofline
@@ -125,6 +124,15 @@ nnoremap <C-j> <Esc>
 cnoremap <C-j> <Esc>
 inoremap <C-j> <Esc>
 inoremap jj <Esc>
+inoremap jk <Esc>
+inoremap zk ^
+inoremap zl -
+inoremap zj _
+
+cnoremap zk ^
+cnoremap zl -
+cnoremap zj _
+
 vnoremap <C-j> <Esc>
 
 " if !has('nvim')
@@ -155,7 +163,7 @@ inoremap {} {}<Left>
 inoremap "" ""<Left>
 inoremap '' ''<Left>
 " 補完のポップアップ上でのカーソル移動
-inoremap <expr> <C-j> pumvisible() ? "\<Down>" : "\<C-j>"
+inoremap <expr> <C-j> pumvisible() ? "\<Down>" : "\<Esc>"
 inoremap <expr> <C-k> pumvisible() ? "\<Up>" : "\<C-k>"
 
 nnoremap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
@@ -169,12 +177,17 @@ if has('win32')
   nnoremap <C-Space> za
 endif
 
+" auto indent 後に insert mode を抜けても indent を削除しないようにする
+" c.f. https://vim-jp.org/vim-users-jp/2010/04/06/Hack-137.html
+nnoremap o oX<C-h>
+nnoremap O OX<C-h>
+inoremap <CR> <CR>X<C-h>
+
 nnoremap QQ :<C-u>bd!<CR>
 
 if executable('tig')
   nnoremap <LocalLeader>gg :vs\|:terminal ++curwin ++close tig status<CR>
 endif
-
 
 " }}}
 " copy to clipboard {{{

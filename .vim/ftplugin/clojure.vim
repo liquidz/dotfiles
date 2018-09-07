@@ -38,6 +38,7 @@ let g:iced#format#rule = {
     \ 'h/let-test-data': '[[:block 2] [:inner 1]]',
     \ 'go-loop-sub': '[[:block 3] [:inner 1]]',
     \ }
+let g:iced#lint#linters = ['all']
 
 let g:iced_enable_default_key_mappings = v:true
 
@@ -59,7 +60,8 @@ aug MyClojureSetting
   au FileType clojure setl completeopt=menu
   au FileType clojure setl updatetime=1000
   au CursorHoldI *.clj,*.cljs,*.cljc call iced#nrepl#document#current_form()
-  "au CursorHoldI <buffer> call iced#nrepl#document#current_form()
+  au BufWritePost *.clj call iced#lint#ns()
+  au CursorMoved *.clj call iced#lint#echo_message()
 
   au FileType qf nnoremap <buffer> q :<C-u>q<CR>
 

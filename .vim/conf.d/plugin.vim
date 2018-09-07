@@ -13,6 +13,7 @@ Plug 'cocopon/vaffle.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'gregsexton/gitv'
 Plug 'haya14busa/vim-metarepeat'
+Plug 'easymotion/vim-easymotion'
 Plug 'idanarye/vim-merginal'
 Plug 'inside/vim-search-pulse'
 Plug 'itchyny/lightline.vim'
@@ -29,7 +30,7 @@ Plug 'LeafCage/foldCC.vim'
 Plug 'LeafCage/lastmess.vim'
 Plug 'liquidz/ctrlme.vim'
 Plug 'liquidz/kami.vim'
-Plug 'liquidz/vim-ctrlp-help'
+"Plug 'liquidz/vim-ctrlp-help'
 Plug 'liquidz/vim-textobj-value'
 Plug 'luochen1990/rainbow'
 Plug 'mattn/sonictemplate-vim'
@@ -139,7 +140,7 @@ let g:ctrlp_follow_symlinks     = 1
 let g:ctrlp_root_markers        = ['.root', 'project.clj', 'Cargo.toml', 'pom.xml', 'README.md']
 let g:ctrlp_custom_ignore = {
   \   'dir' : '\v[\/](\.git|\.hg|\.svn|cookbooks|target|Vendor|.dein|cache|node_modules|.vim-themis)$',
-  \   'file': '\v\.(o|bk|org|exe|so|dll|skl|cgi|gitkeep)$',
+  \   'file': '\v\.(o|bk|org|exe|so|dll|skl|cgi|gitkeep|png|gif|jpg)$',
   \   'link': 'some_bad_symbolic_links',
   \ }
 let g:ctrlp_prompt_mappings = {
@@ -322,6 +323,12 @@ let g:easy_align_delimiters = {
     \ }
 
 " }}}
+" =vim-easymotion {{{
+
+map <LocalLeader><LocalLeader> <Plug>(easymotion-prefix)
+let g:EasyMotion_keys='hklyuiopnm,qwertzxcvbasdgjf'
+
+" }}}
 " =gtags.vim {{{
 
 if executable('gtags')
@@ -488,7 +495,7 @@ let g:rustfmt_autosave = 1
 " }}}
 " vim-ctrlp-help {{{
 
-nnoremap <Leader>h :CtrlPHelp<CR>
+"nnoremap <Leader>h :CtrlPHelp<CR>
 
 " }}}
 " =vim-racer {{{
