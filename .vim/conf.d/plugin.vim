@@ -452,6 +452,7 @@ let g:kami#timestamp_format = '== %s'
 let g:completor_auto_trigger = 0
 let g:completor_set_options = 0
 let g:completor_disable_filename = ['clojure']
+let g:completor_complete_options = 'menu'
 let g:completor_clojure_omni_trigger = '[\w!$%&*+/:<=>?@\^_~\-\.#]{2,}'
 
 " }}}

@@ -41,6 +41,7 @@ let g:iced#format#rule = {
 let g:iced#lint#linters = ['all']
 
 let g:iced_enable_default_key_mappings = v:true
+let g:iced_enable_auto_linting = v:true
 
 aug MyClojureSetting
   au!
@@ -60,8 +61,6 @@ aug MyClojureSetting
   au FileType clojure setl completeopt=menu
   au FileType clojure setl updatetime=1000
   au CursorHoldI *.clj,*.cljs,*.cljc call iced#nrepl#document#current_form()
-  au BufWritePost *.clj call iced#lint#ns()
-  au CursorMoved *.clj call iced#lint#echo_message()
 
   au FileType qf nnoremap <buffer> q :<C-u>q<CR>
 
