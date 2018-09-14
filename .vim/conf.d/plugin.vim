@@ -19,6 +19,7 @@ Plug 'inside/vim-search-pulse'
 Plug 'itchyny/lightline.vim'
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'junegunn/vim-easy-align'
+"Plug 'kana/vim-arpeggio'
 Plug 'kana/vim-operator-replace'
 Plug 'kana/vim-operator-user'
 Plug 'kana/vim-submode'
@@ -41,6 +42,7 @@ Plug 'rhysd/vim-color-spring-night'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 't9md/vim-quickhl'
 Plug 'tacahiroy/ctrlp-funky'
+Plug 'thinca/vim-localrc'
 Plug 'thinca/vim-quickrun'
 Plug 'thinca/vim-themis'
 Plug 'thinca/vim-visualstar'
@@ -137,9 +139,9 @@ let g:ctrlp_open_new_file       = 1   " 新規ファイル作成時にタブで�
 let g:ctrlp_show_hidden         = 1   " 隠しファイルも表示
 let g:ctrlp_match_window        = 'results:50'
 let g:ctrlp_follow_symlinks     = 1
-let g:ctrlp_root_markers        = ['.root', 'project.clj', 'Cargo.toml', 'pom.xml', 'README.md']
+let g:ctrlp_root_markers        = ['.root', 'project.clj', 'deps.edn', 'Cargo.toml', 'pom.xml', 'README.md']
 let g:ctrlp_custom_ignore = {
-  \   'dir' : '\v[\/](\.git|\.hg|\.svn|cookbooks|target|Vendor|.dein|cache|node_modules|.vim-themis)$',
+  \   'dir' : '\v[\/](\.git|\.hg|\.svn|cookbooks|target|Vendor|.dein|cache|node_modules)$',
   \   'file': '\v\.(o|bk|org|exe|so|dll|skl|cgi|gitkeep|png|gif|jpg)$',
   \   'link': 'some_bad_symbolic_links',
   \ }
@@ -325,7 +327,7 @@ let g:easy_align_delimiters = {
 " }}}
 " =vim-easymotion {{{
 
-map <LocalLeader><LocalLeader> <Plug>(easymotion-prefix)
+map zz <Plug>(easymotion-prefix)
 let g:EasyMotion_keys='hklyuiopnm,qwertzxcvbasdgjf'
 
 " }}}

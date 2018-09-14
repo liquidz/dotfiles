@@ -3,7 +3,7 @@
    ; vim-iced
    :dependencies [
                   [nrepl "0.4.5"]
-                  [iced-nrepl "0.1.0"]
+                  [iced-nrepl "0.1.2"]
                   [cider/cider-nrepl "0.18.0"]
                   ]
    ;:repl-options {:nrepl-middleware [cider.nrepl/wrap-complete]}

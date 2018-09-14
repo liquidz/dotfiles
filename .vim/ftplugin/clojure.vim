@@ -43,6 +43,9 @@ let g:iced#lint#linters = ['all']
 let g:iced_enable_default_key_mappings = v:true
 let g:iced_enable_auto_linting = v:true
 
+" call arpeggio#load()
+" call arpeggio#map('n', '', 0, 'jk', '<LocalLeader>p')
+
 aug MyClojureSetting
   au!
 

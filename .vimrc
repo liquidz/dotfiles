@@ -125,6 +125,14 @@ cnoremap <C-j> <Esc>
 inoremap <C-j> <Esc>
 inoremap jj <Esc>
 inoremap jk <Esc>
+
+nnoremap zk ^
+nnoremap zp %
+nnoremap zh 0
+nnoremap zl $
+
+inoremap zi !
+inoremap zp %
 inoremap zk ^
 inoremap zl -
 inoremap zj _
@@ -132,6 +140,11 @@ inoremap zj _
 cnoremap zk ^
 cnoremap zl -
 cnoremap zj _
+
+nnoremap <LocalLeader>sh :<C-u>terminal ++close zsh<CR>
+tnoremap zk ^
+tnoremap zl -
+tnoremap zj _
 
 vnoremap <C-j> <Esc>
 
