@@ -131,7 +131,6 @@ nnoremap zp %
 nnoremap zh 0
 nnoremap zl $
 
-inoremap zi !
 inoremap zp %
 inoremap zk ^
 inoremap zl -
@@ -176,8 +175,8 @@ inoremap {} {}<Left>
 inoremap "" ""<Left>
 inoremap '' ''<Left>
 " 補完のポップアップ上でのカーソル移動
-inoremap <expr> <C-j> pumvisible() ? "\<Down>" : "\<Esc>"
-inoremap <expr> <C-k> pumvisible() ? "\<Up>" : "\<C-k>"
+inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<Esc>"
+inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
 
 nnoremap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
 nnoremap <silent> <C-j><C-j> :nohlsearch<CR><Esc>

@@ -30,6 +30,7 @@ let g:clojure_fuzzy_indent_patterns = [
     \ ]
 
 let g:iced#buffer#stdout#mods = 'vertical'
+let g:iced#buffer#stdout#file = '/tmp/.vim-iced-buffer.clj'
 let g:iced#nrepl#cljs#default_env = 'custom'
 let g:iced#nrepl#cljs#custom#start_code = '(cljs-repl)'
 let g:iced#format#rule = {
@@ -53,6 +54,8 @@ aug MyClojureSetting
   au FileType clojure nnoremap <buffer> LL :lnext<CR>
 
   au FileType clojure imap <silent><buffer> <C-h> <Plug>(sexp_insert_backspace)
+  au FileType clojure inoremap <buffer> >> ->
+
   au FileType clojure nmap <buffer> tt <Plug>(iced_toggle_src_and_test)
   au FileType clojure nmap <buffer> <Leader>go :<C-u>IcedEvalRepl (go)<CR>
   au FileType clojure nmap <buffer> <Leader>stop :<C-u>IcedEvalRepl (stop)<CR>

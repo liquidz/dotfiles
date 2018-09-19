@@ -4,22 +4,19 @@ let g:dotfiles = $HOME.'/src/github.com/liquidz/dotfiles'
 call plug#begin('~/.vim/repos')
 " default {{{
 
-" Plug 'prabirshrestha/async.vim'
-" Plug 'prabirshrestha/vim-lsp'
 Plug 'aklt/plantuml-syntax'
 Plug 'cespare/vim-toml'
 Plug 'cocopon/iceberg.vim'
 Plug 'cocopon/vaffle.vim'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'easymotion/vim-easymotion'
 Plug 'gregsexton/gitv'
 Plug 'haya14busa/vim-metarepeat'
-Plug 'easymotion/vim-easymotion'
 Plug 'idanarye/vim-merginal'
 Plug 'inside/vim-search-pulse'
 Plug 'itchyny/lightline.vim'
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'junegunn/vim-easy-align'
-"Plug 'kana/vim-arpeggio'
 Plug 'kana/vim-operator-replace'
 Plug 'kana/vim-operator-user'
 Plug 'kana/vim-submode'
@@ -31,10 +28,10 @@ Plug 'LeafCage/foldCC.vim'
 Plug 'LeafCage/lastmess.vim'
 Plug 'liquidz/ctrlme.vim'
 Plug 'liquidz/kami.vim'
-"Plug 'liquidz/vim-ctrlp-help'
 Plug 'liquidz/vim-textobj-value'
 Plug 'luochen1990/rainbow'
 Plug 'mattn/sonictemplate-vim'
+Plug 'nixprime/cpsm', {'do': './install.sh'}
 Plug 'osyo-manga/vim-anzu'
 Plug 'previm/previm'
 Plug 'rhysd/clever-f.vim'
@@ -155,6 +152,10 @@ nnoremap <Leader>b   :CtrlPBuffer<CR>
 nnoremap <Leader>cd  :CtrlPGonosen<CR>
 nnoremap <Leader>ccc :CtrlPClearCache<CR>
 
+" }}}
+" =cpsm {{{
+let g:cpsm_query_inverting_delimiter = ' '
+let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
 " }}}
 " =ctrlp-funky {{{
 

@@ -10,4 +10,9 @@ xkb_symbols "swapkeys" {
     key <AE08> { [ asterisk,    8 ] };
     key <AE09> { [ parenleft,   9 ] };
     key <AC10> { [ colon,       semicolon ] };
+
+    key <AE11> { [ minus,       underscore ] };
+    key <AB08> { [ comma,       less ] };
+    key <AB09> { [ period,      greater ] };
 };
+
