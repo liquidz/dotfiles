@@ -409,6 +409,13 @@ try
   call submode#leave_with('slurp', 'n', '', '<Esc>')
   call submode#map('slurp', 'n', '', 's', ':<C-u>IcedSlurp<CR>')
   call submode#map('slurp', 'n', '', 'b', ':<C-u>IcedBarf<CR>')
+
+  " c.f. vim-iced jumping signs
+  call submode#enter_with('sign_jump', 'n', '', '<LocalLeader>n', ':<C-u>IcedJumpToNextSign<CR>')
+  call submode#enter_with('sign_jump', 'n', '', '<LocalLeader>N', ':<C-u>IcedJumpToPrevSign<CR>')
+  call submode#leave_with('sign_jump', 'n', '', '<Esc>')
+  call submode#map('sign_jump', 'n', '', 'n', ':<C-u>IcedJumpToNextSign<CR>')
+  call submode#map('sign_jump', 'n', '', 'N', ':<C-u>IcedJumpToPrevSign<CR>')
 catch
   echo 'submode is not installed'
   PlugInstall vim-submode

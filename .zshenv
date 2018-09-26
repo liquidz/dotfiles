@@ -8,6 +8,7 @@ PATH=$PATH:/usr/local/julia/bin
 PATH=$PATH:~/.cargo/bin
 PATH=$PATH:~/.skim/bin
 PATH=$PATH:~/.roswell/bin
+PATH=$PATH:~/src/github.com/liquidz/vim-iced/bin
 PATH="/usr/local/bin:$PATH:/usr/local/sbin"
 export PATH
 # }}}
