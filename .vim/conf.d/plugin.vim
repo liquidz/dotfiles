@@ -57,7 +57,7 @@ Plug 'w0ng/vim-hybrid'
 if has('nvim')
   Plug 'roxma/nvim-completion-manager'
   Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
-  Plug 'neomake/neomake'
+  "Plug 'neomake/neomake'
 elseif has('channel')
   Plug 'maralla/completor.vim'
   " Plug 'Shougo/deoplete.nvim'
@@ -470,7 +470,7 @@ let g:completor_clojure_omni_trigger = '[\w!$%&*+/:<=>?@\^_~\-\.#]{2,}'
 
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#keyword_patterns = {}
-let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
+"let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
 
 " }}}
 " =ctrlme {{{

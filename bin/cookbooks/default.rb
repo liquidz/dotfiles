@@ -64,6 +64,10 @@ define :dotfiles do
     to "#{install_dir}/.vimrc"
   end
 
+  link "#{home}/.config/nvim/ftplugin" do
+    to "#{install_dir}/.vim/ftplugin"
+  end
+
   # }}}
 
   # spacemacs の設定

@@ -38,6 +38,7 @@ let g:iced#format#rule = {
     \ 'merr/let': '[[:block 2] [:inner 1]]',
     \ 'h/let-test-data': '[[:block 2] [:inner 1]]',
     \ 'go-loop-sub': '[[:block 3] [:inner 1]]',
+    \ 'p/plet': '[[:block 1]]',
     \ }
 let g:iced#lint#linters = ['all']
 
