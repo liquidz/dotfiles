@@ -35,7 +35,7 @@ let g:iced#nrepl#cljs#default_env = 'custom'
 let g:iced#nrepl#cljs#custom#start_code = '(cljs-repl)'
 let g:iced#format#rule = {
     \ 'core-let': '[[:block 1]]',
-    \ 'merr/let': '[[:block 2] [:inner 1]]',
+    \ 'merr.core/let': '[[:block 2] [:inner 1]]',
     \ 'h/let-test-data': '[[:block 2] [:inner 1]]',
     \ 'go-loop-sub': '[[:block 3] [:inner 1]]',
     \ 'p/plet': '[[:block 1]]',
