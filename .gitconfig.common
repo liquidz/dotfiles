@@ -48,6 +48,7 @@
 	refs    = p       ?!git push -u %(remote) %(branch)
 	refs    = r       ?git rebase %(branch)
 	refs    = R       ?git rebase %(remote)/%(branch)
+	refs    = <C-R>   ?git branch -m %(branch) %(promptNewBranchName:)
 	refs    = x       ?!git branch -d %(branch)
 	refs    = X       ?!git branch -D %(branch)
 	stage   = v       stage-update-line

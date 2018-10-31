@@ -255,6 +255,11 @@ aug MyAutoOpenCWindow
   "autocmd QuickFixCmdPost l* lopen
 aug END
 
+aug MyAutoDeleteExtraSpaces
+  au!
+  autocmd BufWritePre * :%s/\s\+$//ge
+aug END
+
 if $TMUX !=# ''
   augroup titlesettings
     autocmd!
