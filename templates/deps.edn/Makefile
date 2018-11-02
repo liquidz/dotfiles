@@ -1,9 +1,14 @@
-.PHONY: repl run
+.PHONY: repl run test ancient
 
 repl:
-	clj -C:dev '-J-Dclojure.server.repl={:port 5432 :accept clojure.core.server/repl}' -r
+	iced repl -A:dev
 
 run:
 	clj -m __dummy__.core
 
+test:
+	clojure -R:dev -A:test
+
+ancient:
+	clojure -A:ancient
 

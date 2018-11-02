@@ -2,5 +2,5 @@
   (:require [clojure.test :as t]
             [__dummy__.core :as sut]))
 
-(t/deftest constantly-false
-  (t/is false))
+(t/deftest greet-test
+  (t/is (= (sut/greet "world") "hello world")))
