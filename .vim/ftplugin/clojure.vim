@@ -59,9 +59,9 @@ aug MyClojureSetting
   au FileType clojure inoremap <buffer> >> ->
 
   au FileType clojure nmap <buffer> tt <Plug>(iced_toggle_src_and_test)
-  au FileType clojure nmap <buffer> <Leader>go :<C-u>IcedEvalRepl (go)<CR>
-  au FileType clojure nmap <buffer> <Leader>stop :<C-u>IcedEvalRepl (stop)<CR>
-  au FileType clojure nmap <buffer> <Leader>Go :<C-u>IcedEvalRepl (reset)<CR>
+  au FileType clojure nnoremap <buffer> <Leader>go :<C-u>IcedEvalRepl (go)<CR>
+  au FileType clojure nnoremap <buffer> <Leader>stop :<C-u>IcedEvalRepl (stop)<CR>
+  au FileType clojure nnoremap <buffer> <Leader>Go :<C-u>IcedEvalRepl (reset)<CR>
 
   au FileType clojure nmap <buffer> <Leader>jss :<C-u>IcedStartCljsRepl<CR>
   au FileType clojure nmap <buffer> <Leader>jsq :<C-u>IcedQuitCljsRepl<CR>

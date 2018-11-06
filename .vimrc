@@ -155,10 +155,10 @@ vnoremap <C-j> <Esc>
 " endif
 
 " Linux 上では xkb を使って入れ替えているため
-if system('uname') !=# "Linux\n"
+"if system('uname') !=# "Linux\n"
   nnoremap ; :
   nnoremap : ;
-endif
+"endif
 
 nnoremap > %
 nnoremap < %
