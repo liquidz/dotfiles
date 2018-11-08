@@ -426,7 +426,7 @@ endtry
 
 let g:rainbow_active = 1
 let g:rainbow_conf = {
-		\  'ctermfgs': ['darkmagenta', 'red', 'darkcyan', 'brown', 'darkgreen', 'darkred', 'darkblue'],
+		\  'ctermfgs': ['darkmagenta', 'red', 'darkcyan', 'brown', 'darkgreen', 'darkred'],
 		\  'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
 		\  'separately': {'*': 0, 'clojure': {}}}
 

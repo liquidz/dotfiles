@@ -171,7 +171,9 @@ alias mita='sudo mitamae local -y ~/src/github.com/liquidz/cookbooks/nodes/$(hos
 # spacemacs {{{
 alias vil='emacs --insecure'
 # }}}
-
+# graalvm {{{
+alias -g GRAALVM='PATH=/usr/local/graalvm/bin:$PATH'
+# }}}
 # my commands {{{
 alias server='python ~/src/github.com/liquidz/dotfiles/bin/server.py'
 alias suteneko='docker run -it uochan/suteneko'

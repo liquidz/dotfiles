@@ -179,5 +179,8 @@ if [[ ! -n $TMUX && $- == *l* ]]; then
     fi
 fi
 
+if [[ -e ~/.dircolors ]]; then
+    eval $(dircolors ~/.dircolors)
+fi
 
 source ~/.zshrc.antigen
