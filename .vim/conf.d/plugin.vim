@@ -148,7 +148,7 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtClearCache()': ['<c-l>'],
   \ }
 nnoremap <Leader>ct  :CtrlPTag<CR>
-nnoremap <Leader>b   :CtrlPBuffer<CR>
+nnoremap <Leader>bb  :CtrlPBuffer<CR>
 nnoremap <Leader>cd  :CtrlPGonosen<CR>
 nnoremap <Leader>ccc :CtrlPClearCache<CR>
 

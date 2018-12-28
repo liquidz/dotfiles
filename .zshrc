@@ -125,16 +125,20 @@ fi
 
 # generate template
 function tmpl() {
-    FROM=$1
-    TO=$2
-    echo "copying $FROM template to $TO ..."
-    cp -pir $HOME/src/github.com/liquidz/dotfiles/templates/$FROM $TO
-    if [[ -e $HOME/src/github.com/liquidz/dotfiles/templates/$FROM/setup.sh ]]; then
-        echo "setting up $TO ..."
-        (cd $TO && ./setup.sh "$TO")
-        \rm -f $TO/setup.sh
-        if [[ $(find $TO -type f | wc -l) = 0 ]]; then
-            rmdir $TO
+    if [[ $# -ne 2 ]]; then
+        echo "invalid arity"
+    else
+        FROM=$1
+        TO=$2
+        echo "copying $FROM template to $TO ..."
+        cp -pir $HOME/src/github.com/liquidz/dotfiles/templates/$FROM $TO
+        if [[ -e $HOME/src/github.com/liquidz/dotfiles/templates/$FROM/setup.sh ]]; then
+            echo "setting up $TO ..."
+            (cd $TO && ./setup.sh "$TO")
+            \rm -f $TO/setup.sh
+            if [[ $(find $TO -type f | wc -l) = 0 ]]; then
+                rmdir $TO
+            fi
         fi
     fi
 }

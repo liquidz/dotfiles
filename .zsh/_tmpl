@@ -8,6 +8,8 @@ function __tmpl_commands() {
         'vim-plugin' \
         'cl-project' \
         'deps.edn' \
+        'deps.cljs' \
+        'deps.native' \
         'ragtime' \
         'clj-web' \
         'cljs' \

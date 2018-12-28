@@ -172,6 +172,7 @@ alias mita='sudo mitamae local -y ~/src/github.com/liquidz/cookbooks/nodes/$(hos
 alias vil='emacs --insecure'
 # }}}
 # graalvm {{{
+export GRAALVM_HOME='/usr/local/graalvm'
 alias -g GRAALVM='PATH=/usr/local/graalvm/bin:$PATH'
 # }}}
 # my commands {{{

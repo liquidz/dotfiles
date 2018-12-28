@@ -1,7 +1,7 @@
 #!/bin/bash
 
 PROJECT_NAME=$1
-DIR_NAME="${PROJECT_NAME/-/_}"
+DIR_NAME="${PROJECT_NAME//-/_}"
 
 SRC_DIR=src/$DIR_NAME
 TEST_DIR=test/$DIR_NAME

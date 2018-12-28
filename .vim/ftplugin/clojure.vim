@@ -34,17 +34,25 @@ let g:iced#buffer#stdout#file = '/tmp/.vim-iced-buffer.clj'
 let g:iced#nrepl#cljs#default_env = 'custom'
 let g:iced#nrepl#cljs#custom#start_code = '(cljs-repl)'
 let g:iced#format#rule = {
-    \ 'core-let': '[[:block 1]]',
-    \ 'merr.core/let': '[[:block 2] [:inner 1]]',
-    \ 'clojure.spec.alpha/fdef': '[[:block 1]]',
-    \ }
+      \ 'core-let': '[[:block 1]]',
+      \ 'merr.core/let': '[[:block 2] [:inner 1]]',
+      \ 'clojure.spec.alpha/fdef': '[[:block 1]]',
+      \ }
+" let g:iced#format#rule = {
+"    \ 'core-let': [['block', 1]],
+"    \ 'merr.core/let': [['block', 2], ['inner', 1]],
+"    \ 'clojure.spec.alpha/fdef': [['block', 1]],
+"    \ }
 let g:iced#eastwood#option = {
       \ 'linters': ['all'],
-      \ 'exclude-linters': ['implicit-dependencies'],
+      \ 'exclude-linters': ['implicit-dependencies', 'keyword-typos', 'constant-test'],
       \ }
+let g:iced#lint#message_max_length = 200
 
 let g:iced_enable_default_key_mappings = v:true
 let g:iced_enable_auto_linting = v:true
+let g:iced_enable_auto_indent = v:true
+let g:iced_sign = {'error': 'E', 'trace': 'T', 'lint': 'L'}
 
 " call arpeggio#load()
 " call arpeggio#map('n', '', 0, 'jk', '<LocalLeader>p')
