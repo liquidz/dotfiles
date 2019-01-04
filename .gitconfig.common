@@ -51,6 +51,9 @@
 	refs    = <C-R>   ?git branch -m %(branch) %(promptNewBranchName:)
 	refs    = x       ?!git branch -d %(branch)
 	refs    = X       ?!git branch -D %(branch)
+	refs    = <Esc>f  ?!git fetch origin pull/%(promptPullRequestID:)/head:PullRequest
+	refs    = <Esc>p  !git remote prune --dry-run origin
+	refs    = <Esc>P  ?!git remote prune origin
 	stage   = v       stage-update-line
 	stage   = x       status-revert
 	stage   = <C-V>   !vim -c %(lineno) %(file)
