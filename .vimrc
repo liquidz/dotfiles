@@ -147,12 +147,12 @@ tnoremap zj _
 
 vnoremap <C-j> <Esc>
 
-" if !has('nvim')
-"   tnoremap <Esc> <C-\><C-n>
-" else
-"   tnoremap <Esc> <C-W>N
-"   set notimeout ttimeout timeoutlen=100
-" endif
+if !has('nvim')
+  tnoremap <Esc> <C-\><C-n>
+else
+  tnoremap <Esc> <C-\><C-n>
+  set notimeout ttimeout timeoutlen=100
+endif
 
 " Linux 上では xkb を使って入れ替えているため
 "if system('uname') !=# "Linux\n"
@@ -255,9 +255,18 @@ aug MyAutoOpenCWindow
   "autocmd QuickFixCmdPost l* lopen
 aug END
 
+function! s:clean_extra_spaces() abort
+  let v = winsaveview()
+  try
+    exec ':%s/\s\+$//ge'
+  finally
+    call winrestview(v)
+  endtry
+endfunction
+
 aug MyAutoDeleteExtraSpaces
   au!
-  autocmd BufWritePre * :%s/\s\+$//ge
+  autocmd BufWritePre * call s:clean_extra_spaces()
 aug END
 
 if $TMUX !=# ''
@@ -286,30 +295,50 @@ set laststatus=2
 " }}}
 " omni completion {{{
 
-function! InsertTabWrapper(type)
+" function! InsertTabWrapper(type)
+"   let col = col('.') - 1
+"   "omni補完の場合、omini以外にも上下左右の移動もする
+"   if a:type ==# 'omni'
+"     if pumvisible()
+"       return "\<c-n>"
+"     endif
+"     if !col || getline('.')[col - 1] !~# '\k\|<\|/'
+"       return "\<tab>"
+"     elseif exists('&omnifunc') && &omnifunc ==# ''
+"       return "\<c-n>"
+"     else
+"       return "\<c-x>\<c-o>"
+"     endif
+"     "keywordの場合、該当のとき以外は何もしない
+"   else
+"     if pumvisible() || !col || getline('.')[col - 1] !~# '\k\|<\|/'
+"       return ''
+"     else
+"       return "\<c-x>\<c-p>"
+"     endif
+"   endif
+" endfunction
+" inoremap <tab> <c-r>=InsertTabWrapper('omni')<cr><c-r>=InsertTabWrapper('keyword')<cr>
+
+function! MyComplete() abort
   let col = col('.') - 1
-  "omni補完の場合、omini以外にも上下左右の移動もする
-  if a:type ==# 'omni'
-    if pumvisible()
-      return "\<c-n>"
-    endif
-    if !col || getline('.')[col - 1] !~# '\k\|<\|/'
-      return "\<tab>"
-    elseif exists('&omnifunc') && &omnifunc ==# ''
-      return "\<c-n>"
-    else
-      return "\<c-x>\<c-o>"
-    endif
-    "keywordの場合、該当のとき以外は何もしない
+  if !col || getline('.')[col - 1] !~# '\k\|<\|/'
+    return "\<tab>"
+  endif
+
+  let c = nr2char(getchar())
+  if c ==# 'j'
+    return "\<c-x>\<c-n>"
+  elseif c ==# 'k'
+    return "\<c-x>\<c-p>"
+  elseif c ==# 'f'
+    return "\<c-x>\<c-f>"
   else
-    if pumvisible() || !col || getline('.')[col - 1] !~# '\k\|<\|/'
-      return ''
-    else
-      return "\<c-x>\<c-p>"
-    endif
+    return "\<c-x>\<c-o>"
   endif
 endfunction
-inoremap <tab> <c-r>=InsertTabWrapper('omni')<cr><c-r>=InsertTabWrapper('keyword')<cr>
+
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : MyComplete()
 
 " }}}
 " matchit {{{

@@ -32,11 +32,14 @@ let g:clojure_fuzzy_indent_patterns = [
 let g:iced#buffer#stdout#mods = 'vertical'
 let g:iced#buffer#stdout#file = '/tmp/.vim-iced-buffer.clj'
 let g:iced#nrepl#cljs#default_env = 'custom'
-let g:iced#nrepl#cljs#custom#start_code = '(cljs-repl)'
+let g:iced#nrepl#auto#does_switch_session = v:true
 let g:iced#format#rule = {
       \ 'core-let': '[[:block 1]]',
       \ 'merr.core/let': '[[:block 2] [:inner 1]]',
       \ 'clojure.spec.alpha/fdef': '[[:block 1]]',
+      \ 're-frame.core/reg-event-db': '[[:block 1]]',
+      \ 're-frame.core/reg-event-fx': '[[:block 1]]',
+      \ 're-frame.core/reg-sub': '[[:block 1]]',
       \ }
 " let g:iced#format#rule = {
 "    \ 'core-let': [['block', 1]],
@@ -48,6 +51,38 @@ let g:iced#eastwood#option = {
       \ 'exclude-linters': ['implicit-dependencies', 'keyword-typos', 'constant-test'],
       \ }
 let g:iced#lint#message_max_length = 200
+
+function! s:notify(title, body, reporter) abort
+  let q = printf('mutation {notify(title: \"%s\", body: \"%s\", reporter: \"%s\") {result}}',
+       \ a:title, a:body, a:reporter)
+  let q = printf('curl -d "%s" localhost:8443/graphql', q)
+  return q
+endfunction
+
+function! s:tmux_notify(title, body) abort
+  return printf('tmux-notify "%s" "%s"', a:title, a:body)
+endfunction
+
+" function! s:notify_test_finished(param) abort
+"   return s:notify_command(
+"        \ printf('Test %s', a:param['result']),
+"        \ a:param['summary'],
+"        \ 'iced')
+" endfunction
+
+" let g:iced#hook = {
+"      \ 'test_finished': {'type': 'shell',
+"      \                   'exec': {v -> s:notify(printf('Test %s', v.result), v.summary, 'iced')}},
+"      \ 'session_switched': {'type': 'shell',
+"      \                   'exec': {v -> s:notify('Session switched', 'switched to ' . v.session, 'iced')}},
+"      \ }
+
+let g:iced#hook = {
+      \ 'test_finished': {'type': 'shell',
+      \                   'exec': {v -> printf('tmux display-message "Test %s: %s"', v.result, v.summary)}},
+      \ 'session_switched': {'type': 'shell',
+      \                   'exec': {v -> printf('tmux display-message "Session: switch to %s"', v.session)}},
+      \ }
 
 let g:iced_enable_default_key_mappings = v:true
 let g:iced_enable_auto_linting = v:true
