@@ -10,9 +10,7 @@ Plug 'cocopon/iceberg.vim'
 Plug 'cocopon/vaffle.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion'
-Plug 'gregsexton/gitv'
 Plug 'haya14busa/vim-metarepeat'
-Plug 'idanarye/vim-merginal'
 Plug 'inside/vim-search-pulse'
 Plug 'itchyny/lightline.vim'
 Plug 'JuliaEditorSupport/julia-vim'
@@ -23,7 +21,6 @@ Plug 'kana/vim-submode'
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-line'
 Plug 'kana/vim-textobj-user'
-Plug 'lambdalisue/gina.vim'
 Plug 'LeafCage/foldCC.vim'
 Plug 'LeafCage/lastmess.vim'
 Plug 'liquidz/ctrlme.vim'
@@ -38,7 +35,6 @@ Plug 'rhysd/clever-f.vim'
 Plug 'rhysd/vim-color-spring-night'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 't9md/vim-quickhl'
-Plug 'tacahiroy/ctrlp-funky'
 Plug 'thinca/vim-localrc'
 Plug 'thinca/vim-quickrun'
 Plug 'thinca/vim-themis'
@@ -51,49 +47,49 @@ Plug 'tyru/caw.vim'
 Plug 'tyru/open-browser.vim'
 Plug 'vim-jp/vital.vim'
 Plug 'vim-scripts/confluencewiki.vim'
-Plug 'vim-scripts/gtags.vim'
 Plug 'w0ng/vim-hybrid'
+Plug 'ConradIrwin/vim-bracketed-paste'
 
-if has('nvim')
-  Plug 'roxma/nvim-completion-manager'
-  Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
-  "Plug 'neomake/neomake'
-elseif has('channel')
-  Plug 'maralla/completor.vim'
-  " Plug 'Shougo/deoplete.nvim'
-  " Plug 'roxma/nvim-yarp'
-  " Plug 'roxma/vim-hug-neovim-rpc'
-else
-  Plug 'ervandew/supertab'
-endif
+" if has('nvim')
+"   Plug 'roxma/nvim-completion-manager'
+"   Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+" elseif has('channel')
+"   " Plug 'prabirshrestha/asyncomplete.vim'
+"   " Plug 'yami-beta/asyncomplete-omni.vim'
+"   "Plug 'maralla/completor.vim'
+" else
+"   "Plug 'ervandew/supertab'
+" endif
 
 " /default }}}
 " filetype {{{
 
-Plug 'fatih/vim-go',                   {'for': 'go'}
+"Plug 'fatih/vim-go',                   {'for': 'go'}
 Plug 'nelstrom/vim-textobj-rubyblock', {'for': 'ruby'}
 Plug 'thinca/vim-prettyprint',         {'for': 'vim'}
 Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 if has('unix')
-  "" clojure
+  "" Language Server Protocol
+  Plug 'prabirshrestha/async.vim',            {'for': ['go']}
+  Plug 'prabirshrestha/vim-lsp',              {'for': ['go']}
+  Plug 'prabirshrestha/asyncomplete.vim',     {'for': ['go']}
+  Plug 'prabirshrestha/asyncomplete-lsp.vim', {'for': ['go']}
+  Plug 'natebosch/vim-lsc',                   {'for': ['go']}
+  let g:lsp_async_completion = 1
+
+  "" Clojure
   Plug 'guns/vim-sexp',           {'for': ['lisp', 'clojure']}
+  "Plug 'eraserhd/parinfer-rust',  {'for': 'clojure', 'do': 'cargo build --release'}
+  Plug 'kovisoft/paredit',        {'for': ['lisp', 'clojure']}
   Plug 'liquidz/vim-iced',        {'for': 'clojure'}
-  "Plug 'tpope/vim-fireplace',     {'for': 'clojure'}
-  "Plug 'gberenfield/cljfold.vim', {'for': 'clojure'}
+  "
+  " Plug 'tpope/vim-classpath', {'for': 'clojure'}
+  " Plug 'tpope/vim-fireplace', {'for': 'clojure'}
 
-  "Plug 'kotarak/vimpire', {'for': 'clojure'}
-  "Plug 'liquidz/vim-clj-trace',   {'for': 'clojure'}
-  "Plug 'liquidz/vim-clj-buffer',  {'for': 'clojure'}
-  "Plug 'guns/vim-slamhound',      {'for': 'clojure'}
-  "Plug 'venantius/vim-cljfmt',    {'for': 'clojure'}
-  "if has('nvim')
-  "  Plug 'clojure-vim/async-clj-omni', {'for': 'clojure'}
-  "endif
-
-  "" common lisp
+  "" Common Lisp
   Plug 'l04m33/vlime',            {'for': 'lisp', 'rtp': 'vim'}
 
-  "" rust
+  "" Rust
   Plug 'rust-lang/rust.vim',      {'for': 'rust'}
   Plug 'racer-rust/vim-racer',    {'for': 'rust'}
   Plug 'yuratomo/w3m.vim',        {'for': ['lisp', 'rust']}
@@ -156,11 +152,6 @@ nnoremap <Leader>ccc :CtrlPClearCache<CR>
 " =cpsm {{{
 let g:cpsm_query_inverting_delimiter = ' '
 let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
-" }}}
-" =ctrlp-funky {{{
-
-nnoremap <Leader>f :CtrlPFunky<Cr>
-
 " }}}
 " =previm {{{
 
@@ -228,12 +219,6 @@ let g:quickrun_config = {
     \       : executable('ruby') ? 'watchdogs_checker/ruby'
     \       : '',
     \   },
-    \   'watchdogs_checker/fireplace': {
-    \     'runner'      : 'vimscript',
-    \     'exec'        : ':MyReloadWithStringException',
-    \     'outputter'   : 'quickfix',
-    \     'errorformat' : '"%m:(%.%#/%f:%l:%c)"'
-    \   },
     \ }
 
 " }}}
@@ -252,40 +237,6 @@ nmap <LocalLeader>m <Plug>(quickhl-manual-this)
 xmap <LocalLeader>m <Plug>(quickhl-manual-this)
 nmap <LocalLeader>M <Plug>(quickhl-manual-reset)
 xmap <LocalLeader>M <Plug>(quickhl-manual-reset)
-
-" }}}
-" =gina.vim {{{
-
-nnoremap <Leader>gs  :Gina status<CR>
-nnoremap <Leader>gd  :Gina diff<CR>
-nnoremap <Leader>gc  :Gina commit<CR>
-nnoremap <Leader>gb  :Gina branch<CR>
-nnoremap <Leader>gl  :Gina log<CR>
-
-aug MyGinaMapping
-  au!
-  au Filetype gina-* nnoremap <silent> <buffer> q :<C-u>q<CR>
-  au Filetype gina-status nnoremap <buffer> c :Gina commit<CR>
-aug END
-
-" }}}
-" =vim-fugitive {{{
-
-"  nnoremap <Leader>ga  :Gwrite<CR>
-"  nnoremap <Leader>gs  :Gstatus<CR>
-"  nnoremap <Leader>gd  :Gdiff<CR>
-"  nnoremap <Leader>gc  :Gcommit -av<CR>
-"  nnoremap <Leader>go  :Git browse<CR>
-
-" }}}
-" =gitv {{{
-
-"nnoremap <Leader>gl  :Gitv<CR>
-
-" }}}
-" =vim-merginal {{{
-
-"nnoremap <Leader>gb  :Merginal<CR>
 
 " }}}
 " =lightline.vim {{{
@@ -332,49 +283,10 @@ map zz <Plug>(easymotion-prefix)
 let g:EasyMotion_keys='hklyuiopnm,qwertzxcvbasdgjf'
 
 " }}}
-" =gtags.vim {{{
-
-if executable('gtags')
-    nnoremap <Leader>gg :GtagsCursor<CR>
-endif
-
-" }}}
-" =fireplace {{{
-
-"aug VimFireplaceSetting
-"  au!
-"  " vim-ref の K と競合するため再定義
-"  au Filetype clojure nmap <buffer> K <Plug>FireplaceK
-"  " 補完候補を切り替える度に doc を表示するのを無効化する
-"  " チカチカして気持ち悪いため
-"  au Filetype clojure setl completeopt-=preview
-"aug END
-
-" }}}
-" =vimpire {{{
-
-"aug VimFireplaceSetting
-"  au!
-"  " vim-ref の K と競合するため再定義
-"  au Filetype clojure nmap <buffer> K <Plug>FireplaceK
-"aug END
-
-" }}}
-" =vim-clj-buffer {{{
-
-let cljbuf#buffer#mods = 'vertical'
-let cljbuf#test#runner = 'eftest.runner'
-
-" }}}
-" =vim-sayid {{{
-
-let g:enable_sayid_mappings = 0
-
-" }}}
 " =vim-sexp {{{
 
 let g:sexp_filetypes = 'clojure,lisp'
-let g:sexp_enable_insert_mode_mappings = 1
+"let g:sexp_enable_insert_mode_mappings = 1
 let g:sexp_mappings = {
     \ 'sexp_indent': '',
     \ 'sexp_indent_top': '',
@@ -416,6 +328,10 @@ try
   call submode#leave_with('sign_jump', 'n', '', '<Esc>')
   call submode#map('sign_jump', 'n', '', 'n', ':<C-u>IcedJumpToNextSign<CR>')
   call submode#map('sign_jump', 'n', '', 'N', ':<C-u>IcedJumpToPrevSign<CR>')
+
+  call submode#enter_with('window', 'v', '', '<', '<Nop>')
+  call submode#leave_with('window', 'v', '', '<Esc>')
+
 catch
   echo 'submode is not installed'
   PlugInstall vim-submode
@@ -426,27 +342,10 @@ endtry
 
 let g:rainbow_active = 1
 let g:rainbow_conf = {
-		\  'ctermfgs': ['darkmagenta', 'red', 'darkcyan', 'brown', 'darkgreen', 'darkred'],
-		\  'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
-		\  'separately': {'*': 0, 'clojure': {}}}
-
-" }}}
-" =neomake {{{
-
-"if executable('joker')
-"  let g:neomake_clojure_joker_maker = {
-"      \ 'exe': 'joker',
-"      \ 'args': ['--lint', '%:p'],
-"      \ 'errorformat': '%f:%l:%c: %m'
-"      \ }
-"
-"	let g:neomake_clojure_enabled_makers = ['joker']
-"
-"	aug MyNeoMake
-"		au!
-"		au BufWritePost *.clj Neomake
-"	aug END
-"endif
+      \ 'ctermfgs': ['darkmagenta', 'red', 'darkcyan', 'brown', 'darkgreen', 'darkred'],
+      \ 'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+      \ 'separately': {'*': 0, 'clojure': {}}
+      \ }
 
 " }}}
 " =kami {{{
@@ -459,11 +358,22 @@ let g:kami#timestamp_format = '== %s'
 " }}}
 " =completor {{{
 
-let g:completor_auto_trigger = 0
-let g:completor_set_options = 0
-let g:completor_disable_filename = ['clojure']
-let g:completor_complete_options = 'menu'
-let g:completor_clojure_omni_trigger = '[\w!$%&*+/:<=>?@\^_~\-\.#]{2,}'
+" let g:completor_auto_trigger = 0
+" let g:completor_set_options = 0
+" let g:completor_disable_filename = ['clojure']
+" let g:completor_complete_options = 'menu,noselect'
+" let g:completor_clojure_omni_trigger = '[\w!$%&*+/:<=>?@\^_~\-\.#]{2,}'
+"
+" function! s:check_back_space() abort
+"     let col = col('.') - 1
+"     return !col || getline('.')[col - 1]  =~ '\s'
+" endfunction
+"
+" inoremap <silent><expr> <TAB>
+"  \ pumvisible() ? "\<C-n>" :
+"  \ <SID>check_back_space() ? "\<TAB>" :
+"  \ "<C-R>=completor#do('complete')<CR>"
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " }}}
 " =deoplete {{{
@@ -502,11 +412,6 @@ let g:UltiSnipsSnippetDirectories = ['UltiSnips']
 " =rust.vim {{{
 
 let g:rustfmt_autosave = 1
-
-" }}}
-" vim-ctrlp-help {{{
-
-"nnoremap <Leader>h :CtrlPHelp<CR>
 
 " }}}
 " =vim-racer {{{
@@ -573,6 +478,21 @@ let g:lastmess_default_count = 10
 nmap mz <Plug>(lastmess)
 nmap <Leader>mz <Plug>(lastmess)
 
+
+" }}}
+" =vim-lsp {{{
+
+if executable('gopls')
+  aug LspGo
+    au!
+    au User lsp_setup call lsp#register_server({
+          \ 'name': 'go-lang',
+          \ 'cmd': {server_info->['gopls', '-mode', 'stdio']},
+          \ 'whitelist': ['go'],
+          \ })
+    au FileType go setlocal omnifunc=lsp#complete
+  aug END
+endif
 
 " }}}
 " developing plugins {{{

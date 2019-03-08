@@ -256,6 +256,7 @@ aug MyAutoOpenCWindow
 aug END
 
 function! s:clean_extra_spaces() abort
+  if &ft ==# 'help' | return | endif
   let v = winsaveview()
   try
     exec ':%s/\s\+$//ge'
@@ -269,14 +270,14 @@ aug MyAutoDeleteExtraSpaces
   autocmd BufWritePre * call s:clean_extra_spaces()
 aug END
 
-if $TMUX !=# ''
-  augroup titlesettings
-    autocmd!
-    autocmd BufEnter * call system("tmux rename-window " . "'[vim] " . expand("%:t") . "'")
-    autocmd VimLeave * call system("tmux rename-window zsh")
-    autocmd BufEnter * let &titlestring = ' ' . expand("%:t")
-  augroup END
-endif
+" if $TMUX !=# ''
+"   augroup titlesettings
+"     autocmd!
+"     autocmd BufEnter * call system("tmux rename-window " . "'[vim] " . expand("%:t") . "'")
+"     autocmd VimLeave * call system("tmux rename-window zsh")
+"     autocmd BufEnter * let &titlestring = ' ' . expand("%:t")
+"   augroup END
+" endif
 
 " }}}
 " status line {{{
