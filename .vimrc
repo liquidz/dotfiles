@@ -84,6 +84,7 @@ set noequalalways
 set cursorline
 set breakindent
 set nocursorcolumn
+set signcolumn=yes
 augroup cch
   autocmd! cch
   autocmd WinLeave * set nocursorline
