@@ -8,6 +8,7 @@ Plug 'aklt/plantuml-syntax'
 Plug 'cespare/vim-toml'
 Plug 'cocopon/iceberg.vim'
 Plug 'cocopon/vaffle.vim'
+Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'haya14busa/vim-metarepeat'
@@ -48,7 +49,7 @@ Plug 'tyru/open-browser.vim'
 Plug 'vim-jp/vital.vim'
 Plug 'vim-scripts/confluencewiki.vim'
 Plug 'w0ng/vim-hybrid'
-Plug 'ConradIrwin/vim-bracketed-paste'
+Plug 'w0rp/ale'
 
 " if has('nvim')
 "   Plug 'roxma/nvim-completion-manager'
@@ -493,6 +494,11 @@ if executable('gopls')
     au FileType go setlocal omnifunc=lsp#complete
   aug END
 endif
+
+" }}}
+" =ale {{{
+
+let b:ale_linters = {'clojure': ['joker']}
 
 " }}}
 " developing plugins {{{

@@ -85,7 +85,7 @@ let g:iced#hook = {
       \ }
 
 let g:iced_enable_default_key_mappings = v:true
-let g:iced_enable_auto_linting = v:true
+"let g:iced_enable_auto_linting = v:true
 let g:iced_enable_auto_indent = v:true
 let g:iced_sign = {'error': 'E', 'trace': 'T', 'lint': 'L'}
 

@@ -13,4 +13,5 @@ function __tmpl_commands() {
         'ragtime' \
         'clj-web' \
         'cljs' \
+        'cljshell' \
 }

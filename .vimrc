@@ -120,11 +120,14 @@ nnoremap <silent> ss :<C-u>setlocal spell!<CR>
 " }}}
 " mapping {{{
 
-nnoremap <C-j> <Esc>
-cnoremap <C-j> <Esc>
-inoremap <C-j> <Esc>
 inoremap jj <Esc>
 inoremap jk <Esc>
+
+nnoremap <C-k> {
+nnoremap <C-j> }
+cnoremap <C-j> <Esc>
+inoremap <C-j> <Esc>
+vnoremap <C-j> <Esc>
 
 nnoremap zk ^
 nnoremap zp %
@@ -144,8 +147,6 @@ nnoremap <LocalLeader>sh :<C-u>terminal ++close zsh<CR>
 tnoremap zk ^
 tnoremap zl -
 tnoremap zj _
-
-vnoremap <C-j> <Esc>
 
 if !has('nvim')
   tnoremap <Esc> <C-\><C-n>
@@ -179,7 +180,6 @@ inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<Esc>"
 inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
 
 nnoremap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
-nnoremap <silent> <C-j><C-j> :nohlsearch<CR><Esc>
 
 nnoremap <Leader><Leader> :<C-u>Ex<CR>
 nnoremap <C-]> g<C-]>
