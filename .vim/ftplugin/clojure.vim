@@ -34,18 +34,19 @@ let g:iced#buffer#stdout#file = '/tmp/.vim-iced-buffer.clj'
 let g:iced#nrepl#cljs#default_env = 'custom'
 let g:iced#nrepl#auto#does_switch_session = v:true
 let g:iced#format#rule = {
-      \ 'core-let': '[[:block 1]]',
-      \ 'merr.core/let': '[[:block 2] [:inner 1]]',
-      \ 'clojure.spec.alpha/fdef': '[[:block 1]]',
-      \ 're-frame.core/reg-event-db': '[[:block 1]]',
-      \ 're-frame.core/reg-event-fx': '[[:block 1]]',
-      \ 're-frame.core/reg-sub': '[[:block 1]]',
-      \ }
+     \ 'core-let': '[[:block 1]]',
+     \ 'merr.core/let': '[[:block 2] [:inner 1]]',
+     \ 'clojure.spec.alpha/fdef': '[[:block 1]]',
+     \ 're-frame.core/reg-event-db': '[[:block 1]]',
+     \ 're-frame.core/reg-event-fx': '[[:block 1]]',
+     \ 're-frame.core/reg-sub': '[[:block 1]]',
+     \ }
+
+" let g:iced#format#does_overwrite_rules = v:true
 " let g:iced#format#rule = {
-"    \ 'core-let': [['block', 1]],
-"    \ 'merr.core/let': [['block', 2], ['inner', 1]],
-"    \ 'clojure.spec.alpha/fdef': [['block', 1]],
-"    \ }
+"      \ '#"^\w"': '[[:inner 0]]',
+"      \ }
+
 let g:iced#eastwood#option = {
       \ 'linters': ['all'],
       \ 'exclude-linters': ['implicit-dependencies', 'keyword-typos', 'constant-test'],

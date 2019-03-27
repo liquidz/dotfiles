@@ -297,47 +297,23 @@ set laststatus=2
 " }}}
 " omni completion {{{
 
-" function! InsertTabWrapper(type)
-"   let col = col('.') - 1
-"   "omni補完の場合、omini以外にも上下左右の移動もする
-"   if a:type ==# 'omni'
-"     if pumvisible()
-"       return "\<c-n>"
-"     endif
-"     if !col || getline('.')[col - 1] !~# '\k\|<\|/'
-"       return "\<tab>"
-"     elseif exists('&omnifunc') && &omnifunc ==# ''
-"       return "\<c-n>"
-"     else
-"       return "\<c-x>\<c-o>"
-"     endif
-"     "keywordの場合、該当のとき以外は何もしない
-"   else
-"     if pumvisible() || !col || getline('.')[col - 1] !~# '\k\|<\|/'
-"       return ''
-"     else
-"       return "\<c-x>\<c-p>"
-"     endif
-"   endif
-" endfunction
-" inoremap <tab> <c-r>=InsertTabWrapper('omni')<cr><c-r>=InsertTabWrapper('keyword')<cr>
-
 function! MyComplete() abort
   let col = col('.') - 1
   if !col || getline('.')[col - 1] !~# '\k\|<\|/'
     return "\<tab>"
   endif
 
-  let c = nr2char(getchar())
-  if c ==# 'j'
-    return "\<c-x>\<c-n>"
-  elseif c ==# 'k'
-    return "\<c-x>\<c-p>"
-  elseif c ==# 'f'
-    return "\<c-x>\<c-f>"
-  else
-    return "\<c-x>\<c-o>"
-  endif
+  " let c = nr2char(getchar())
+  " if c ==# 'j'
+  "   return "\<c-x>\<c-n>"
+  " elseif c ==# 'k'
+  "   return "\<c-x>\<c-p>"
+  " elseif c ==# 'f'
+  "   return "\<c-x>\<c-f>"
+  " else
+  "   return "\<c-x>\<c-o>"
+  " endif
+  return "\<c-x>\<c-o>"
 endfunction
 
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : MyComplete()
