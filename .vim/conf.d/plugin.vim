@@ -29,6 +29,7 @@ Plug 'liquidz/kami.vim'
 Plug 'liquidz/vim-textobj-value'
 Plug 'luochen1990/rainbow'
 Plug 'mattn/sonictemplate-vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'nixprime/cpsm', {'do': './install.sh'}
 Plug 'osyo-manga/vim-anzu'
 Plug 'previm/previm'
@@ -55,7 +56,6 @@ Plug 'w0rp/ale'
 "   Plug 'roxma/nvim-completion-manager'
 "   Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 " elseif has('channel')
-"   " Plug 'prabirshrestha/asyncomplete.vim'
 "   " Plug 'yami-beta/asyncomplete-omni.vim'
 "   "Plug 'maralla/completor.vim'
 " else
@@ -71,10 +71,10 @@ Plug 'thinca/vim-prettyprint',         {'for': 'vim'}
 Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 if has('unix')
   "" Language Server Protocol
-  Plug 'prabirshrestha/async.vim',            {'for': ['go']}
-  Plug 'prabirshrestha/vim-lsp',              {'for': ['go']}
-  Plug 'prabirshrestha/asyncomplete.vim',     {'for': ['go']}
-  Plug 'prabirshrestha/asyncomplete-lsp.vim', {'for': ['go']}
+  " Plug 'prabirshrestha/async.vim',            {'for': ['go']}
+  " Plug 'prabirshrestha/vim-lsp',              {'for': ['go']}
+  " Plug 'prabirshrestha/asyncomplete.vim',     {'for': ['go']}
+  " Plug 'prabirshrestha/asyncomplete-lsp.vim', {'for': ['go']}
   Plug 'natebosch/vim-lsc',                   {'for': ['go']}
   let g:lsp_async_completion = 1
 
@@ -82,8 +82,8 @@ if has('unix')
   Plug 'guns/vim-sexp',           {'for': ['lisp', 'clojure']}
   "Plug 'eraserhd/parinfer-rust',  {'for': 'clojure', 'do': 'cargo build --release'}
   Plug 'kovisoft/paredit',        {'for': ['lisp', 'clojure']}
+
   Plug 'liquidz/vim-iced',        {'for': 'clojure'}
-  "
   " Plug 'tpope/vim-classpath', {'for': 'clojure'}
   " Plug 'tpope/vim-fireplace', {'for': 'clojure'}
 
@@ -144,10 +144,9 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtCurRight()'  : ['<c-f>', '<right>'],
   \ 'PrtClearCache()': ['<c-l>'],
   \ }
-nnoremap <Leader>ct  :CtrlPTag<CR>
-nnoremap <Leader>bb  :CtrlPBuffer<CR>
-nnoremap <Leader>cd  :CtrlPGonosen<CR>
-nnoremap <Leader>ccc :CtrlPClearCache<CR>
+nnoremap <LocalLeader>pb  :CtrlPBuffer<CR>
+nnoremap <LocalLeader>pq  :CtrlPBuffer<CR>
+nnoremap <LocalLeader>pcc :CtrlPClearCache<CR>
 
 " }}}
 " =cpsm {{{
@@ -193,6 +192,10 @@ let g:quickrun_config = {
     \   },
     \   'clojure': {
     \     'command': 'lumo',
+    \     'exec'   : '%c %s'
+    \   },
+    \   'tla': {
+    \     'command': 'tlc',
     \     'exec'   : '%c %s'
     \   },
     \   'julia': {
@@ -498,7 +501,21 @@ endif
 " }}}
 " =ale {{{
 
-let b:ale_linters = {'clojure': ['joker']}
+let b:ale_linters = {'clojure': ['clj-kondo']}
+
+" }}}
+" =coc.nvim {{{
+
+function! s:coc_check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1] =~# '\s'
+endfunction
+
+iunmap <expr><tab>
+inoremap <expr><tab>
+      \ pumvisible() ? "\<c-n>" :
+      \ <SID>coc_check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
 
 " }}}
 " developing plugins {{{

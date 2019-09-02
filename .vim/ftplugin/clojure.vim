@@ -52,6 +52,7 @@ let g:iced#eastwood#option = {
       \ 'exclude-linters': ['implicit-dependencies', 'keyword-typos', 'constant-test'],
       \ }
 let g:iced#lint#message_max_length = 200
+let g:iced#grep#prg = 'git grep -I --line-number --no-color'
 
 function! s:notify(title, body, reporter) abort
   let q = printf('mutation {notify(title: \"%s\", body: \"%s\", reporter: \"%s\") {result}}',
@@ -103,6 +104,7 @@ aug MyClojureSetting
   au FileType clojure inoremap <buffer> >> ->
 
   au FileType clojure nmap <buffer> tt <Plug>(iced_toggle_src_and_test)
+  au FileType clojure nmap <buffer> <C-l><C-l><C-l> <Plug>(iced_clean_all)
   au FileType clojure nnoremap <buffer> <Leader>go :<C-u>IcedEvalRepl (go)<CR>
   au FileType clojure nnoremap <buffer> <Leader>stop :<C-u>IcedEvalRepl (stop)<CR>
   au FileType clojure nnoremap <buffer> <Leader>Go :<C-u>IcedEvalRepl (reset)<CR>

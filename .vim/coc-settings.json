@@ -1,0 +1,6 @@
+{
+    "coc.source.iced.enable": true,
+    "suggest.timeout": 500,
+    "suggest.minTriggerInputLength": 2,
+    "suggest.autoTrigger": "trigger"
+}
