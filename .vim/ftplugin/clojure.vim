@@ -30,7 +30,8 @@ let g:clojure_fuzzy_indent_patterns = [
     \ ]
 
 let g:iced#buffer#stdout#mods = 'vertical'
-let g:iced#buffer#stdout#file = '/tmp/.vim-iced-buffer.clj'
+"let g:iced#buffer#stdout#file = '/tmp/.vim-iced-buffer.clj'
+let g:iced#buffer#stdout#max_line = 512
 let g:iced#nrepl#cljs#default_env = 'custom'
 let g:iced#nrepl#auto#does_switch_session = v:true
 let g:iced#format#rule = {
@@ -118,6 +119,9 @@ aug MyClojureSetting
 
   au FileType qf nnoremap <buffer> q :<C-u>q<CR>
 
+  au FileType clojure nmap <buffer> <Leader>eae <Plug>(iced_eval_and_tap)<Plug>(sexp_outer_list)``
+  au FileType clojure nmap <buffer> <Leader>eat <Plug>(iced_eval_and_tap)<Plug>(sexp_outer_top_list)``
+
   "" vim-sexp
   au FileType clojure nmap <silent><buffer> <LocalLeader>kk <Plug>(sexp_swap_list_backward)
   au FileType clojure xmap <silent><buffer> <LocalLeader>kk <Plug>(sexp_swap_list_backward)
@@ -127,4 +131,10 @@ aug MyClojureSetting
   au FileType clojure xmap <silent><buffer> <LocalLeader>kh <Plug>(sexp_swap_element_backward)
   au FileType clojure nmap <silent><buffer> <LocalLeader>kl <Plug>(sexp_swap_element_forward)
   au FileType clojure xmap <silent><buffer> <LocalLeader>kl <Plug>(sexp_swap_element_forward)
+
+  "" vim-iced-kaocha
+  au FileType clojure nmap <silent><buffer> <Leader>ktt <Plug>(iced_kaocha_test_under_cursor)
+  au FileType clojure nmap <silent><buffer> <Leader>ktn <Plug>(iced_kaocha_test_ns)
+  au FileType clojure nmap <silent><buffer> <Leader>ktr <Plug>(iced_kaocha_test_redo)
+  au FileType clojure nmap <silent><buffer> <Leader>ktl <Plug>(iced_kaocha_test_rerun_last)
 aug END

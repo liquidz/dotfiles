@@ -23,13 +23,12 @@ Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-line'
 Plug 'kana/vim-textobj-user'
 Plug 'LeafCage/foldCC.vim'
-Plug 'LeafCage/lastmess.vim'
 Plug 'liquidz/ctrlme.vim'
 Plug 'liquidz/kami.vim'
 Plug 'liquidz/vim-textobj-value'
 Plug 'luochen1990/rainbow'
 Plug 'mattn/sonictemplate-vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'nixprime/cpsm', {'do': './install.sh'}
 Plug 'osyo-manga/vim-anzu'
 Plug 'previm/previm'
@@ -50,7 +49,7 @@ Plug 'tyru/open-browser.vim'
 Plug 'vim-jp/vital.vim'
 Plug 'vim-scripts/confluencewiki.vim'
 Plug 'w0ng/vim-hybrid'
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 
 " if has('nvim')
 "   Plug 'roxma/nvim-completion-manager'
@@ -476,14 +475,6 @@ xmap <LocalLeader>g <Plug>(caw:prefix)
 let g:sonictemplate_vim_template_dir = '$HOME/.vim/template'
 
 " }}}
-" =lastmess {{{
-
-let g:lastmess_default_count = 10
-nmap mz <Plug>(lastmess)
-nmap <Leader>mz <Plug>(lastmess)
-
-
-" }}}
 " =vim-lsp {{{
 
 if executable('gopls')
@@ -501,21 +492,22 @@ endif
 " }}}
 " =ale {{{
 
+let g:ale_lint_on_text_changed = 'never'
 let b:ale_linters = {'clojure': ['clj-kondo']}
 
 " }}}
 " =coc.nvim {{{
 
-function! s:coc_check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1] =~# '\s'
-endfunction
-
-iunmap <expr><tab>
-inoremap <expr><tab>
-      \ pumvisible() ? "\<c-n>" :
-      \ <SID>coc_check_back_space() ? "\<Tab>" :
-      \ coc#refresh()
+" function! s:coc_check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1] =~# '\s'
+" endfunction
+"
+" iunmap <expr><tab>
+" inoremap <expr><tab>
+"      \ pumvisible() ? "\<c-n>" :
+"      \ <SID>coc_check_back_space() ? "\<Tab>" :
+"      \ coc#refresh()
 
 " }}}
 " developing plugins {{{

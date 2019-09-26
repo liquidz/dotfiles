@@ -130,6 +130,8 @@ cnoremap <C-j> <Esc>
 inoremap <C-j> <Esc>
 vnoremap <C-j> <Esc>
 
+nnoremap mz :<C-u>10messages<CR>
+
 nnoremap zk ^
 nnoremap zp %
 nnoremap zh 0
@@ -185,6 +187,7 @@ nnoremap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
 nnoremap <Leader><Leader> :<C-u>Ex<CR>
 nnoremap <C-]> g<C-]>
 
+" <Nul> means Ctrl+Space in terminal
 nnoremap <Nul> za
 if has('win32')
   nnoremap <C-Space> za
@@ -346,6 +349,9 @@ let g:netrw_alto = &spr
 
 set wildignore=*.o,*.bk,*.org,*.exe,*.so
     \,*.dll,*.swp,*.zip,*.pyc,.gitkeep
+
+set grepprg=git\ grep\ --no-index\ -I\ --line-number\ --no-color
+
 " }}}
 " load conf.d {{{
 
