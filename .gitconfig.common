@@ -42,7 +42,7 @@
 	refs    = !       none
 	refs    = B       ?git checkout -b %(promptBranchName:)
 	refs    = c       ?git checkout %(branch)
-	refs    = C       ?git checkout -b %(branch) origin/%(branch)
+	refs    = C       ?git checkout -b %(branch) %(remote)/%(branch)
 	refs    = F       ?git fetch %(remote)
 	refs    = P       ?!git push -f %(remote) %(branch)
 	refs    = p       ?!git push -u %(remote) %(branch)
