@@ -54,6 +54,7 @@ let g:iced#eastwood#option = {
       \ }
 let g:iced#lint#message_max_length = 200
 let g:iced#grep#prg = 'git grep -I --line-number --no-color'
+let g:iced#clap#options = ['++externalfilter=fzf', '+async']
 
 function! s:notify(title, body, reporter) abort
   let q = printf('mutation {notify(title: \"%s\", body: \"%s\", reporter: \"%s\") {result}}',

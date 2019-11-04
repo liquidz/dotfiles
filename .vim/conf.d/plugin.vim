@@ -5,6 +5,9 @@ call plug#begin('~/.vim/repos')
 " default {{{
 
 Plug 'aklt/plantuml-syntax'
+
+"Plug 'liuchengxu/vim-clap'
+
 Plug 'cespare/vim-toml'
 Plug 'cocopon/iceberg.vim'
 Plug 'cocopon/vaffle.vim'
@@ -70,11 +73,10 @@ Plug 'thinca/vim-prettyprint',         {'for': 'vim'}
 Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 if has('unix')
   "" Language Server Protocol
-  " Plug 'prabirshrestha/async.vim',            {'for': ['go']}
-  " Plug 'prabirshrestha/vim-lsp',              {'for': ['go']}
-  " Plug 'prabirshrestha/asyncomplete.vim',     {'for': ['go']}
-  " Plug 'prabirshrestha/asyncomplete-lsp.vim', {'for': ['go']}
-  Plug 'natebosch/vim-lsc',                   {'for': ['go']}
+  Plug 'prabirshrestha/async.vim',            {'for': ['vim']}
+  Plug 'prabirshrestha/vim-lsp',              {'for': ['vim']}
+  Plug 'prabirshrestha/asyncomplete.vim',     {'for': ['vim']}
+  Plug 'prabirshrestha/asyncomplete-lsp.vim', {'for': ['vim']}
   let g:lsp_async_completion = 1
 
   "" Clojure
@@ -489,6 +491,35 @@ if executable('gopls')
   aug END
 endif
 
+if executable('vim-language-server')
+  function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1] =~# '\s'
+  endfunction
+
+  aug LspVimScript
+    au!
+    au User lsp_setup call lsp#register_server({
+          \ 'name': 'vim-language-server',
+          \ 'cmd': {server_info->['vim-language-server', '--stdio']},
+          \ 'whitelist': ['vim'],
+          \ })
+    "au FileType vim setlocal omnifunc=lsp#complete
+    au FileType vim nnoremap <C-]> :<C-u>LspDefinition<CR>
+    au FileType vim inoremap <silent><expr> <TAB>
+          \ pumvisible() ? "\<C-n>" :
+          \ <SID>check_back_space() ? "\<TAB>" :
+          \ asyncomplete#force_refresh()
+    au FileType vim inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+    "au FileType vim inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+    au FileType vim nnoremap K :<C-u>LspHover<CR>
+  aug END
+endif
+
+let g:lsp_fold_enabled = 0
+let g:asyncomplete_auto_popup = 0
+
+
 " }}}
 " =ale {{{
 
@@ -508,6 +539,12 @@ let b:ale_linters = {'clojure': ['clj-kondo']}
 "      \ pumvisible() ? "\<c-n>" :
 "      \ <SID>coc_check_back_space() ? "\<Tab>" :
 "      \ coc#refresh()
+
+" }}}
+" =vim-clap {{{
+
+" nnoremap <C-p> :<C-u>Clap rg_root_files ++externalfilter=fzf +async<CR>
+" let g:clap_popup_input_delay = 1000
 
 " }}}
 " developing plugins {{{
