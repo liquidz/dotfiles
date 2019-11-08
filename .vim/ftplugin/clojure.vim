@@ -99,6 +99,8 @@ let g:iced_sign = {'error': 'E', 'trace': 'T', 'lint': 'L'}
 aug MyClojureSetting
   au!
 
+  au VimEnter * call iced#nrepl#auto_connect()
+
   au FileType clojure nnoremap <buffer> HH :lprevious<CR>
   au FileType clojure nnoremap <buffer> LL :lnext<CR>
 
@@ -122,6 +124,9 @@ aug MyClojureSetting
 
   au FileType clojure nmap <buffer> <Leader>eae <Plug>(iced_eval_and_tap)<Plug>(sexp_outer_list)``
   au FileType clojure nmap <buffer> <Leader>eat <Plug>(iced_eval_and_tap)<Plug>(sexp_outer_top_list)``
+
+  au FileType clojure nmap <buffer> <Leader>ere <Plug>(iced_eval_and_replace)<Plug>(sexp_outer_list)``
+  au FileType clojure nmap <buffer> <Leader>ert <Plug>(iced_eval_and_replace)<Plug>(sexp_outer_top_list)``
 
   "" vim-sexp
   au FileType clojure nmap <silent><buffer> <LocalLeader>kk <Plug>(sexp_swap_list_backward)

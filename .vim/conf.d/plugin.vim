@@ -6,13 +6,15 @@ call plug#begin('~/.vim/repos')
 
 Plug 'aklt/plantuml-syntax'
 
-"Plug 'liuchengxu/vim-clap'
+Plug 't9md/vim-choosewin'
+Plug 'kshenoy/vim-signature'
 
 Plug 'cespare/vim-toml'
 Plug 'cocopon/iceberg.vim'
 Plug 'cocopon/vaffle.vim'
+"Plug 'justinmk/vim-dirvish'
 Plug 'ConradIrwin/vim-bracketed-paste'
-Plug 'ctrlpvim/ctrlp.vim'
+
 Plug 'easymotion/vim-easymotion'
 Plug 'haya14busa/vim-metarepeat'
 Plug 'inside/vim-search-pulse'
@@ -32,7 +34,6 @@ Plug 'liquidz/vim-textobj-value'
 Plug 'luochen1990/rainbow'
 Plug 'mattn/sonictemplate-vim'
 "Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'nixprime/cpsm', {'do': './install.sh'}
 Plug 'osyo-manga/vim-anzu'
 Plug 'previm/previm'
 Plug 'rhysd/clever-f.vim'
@@ -53,6 +54,13 @@ Plug 'vim-jp/vital.vim'
 Plug 'vim-scripts/confluencewiki.vim'
 Plug 'w0ng/vim-hybrid'
 Plug 'dense-analysis/ale'
+
+if has('nvim')
+  Plug 'liuchengxu/vim-clap'
+else
+  Plug 'ctrlpvim/ctrlp.vim'
+  Plug 'nixprime/cpsm', {'do': './install.sh'}
+endif
 
 " if has('nvim')
 "   Plug 'roxma/nvim-completion-manager'
@@ -145,22 +153,15 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtCurRight()'  : ['<c-f>', '<right>'],
   \ 'PrtClearCache()': ['<c-l>'],
   \ }
+
 nnoremap <LocalLeader>pb  :CtrlPBuffer<CR>
 nnoremap <LocalLeader>pq  :CtrlPBuffer<CR>
 nnoremap <LocalLeader>pcc :CtrlPClearCache<CR>
 
-" }}}
-" =cpsm {{{
-let g:cpsm_query_inverting_delimiter = ' '
-let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
-" }}}
-" =previm {{{
-
-let g:previm_open_cmd = ''  " set empty to use open-browser.vim
-aug PrevimSettings
-  au!
-  au BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
-aug END
+if exists('*cpsm#CtrlPMatch')
+  let g:cpsm_query_inverting_delimiter = ' '
+  let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
+endif
 
 " }}}
 " =quickrun {{{
@@ -229,7 +230,13 @@ let g:quickrun_config = {
 " }}}
 " =previm {{{
 
-let g:previm_open_cmd = ''  " set empty to use open-browser.vim
+if has('unix')
+  let g:previm_open_cmd = 'env DISPLAY=:0 xdg-open'
+else
+  " set empty to use open-browser.vim
+  let g:previm_open_cmd = ''
+endif
+
 aug PrevimSettings
   au!
   au BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
@@ -451,8 +458,22 @@ function! s:open_vaffle_current_dir() abort
 endfunction
 command! VaffleCurrentDir call s:open_vaffle_current_dir()
 
-"let g:vaffle_auto_cd = 1
+let g:vaffle_auto_cd = 1
 nnoremap <Leader><Leader> :<C-u>VaffleCurrentDir<CR>
+
+" function! s:open_dirvish_current_dir() abort
+"   let dir = expand('%:h')
+"   execute printf(':Dirvish %s', dir)
+" endfunction
+" command! DirvishCurrentDir call s:open_dirvish_current_dir()
+"
+"nnoremap <Leader><Leader> :<C-u>DirvishCurrentDir<CR>
+" aug MyDirvishSetting
+"   au!
+"   au FileType dirvish nmap <buffer> l <CR>
+"   au FileType dirvish nmap <buffer> h <Plug>(dirvish_up)
+"   au FileType dirvish nmap <buffer> q <Plug>(dirvish_quit)
+" aug END
 
 " }}}
 " =vlime {{{
@@ -543,8 +564,22 @@ let b:ale_linters = {'clojure': ['clj-kondo']}
 " }}}
 " =vim-clap {{{
 
-" nnoremap <C-p> :<C-u>Clap rg_root_files ++externalfilter=fzf +async<CR>
-" let g:clap_popup_input_delay = 1000
+if has('nvim')
+  nnoremap <C-p> :<C-u>Clap rg_root_files ++externalfilter=fzf +async<CR>
+endif
+
+" }}}
+" =quickpick {{{
+
+"let g:quickpick_files_command = 'rg --files --hidden'
+
+
+
+" }}}
+" =choosewin {{{
+
+nmap - <Plug>(choosewin)
+let g:choosewin_overlay_enable = 1
 
 " }}}
 " developing plugins {{{
