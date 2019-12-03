@@ -5,14 +5,14 @@ call plug#begin('~/.vim/repos')
 " default {{{
 
 Plug 'aklt/plantuml-syntax'
+Plug 'skanehira/translate.vim'
 
 Plug 't9md/vim-choosewin'
 Plug 'kshenoy/vim-signature'
 
 Plug 'cespare/vim-toml'
 Plug 'cocopon/iceberg.vim'
-Plug 'cocopon/vaffle.vim'
-"Plug 'justinmk/vim-dirvish'
+Plug 'wadackel/vim-dogrun'
 Plug 'ConradIrwin/vim-bracketed-paste'
 
 Plug 'easymotion/vim-easymotion'
@@ -33,7 +33,6 @@ Plug 'liquidz/kami.vim'
 Plug 'liquidz/vim-textobj-value'
 Plug 'luochen1990/rainbow'
 Plug 'mattn/sonictemplate-vim'
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'osyo-manga/vim-anzu'
 Plug 'previm/previm'
 Plug 'rhysd/clever-f.vim'
@@ -53,7 +52,7 @@ Plug 'tyru/open-browser.vim'
 Plug 'vim-jp/vital.vim'
 Plug 'vim-scripts/confluencewiki.vim'
 Plug 'w0ng/vim-hybrid'
-Plug 'dense-analysis/ale'
+"Plug 'dense-analysis/ale'
 
 if has('nvim')
   Plug 'liuchengxu/vim-clap'
@@ -62,36 +61,22 @@ else
   Plug 'nixprime/cpsm', {'do': './install.sh'}
 endif
 
-" if has('nvim')
-"   Plug 'roxma/nvim-completion-manager'
-"   Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
-" elseif has('channel')
-"   " Plug 'yami-beta/asyncomplete-omni.vim'
-"   "Plug 'maralla/completor.vim'
-" else
-"   "Plug 'ervandew/supertab'
-" endif
-
 " /default }}}
 " filetype {{{
 
-"Plug 'fatih/vim-go',                   {'for': 'go'}
 Plug 'nelstrom/vim-textobj-rubyblock', {'for': 'ruby'}
 Plug 'thinca/vim-prettyprint',         {'for': 'vim'}
 Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 if has('unix')
-  "" Language Server Protocol
-  Plug 'prabirshrestha/async.vim',            {'for': ['vim']}
-  Plug 'prabirshrestha/vim-lsp',              {'for': ['vim']}
-  Plug 'prabirshrestha/asyncomplete.vim',     {'for': ['vim']}
-  Plug 'prabirshrestha/asyncomplete-lsp.vim', {'for': ['vim']}
-  let g:lsp_async_completion = 1
+  if !has('nvim')
+    Plug 'prabirshrestha/async.vim', {'for': ['vim']}
+    Plug 'prabirshrestha/vim-lsp',   {'for': ['vim']}
+  endif
 
   "" Clojure
   Plug 'guns/vim-sexp',           {'for': ['lisp', 'clojure']}
   "Plug 'eraserhd/parinfer-rust',  {'for': 'clojure', 'do': 'cargo build --release'}
   Plug 'kovisoft/paredit',        {'for': ['lisp', 'clojure']}
-
   Plug 'liquidz/vim-iced',        {'for': 'clojure'}
   " Plug 'tpope/vim-classpath', {'for': 'clojure'}
   " Plug 'tpope/vim-fireplace', {'for': 'clojure'}
@@ -104,6 +89,9 @@ if has('unix')
   Plug 'racer-rust/vim-racer',    {'for': 'rust'}
   Plug 'yuratomo/w3m.vim',        {'for': ['lisp', 'rust']}
   Plug 'rhysd/rust-doc.vim',      {'for': 'rust'}
+
+  "" Lua
+  Plug 'rhysd/reply.vim', {'for': 'lua'}
 endif
 
 " /filetype }}}
@@ -111,9 +99,14 @@ call plug#end()
 
 " =colorscheme {{{
 
-set background=dark
+set termguicolors
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
+"set background=dark
 "colorscheme hybrid
 colorscheme iceberg
+"colorscheme dogrun
 "colorscheme spring-night
 
 " }}}
@@ -192,10 +185,6 @@ let g:quickrun_config = {
     \     'exec'      : '%c %o',
     \     'outputter' : 'error:buffer:quickfix'
     \   },
-    \   'clojure': {
-    \     'command': 'lumo',
-    \     'exec'   : '%c %s'
-    \   },
     \   'tla': {
     \     'command': 'tlc',
     \     'exec'   : '%c %s'
@@ -263,14 +252,13 @@ function! MyFugitive()
 endfunction
 
 let g:lightline = {
-    \ 'colorscheme': 'wombat',
+    \ 'colorscheme': 'iceberg',
     \ 'active': {
     \   'left': [['mode', 'paste'],
     \            ['fugitive', 'readonly', 'modified']],
     \   'right': [['lineinfo'], ['percent'], ['fileformat', 'fileencoding', 'filetype'], ['anzu'], ['iced']]
     \ },
     \ 'component_function': {
-    \   'ale': 'ALEGetStatusLine',
     \   'fugitive': 'MyFugitive',
     \   'anzu': 'anzu#search_status',
     \   'iced': 'iced#status',
@@ -291,7 +279,7 @@ let g:easy_align_delimiters = {
 " }}}
 " =vim-easymotion {{{
 
-map zz <Plug>(easymotion-prefix)
+map e <Plug>(easymotion-prefix)
 let g:EasyMotion_keys='hklyuiopnm,qwertzxcvbasdgjf'
 
 " }}}
@@ -450,32 +438,6 @@ let g:rust_doc#vim_open_cmd = 'W3mLocalVSplit'
 let g:rust_doc#downloaded_rust_doc_dir = '~/.multirust/toolchains/nightly-x86_64-unknown-linux-gnu'
 
 " }}}
-" =vaffle.vim {{{
-
-function! s:open_vaffle_current_dir() abort
-  let dir = expand('%:h')
-  execute printf(':Vaffle %s', dir)
-endfunction
-command! VaffleCurrentDir call s:open_vaffle_current_dir()
-
-let g:vaffle_auto_cd = 1
-nnoremap <Leader><Leader> :<C-u>VaffleCurrentDir<CR>
-
-" function! s:open_dirvish_current_dir() abort
-"   let dir = expand('%:h')
-"   execute printf(':Dirvish %s', dir)
-" endfunction
-" command! DirvishCurrentDir call s:open_dirvish_current_dir()
-"
-"nnoremap <Leader><Leader> :<C-u>DirvishCurrentDir<CR>
-" aug MyDirvishSetting
-"   au!
-"   au FileType dirvish nmap <buffer> l <CR>
-"   au FileType dirvish nmap <buffer> h <Plug>(dirvish_up)
-"   au FileType dirvish nmap <buffer> q <Plug>(dirvish_quit)
-" aug END
-
-" }}}
 " =vlime {{{
 
 let g:vlime_window_settings = {
@@ -496,50 +458,6 @@ xmap <LocalLeader>g <Plug>(caw:prefix)
 " =sonictemplate {{{
 
 let g:sonictemplate_vim_template_dir = '$HOME/.vim/template'
-
-" }}}
-" =vim-lsp {{{
-
-if executable('gopls')
-  aug LspGo
-    au!
-    au User lsp_setup call lsp#register_server({
-          \ 'name': 'go-lang',
-          \ 'cmd': {server_info->['gopls', '-mode', 'stdio']},
-          \ 'whitelist': ['go'],
-          \ })
-    au FileType go setlocal omnifunc=lsp#complete
-  aug END
-endif
-
-if executable('vim-language-server')
-  function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1] =~# '\s'
-  endfunction
-
-  aug LspVimScript
-    au!
-    au User lsp_setup call lsp#register_server({
-          \ 'name': 'vim-language-server',
-          \ 'cmd': {server_info->['vim-language-server', '--stdio']},
-          \ 'whitelist': ['vim'],
-          \ })
-    "au FileType vim setlocal omnifunc=lsp#complete
-    au FileType vim nnoremap <C-]> :<C-u>LspDefinition<CR>
-    au FileType vim inoremap <silent><expr> <TAB>
-          \ pumvisible() ? "\<C-n>" :
-          \ <SID>check_back_space() ? "\<TAB>" :
-          \ asyncomplete#force_refresh()
-    au FileType vim inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-    "au FileType vim inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-    au FileType vim nnoremap K :<C-u>LspHover<CR>
-  aug END
-endif
-
-let g:lsp_fold_enabled = 0
-let g:asyncomplete_auto_popup = 0
-
 
 " }}}
 " =ale {{{
@@ -580,6 +498,111 @@ endif
 
 nmap - <Plug>(choosewin)
 let g:choosewin_overlay_enable = 1
+
+" }}}
+" =asyncomplete.vim {{{
+
+" let g:asyncomplete_auto_popup = 0
+"
+" function! s:check_back_space() abort
+" 	let col = col('.') - 1
+" 	return !col || getline('.')[col - 1] =~# '\s'
+" endfunction
+"
+" inoremap <silent><expr> <TAB>
+"			\ pumvisible() ? "\<C-n>" :
+"			\ <SID>check_back_space() ? "\<TAB>" :
+"			\ asyncomplete#force_refresh()
+" inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+" }}}
+" =LanguageServer {{{
+
+if has('nvim')
+  " =neovim {{{
+  if executable('vim-language-server')
+    call lsp#add_filetype_config({
+          \ 'filetype': 'vim',
+          \ 'name': 'vim-language-server',
+          \ 'cmd': 'vim-language-server --stdio',
+          \ })
+    set omnifunc=lsp#omnifunc
+    nnoremap <silent> <buffer> K :call lsp#text_document_hover()<CR>
+    nnoremap <silent> <buffer> <C-]> :call lsp#text_document_definition()<CR>
+  endif
+  " }}}
+else
+  " =vim {{{
+  let g:lsp_signs_enabled = 1
+  let g:lsp_diagnostics_echo_cursor = 1
+
+  if executable('efm-langserver')
+    aug LspEfm
+      au!
+      au User lsp_setup call lsp#register_server({
+            \ 'name': 'efm-langserver',
+            \ 'cmd': {server_info->['efm-langserver', '-c=/home/uochan/.config/efm-langserver/config.yaml']},
+            \ 'whitelist': ['vim'],
+            \ })
+    aug END
+  endif
+
+  if executable('gopls')
+    aug LspGo
+      au!
+      au User lsp_setup call lsp#register_server({
+            \ 'name': 'go-lang',
+            \ 'cmd': {server_info->['gopls', '-mode', 'stdio']},
+            \ 'whitelist': ['go'],
+            \ })
+      au FileType go setlocal omnifunc=lsp#complete
+    aug END
+  endif
+
+  if executable('vim-language-server')
+    aug LspVimScript
+      au!
+      au User lsp_setup call lsp#register_server({
+            \ 'name': 'vim-language-server',
+            \ 'cmd': {server_info->['vim-language-server', '--stdio']},
+            \ 'whitelist': ['vim'],
+            \ })
+      "au FileType vim setlocal omnifunc=lsp#complete
+      au FileType vim nnoremap <C-]> :<C-u>LspDefinition<CR>
+      au FileType vim nnoremap K :<C-u>LspHover<CR>
+    aug END
+  endif
+  " }}}
+endif
+
+" }}}
+" =translate.vim {{{
+
+let g:translate_source = 'en'
+let g:translate_target = 'ja'
+
+xmap <LocalLeader>en <Plug>(VTranslate)
+xmap <LocalLeader>ja <Plug>(VTranslateBang)
+
+" }}}
+" dispatch by hints {{{
+
+let s:fixme = {
+      \ 'n': {'cmd': ':Translate', 'text': 'Translate'},
+      \ 'N': {'cmd': ':Translate!', 'text': 'Translate!'},
+      \ }
+
+let g:hint#config = {
+      \ 'b': {'command': ':CtrlPBuffer'},
+      \ 'q': {'command': ':CtrlPQuickfix'},
+      \ 'tb': {'command': ':IcedBrowseTapped'},
+      \ 'tc': {'command': ':IcedClearTapped'},
+      \ }
+let g:hint#merge_default_config = v:true
+
+nnoremap <expr><LocalLeader><LocalLeader> hint#show()
+inoremap <expr><LocalLeader><LocalLeader> hint#show()
+"inoremap <expr><tab> pumvisible() ? "\<c-n>" : <SID>hint_completions()
 
 " }}}
 " developing plugins {{{

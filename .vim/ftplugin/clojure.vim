@@ -96,10 +96,18 @@ let g:iced_sign = {'error': 'E', 'trace': 'T', 'lint': 'L'}
 " call arpeggio#load()
 " call arpeggio#map('n', '', 0, 'jk', '<LocalLeader>p')
 
+function! s:auto_connect() abort
+  if expand('%:t') ==# 'project.clj' || expand('%:e') ==# 'edn'
+    return
+  endif
+  return iced#nrepl#auto_connect()
+endfunction
+
 aug MyClojureSetting
   au!
 
-  au VimEnter * call iced#nrepl#auto_connect()
+  "au VimEnter * call iced#nrepl#auto_connect()
+  au VimEnter * call s:auto_connect()
 
   au FileType clojure nnoremap <buffer> HH :lprevious<CR>
   au FileType clojure nnoremap <buffer> LL :lnext<CR>
@@ -107,11 +115,13 @@ aug MyClojureSetting
   au FileType clojure imap <silent><buffer> <C-h> <Plug>(sexp_insert_backspace)
   au FileType clojure inoremap <buffer> >> ->
 
-  au FileType clojure nmap <buffer> tt <Plug>(iced_toggle_src_and_test)
+  au FileType clojure nmap <buffer> tt <Plug>(iced_cycle_src_and_test)
   au FileType clojure nmap <buffer> <C-l><C-l><C-l> <Plug>(iced_clean_all)
-  au FileType clojure nnoremap <buffer> <Leader>go :<C-u>IcedEvalRepl (go)<CR>
-  au FileType clojure nnoremap <buffer> <Leader>stop :<C-u>IcedEvalRepl (stop)<CR>
-  au FileType clojure nnoremap <buffer> <Leader>Go :<C-u>IcedEvalRepl (reset)<CR>
+  "au FileType clojure nnoremap <buffer> <Leader>go :<C-u>IcedEvalRepl (go)<CR>
+  au FileType clojure nnoremap <buffer> <Leader>go :<C-u>IcedEval (user/go)<CR>
+  au FileType clojure nnoremap <buffer> <Leader>stop :<C-u>IcedEval (user/stop)<CR>
+  au FileType clojure nnoremap <buffer> <Leader>Go :<C-u>IcedEval (user/reset)<CR>
+  au FileType clojure nmap <buffer> <Leader>gg <Plug>(iced_grep)
 
   au FileType clojure nmap <buffer> <Leader>jss :<C-u>IcedStartCljsRepl<CR>
   au FileType clojure nmap <buffer> <Leader>jsq :<C-u>IcedQuitCljsRepl<CR>
