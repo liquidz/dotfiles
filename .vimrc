@@ -167,6 +167,9 @@ endif
 nnoremap > %
 nnoremap < %
 
+" command-line window を開く
+cnoremap <C-e> <C-f>
+" カーソル移動など
 cnoremap <C-f> <Right>
 cnoremap <C-b> <Left>
 cnoremap <C-d> <Delete>

@@ -4,17 +4,12 @@ let g:dotfiles = $HOME.'/src/github.com/liquidz/dotfiles'
 call plug#begin('~/.vim/repos')
 " default {{{
 
+"Plug 'dense-analysis/ale'
 Plug 'aklt/plantuml-syntax'
-Plug 'skanehira/translate.vim'
-
-Plug 't9md/vim-choosewin'
-Plug 'kshenoy/vim-signature'
-
 Plug 'cespare/vim-toml'
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'cocopon/iceberg.vim'
-Plug 'wadackel/vim-dogrun'
 Plug 'ConradIrwin/vim-bracketed-paste'
-
 Plug 'easymotion/vim-easymotion'
 Plug 'haya14busa/vim-metarepeat'
 Plug 'inside/vim-search-pulse'
@@ -27,6 +22,7 @@ Plug 'kana/vim-submode'
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-line'
 Plug 'kana/vim-textobj-user'
+Plug 'kshenoy/vim-signature'
 Plug 'LeafCage/foldCC.vim'
 Plug 'liquidz/ctrlme.vim'
 Plug 'liquidz/kami.vim'
@@ -38,6 +34,8 @@ Plug 'previm/previm'
 Plug 'rhysd/clever-f.vim'
 Plug 'rhysd/vim-color-spring-night'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'skanehira/translate.vim'
+Plug 't9md/vim-choosewin'
 Plug 't9md/vim-quickhl'
 Plug 'thinca/vim-localrc'
 Plug 'thinca/vim-quickrun'
@@ -52,7 +50,6 @@ Plug 'tyru/open-browser.vim'
 Plug 'vim-jp/vital.vim'
 Plug 'vim-scripts/confluencewiki.vim'
 Plug 'w0ng/vim-hybrid'
-"Plug 'dense-analysis/ale'
 
 if has('nvim')
   Plug 'liuchengxu/vim-clap'
@@ -106,8 +103,6 @@ let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 "set background=dark
 "colorscheme hybrid
 colorscheme iceberg
-"colorscheme dogrun
-"colorscheme spring-night
 
 " }}}
 " =search puls {{{
@@ -291,6 +286,14 @@ let g:sexp_mappings = {
     \ 'sexp_indent': '',
     \ 'sexp_indent_top': '',
     \ }
+
+" }}}
+" =vim-tmux-navigator {{{
+
+nnoremap <silent> <C-w>h :TmuxNavigateLeft<cr>
+nnoremap <silent> <C-w>j :TmuxNavigateDown<cr>
+nnoremap <silent> <C-w>k :TmuxNavigateUp<cr>
+nnoremap <silent> <C-w>l :TmuxNavigateRight<cr>
 
 " }}}
 " =vim-submode {{{
@@ -601,7 +604,6 @@ let g:hint#config = {
 let g:hint#merge_default_config = v:true
 
 nnoremap <expr><LocalLeader><LocalLeader> hint#show()
-inoremap <expr><LocalLeader><LocalLeader> hint#show()
 "inoremap <expr><tab> pumvisible() ? "\<c-n>" : <SID>hint_completions()
 
 " }}}
