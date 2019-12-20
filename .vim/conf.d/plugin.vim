@@ -7,7 +7,6 @@ call plug#begin('~/.vim/repos')
 "Plug 'dense-analysis/ale'
 Plug 'aklt/plantuml-syntax'
 Plug 'cespare/vim-toml'
-Plug 'christoomey/vim-tmux-navigator'
 Plug 'cocopon/iceberg.vim'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'easymotion/vim-easymotion'
@@ -256,7 +255,7 @@ let g:lightline = {
     \ 'component_function': {
     \   'fugitive': 'MyFugitive',
     \   'anzu': 'anzu#search_status',
-    \   'iced': 'iced#status',
+    \   'iced': 'iced#repl#status',
     \ },
     \ 'separator': { 'left': '', 'right': '' },
     \ 'subseparator': { 'left': '|', 'right': '|' },
@@ -286,14 +285,6 @@ let g:sexp_mappings = {
     \ 'sexp_indent': '',
     \ 'sexp_indent_top': '',
     \ }
-
-" }}}
-" =vim-tmux-navigator {{{
-
-nnoremap <silent> <C-w>h :TmuxNavigateLeft<cr>
-nnoremap <silent> <C-w>j :TmuxNavigateDown<cr>
-nnoremap <silent> <C-w>k :TmuxNavigateUp<cr>
-nnoremap <silent> <C-w>l :TmuxNavigateRight<cr>
 
 " }}}
 " =vim-submode {{{

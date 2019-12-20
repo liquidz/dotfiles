@@ -166,7 +166,8 @@ alias vlime-start='ros run -- --load ~/.vim/repos/vlime/lisp/start-vlime.lisp'
 alias kill-vlime='sudo kill -9 $(ps -ef | grep sbcl | grep -v grep | awk "{print \$2}")'
 # }}}
 # mitamae {{{
-alias mita='sudo mitamae local -y ~/src/github.com/liquidz/cookbooks/nodes/$(hostname).yaml'
+#alias mita='sudo mitamae local -y ~/src/github.com/liquidz/cookbooks/nodes/$(hostname).yaml'
+alias dad='sudo dad ~/src/github.com/liquidz/cookbooks/nodes/$(hostname).clj'
 # }}}
 # spacemacs {{{
 alias vil='emacs --insecure'
