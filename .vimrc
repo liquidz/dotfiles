@@ -122,13 +122,16 @@ nnoremap <silent> ss :<C-u>setlocal spell!<CR>
 " mapping {{{
 
 inoremap jj <Esc>
+cnoremap jj <Esc>
 inoremap jk <Esc>
 
 nnoremap <C-k> {
 nnoremap <C-j> }
+vnoremap <C-k> {
+vnoremap <C-j> }
 cnoremap <C-j> <Esc>
 inoremap <C-j> <Esc>
-vnoremap <C-j> <Esc>
+"vnoremap <C-j> <Esc>
 
 nnoremap mz :<C-u>10messages<CR>
 
@@ -217,9 +220,6 @@ if has('win32')
   nnoremap <C-y> i<C-r><C-o>+<Esc>l
   cnoremap <C-y> <C-r><C-o>+
   inoremap <C-y> <C-r><C-o>+
-endif
-if system('uname') ==# "Darwin\n"
-  set clipboard=unnamed,autoselect
 endif
 
 " viminfo 経由でヤンクデータを共有

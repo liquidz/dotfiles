@@ -215,7 +215,8 @@ let g:quickrun_config = {
 
 if has('unix')
   let g:previm_open_cmd = 'env DISPLAY=:0 xdg-open'
-else
+endif
+if has('mac')
   " set empty to use open-browser.vim
   let g:previm_open_cmd = ''
 endif

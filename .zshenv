@@ -9,6 +9,7 @@ PATH=$PATH:~/.cargo/bin
 PATH=$PATH:~/.skim/bin
 PATH=$PATH:~/.roswell/bin
 PATH=$PATH:~/src/github.com/liquidz/vim-iced/bin
+PATH=$PATH:~/.nodebrew/current/bin
 PATH="/usr/local/bin:$PATH:/usr/local/sbin"
 export PATH
 # }}}
@@ -173,8 +174,15 @@ alias dad='sudo dad ~/src/github.com/liquidz/cookbooks/nodes/$(hostname).clj'
 alias vil='emacs --insecure'
 # }}}
 # graalvm {{{
-export GRAALVM_HOME='/usr/local/graalvm'
-alias -g GRAALVM='PATH=/usr/local/graalvm/bin:$PATH'
+
+if [ -e /usr/local/graalvm/Contents/Home ]; then
+    export GRAALVM_HOME='/usr/local/graalvm/Contents/Home'
+    alias -g GRAALVM='PATH=/usr/local/graalvm/Contents/Home/bin:$PATH'
+elif [ -e /usr/local/graalvm ]; then
+    export GRAALVM_HOME='/usr/local/graalvm'
+    alias -g GRAALVM='PATH=/usr/local/graalvm/bin:$PATH'
+fi
+
 # }}}
 # my commands {{{
 alias server='python ~/src/github.com/liquidz/dotfiles/bin/server.py'
