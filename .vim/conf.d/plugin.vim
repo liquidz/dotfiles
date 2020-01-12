@@ -7,6 +7,8 @@ call plug#begin('~/.vim/repos')
 "Plug 'dense-analysis/ale'
 Plug 'aklt/plantuml-syntax'
 Plug 'cespare/vim-toml'
+Plug 'vifm/vifm.vim'
+Plug 'iberianpig/tig-explorer.vim'
 Plug 'cocopon/iceberg.vim'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'easymotion/vim-easymotion'
@@ -52,6 +54,7 @@ Plug 'w0ng/vim-hybrid'
 
 if has('nvim')
   Plug 'liuchengxu/vim-clap'
+  Plug 'rbgrouleff/bclose.vim' " required by tig-explorer
 else
   Plug 'ctrlpvim/ctrlp.vim'
   Plug 'nixprime/cpsm', {'do': './install.sh'}
@@ -477,7 +480,7 @@ let b:ale_linters = {'clojure': ['clj-kondo']}
 " }}}
 " =vim-clap {{{
 
-if has('nvim')
+if !empty(globpath(&rtp, 'autoload/clap'))
   nnoremap <C-p> :<C-u>Clap rg_root_files ++externalfilter=fzf +async<CR>
 endif
 
@@ -578,6 +581,15 @@ let g:translate_target = 'ja'
 
 xmap <LocalLeader>en <Plug>(VTranslate)
 xmap <LocalLeader>ja <Plug>(VTranslateBang)
+
+" }}}
+" =tig-explorer.vim {{{
+
+nnoremap <LocalLeader>tt :<C-u>TigOpenProjectRootDir<CR>
+nnoremap <LocalLeader>tf :<C-u>TigOpenCurrentFile<CR>
+nnoremap <LocalLeader>tg :<C-u>TigGrep<CR>
+nnoremap <LocalLeader>ts :<C-u>TigStatus<CR>
+nnoremap <LocalLeader>tb :<C-u>TigBlame<CR>
 
 " }}}
 " dispatch by hints {{{
