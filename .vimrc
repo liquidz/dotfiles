@@ -154,12 +154,16 @@ tnoremap zk ^
 tnoremap zl -
 tnoremap zj _
 
-if !has('nvim')
-  tnoremap <Esc> <C-\><C-n>
-else
-  tnoremap <Esc> <C-\><C-n>
-  set notimeout ttimeout timeoutlen=100
-endif
+" git commit じゃない場合
+if $HOME ==# $USERPROFILE || $GIT_EXEC_PATH !=# ''
+  " Esc で terminal から抜け出せるようにする
+  if !has('nvim')
+    tnoremap <Esc> <C-\><C-n
+  else
+    tnoremap <Esc> <C-\><C-n>
+    set notimeout ttimeout timeoutlen=100
+  endif
+end
 
 " Linux 上では xkb を使って入れ替えているため
 "if system('uname') !=# "Linux\n"

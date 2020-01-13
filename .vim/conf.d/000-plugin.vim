@@ -122,7 +122,7 @@ let g:ctrlp_match_window        = 'results:50'
 let g:ctrlp_follow_symlinks     = 1
 let g:ctrlp_root_markers        = ['.root', 'project.clj', 'deps.edn', 'Cargo.toml', 'pom.xml', 'README.md']
 let g:ctrlp_custom_ignore = {
-  \   'dir' : '\v[\/](\.git|\.hg|\.svn|cookbooks|target|Vendor|.dein|cache|node_modules)$',
+  \   'dir' : '\v[\/](\.git|\.hg|\.svn|cookbooks|target|Vendor|.dein|cache|node_modules|\.cache|\.cpcache)$',
   \   'file': '\v\.(o|bk|org|exe|so|dll|skl|cgi|gitkeep|png|gif|jpg)$',
   \   'link': 'some_bad_symbolic_links',
   \ }
@@ -506,21 +506,30 @@ let g:choosewin_overlay_enable = 1
 
 if has('nvim')
   " =neovim {{{
-  if executable('vim-language-server')
-    call lsp#add_filetype_config({
-          \ 'filetype': 'vim',
-          \ 'name': 'vim-language-server',
-          \ 'cmd': 'vim-language-server --stdio',
-          \ })
-    set omnifunc=lsp#omnifunc
-    nnoremap <silent> <buffer> K :call lsp#text_document_hover()<CR>
-    nnoremap <silent> <buffer> <C-]> :call lsp#text_document_definition()<CR>
-  endif
+  " if executable('vim-language-server')
+  "   call lsp#add_filetype_config({
+  "        \ 'filetype': 'vim',
+  "        \ 'name': 'vim-language-server',
+  "        \ 'cmd': 'vim-language-server --stdio',
+  "        \ })
+  "   set omnifunc=lsp#omnifunc
+  "   nnoremap <silent> <buffer> K :call lsp#text_document_hover()<CR>
+  "   nnoremap <silent> <buffer> <C-]> :call lsp#text_document_definition()<CR>
+  " endif
   " }}}
 else
   " =vim {{{
   let g:lsp_signs_enabled = 1
   let g:lsp_diagnostics_echo_cursor = 1
+
+    " aug LspIcedLsp
+    "   au!
+    "   au User lsp_setup call lsp#register_server({
+    "       \ 'name': 'iced-lsp',
+    "       \ 'cmd': {server_info->['java', '-jar', '/home/uochan/src/github.com/liquidz/iced-lsp/target/iced-lsp.jar']},
+    "       \ 'whitelist': ['clojure'],
+    "       \ })
+    " aug END
 
   if executable('efm-langserver')
     aug LspEfm
