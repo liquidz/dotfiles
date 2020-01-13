@@ -48,7 +48,6 @@ endfunction
 aug MyClojureSetting
   au!
   au VimEnter * call s:auto_connect()
-  "au VimEnter * IcedConnect
 
   au FileType clojure nnoremap <buffer> HH :lprevious<CR>
   au FileType clojure nnoremap <buffer> LL :lnext<CR>

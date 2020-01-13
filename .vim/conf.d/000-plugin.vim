@@ -7,12 +7,11 @@ call plug#begin('~/.vim/repos')
 "Plug 'dense-analysis/ale'
 Plug 'aklt/plantuml-syntax'
 Plug 'cespare/vim-toml'
-Plug 'vifm/vifm.vim'
-Plug 'iberianpig/tig-explorer.vim'
 Plug 'cocopon/iceberg.vim'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'easymotion/vim-easymotion'
 Plug 'haya14busa/vim-metarepeat'
+Plug 'iberianpig/tig-explorer.vim'
 Plug 'inside/vim-search-pulse'
 Plug 'itchyny/lightline.vim'
 Plug 'JuliaEditorSupport/julia-vim'
@@ -96,17 +95,6 @@ endif
 " /filetype }}}
 call plug#end()
 
-" =colorscheme {{{
-
-set termguicolors
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-
-"set background=dark
-"colorscheme hybrid
-colorscheme iceberg
-
-" }}}
 " =search puls {{{
 
 let g:vim_search_pulse_mode = 'cursor_line'
@@ -581,15 +569,6 @@ let g:translate_target = 'ja'
 
 xmap <LocalLeader>en <Plug>(VTranslate)
 xmap <LocalLeader>ja <Plug>(VTranslateBang)
-
-" }}}
-" =tig-explorer.vim {{{
-
-nnoremap <LocalLeader>tt :<C-u>TigOpenProjectRootDir<CR>
-nnoremap <LocalLeader>tf :<C-u>TigOpenCurrentFile<CR>
-nnoremap <LocalLeader>tg :<C-u>TigGrep<CR>
-nnoremap <LocalLeader>ts :<C-u>TigStatus<CR>
-nnoremap <LocalLeader>tb :<C-u>TigBlame<CR>
 
 " }}}
 " dispatch by hints {{{
