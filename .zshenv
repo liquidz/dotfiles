@@ -132,6 +132,7 @@ alias l='git log --oneline | sk | cut -d" " -f1'
 alias -g L='$(l)'
 alias s='git status -s | sk | cut -b 4-'
 alias -g S='$(s)'
+alias -g root='$(git rev-parse --show-toplevel)'
 # }}}
 # ssh {{{
 alias ss='ssh $(grep "Host " ~/.ssh/config | cut -c6- | sk)'
