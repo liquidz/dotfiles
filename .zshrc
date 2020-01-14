@@ -206,3 +206,4 @@ if [[ -e ~/.dircolors ]]; then
 fi
 
 source ~/.zshrc.antigen
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
