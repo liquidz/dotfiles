@@ -109,8 +109,10 @@ set autoread
 " }}}
 " system {{{
 
-let mapleader=','
-let maplocalleader=' ' "<space>
+" let mapleader=','
+" let maplocalleader=' ' "<space>
+let mapleader=' ' "<space>
+let maplocalleader=','
 
 " }}}
 " spell {{{
@@ -194,7 +196,7 @@ inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
 
 nnoremap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
 
-nnoremap <Leader><Leader> :<C-u>Ex<CR>
+nnoremap <LocalLeader><LocalLeader> :<C-u>Ex<CR>
 nnoremap <C-]> g<C-]>
 
 " <Nul> means Ctrl+Space in terminal
@@ -210,10 +212,6 @@ nnoremap O OX<C-h>
 inoremap <CR> <CR>X<C-h>
 
 nnoremap QQ :<C-u>bd!<CR>
-
-if executable('tig')
-  nnoremap <LocalLeader>gg :vs\|:terminal ++curwin ++close tig status<CR>
-endif
 
 " }}}
 " copy to clipboard {{{
@@ -335,11 +333,11 @@ source $VIMRUNTIME/macros/matchit.vim
 let b:match_ignorecase = 1
 
 " }}}
-" netrc {{{
+" netrw {{{
 
 aug MyNetrw
   au!
-  au FileType netrw nnoremap <buffer> q :q<CR>
+  au FileType netrw nnoremap <buffer> q :close<CR>
   au FileType netrw nmap <buffer> l <CR>
   au FileType netrw nmap <buffer> h -
   au FileType netrw nmap <buffer> <space> mfj
