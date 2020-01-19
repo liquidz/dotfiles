@@ -103,7 +103,6 @@ set foldlevel=2
 " }}}
 " buffer {{{
 
-set hidden
 set autoread
 
 " }}}
