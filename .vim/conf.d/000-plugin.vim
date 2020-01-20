@@ -8,7 +8,6 @@ call plug#begin('~/.vim/repos')
 Plug 'aklt/plantuml-syntax'
 Plug 'cespare/vim-toml'
 Plug 'cocopon/iceberg.vim'
-Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'easymotion/vim-easymotion'
 Plug 'haya14busa/vim-metarepeat'
 Plug 'iberianpig/tig-explorer.vim'
@@ -194,35 +193,6 @@ nmap <LocalLeader>m <Plug>(quickhl-manual-this)
 xmap <LocalLeader>m <Plug>(quickhl-manual-this)
 nmap <LocalLeader>M <Plug>(quickhl-manual-reset)
 xmap <LocalLeader>M <Plug>(quickhl-manual-reset)
-
-" }}}
-" =lightline.vim {{{
-
-function! MyFugitive()
-  let l:branch = exists('*fugitive#head') ? fugitive#head() : ''
-  if l:branch ==# 'master'
-    let l:branch = printf('!! %s !!', toupper(l:branch))
-  endif
-
-  return l:branch
-endfunction
-
-let g:lightline = {
-    \ 'colorscheme': 'iceberg',
-    \ 'active': {
-    \   'left': [['mode', 'paste'],
-    \            ['fugitive', 'readonly', 'modified']],
-    \   'right': [['lineinfo'], ['percent'], ['fileformat', 'fileencoding', 'filetype'], ['anzu'], ['iced']]
-    \ },
-    \ 'component_function': {
-    \   'fugitive': 'MyFugitive',
-    \   'anzu': 'anzu#search_status',
-    \   'iced': 'iced#repl#status',
-    \ },
-    \ 'separator': { 'left': '', 'right': '' },
-    \ 'subseparator': { 'left': '|', 'right': '|' },
-    \ 'tabline': { 'left': [[ 'tabs' ]], 'right': [[ 'bufnum' ]] }
-    \ }
 
 " }}}
 " =vim-easy-align {{{
@@ -548,25 +518,6 @@ let g:translate_target = 'ja'
 
 xmap <LocalLeader>en <Plug>(VTranslate)
 xmap <LocalLeader>ja <Plug>(VTranslateBang)
-
-" }}}
-" dispatch by hints {{{
-
-let s:fixme = {
-      \ 'n': {'cmd': ':Translate', 'text': 'Translate'},
-      \ 'N': {'cmd': ':Translate!', 'text': 'Translate!'},
-      \ }
-
-let g:hint#config = {
-      \ 'b': {'command': ':CtrlPBuffer'},
-      \ 'q': {'command': ':CtrlPQuickfix'},
-      \ 'tb': {'command': ':IcedBrowseTapped'},
-      \ 'tc': {'command': ':IcedClearTapped'},
-      \ }
-let g:hint#merge_default_config = v:true
-
-nnoremap <expr><LocalLeader><LocalLeader> hint#show()
-"inoremap <expr><tab> pumvisible() ? "\<c-n>" : <SID>hint_completions()
 
 " }}}
 " developing plugins {{{

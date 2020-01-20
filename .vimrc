@@ -57,7 +57,7 @@ cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 " }}}
 " paste {{{
 
-set pastetoggle=<C-e>
+set pastetoggle=<C-x><C-p>
 
 " }}}
 " visual {{{

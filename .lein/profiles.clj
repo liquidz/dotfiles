@@ -5,6 +5,6 @@
             [lein-codox "0.10.7"]
             [lein-pprint "1.2.0"]
             ]
-  :signing {:gpg-passphrase :env/gpgpass}
+  ;;:signing {:gpg-passphrase :env/gpgpass}
   :repl-options {:timeout 3600000}
   }}

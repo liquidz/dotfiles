@@ -29,8 +29,9 @@
 	generic = <C-L>   refresh
 	generic = B       view-blame
 	generic = b       view-refs
-	generic = G       view-grep
+	generic = <C-g>   view-grep
 	generic = g       move-first-line
+	generic = G       move-last-line
 	generic = U       ?!git pull %(remote) %(repo:head)
 	main    = G       view-grep
 	main    = ^       ?!git reset --soft HEAD^

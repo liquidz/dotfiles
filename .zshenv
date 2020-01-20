@@ -194,3 +194,7 @@ export BECOROOT=/Users/uochan/src/github.com/liquidz/beco
 if [[ -e ~/.zshenv.local ]]; then
     source ~/.zshenv.local
 fi
+
+if [[ -e ~/.ebcli-virtual-env ]]; then
+  export PATH="${HOME}/.ebcli-virtual-env/executables:$PATH"
+fi
