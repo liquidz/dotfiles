@@ -1,3 +1,4 @@
+scriptencoding utf-8
 if empty(globpath(&rtp, 'autoload/quickrun.vim'))
   finish
 endif

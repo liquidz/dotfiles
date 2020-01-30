@@ -169,7 +169,16 @@ alias kill-vlime='sudo kill -9 $(ps -ef | grep sbcl | grep -v grep | awk "{print
 # }}}
 # mitamae {{{
 #alias mita='sudo mitamae local -y ~/src/github.com/liquidz/cookbooks/nodes/$(hostname).yaml'
-alias dad='sudo dad ~/src/github.com/liquidz/cookbooks/nodes/$(hostname).clj'
+
+case "${OSTYPE}" in
+linux*)
+    alias dad='sudo dad ~/src/github.com/liquidz/cookbooks/nodes/$(hostname).clj'
+    ;;
+darwin*)
+    alias dad='dad ~/src/github.com/liquidz/cookbooks/nodes/$(hostname).clj'
+    ;;
+esac
+
 # }}}
 # spacemacs {{{
 alias vil='emacs --insecure'
