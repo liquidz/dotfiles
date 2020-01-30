@@ -1,0 +1,11 @@
+name: lint
+on: push
+jobs:
+  vint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v1
+      - run: pip install -r requirements.txt
+      - run: vint .vimrc
+      - run: find .vim -type f -name "*.vim" | grep -v .vim/repos | grep -v .vim/autoload | xargs vint
