@@ -163,7 +163,7 @@ function tmpl() {
 
 function dad-repl() {
     rm -f /tmp/dadf; mkfifo /tmp/dadf
-    cat /tmp/dadf | dad --no-color --repl 2>&1 | nc -lk 0.0.0.0 5555 > /tmp/dadf
+    cat /tmp/dadf | /usr/local/bin/dad ~/src/github.com/liquidz/cookbooks/nodes/$(hostname).clj --no-color --repl 2>&1 | nc -lk 0.0.0.0 5555 > /tmp/dadf
 }
 
 function es-indexes() {

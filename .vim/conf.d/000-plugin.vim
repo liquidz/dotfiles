@@ -22,6 +22,7 @@ Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-line'
 Plug 'kana/vim-textobj-user'
 Plug 'kshenoy/vim-signature'
+Plug 'lambdalisue/fern.vim'
 Plug 'LeafCage/foldCC.vim'
 Plug 'liquidz/ctrlme.vim'
 Plug 'liquidz/kami.vim'
@@ -66,8 +67,8 @@ Plug 'thinca/vim-prettyprint',         {'for': 'vim'}
 Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 if has('unix')
   if !has('nvim')
-    Plug 'prabirshrestha/async.vim', {'for': ['vim']}
-    Plug 'prabirshrestha/vim-lsp',   {'for': ['vim']}
+    Plug 'prabirshrestha/async.vim', {'for': 'vim'}
+    Plug 'prabirshrestha/vim-lsp',   {'for': 'vim'}
   endif
 
   "" Clojure
@@ -466,5 +467,4 @@ for pattern in [ 'vim*', '*vim' ]
     end
   endfor
 endfor " }}}
-
 " vim:foldlevel=0
