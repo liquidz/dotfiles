@@ -75,7 +75,8 @@ if has('unix')
   Plug 'guns/vim-sexp',           {'for': ['lisp', 'clojure']}
   "Plug 'eraserhd/parinfer-rust',  {'for': 'clojure', 'do': 'cargo build --release'}
   Plug 'kovisoft/paredit',        {'for': ['lisp', 'clojure']}
-  Plug 'liquidz/vim-iced',        {'for': 'clojure'}
+  Plug '~/src/github.com/liquidz/vim-iced',               {'for': 'clojure'}
+  Plug '~/src/github.com/liquidz/vim-iced-fern-debugger', {'for': 'clojure'}
   " Plug 'tpope/vim-classpath', {'for': 'clojure'}
   " Plug 'tpope/vim-fireplace', {'for': 'clojure'}
 

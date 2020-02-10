@@ -10,9 +10,7 @@ let g:clojure_fuzzy_indent_patterns = [
     \ ]
 
 let g:iced#buffer#stdout#mods = 'vertical'
-"let g:iced#buffer#stdout#file = '/tmp/.vim-iced-buffer.clj'
 let g:iced#buffer#stdout#max_line = 512
-let g:iced#nrepl#cljs#default_env = 'custom'
 let g:iced#nrepl#auto#does_switch_session = v:true
 let g:iced#format#rule = {
      \ 'core-let': '[[:block 1]]',
@@ -22,11 +20,7 @@ let g:iced#format#rule = {
      \ 're-frame.core/reg-event-fx': '[[:block 1]]',
      \ 're-frame.core/reg-sub': '[[:block 1]]',
      \ }
-
-let g:iced#lint#message_max_length = 200
 let g:iced#grep#prg = 'git grep -I --line-number --no-color'
-let g:iced#clap#options = ['++externalfilter=fzf', '+async']
-
 let g:iced#hook = {
       \ 'test_finished': {'type': 'shell',
       \                   'exec': {v -> printf('tmux display-message "Test %s: %s"', v.result, v.summary)}},
