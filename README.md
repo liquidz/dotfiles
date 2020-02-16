@@ -1,4 +1,7 @@
-# dotfiles [![Circle CI](https://circleci.com/gh/liquidz/dotfiles.svg?style=svg)](https://circleci.com/gh/liquidz/dotfiles)
+# dotfiles
+
+[![GitHub Actions](https://github.com/liquidz/dotfiles/workflows/lint/badge.svg)](https://github.com/liquidz/dotfiles/actions?query=workflow%3Alint)
+[![GitHub Actions](https://github.com/liquidz/dotfiles/workflows/test/badge.svg)](https://github.com/liquidz/dotfiles/actions?query=workflow%3Atest)
 
 ## setup
 
