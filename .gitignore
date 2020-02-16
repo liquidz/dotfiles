@@ -15,3 +15,4 @@ test/.workspace
 .zsh/_beco
 .w3m/cgi-bin/quickcmd
 bin/dad
+.cache

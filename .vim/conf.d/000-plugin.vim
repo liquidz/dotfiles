@@ -66,8 +66,8 @@ Plug 'thinca/vim-prettyprint',         {'for': 'vim'}
 Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 if has('unix')
   if !has('nvim')
-    Plug 'prabirshrestha/async.vim', {'for': 'vim'}
-    Plug 'prabirshrestha/vim-lsp',   {'for': 'vim'}
+    Plug 'prabirshrestha/async.vim'
+    Plug 'prabirshrestha/vim-lsp'
   endif
 
   "" Clojure
@@ -397,6 +397,8 @@ else
   " =vim {{{
   let g:lsp_signs_enabled = 1
   let g:lsp_diagnostics_echo_cursor = 1
+  let g:lsp_signs_error = {'text': 'ｴﾗ'}
+  let g:lsp_signs_warning = {'text': 'ﾜｰ'}
 
     " aug LspIcedLsp
     "   au!
@@ -413,7 +415,7 @@ else
       au User lsp_setup call lsp#register_server({
             \ 'name': 'efm-langserver',
             \ 'cmd': {server_info->['efm-langserver', '-c=/home/uochan/.config/efm-langserver/config.yaml']},
-            \ 'whitelist': ['vim'],
+            \ 'whitelist': ['vim', 'clojure'],
             \ })
     aug END
   endif

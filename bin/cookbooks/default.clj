@@ -10,8 +10,6 @@
 
 (def git-user {:name "liquidz" :email "liquidz.uo@gmail.com"})
 
-(package "git")
-
 ;; git clone
 (git {:path (install-dir)
       :url "https://github.com/liquidz/dotfiles"})
@@ -21,10 +19,18 @@
   (directory (home dir)))
 
 ;; dotfiles のシンボリックリンクを貼る
-(doseq [file '[.boot/profile.boot .cheatrc .ctags .gemrc
-               .gitconfig.common .joker .lein/profiles.clj
-               .rubocop.yml .spacemacs.d .tmux.conf .vim .vimrc
-               .w3m .xkb .zsh .zshenv .zshrc .zshrc.antigen]]
+(doseq [file '[.boot/profile.boot
+               .cheatrc .config/efm-langserver .ctags
+               .gemrc .gitconfig.common
+               .joker
+               .lein/profiles.clj
+               .rubocop.yml
+               .spacemacs.d
+               .tmux.conf
+               .vim .vimrc
+               .w3m
+               .xkb
+               .zsh .zshenv .zshrc .zshrc.antigen]]
   (link {:path (home file)
          :to (install-dir file)}))
 

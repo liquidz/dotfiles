@@ -1,0 +1,15 @@
+{
+ :linters
+ {:unresolved-symbol
+  {:exclude [directory
+             download
+             execute
+             file
+             git
+             link
+             package
+             template
+             (dad)
+             ]}}
+
+ }
