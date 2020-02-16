@@ -1,32 +1,37 @@
-(defn home [& [path]]
+(defn home
+  [& [path]]
   (cond-> (dad/env :home)
     path (str "/" path)))
 
-(defn install-dir [& [path]]
+(defn install-dir
+  [& [path]]
   (cond-> (home "src/github.com/liquidz/dotfiles")
     path (str "/" path)))
 
 (def git-user {:name "liquidz" :email "liquidz.uo@gmail.com"})
+
+(package "git")
 
 ;; git clone
 (git {:path (install-dir)
       :url "https://github.com/liquidz/dotfiles"})
 
 ;; 必要なディレクトリを作成
-(doseq [dir '[.tags .lein .config/nvim .zsh]]
+(doseq [dir '[.boot .config/nvim .lein .tags .zsh]]
   (directory (home dir)))
 
 ;; dotfiles のシンボリックリンクを貼る
-(doseq [file '[.vim .vimrc .tmux.conf .zshenv .zshrc .zshrc.antigen
-               .ctags .gemrc .rubocop.yml .gitconfig.common .w3m
-               .cheatrc .lein/profiles.clj .boot/profile.boot .joker .xkb
-               .spacemacs.d .zsh]]
+(doseq [file '[.boot/profile.boot .cheatrc .ctags .gemrc
+               .gitconfig.common .joker .lein/profiles.clj
+               .rubocop.yml .spacemacs.d .tmux.conf .vim .vimrc
+               .w3m .xkb .zsh .zshenv .zshrc .zshrc.antigen]]
   (link {:path (home file)
          :to (install-dir file)}))
 
 ;; vim の設定
-(doseq [dir '[.vim/backup .vim/memo .vim/autoload]]
+(doseq [dir '[.vim/autoload .vim/backup .vim/memo]]
   (directory (home dir)))
+
 (download {:path (home ".vim/autoload/plug.vim")
            :url "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"})
 
@@ -42,11 +47,11 @@
   (download
     {:path (home k)
      :url (str "https://raw.githubusercontent.com/git/git/master/contrib/completion/" v)}))
+
 ;;;; antigen
 (git {:path (home "src/github.com/zsh-users/antigen")
       :url "https://github.com/zsh-users/antigen"})
 
-(help "execute")
 ;; git config
 (execute
   {:command [(str "git config --global include.path " (home ".gitconfig.common"))

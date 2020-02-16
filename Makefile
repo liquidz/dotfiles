@@ -1,10 +1,15 @@
 .PHONY: setup test lint xkb clean
 
+PWD=$(shell pwd)
+
 setup:
 	bash bin/setup.sh
 
 test:
 	shelltest test/*.shelltest
+
+test_container:
+	docker run --rm -v $(PWD):/root/dotfiles -it ubuntu:latest bash
 
 lint:
 	beco vint .vimrc
