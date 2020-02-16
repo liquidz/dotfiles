@@ -5,6 +5,8 @@ if exists('g:loaded_clojure_ftplugin')
 endif
 let g:loaded_clojure_ftplugin = 1
 
+let g:iced_formatter = 'cljstyle'
+
 let g:clojure_fuzzy_indent_patterns = [
     \ '^with', '^def', '^let', '^\w\+-let'
     \ ]
