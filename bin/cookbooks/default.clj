@@ -17,7 +17,7 @@
       :url "https://github.com/liquidz/dotfiles"})
 
 ;; 必要なディレクトリを作成
-(doseq [dir '[.boot .config/nvim .lein .tags .zsh]]
+(doseq [dir '[.boot .config/nvim .lein .tags]]
   (directory (home dir)))
 
 ;; dotfiles のシンボリックリンクを貼る

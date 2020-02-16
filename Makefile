@@ -6,7 +6,7 @@ setup:
 	bash bin/setup.sh
 
 test:
-	shelltest test/*.shelltest
+	docker run --rm -v $(PWD):/root/dotfiles uochan/ubuntu bash /root/dotfiles/test/run.sh
 
 test_container:
 	docker run --rm -v $(PWD):/root/dotfiles -it ubuntu:latest bash
@@ -20,4 +20,4 @@ xkb:
 	bash bin/xkb.sh
 
 clean:
-	\rm -rf .vim/.dein .vim/cache_vim .vim/merged .vim/state_vim.vim .vim/temp .vim/rollbacks
+	\rm -rf bin/dad .vim/cache_vim .vim/merged .vim/state_vim.vim .vim/temp .vim/rollbacks

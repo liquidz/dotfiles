@@ -21,9 +21,23 @@ if [[ "$(uname)" = "Linux" ]]; then
     fi
 fi
 
-git clone https://github.com/liquidz/dotfiles ${BASE_DIR}
+if [[ -e ${SCRIPT_DIR}/cookbooks ]]; then
+    ### Local test
+    if [[ ! -e ${SCRIPT_DIR}/dad ]]; then
+        (cd ${SCRIPT_DIR} && \
+            curl -L https://raw.githubusercontent.com/liquidz/dad/master/script/download | bash)
+    fi
+    ${SUDO} ${SCRIPT_DIR}/dad ${SCRIPT_DIR}/cookbooks/default.clj
+else
+    if [[ ! -d ${BASE_DIR} ]]; then
+        git clone https://github.com/liquidz/dotfiles ${BASE_DIR}
+    fi
 
-(cd ${BASE_DIR}/bin && \
-    curl -L https://raw.githubusercontent.com/liquidz/dad/master/script/download | bash)
+    if [[ ! -e ${BASE_DIR}/bin/dad ]]; then
+        (cd ${BASE_DIR}/bin && \
+            curl -L https://raw.githubusercontent.com/liquidz/dad/master/script/download | bash)
+    fi
 
-${SUDO} ${BASE_DIR}/bin/dad ${BASE_DIR}/bin/cookbooks/default.clj
+    ${SUDO} ${BASE_DIR}/bin/dad ${BASE_DIR}/bin/cookbooks/default.clj
+fi
+
