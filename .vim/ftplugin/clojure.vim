@@ -38,7 +38,10 @@ function! s:auto_connect() abort
   if expand('%:t') ==# 'project.clj' || expand('%:e') ==# 'edn'
     return
   endif
-  IcedConnect
+  try
+    IcedConnect
+  catch
+  endtry
 endfunction
 
 aug MyClojureSetting

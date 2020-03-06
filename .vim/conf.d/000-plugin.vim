@@ -6,6 +6,7 @@ call plug#begin('~/.vim/repos')
 
 "Plug 'dense-analysis/ale'
 Plug 'aklt/plantuml-syntax'
+Plug 'camspiers/lens.vim'
 Plug 'cespare/vim-toml'
 Plug 'cocopon/iceberg.vim'
 Plug 'easymotion/vim-easymotion'
