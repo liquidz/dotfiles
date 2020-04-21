@@ -4,11 +4,37 @@ let g:dotfiles = $HOME.'/src/github.com/liquidz/dotfiles'
 call plug#begin('~/.vim/repos')
 " default {{{
 
-"Plug 'dense-analysis/ale'
+
+" Plug 'clojure-vim/async-clj-omni',       {'for': 'clojure'}
+" Plug 'elmcast/elm-vim'
+" " Plug 'guns/vim-sexp',                    {'for': 'clojure'}
+" " Plug 'junegunn/fzf',                     { 'dir': '~/.fzf', 'do': './install --all' }
+" " Plug 'junegunn/fzf.vim'
+" Plug 'iamcco/markdown-preview.nvim',     { 'do': { -> mkdp#util#install() } }
+" " Plug 'liquidz/vim-iced',                 {'for': 'clojure'}
+" " Plug 'liquidz/vim-iced-coc-source',      {'for': 'clojure'}
+" Plug 'morhetz/gruvbox'
+" " Plug 'neoclide/coc.nvim',                {'branch': 'release'}
+" Plug 'preservim/nerdtree'
+" Plug 'scrooloose/nerdcommenter'
+" Plug 'sjl/gundo.vim'
+" Plug 'tpope/vim-dadbod'
+" Plug 'tpope/vim-fugitive'
+" Plug 'tpope/vim-surround'
+" Plug 'tpope/vim-sensible'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
+" Plug 'ifightcrime/Muon'
+
+
+
+
 Plug 'aklt/plantuml-syntax'
 Plug 'camspiers/lens.vim'
 Plug 'cespare/vim-toml'
 Plug 'cocopon/iceberg.vim'
+Plug 'tyru/columnskip.vim'
+Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'easymotion/vim-easymotion'
 Plug 'haya14busa/vim-metarepeat'
 Plug 'iberianpig/tig-explorer.vim'
@@ -25,12 +51,10 @@ Plug 'kana/vim-textobj-user'
 Plug 'kshenoy/vim-signature'
 Plug 'lambdalisue/fern.vim'
 Plug 'LeafCage/foldCC.vim'
-Plug 'liquidz/ctrlme.vim'
-Plug 'liquidz/kami.vim'
 Plug 'liquidz/vim-textobj-value'
 Plug 'luochen1990/rainbow'
 Plug 'machakann/vim-sandwich'
-Plug 'mattn/sonictemplate-vim'
+Plug 'mattn/vim-sonictemplate'
 Plug 'osyo-manga/vim-anzu'
 Plug 'previm/previm'
 Plug 'rhysd/clever-f.vim'
@@ -66,17 +90,13 @@ Plug 'nelstrom/vim-textobj-rubyblock', {'for': 'ruby'}
 Plug 'thinca/vim-prettyprint',         {'for': 'vim'}
 Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 if has('unix')
-  if !has('nvim')
-    Plug 'prabirshrestha/async.vim'
-    Plug 'prabirshrestha/vim-lsp'
-  endif
-
   "" Clojure
   Plug 'guns/vim-sexp',           {'for': ['lisp', 'clojure']}
   "Plug 'eraserhd/parinfer-rust',  {'for': 'clojure', 'do': 'cargo build --release'}
   Plug 'kovisoft/paredit',        {'for': ['lisp', 'clojure']}
   Plug '~/src/github.com/liquidz/vim-iced',               {'for': 'clojure'}
   Plug '~/src/github.com/liquidz/vim-iced-fern-debugger', {'for': 'clojure'}
+
   " Plug 'tpope/vim-classpath', {'for': 'clojure'}
   " Plug 'tpope/vim-fireplace', {'for': 'clojure'}
 
@@ -91,6 +111,26 @@ if has('unix')
 
   "" Lua
   Plug 'rhysd/reply.vim', {'for': 'lua'}
+
+  if has('nvim')
+    " ---- NEOVIM ----
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug '~/src/github.com/liquidz/vim-iced-coc-source', {'for': 'clojure'}
+  else
+    " ---- VIM ----
+    Plug 'prabirshrestha/async.vim'
+    Plug 'prabirshrestha/vim-lsp'
+    Plug 'mattn/vim-lsp-settings'
+
+    " Plug 'prabirshrestha/asyncomplete.vim'
+    " Plug 'prabirshrestha/asyncomplete-lsp.vim'
+    " Plug 'high-moctane/asyncomplete-nextword.vim'
+    " Plug '~/src/github.com/liquidz/vim-iced-asyncomplete',  {'for': 'clojure'}
+
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug '~/src/github.com/liquidz/vim-iced-coc-source', {'for': 'clojure'}
+
+  endif
 endif
 
 " /filetype }}}
@@ -211,14 +251,6 @@ let g:rainbow_conf = {
       \ }
 
 " }}}
-" =kami {{{
-
-nnoremap <Leader>ko :KamiOpenFromList<CR>
-nnoremap <Leader>kk :KamiOpenToday<CR>
-let g:kami#ext = 'adoc'
-let g:kami#timestamp_format = '== %s'
-
-" }}}
 " =completor {{{
 
 " let g:completor_auto_trigger = 0
@@ -244,13 +276,6 @@ let g:kami#timestamp_format = '== %s'
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#keyword_patterns = {}
 "let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
-
-" }}}
-" =ctrlme {{{
-
-    let g:ctrlme_toml_file = g:dotfiles . '/.vim/conf.d/ctrlme.toml'
-    nnoremap <Leader>e :CtrlMe<CR>
-    vnoremap <Leader>e :CtrlMe<CR>
 
 " }}}
 " =foldCC.vim {{{
@@ -318,29 +343,10 @@ nmap <LocalLeader>g <Plug>(caw:prefix)
 xmap <LocalLeader>g <Plug>(caw:prefix)
 
 " }}}
-" =sonictemplate {{{
-
-let g:sonictemplate_vim_template_dir = '$HOME/.vim/template'
-
-" }}}
 " =ale {{{
 
 let g:ale_lint_on_text_changed = 'never'
 let b:ale_linters = {'clojure': ['clj-kondo']}
-
-" }}}
-" =coc.nvim {{{
-
-" function! s:coc_check_back_space() abort
-"   let col = col('.') - 1
-"   return !col || getline('.')[col - 1] =~# '\s'
-" endfunction
-"
-" iunmap <expr><tab>
-" inoremap <expr><tab>
-"      \ pumvisible() ? "\<c-n>" :
-"      \ <SID>coc_check_back_space() ? "\<Tab>" :
-"      \ coc#refresh()
 
 " }}}
 " =vim-clap {{{
@@ -363,22 +369,6 @@ nmap - <Plug>(choosewin)
 let g:choosewin_overlay_enable = 1
 
 " }}}
-" =asyncomplete.vim {{{
-
-" let g:asyncomplete_auto_popup = 0
-"
-" function! s:check_back_space() abort
-" 	let col = col('.') - 1
-" 	return !col || getline('.')[col - 1] =~# '\s'
-" endfunction
-"
-" inoremap <silent><expr> <TAB>
-"			\ pumvisible() ? "\<C-n>" :
-"			\ <SID>check_back_space() ? "\<TAB>" :
-"			\ asyncomplete#force_refresh()
-" inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-" }}}
 " =translate.vim {{{
 
 let g:translate_source = 'en'
@@ -399,4 +389,3 @@ for pattern in [ 'vim*', '*vim' ]
     end
   endfor
 endfor " }}}
-" vim:foldlevel=0

@@ -17,46 +17,56 @@ else
   endif
 
   let g:lsp_signs_enabled = 1
+  let g:lsp_fold_enabled = 0
   let g:lsp_diagnostics_echo_cursor = 1
   let g:lsp_signs_error = {'text': 'ｴｰ'}
   let g:lsp_signs_warning = {'text': 'ﾜｰ'}
 
-  if executable('gopls') " {{{
-    aug LspGo
-      au!
-      au User lsp_setup call lsp#register_server({
-           \ 'name': 'go-lang',
-           \ 'cmd': {server_info->['gopls', '-mode', 'stdio']},
-           \ 'whitelist': ['go'],
-           \ })
-      au FileType go setlocal omnifunc=lsp#complete
-    aug END
-  endif " }}}
+  let g:lsp_settings = {
+       \  'clojure-lsp': {'disabled': v:true},
+       \  'json-languageserver': {'disabled': v:true},
+       \  'efm-langserver': {
+       \     'disabled': v:false,
+       \     'whitelist': ['vim', 'clojure'],
+       \   },
+       \}
 
-  if executable('efm-langserver') " {{{
-    aug LspEfm
-      au!
-      au User lsp_setup call lsp#register_server({
-            \ 'name': 'efm-langserver',
-            \ 'cmd': {server_info->['efm-langserver', '-c=/home/uochan/.config/efm-langserver/config.yaml']},
-            \ 'whitelist': ['vim', 'clojure'],
-            \ })
-    aug END
-  endif " }}}
-
-  if executable('vim-language-server') " {{{
-    aug LspVimScript
-      au!
-      au User lsp_setup call lsp#register_server({
-           \ 'name': 'vim-language-server',
-           \ 'cmd': {server_info->['vim-language-server', '--stdio']},
-           \ 'whitelist': ['vim'],
-           \ })
-      "au FileType vim setlocal omnifunc=lsp#complete
-      au FileType vim nnoremap <C-]> :<C-u>LspDefinition<CR>
-      au FileType vim nnoremap K :<C-u>LspHover<CR>
-    aug END
-  endif " }}}
+  " if executable('gopls') " {{{
+  "   aug LspGo
+  "     au!
+  "     au User lsp_setup call lsp#register_server({
+  "         \ 'name': 'go-lang',
+  "         \ 'cmd': {server_info->['gopls', '-mode', 'stdio']},
+  "         \ 'whitelist': ['go'],
+  "         \ })
+  "     au FileType go setlocal omnifunc=lsp#complete
+  "   aug END
+  " endif " }}}
+  "
+  " if executable('efm-langserver') " {{{
+  "   aug LspEfm
+  "     au!
+  "     au User lsp_setup call lsp#register_server({
+  "          \ 'name': 'efm-langserver',
+  "          \ 'cmd': {server_info->['efm-langserver', '-c=/home/uochan/.config/efm-langserver/config.yaml']},
+  "          \ 'whitelist': ['vim', 'clojure'],
+  "          \ })
+  "   aug END
+  " endif " }}}
+  "
+  " if executable('vim-language-server') " {{{
+  "   aug LspVimScript
+  "     au!
+  "     au User lsp_setup call lsp#register_server({
+  "         \ 'name': 'vim-language-server',
+  "         \ 'cmd': {server_info->['vim-language-server', '--stdio']},
+  "         \ 'whitelist': ['vim'],
+  "         \ })
+  "     "au FileType vim setlocal omnifunc=lsp#complete
+  "     au FileType vim nnoremap <C-]> :<C-u>LspDefinition<CR>
+  "     au FileType vim nnoremap K :<C-u>LspHover<CR>
+  "   aug END
+  " endif " }}}
 
 endif
 " vim:foldlevel=0

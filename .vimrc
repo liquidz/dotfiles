@@ -20,6 +20,7 @@ endif
 set modeline
 set modelines=3
 set textwidth=0
+set hidden
 
 if has('unix')
   set nofixendofline
@@ -155,7 +156,7 @@ tnoremap zk ^
 tnoremap zl -
 tnoremap zj _
 
-" git commit じゃない場合
+" git commit の画面である場合
 if $HOME ==# $USERPROFILE || $GIT_EXEC_PATH !=# ''
   " Esc で terminal から抜け出せるようにする
   if !has('nvim')
@@ -246,21 +247,13 @@ command! ToEUC  set fileencoding=euc-jp
 command! ToSJIS set fileencoding=sjis
 command! ToUNIX set fileformat=unix
 command! ReloadVimrc source $HOME/src/github.com/liquidz/dotfiles/.vimrc
+command! LastSession source $HOME/.my_last_session
 
 " }}}
 " auto command {{{
-
-aug MyAutoCompletion
-  au!
-  " XML, HTML補完
-  autocmd FileType eruby,html,xml,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType xml,html inoremap <buffer> </ </<C-x><C-o>
-aug END
-
 aug MyAutoOpenCWindow
   au!
   autocmd QuickFixCmdPost grep cwindow
-  "autocmd QuickFixCmdPost l* lopen
 aug END
 
 function! s:clean_extra_spaces() abort
@@ -278,14 +271,22 @@ aug MyAutoDeleteExtraSpaces
   autocmd BufWritePre * call s:clean_extra_spaces()
 aug END
 
-" if $TMUX !=# ''
-"   augroup titlesettings
-"     autocmd!
-"     autocmd BufEnter * call system("tmux rename-window " . "'[vim] " . expand("%:t") . "'")
-"     autocmd VimLeave * call system("tmux rename-window zsh")
-"     autocmd BufEnter * let &titlestring = ' ' . expand("%:t")
-"   augroup END
-" endif
+
+if !has('nvim')
+  aug MyWinColor
+    au!
+    " c.f. iceberg の Normal ハイライト
+    "      ctermfg=252 ctermbg=234 guifg=#c6c8d1 guibg=#16182
+    au ColorScheme * highlight NormalNC ctermfg=244 ctermbg=233
+    au WinEnter,BufWinEnter * setlocal wincolor=
+    au WinLeave * setlocal wincolor=NormalNC
+  aug END
+endif
+
+aug MySaveSession
+	au!
+	au VimLeavePre * mksession! $HOME/.my_last_session
+aug END
 
 " }}}
 " status line {{{

@@ -1,6 +1,7 @@
 {
     "coc.source.iced.enable": true,
-    "suggest.timeout": 500,
+    "nextword.filetypes": ["markdown", "asciidoc", "gitcommit", "clojure", "vim", "help"],
     "suggest.minTriggerInputLength": 2,
-    "suggest.autoTrigger": "trigger"
+    "suggest.triggerCompletionWait": 300,
+    "suggest.timeout": 500
 }

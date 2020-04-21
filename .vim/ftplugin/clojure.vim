@@ -6,14 +6,22 @@ endif
 let g:loaded_clojure_ftplugin = 1
 
 let g:iced_formatter = 'cljstyle'
+"let g:iced_formatter = 'zprint'
 
 let g:clojure_fuzzy_indent_patterns = [
     \ '^with', '^def', '^let', '^\w\+-let'
     \ ]
 
-let g:iced#buffer#stdout#mods = 'vertical'
 let g:iced#buffer#stdout#max_line = 512
+let g:iced#buffer#stdout#mods = 'vertical'
+let g:iced#clojuredocs#use_clj_docs_on_cljs = v:true
+let g:iced#grep#prg = 'git grep -I --line-number --no-color'
 let g:iced#nrepl#auto#does_switch_session = v:true
+let g:iced#nrepl#complete#ignore_context = v:true
+let g:iced_enable_auto_indent = v:true
+let g:iced_enable_default_key_mappings = v:true
+let g:iced_sign = {'error': 'E', 'trace': 'T', 'lint': 'L'}
+
 let g:iced#format#rule = {
      \ 'core-let': '[[:block 1]]',
      \ 'merr.core/let': '[[:block 2] [:inner 1]]',
@@ -22,31 +30,51 @@ let g:iced#format#rule = {
      \ 're-frame.core/reg-event-fx': '[[:block 1]]',
      \ 're-frame.core/reg-sub': '[[:block 1]]',
      \ }
-let g:iced#grep#prg = 'git grep -I --line-number --no-color'
+
 let g:iced#hook = {
-      \ 'test_finished': {'type': 'shell',
-      \                   'exec': {v -> printf('tmux display-message "Test %s: %s"', v.result, v.summary)}},
       \ 'session_switched': {'type': 'shell',
       \                   'exec': {v -> printf('tmux display-message "Session: switch to %s"', v.session)}},
       \ }
 
-let g:iced_enable_default_key_mappings = v:true
-let g:iced_enable_auto_indent = v:true
-let g:iced_sign = {'error': 'E', 'trace': 'T', 'lint': 'L'}
+if exists('$SLACK_INCOMING_WEBHOOK_URL')
+  " let s:succeeded = ':tada: :tada: :tada: :tada: '
+  " let s:failed = ':fire: :fire: :fire: :fire: '
+  " let g:iced#hook['test_finished'] = {
+  "     \ 'type': 'shell',
+  "     \ 'exec': {v -> ['curl', $SLACK_INCOMING_WEBHOOK_URL,
+  "     \                '-X', 'POST',
+  "     \                '-d', printf('{"username": "vim-iced", "text": "%s %s"}',
+  "     \                             (v.result ==# 'succeeded' ? s:succeeded : s:failed),
+  "     \                             v.summary,
+  "     \                             )]},
+  "     \ }
+
+  let g:iced#hook['test_finished'] = {
+       \ 'type': 'shell',
+       \ 'exec': {v -> ['curl', 'localhost:8890/api',
+       \                '-X', 'POST', '-H', 'Content-Type: application/json',
+       \                '-d', printf('{"action": "add-tile", "type": "icon", "content": "fas %s", "color": "%s"}',
+       \                             (v.result ==# 'succeeded' ? 'fa-check' : 'fa-times'),
+       \                             (v.result ==# 'succeeded' ? '#7BA23F' : '#D0104C'),
+       \                             )]},
+       \ }
+else
+  let g:iced#hook['test_finished'] = {
+       \ 'type': 'shell',
+       \ 'exec': {v -> printf('tmux display-message "Test %s: %s"', v.result, v.summary)},
+       \ }
+endif
 
 function! s:auto_connect() abort
   if expand('%:t') ==# 'project.clj' || expand('%:e') ==# 'edn'
     return
   endif
-  try
-    IcedConnect
-  catch
-  endtry
+  call timer_start(250, {-> execute(':IcedConnect')})
 endfunction
 
 aug MyClojureSetting
   au!
-  au VimEnter * call s:auto_connect()
+  "au VimEnter * call s:auto_connect()
 
   au FileType clojure nnoremap <buffer> HH :lprevious<CR>
   au FileType clojure nnoremap <buffer> LL :lnext<CR>

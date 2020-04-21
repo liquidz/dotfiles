@@ -11,6 +11,19 @@ PATH=$PATH:~/.roswell/bin
 PATH=$PATH:~/src/github.com/liquidz/vim-iced/bin
 PATH=$PATH:~/.nodebrew/current/bin
 PATH="/usr/local/bin:$PATH:/usr/local/sbin"
+
+if [[ -e ~/.ebcli-virtual-env ]]; then
+    PATH="${HOME}/.ebcli-virtual-env/executables:$PATH"
+fi
+
+# if [[ -e ~/.sdkman/bin/sdkman-init.sh ]]; then
+#     source "$HOME/.sdkman/bin/sdkman-init.sh"
+# fi
+
+if [[ -e /usr/local/Cellar/libpq/12.2/bin ]]; then
+	PATH=$PATH:/usr/local/Cellar/libpq/12.2/bin
+fi
+
 export PATH
 # }}}
 
@@ -54,6 +67,8 @@ export PATH=$ANDROID_SDK_ROOT:$PATH
 export PATH=$ANDROID_SDK_ROOT/tools:$ANDROID_SDK_ROOT/platform-tools:$PATH
 
 export CPLUS_INCLUDE_PATH="/Users/uochan/app/cocos2d-x-3.3rc0/cocos:/Users/uochan/app/./cocos2d-x-3.3rc0/external/glfw3/include/mac/"
+
+export NEXTWORD_DATA_PATH="${HOME}/opt/nextword-data-large"
 
 # vim {{{
 alias rebuild_vim='(cd /usr/local/src/vim && sudo ./rebuild.sh)'
@@ -121,6 +136,7 @@ function __bookmarklist() {
     cat ~/.bookmark
 }
 alias bm='cd $(__bookmarklist | sk)'
+alias cdd='cd $(git rev-parse --show-toplevel) && cd $(fd -t d . | fzf)'
 # }}}
 # git {{{
 if which hub > /dev/null 2>&1; then
@@ -206,8 +222,4 @@ fi
 
 if [[ -e ~/.zshenv.local ]]; then
     source ~/.zshenv.local
-fi
-
-if [[ -e ~/.ebcli-virtual-env ]]; then
-  export PATH="${HOME}/.ebcli-virtual-env/executables:$PATH"
 fi

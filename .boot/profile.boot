@@ -1,4 +1,4 @@
-(require 'boot.repl)
+;;(require 'boot.repl)
 
 ;; (swap! boot.repl/*default-dependencies*
 ;;        concat '[[nrepl "0.4.5"]

@@ -64,6 +64,6 @@
 	stash   = p       ?!git stash pop %(stash)
 	stash   = P       none
 	stash   = x       ?git stash drop %(stash)
-	status  = c       ?git checkout %(file)
+	status  = x       ?git checkout %(file)
 	status  = C       !git commit -v
 	status  = d       enter
