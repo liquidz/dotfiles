@@ -365,4 +365,3 @@ runtime! conf.d/*.vim
 exec printf(':runtime! conf.d/%s/*.vim', hostname())
 
 " }}}
-" vim:fdl=0

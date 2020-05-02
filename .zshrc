@@ -130,17 +130,6 @@ fi
 #    builtin cd $@ && ls;
 #}
 
-# To enable this function, you must export CAKE_PROJECT_ROOT in /etc/zshenv
-if [[ "$CAKE_PROJECT_ROOT" != "" ]]; then
-    function cake_app_test () {
-        TESTCASE=$(find $CAKE_PROJECT_ROOT/app/Test/Case -name "*Test.php" | cut -b 36- | sed "s/Test.php//g" | fzf)
-        BUFFER="$CAKE_PROJECT_ROOT/bin/cake test app --app $CAKE_PROJECT_ROOT/app $TESTCASE"
-        zle accept-line
-    }
-    zle -N cake_app_test
-    bindkey '^T' cake_app_test
-fi
-
 # generate template
 function tmpl() {
     if [[ $# -ne 2 ]]; then
@@ -186,26 +175,6 @@ function es-get-index-mapping() {
     curl -XGET "localhost:9200/${1}/_mapping?pretty"
 }
 
-# tmux
-if [[ ! -n $TMUX && $- == *l* ]]; then
-    # get the IDs
-    ID="$(tmux list-sessions)"
-    if [[ -z "$ID" ]]; then
-        tmux new-session
-    fi
-
-    create_new_session="Create New Session"
-    ID="$ID\n${create_new_session}:"
-    ID="$(echo $ID | sk | cut -d: -f1)"
-    if [[ "$ID" = "${create_new_session}" ]]; then
-        tmux new-session
-    elif [[ -n "$ID" ]]; then
-        tmux attach-session -t "$ID"
-    else
-      :  # Start terminal normally
-    fi
-fi
-
 if [[ -e ~/.dircolors ]]; then
     eval $(dircolors ~/.dircolors)
 fi
@@ -216,3 +185,23 @@ source ~/.zshrc.antigen
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# tmux
+if [[ ! -n $TMUX && $- == *l* ]]; then
+    # get the IDs
+    ID="$(tmux list-sessions)"
+    if [[ -z "$ID" ]]; then
+        tmux new-session
+    fi
+
+    create_new_session="Create New Session"
+    ID="$ID\n${create_new_session}:"
+    ID="$(echo $ID | fzf | cut -d: -f1)"
+    if [[ "$ID" = "${create_new_session}" ]]; then
+        tmux new-session
+    elif [[ -n "$ID" ]]; then
+        tmux attach-session -t "$ID"
+    else
+      :  # Start terminal normally
+    fi
+fi

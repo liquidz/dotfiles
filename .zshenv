@@ -20,8 +20,8 @@ fi
 #     source "$HOME/.sdkman/bin/sdkman-init.sh"
 # fi
 
-if [[ -e /usr/local/Cellar/libpq/12.2/bin ]]; then
-	PATH=$PATH:/usr/local/Cellar/libpq/12.2/bin
+if [[ -e /usr/local/Cellar/libpq/12.2_1/bin ]]; then
+	PATH=$PATH:/usr/local/Cellar/libpq/12.2_1/bin
 fi
 
 export PATH
@@ -84,8 +84,8 @@ alias rebuild_vim='(cd /usr/local/src/vim && sudo ./rebuild.sh)'
 
 alias dl='docker ps -ql'
 alias da='docker ps -qa'
-alias di="docker images | grep -v 'REPOSITORY' | sk | awk '{print \$2}'"
-alias dc="docker ps -a | grep -v 'CONTAINER ID' | sk | awk '{print \$1}'"
+alias di="docker images | grep -v 'REPOSITORY' | fzf | awk '{print \$2}'"
+alias dc="docker ps -a | grep -v 'CONTAINER ID' | fzf | awk '{print \$1}'"
 alias db='docker build --rm -t $(pwd | awk -F/ "{print \$(NF-1),\$NF}" | sed "s/ /\//g") .'
 alias dr='docker run --rm -it DI /bin/bash'
 alias docker-rm='docker rm $(dc)'
@@ -135,30 +135,30 @@ function __bookmarklist() {
     fi
     cat ~/.bookmark
 }
-alias bm='cd $(__bookmarklist | sk)'
+alias bm='cd $(__bookmarklist | fzf)'
 alias cdd='cd $(git rev-parse --show-toplevel) && cd $(fd -t d . | fzf)'
 # }}}
 # git {{{
 if which hub > /dev/null 2>&1; then
     alias git=hub
 fi
-alias b='git branch -a | sk | sed "s/\* *//g"'
+alias b='git branch -a | fzf | sed "s/\* *//g"'
 alias -g B='$(b)'
-alias l='git log --oneline | sk | cut -d" " -f1'
+alias l='git log --oneline | fzf | cut -d" " -f1'
 alias -g L='$(l)'
-alias s='git status -s | sk | cut -b 4-'
+alias s='git status -s | fzf | cut -b 4-'
 alias -g S='$(s)'
 alias -g root='$(git rev-parse --show-toplevel)'
 # }}}
 # ssh {{{
-alias ss='ssh $(grep "Host " ~/.ssh/config | cut -c6- | sk)'
+alias ss='ssh $(grep "Host " ~/.ssh/config | cut -c6- | fzf)'
 alias sss='tmux split-window ss'
 alias ssn='tmux new-window ss'
 # }}}
 # cakephp {{{
 # To enable these aliases, you must export CAKE_PROJECT_ROOT in /etc/zshenv
 if [[ "$CAKE_PROJECT_ROOT" != "" ]]; then
-    alias apptest='$CAKE_PROJECT_ROOT/bin/cake test app --app $CAKE_PROJECT_ROOT/app $(find $CAKE_PROJECT_ROOT/app/Test/Case -name "*Test.php" | cut -b 36- | sed "s/Test.php//g" | sk)'
+    alias apptest='$CAKE_PROJECT_ROOT/bin/cake test app --app $CAKE_PROJECT_ROOT/app $(find $CAKE_PROJECT_ROOT/app/Test/Case -name "*Test.php" | cut -b 36- | sed "s/Test.php//g" | fzf)'
     alias Apptest="$CAKE_PROJECT_ROOT/bin/cake test app --app $CAKE_PROJECT_ROOT/app"
     alias alltest="$CAKE_PROJECT_ROOT/bin/cake test app AllTests --app $CAKE_PROJECT_ROOT/app"
     alias phpcs="phpcs --standard=CakePHP"
@@ -170,7 +170,7 @@ export WWW_HOME="duckduckgo.com"
 # virtualenv {{{
 function activate_virtualenv() {
     ENV_DIR="$HOME/env"
-    TARGET_ENV=$(ls -1 --color=never $ENV_DIR | sed 's/\///g' | sk)
+    TARGET_ENV=$(ls -1 --color=never $ENV_DIR | sed 's/\///g' | fzf)
     source "$ENV_DIR/$TARGET_ENV/bin/activate"
 }
 # }}}
