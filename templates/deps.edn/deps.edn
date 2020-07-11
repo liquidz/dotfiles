@@ -15,13 +15,11 @@
   :test
   {:main-opts ["-m" "kaocha.runner"]}
 
-  :ancient
-  {:extra-deps {olical/depot {:mvn/version "RELEASE"}}
-   :main-opts ["-m" "depot.outdated.main"]}
+  :outdated
+  {:extra-deps {antq {:mvn/version "RELEASE"}}
+   :main-opts ["-m" "antq.core"]}
 
-  :uberjar
-  {:extra-deps {seancorfield/depstar {:mvn/version "RELEASE"}}
-   :main-opts ["-m" "hf.depstar.uberjar" "target/__dummy__.jar"
-               "-C" "-m" "__dummy__.core"]}
+  :depstar
+  {:extra-deps {seancorfield/depstar {:mvn/version "RELEASE"}}}
   }
 }

@@ -1,4 +1,5 @@
-(ns __dummy__.core)
+(ns __dummy__.core
+  (:gen-class))
 
 (defn greet [msg]
   (str "hello " msg))

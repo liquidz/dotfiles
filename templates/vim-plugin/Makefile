@@ -1,7 +1,6 @@
 PLUGIN_NAME = __dummy__
 VITAL_MODULES = System.Filepath \
-				Process \
-				Underscore
+				Process
 
 .PHONY: all
 all:
