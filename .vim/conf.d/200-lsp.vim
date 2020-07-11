@@ -19,8 +19,10 @@ else
   let g:lsp_signs_enabled = 1
   let g:lsp_fold_enabled = 0
   let g:lsp_diagnostics_echo_cursor = 1
-  let g:lsp_signs_error = {'text': 'ｴｰ'}
-  let g:lsp_signs_warning = {'text': 'ﾜｰ'}
+  " nf-mdi-comment_alert"
+  let g:lsp_signs_error = {'text': "\uf67c"}
+  " nf-fa-commenting
+  let g:lsp_signs_warning = {'text': "\uf27a"}
 
   let g:lsp_settings = {
        \  'clojure-lsp': {'disabled': v:true},
@@ -29,7 +31,12 @@ else
        \     'disabled': v:false,
        \     'whitelist': ['vim', 'clojure'],
        \   },
+       \  'vim-language-server': {'disabled': v:false},
        \}
+
+  aug VimLspSetting
+    au FileType vim nmap <C-]> :<C-u>LspDefinition<CR>
+  aug END
 
   " if executable('gopls') " {{{
   "   aug LspGo
@@ -42,18 +49,7 @@ else
   "     au FileType go setlocal omnifunc=lsp#complete
   "   aug END
   " endif " }}}
-  "
-  " if executable('efm-langserver') " {{{
-  "   aug LspEfm
-  "     au!
-  "     au User lsp_setup call lsp#register_server({
-  "          \ 'name': 'efm-langserver',
-  "          \ 'cmd': {server_info->['efm-langserver', '-c=/home/uochan/.config/efm-langserver/config.yaml']},
-  "          \ 'whitelist': ['vim', 'clojure'],
-  "          \ })
-  "   aug END
-  " endif " }}}
-  "
+
   " if executable('vim-language-server') " {{{
   "   aug LspVimScript
   "     au!

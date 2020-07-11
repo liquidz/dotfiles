@@ -3,6 +3,8 @@ if empty(globpath(&rtp, 'autoload/quickrun.vim'))
   finish
 endif
 
+nmap <LocalLeader>r <Plug>(quickrun)
+
 " 結果を縦分割で表示
 let b:quickrun_config = {'_': {'split': 'vertical'}}
 " 横分割時は下､ 縦分割時は右へ新しいウィンドウを開く

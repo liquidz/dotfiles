@@ -4,43 +4,22 @@ let g:dotfiles = $HOME.'/src/github.com/liquidz/dotfiles'
 call plug#begin('~/.vim/repos')
 " default {{{
 
-
-" Plug 'clojure-vim/async-clj-omni',       {'for': 'clojure'}
-" Plug 'elmcast/elm-vim'
-" " Plug 'guns/vim-sexp',                    {'for': 'clojure'}
-" " Plug 'junegunn/fzf',                     { 'dir': '~/.fzf', 'do': './install --all' }
-" " Plug 'junegunn/fzf.vim'
-" Plug 'iamcco/markdown-preview.nvim',     { 'do': { -> mkdp#util#install() } }
-" " Plug 'liquidz/vim-iced',                 {'for': 'clojure'}
-" " Plug 'liquidz/vim-iced-coc-source',      {'for': 'clojure'}
-" Plug 'morhetz/gruvbox'
-" " Plug 'neoclide/coc.nvim',                {'branch': 'release'}
-" Plug 'preservim/nerdtree'
-" Plug 'scrooloose/nerdcommenter'
-" Plug 'sjl/gundo.vim'
-" Plug 'tpope/vim-dadbod'
-" Plug 'tpope/vim-fugitive'
-" Plug 'tpope/vim-surround'
-" Plug 'tpope/vim-sensible'
-" Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
-" Plug 'ifightcrime/Muon'
-
-
-
+Plug 'prabirshrestha/callbag.vim'
 
 Plug 'aklt/plantuml-syntax'
 Plug 'camspiers/lens.vim'
 Plug 'cespare/vim-toml'
 Plug 'cocopon/iceberg.vim'
-Plug 'tyru/columnskip.vim'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'easymotion/vim-easymotion'
 Plug 'haya14busa/vim-metarepeat'
 Plug 'iberianpig/tig-explorer.vim'
 Plug 'inside/vim-search-pulse'
 Plug 'itchyny/lightline.vim'
+Plug 'jiangmiao/auto-pairs'
 Plug 'JuliaEditorSupport/julia-vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'kana/vim-operator-replace'
 Plug 'kana/vim-operator-user'
@@ -50,8 +29,9 @@ Plug 'kana/vim-textobj-line'
 Plug 'kana/vim-textobj-user'
 Plug 'kshenoy/vim-signature'
 Plug 'lambdalisue/fern.vim'
-Plug 'LeafCage/foldCC.vim'
+Plug 'lambdalisue/readablefold.vim'
 Plug 'liquidz/vim-textobj-value'
+Plug 'liuchengxu/vim-which-key'
 Plug 'luochen1990/rainbow'
 Plug 'machakann/vim-sandwich'
 Plug 'mattn/vim-sonictemplate'
@@ -70,18 +50,12 @@ Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tyru/caw.vim'
+Plug 'tyru/columnskip.vim'
 Plug 'tyru/open-browser.vim'
 Plug 'vim-jp/vital.vim'
 Plug 'vim-scripts/confluencewiki.vim'
 Plug 'w0ng/vim-hybrid'
-
-if has('nvim')
-  Plug 'liuchengxu/vim-clap'
-  Plug 'rbgrouleff/bclose.vim' " required by tig-explorer
-else
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-  Plug 'junegunn/fzf.vim'
-endif
+Plug 'zenlang/zen.vim'
 
 " /default }}}
 " filetype {{{
@@ -90,7 +64,7 @@ Plug 'nelstrom/vim-textobj-rubyblock', {'for': 'ruby'}
 Plug 'thinca/vim-prettyprint',         {'for': 'vim'}
 Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 if has('unix')
-  "" Clojure
+  "" Clojure {{{
   Plug 'guns/vim-sexp',           {'for': ['lisp', 'clojure']}
   "Plug 'eraserhd/parinfer-rust',  {'for': 'clojure', 'do': 'cargo build --release'}
   Plug 'kovisoft/paredit',        {'for': ['lisp', 'clojure']}
@@ -99,15 +73,16 @@ if has('unix')
 
   " Plug 'tpope/vim-classpath', {'for': 'clojure'}
   " Plug 'tpope/vim-fireplace', {'for': 'clojure'}
+  " }}}
 
   "" Common Lisp
   Plug 'l04m33/vlime',            {'for': 'lisp', 'rtp': 'vim'}
 
   "" Rust
   Plug 'rust-lang/rust.vim',      {'for': 'rust'}
-  Plug 'racer-rust/vim-racer',    {'for': 'rust'}
-  Plug 'yuratomo/w3m.vim',        {'for': ['lisp', 'rust']}
-  Plug 'rhysd/rust-doc.vim',      {'for': 'rust'}
+  " Plug 'racer-rust/vim-racer',    {'for': 'rust'}
+  " Plug 'yuratomo/w3m.vim',        {'for': ['lisp', 'rust']}
+  " Plug 'rhysd/rust-doc.vim',      {'for': 'rust'}
 
   "" Lua
   Plug 'rhysd/reply.vim', {'for': 'lua'}
@@ -378,6 +353,7 @@ xmap <LocalLeader>en <Plug>(VTranslate)
 xmap <LocalLeader>ja <Plug>(VTranslateBang)
 
 " }}}
+
 " developing plugins {{{
 " http://www.kaoriya.net/blog/2015/12/01/vim-switch-developing-plugin/
 let dirs = [ $HOME.'/src/github.com/liquidz' ]

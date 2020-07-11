@@ -8,15 +8,15 @@ let s:colorscheme = 'wombat'
 let g:lightline = {
     \ 'colorscheme': s:colorscheme,
     \ 'active': {
-    \   'left': [['mode', 'paste'],
-    \            ['readonly', 'modified']],
-    \   'right': [['lineinfo'], ['percent'], ['fileformat', 'fileencoding', 'filetype'], ['anzu'], ['iced']]
+    \   'left': [['mode', 'readonly'],
+    \            ['paste', 'modified']],
+    \   'right': [['lineinfo'], ['percent'], ['fileformat', 'filetype'], ['anzu'], ['iced']]
     \ },
     \ 'component_function': {
     \   'anzu': 'anzu#search_status',
     \   'iced': 'iced#repl#status',
     \ },
-    \ 'separator': { 'left': '', 'right': '' },
-    \ 'subseparator': { 'left': '|', 'right': '|' },
+    \ 'separator': { 'left': "\ue0b4", 'right': "\ue0b6"},
+    \ 'subseparator': { 'left': "\ue0b5", 'right':  "\ue0b7" },
     \ 'tabline': { 'left': [[ 'tabs' ]], 'right': [[ 'bufnum' ]] }
     \ }

@@ -6,12 +6,16 @@ endif
 let g:loaded_clojure_ftplugin = 1
 
 let g:iced_formatter = 'cljstyle'
+"let g:iced_formatter = 'joker'
 "let g:iced_formatter = 'zprint'
 
 let g:clojure_fuzzy_indent_patterns = [
     \ '^with', '^def', '^let', '^\w\+-let'
     \ ]
 
+"let g:iced_default_key_mapping_leader = '<LocalLeader>'
+
+let g:iced#repl#babashka_repl_type = 'nrepl'
 let g:iced#buffer#stdout#max_line = 512
 let g:iced#buffer#stdout#mods = 'vertical'
 let g:iced#clojuredocs#use_clj_docs_on_cljs = v:true
@@ -20,16 +24,21 @@ let g:iced#nrepl#auto#does_switch_session = v:true
 let g:iced#nrepl#complete#ignore_context = v:true
 let g:iced_enable_auto_indent = v:true
 let g:iced_enable_default_key_mappings = v:true
-let g:iced_sign = {'error': 'E', 'trace': 'T', 'lint': 'L'}
+" nf-fa-bomb
+let g:iced_sign = {'error': "\uf1e2", 'trace': 'T', 'lint': 'L'}
 
-let g:iced#format#rule = {
-     \ 'core-let': '[[:block 1]]',
-     \ 'merr.core/let': '[[:block 2] [:inner 1]]',
-     \ 'clojure.spec.alpha/fdef': '[[:block 1]]',
-     \ 're-frame.core/reg-event-db': '[[:block 1]]',
-     \ 're-frame.core/reg-event-fx': '[[:block 1]]',
-     \ 're-frame.core/reg-sub': '[[:block 1]]',
-     \ }
+" let g:iced#format#rule = {
+"     \ 'core-let': '[[:block 1]]',
+"     \ 'merr.core/let': '[[:block 2] [:inner 1]]',
+"     \ 'clojure.spec.alpha/fdef': '[[:block 1]]',
+"     \ 're-frame.core/reg-event-db': '[[:block 1]]',
+"     \ 're-frame.core/reg-event-fx': '[[:block 1]]',
+"     \ 're-frame.core/reg-sub': '[[:block 1]]',
+"     \ }
+
+" tonsky
+let g:iced#format#rule = {'#"^\w"': '[[:inner 0]]'}
+
 
 let g:iced#hook = {
       \ 'session_switched': {'type': 'shell',
@@ -48,20 +57,22 @@ if exists('$SLACK_INCOMING_WEBHOOK_URL')
   "     \                             v.summary,
   "     \                             )]},
   "     \ }
+else
+  let g:iced#hook['test_finished'] = {
+       \ 'type': 'shell',
+       \ 'exec': {v -> printf('tmux display-message "Test %s: %s"', v.result, v.summary)},
+       \ }
+
 
   let g:iced#hook['test_finished'] = {
        \ 'type': 'shell',
        \ 'exec': {v -> ['curl', 'localhost:8890/api',
        \                '-X', 'POST', '-H', 'Content-Type: application/json',
-       \                '-d', printf('{"action": "add-tile", "type": "icon", "content": "fas %s", "color": "%s"}',
+       \                '-d', printf('{"action": "add-tile", "type": "icon", "title": "%s", "content": "fas %s", "color": "%s"}',
+       \                             v.result,
        \                             (v.result ==# 'succeeded' ? 'fa-check' : 'fa-times'),
        \                             (v.result ==# 'succeeded' ? '#7BA23F' : '#D0104C'),
        \                             )]},
-       \ }
-else
-  let g:iced#hook['test_finished'] = {
-       \ 'type': 'shell',
-       \ 'exec': {v -> printf('tmux display-message "Test %s: %s"', v.result, v.summary)},
        \ }
 endif
 
@@ -71,6 +82,10 @@ function! s:auto_connect() abort
   endif
   call timer_start(250, {-> execute(':IcedConnect')})
 endfunction
+
+nmap <Leader>em <Plug>(iced_eval_at_mark)
+nmap <Leader>eM <Plug>(iced_macroexpand_1_outer_list)
+nmap <Nop>(disable_expand_all) <Plug>(iced_macroexpand_outer_list)
 
 aug MyClojureSetting
   au!

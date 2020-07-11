@@ -127,14 +127,6 @@ inoremap jj <Esc>
 cnoremap jj <Esc>
 inoremap jk <Esc>
 
-nnoremap <C-k> {
-nnoremap <C-j> }
-vnoremap <C-k> {
-vnoremap <C-j> }
-cnoremap <C-j> <Esc>
-inoremap <C-j> <Esc>
-"vnoremap <C-j> <Esc>
-
 nnoremap mz :<C-u>10messages<CR>
 
 nnoremap zk ^
@@ -167,11 +159,11 @@ if $HOME ==# $USERPROFILE || $GIT_EXEC_PATH !=# ''
   endif
 end
 
-" Linux 上では xkb を使って入れ替えているため
-"if system('uname') !=# "Linux\n"
+" Mac 上では Karabiner-Elements を使って入れ替えているため
+if system('uname') !=# "Darwin\n"
   nnoremap ; :
   nnoremap : ;
-"endif
+endif
 
 nnoremap > %
 nnoremap < %

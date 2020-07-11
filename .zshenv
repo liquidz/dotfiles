@@ -5,6 +5,8 @@ PATH=$PATH:~/.vim/repos/vim-themis/bin
 PATH=$PATH:/usr/local/nodejs/bin
 PATH=$PATH:/usr/local/cmake/bin
 PATH=$PATH:/usr/local/julia/bin
+PATH=$PATH:/usr/local/zen
+PATH=$PATH:/usr/local/nvim/bin
 PATH=$PATH:~/.cargo/bin
 PATH=$PATH:~/.skim/bin
 PATH=$PATH:~/.roswell/bin
@@ -135,7 +137,7 @@ function __bookmarklist() {
     fi
     cat ~/.bookmark
 }
-alias bm='cd $(__bookmarklist | fzf)'
+alias bm='cd $(__bookmarklist | fzf) && basename $(pwd) | xargs tmux rename-window'
 alias cdd='cd $(git rev-parse --show-toplevel) && cd $(fd -t d . | fzf)'
 # }}}
 # git {{{
@@ -214,6 +216,9 @@ fi
 alias server='python ~/src/github.com/liquidz/dotfiles/bin/server.py'
 alias suteneko='docker run -it uochan/suteneko'
 export BECOROOT=/Users/uochan/src/github.com/liquidz/beco
+
+alias antq='java -jar /Users/uochan/src/github.com/liquidz/antq/target/antq-standalone.jar'
+
 # }}}
 
 if which fd > /dev/null 2>&1; then

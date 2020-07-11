@@ -15,22 +15,23 @@
       :url "https://github.com/liquidz/dotfiles"})
 
 ;; 必要なディレクトリを作成
-(doseq [dir '[.boot .config/nvim .lein .tags]]
+(doseq [dir [".boot" ".config/nvim" ".lein" ".tags" ".config/karabiner/assets/complex_modifications"]]
   (directory (home dir)))
 
 ;; dotfiles のシンボリックリンクを貼る
-(doseq [file '[.boot/profile.boot
-               .cheatrc .config/efm-langserver .ctags
-               .gemrc .gitconfig.common
-               .joker
-               .lein/profiles.clj
-               .rubocop.yml
-               .spacemacs.d
-               .tmux.conf
-               .vim .vimrc
-               .w3m
-               .xkb
-               .zsh .zshenv .zshrc .zshrc.antigen]]
+(doseq [file [".boot/profile.boot"
+               ".cheatrc" ".config/efm-langserver" ".ctags"
+               ".gemrc" ".gitconfig.common"
+               ".joker"
+               ".lein/profiles.clj"
+               ".rubocop.yml"
+               ".spacemacs.d"
+               ".tmux.conf"
+               ".vim" ".vimrc"
+               ".w3m"
+               ".xkb"
+               ".zsh" ".zshenv" ".zshrc" ".zshrc.antigen"
+               ".config/karabiner/assets/complex_modifications/mine.json"]]
   (link {:path (home file)
          :to (install-dir file)}))
 
