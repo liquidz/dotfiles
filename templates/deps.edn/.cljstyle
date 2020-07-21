@@ -1,0 +1,8 @@
+{
+ :list-indent-size 1
+ :insert-padding-lines? false
+ :indents {defrecord [[:inner 0] [:inner 1]]}
+ :reformat-types? false
+ :file-ignore #{"target"}
+ }
+; vim:ft=clojure

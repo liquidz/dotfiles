@@ -96,6 +96,7 @@ aug MyClojureSetting
 
   au FileType clojure imap <silent><buffer> <C-h> <Plug>(sexp_insert_backspace)
   au FileType clojure inoremap <buffer> >> ->
+  au FileType clojure inoremap <buffer> ## #_
 
   au FileType clojure nmap <buffer> tt <Plug>(iced_cycle_src_and_test)
   au FileType clojure nmap <buffer> <C-l><C-l><C-l> <Plug>(iced_clean_all)
