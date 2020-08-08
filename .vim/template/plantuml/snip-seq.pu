@@ -1,0 +1,4 @@
+"{{_input_:from}}" -> "{{_input_:to}}"
+activate {{_input_:to}}
+    {{_cursor_}}
+deactivate {{_input_:to}}

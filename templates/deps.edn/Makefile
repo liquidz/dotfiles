@@ -17,7 +17,7 @@ test:
 	clojure -R:dev -A:test
 
 outdated:
-	clojure -A:ancient
+	clojure -A:outdated
 
 pom:
 	clojure -Spom
