@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 " merr によるエラー処理の位置を把握しやすくするため
 syntax keyword merrErrorSymbol +err+
 syntax keyword merrErr merr/err
