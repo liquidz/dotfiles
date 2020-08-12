@@ -20,18 +20,26 @@
 
 ;; dotfiles のシンボリックリンクを貼る
 (doseq [file [".boot/profile.boot"
-               ".cheatrc" ".config/efm-langserver" ".ctags"
-               ".gemrc" ".gitconfig.common"
-               ".joker"
-               ".lein/profiles.clj"
-               ".rubocop.yml"
-               ".spacemacs.d"
-               ".tmux.conf"
-               ".vim" ".vimrc"
-               ".w3m"
-               ".xkb"
-               ".zsh" ".zshenv" ".zshrc" ".zshrc.antigen"
-               ".config/karabiner/assets/complex_modifications/mine.json"]]
+              ".cheatrc"
+              ".config/alacritty"
+              ".config/efm-langserver"
+              ".config/karabiner/assets/complex_modifications/mine.json"
+              ".ctags"
+              ".gemrc"
+              ".gitconfig.common"
+              ".joker"
+              ".lein/profiles.clj"
+              ".rubocop.yml"
+              ".spacemacs.d"
+              ".tmux.conf"
+              ".vim"
+              ".vimrc"
+              ".w3m"
+              ".xkb"
+              ".zsh"
+              ".zshenv"
+              ".zshrc"
+              ".zshrc.antigen"]]
   (link {:path (home file)
          :to (install-dir file)}))
 
@@ -52,8 +60,8 @@
 (doseq [[k v] {".zsh/_git"                "git-completion.zsh"
                ".zsh/git-completion.bash" "git-completion.bash"}]
   (download
-    {:path (home k)
-     :url (str "https://raw.githubusercontent.com/git/git/master/contrib/completion/" v)}))
+   {:path (home k)
+    :url (str "https://raw.githubusercontent.com/git/git/master/contrib/completion/" v)}))
 
 ;;;; antigen
 (git {:path (home "src/github.com/zsh-users/antigen")
@@ -61,7 +69,7 @@
 
 ;; git config
 (execute
-  {:command [(str "git config --global include.path " (home ".gitconfig.common"))
-             (str "git config --global user.name    " (:name git-user))
-             (str "git config --global user.email   " (:email git-user))]
-   :pre-not (str "test $(git config user.name) = " (:name git-user))})
+ {:command [(str "git config --global include.path " (home ".gitconfig.common"))
+            (str "git config --global user.name    " (:name git-user))
+            (str "git config --global user.email   " (:email git-user))]
+  :pre-not (str "test $(git config user.name) = " (:name git-user))})
