@@ -9,3 +9,4 @@ endfunction
 command! FzfProjectFiles execute 'Files' s:find_git_root()
 
 nnoremap <C-p> :<C-u>FzfProjectFiles<CR>
+nnoremap <C-b> :<C-u>Buffers<CR>

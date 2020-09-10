@@ -5,7 +5,7 @@ tools:
     lint-command: 'vint -'
     lint-stdin: true
   clj-kondo: &clj-kondo
-    lint-command: 'clj-kondo --lint'
+    lint-command: 'clj-kondo --parallel --lint'
     lint-formats:
       - '%f:%l:%c:\ Parse\ %t%*[^:]:\ %m'
       - '%f:%l:%c:\ %t%*[^:]:\ %m'

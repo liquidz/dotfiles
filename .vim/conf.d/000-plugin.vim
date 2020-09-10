@@ -8,6 +8,7 @@ Plug 'prabirshrestha/callbag.vim'
 
 Plug 'aklt/plantuml-syntax'
 Plug 'camspiers/lens.vim'
+Plug 'sentriz/vim-print-debug'
 Plug 'cespare/vim-toml'
 Plug 'cocopon/iceberg.vim'
 Plug 'ConradIrwin/vim-bracketed-paste'
@@ -64,15 +65,15 @@ Plug 'nelstrom/vim-textobj-rubyblock', {'for': 'ruby'}
 Plug 'thinca/vim-prettyprint',         {'for': 'vim'}
 Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 if has('unix')
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
   "" Clojure {{{
   Plug 'guns/vim-sexp',           {'for': ['lisp', 'clojure']}
   "Plug 'eraserhd/parinfer-rust',  {'for': 'clojure', 'do': 'cargo build --release'}
   Plug 'kovisoft/paredit',        {'for': ['lisp', 'clojure']}
   Plug '~/src/github.com/liquidz/vim-iced',               {'for': 'clojure'}
   Plug '~/src/github.com/liquidz/vim-iced-fern-debugger', {'for': 'clojure'}
-
-  " Plug 'tpope/vim-classpath', {'for': 'clojure'}
-  " Plug 'tpope/vim-fireplace', {'for': 'clojure'}
+  Plug '~/src/github.com/liquidz/vim-iced-coc-source', {'for': 'clojure'}
   " }}}
 
   "" Common Lisp
@@ -87,10 +88,12 @@ if has('unix')
   "" Lua
   Plug 'rhysd/reply.vim', {'for': 'lua'}
 
+  Plug 'ziglang/zig.vim'
+
   if has('nvim')
     " ---- NEOVIM ----
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    Plug '~/src/github.com/liquidz/vim-iced-coc-source', {'for': 'clojure'}
+
+    "Plug 'Olical/conjure', {'tag': 'v4.3.1'}
   else
     " ---- VIM ----
     Plug 'prabirshrestha/async.vim'
@@ -102,8 +105,6 @@ if has('unix')
     " Plug 'high-moctane/asyncomplete-nextword.vim'
     " Plug '~/src/github.com/liquidz/vim-iced-asyncomplete',  {'for': 'clojure'}
 
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    Plug '~/src/github.com/liquidz/vim-iced-coc-source', {'for': 'clojure'}
 
   endif
 endif
@@ -353,6 +354,14 @@ xmap <LocalLeader>en <Plug>(VTranslate)
 xmap <LocalLeader>ja <Plug>(VTranslateBang)
 
 " }}}
+
+let g:print_debug_templates = {
+      \ 'javascript': 'console.log(`+++ {}`);',
+      \ 'clojure': '(log/info "+++ {}")',
+      \ 'vim': 'echom printf(''+++ {}'')',
+      \ }
+nnoremap <localleader>p :call print_debug#print_debug()<cr>
+
 
 " developing plugins {{{
 " http://www.kaoriya.net/blog/2015/12/01/vim-switch-developing-plugin/

@@ -7,6 +7,7 @@ let g:loaded_clojure_ftplugin = 1
 
 
 let g:iced_formatter = 'cljstyle'
+let g:iced_enable_clj_kondo_analysis = v:true
 "let g:iced_formatter = 'joker'
 "let g:iced_formatter = 'zprint'
 
@@ -26,6 +27,7 @@ let g:iced#nrepl#skip_evaluation_when_buffer_size_is_exceeded = v:true
 let g:iced#repl#babashka_repl_type = 'nrepl'
 let g:iced_enable_auto_indent = v:true
 let g:iced_enable_default_key_mappings = v:true
+" let g:iced_cache_directory = '/tmp'
 
 " nf-fa-bomb
 let g:iced_sign = {'error': "\uf1e2", 'trace': 'T', 'lint': 'L'}
@@ -116,6 +118,9 @@ aug MyClojureSetting
   au FileType clojure nmap <buffer> <Leader>ere <Plug>(iced_eval_and_replace)<Plug>(sexp_outer_list)``
   au FileType clojure nmap <buffer> <Leader>ert <Plug>(iced_eval_and_replace)<Plug>(sexp_outer_top_list)``
 
+  au FileType clojure nmap <buffer> <Leader>epe <Plug>(iced_eval_and_print)<Plug>(sexp_outer_list)``
+
+
   "" vim-sexp
   au FileType clojure nmap <silent><buffer> <LocalLeader>kk <Plug>(sexp_swap_list_backward)
   au FileType clojure xmap <silent><buffer> <LocalLeader>kk <Plug>(sexp_swap_list_backward)
@@ -133,5 +138,5 @@ aug MyClojureSetting
   au FileType clojure nmap <silent><buffer> <Leader>ktl <Plug>(iced_kaocha_test_rerun_last)
 
   "" cljstyle auto fix
-  au BufWritePre *.clj,*.cljs,*.cljc  call s:auto_format_current_form()
+  au BufWritePre *.clj,*.cljs,*.cljc,*.edn  call s:auto_format_current_form()
 aug END

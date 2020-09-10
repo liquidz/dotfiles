@@ -38,6 +38,10 @@ let g:quickrun_config = {
       \     'command': 'julia',
       \     'exec'   : '%c %s'
       \   },
+      \   'zig': {
+      \     'command': 'zig',
+      \     'exec'   : '%c test %s'
+      \   },
       \   'watchdogs_checker/phpcs': {
       \     'command' : 'phpcs',
       \     'exec'    : '%c --report=emacs %s'
