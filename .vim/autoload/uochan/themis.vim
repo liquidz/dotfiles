@@ -94,6 +94,12 @@ endfunction
 function! s:term_start(cmd, ...) abort
   let win = winnr()
 
+  if type(a:cmd) == v:t_list
+    echom join(a:cmd, ' ')
+  else
+    echom string(a:cmd)
+  endif
+
   try
     call s:init_buf()
     call s:open_buf()
