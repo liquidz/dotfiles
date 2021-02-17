@@ -4,16 +4,30 @@ let g:dotfiles = $HOME.'/src/github.com/liquidz/dotfiles'
 call plug#begin('~/.vim/repos')
 " default {{{
 
+
+Plug 'rbtnn/vim-pterm'
 Plug 'prabirshrestha/callbag.vim'
+Plug 'lambdalisue/vital-Whisky'
+
+Plug 'sainnhe/forest-night'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'sainnhe/edge'
+
+" Deno/Denops
+Plug 'vim-denops/denops.vim'
+Plug 'vim-denops/denops-helloworld.vim'
+
+
+Plug 'powerman/vim-plugin-AnsiEsc'
 
 Plug 'aklt/plantuml-syntax'
 Plug 'camspiers/lens.vim'
-Plug 'sentriz/vim-print-debug'
 Plug 'cespare/vim-toml'
 Plug 'cocopon/iceberg.vim'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'easymotion/vim-easymotion'
 Plug 'haya14busa/vim-metarepeat'
+Plug 'hrsh7th/vim-eft'
 Plug 'iberianpig/tig-explorer.vim'
 Plug 'inside/vim-search-pulse'
 Plug 'itchyny/lightline.vim'
@@ -29,6 +43,8 @@ Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-line'
 Plug 'kana/vim-textobj-user'
 Plug 'kshenoy/vim-signature'
+Plug 'lambdalisue/fern-bookmark.vim'
+Plug 'lambdalisue/fern-hijack.vim'
 Plug 'lambdalisue/fern.vim'
 Plug 'lambdalisue/readablefold.vim'
 Plug 'liquidz/vim-textobj-value'
@@ -38,8 +54,9 @@ Plug 'machakann/vim-sandwich'
 Plug 'mattn/vim-sonictemplate'
 Plug 'osyo-manga/vim-anzu'
 Plug 'previm/previm'
-Plug 'rhysd/clever-f.vim'
 Plug 'rhysd/vim-color-spring-night'
+Plug 'sentriz/vim-print-debug'
+Plug 'skanehira/gh.vim'
 Plug 'skanehira/translate.vim'
 Plug 't9md/vim-choosewin'
 Plug 't9md/vim-quickhl'
@@ -92,6 +109,7 @@ if has('unix')
 
   if has('nvim')
     " ---- NEOVIM ----
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
     "Plug 'Olical/conjure', {'tag': 'v4.3.1'}
   else
@@ -362,6 +380,7 @@ let g:print_debug_templates = {
       \ }
 nnoremap <localleader>p :call print_debug#print_debug()<cr>
 
+let g:pterm_options = { 'border' : [] }
 
 " developing plugins {{{
 " http://www.kaoriya.net/blog/2015/12/01/vim-switch-developing-plugin/

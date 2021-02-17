@@ -3,5 +3,21 @@
     "nextword.filetypes": ["markdown", "asciidoc", "gitcommit", "clojure", "vim", "help"],
     "suggest.minTriggerInputLength": 2,
     "suggest.triggerCompletionWait": 300,
-    "suggest.timeout": 1000
+    "suggest.timeout": 5000,
+
+    "languageserver": {
+        "clojure-lsp": {
+            "command": "bash",
+            "args": ["-c", "clojure-lsp"],
+            "filetypes": ["clojure"],
+            "rootPatterns": ["project.clj", "deps.edn", "shadow-cljs.edn"],
+            "additionalSchemes": ["jar", "zipfile"],
+            "disableDiagnostics": true,
+            "disableCompletion": true,
+            "trace.server": "verbose",
+            "initializationOptions": {
+                "ignore-classpath-directories": true
+            }
+        }
+    }
 }

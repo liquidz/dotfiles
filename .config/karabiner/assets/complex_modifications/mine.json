@@ -19,12 +19,28 @@
         },
 
         {
-            "description": "Map Ctrl-j to Esc",
+            "description": "Change spacebar to left_shift. (Post spacebar if pressed alone)!!",
             "manipulators": [
                 {
                     "type": "basic",
-                    "from": {"key_code": "j", "modifiers": {"mandatory": ["left_control"]}},
-                    "to": [{"key_code": "escape"}]
+                    "from": {
+                        "key_code": "spacebar",
+                        "modifiers": {
+                            "optional": [
+                                "any"
+                            ]
+                        }
+                    },
+                    "to": [
+                        {
+                            "key_code": "left_shift"
+                        }
+                    ],
+                    "to_if_alone": [
+                        {
+                            "key_code": "spacebar"
+                        }
+                    ]
                 }
             ]
         },

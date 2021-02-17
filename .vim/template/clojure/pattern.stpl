@@ -10,4 +10,4 @@
 select\ \([^ .]\+\)\ from\ \([^ .]\+\)$
 	(-> (sql/select :{{$1}})
 	    (sql/from :{{$2}}){{_cursor_}}
-	    (->> (fu.db/fetch db)))
+	    (->> (db/fetch db)))

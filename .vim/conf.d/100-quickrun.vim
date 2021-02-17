@@ -42,6 +42,14 @@ let g:quickrun_config = {
       \     'command': 'zig',
       \     'exec'   : '%c test %s'
       \   },
+      \   'typescript': {
+      \     'command': 'deno',
+      \     'exec'   : '%c run --allow-all %s'
+      \   },
+      \   'typescript_test': {
+      \     'command': 'deno',
+      \     'exec'   : '%c test'
+      \   },
       \   'watchdogs_checker/phpcs': {
       \     'command' : 'phpcs',
       \     'exec'    : '%c --report=emacs %s'
@@ -64,3 +72,8 @@ let g:quickrun_config = {
       \       : '',
       \   },
       \ }
+
+aug quickrun
+  au!
+  au FileType quickrun AnsiEsc
+aug END

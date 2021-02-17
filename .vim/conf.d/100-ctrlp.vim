@@ -25,7 +25,11 @@ nnoremap <LocalLeader>pb  :CtrlPBuffer<CR>
 nnoremap <LocalLeader>pq  :CtrlPBuffer<CR>
 nnoremap <LocalLeader>pcc :CtrlPClearCache<CR>
 
-if exists('*cpsm#CtrlPMatch')
-  let g:cpsm_query_inverting_delimiter = ' '
-  let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
-endif
+" if exists('*cpsm#CtrlPMatch')
+"   let g:cpsm_query_inverting_delimiter = ' '
+"   let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
+" endif
+
+
+let g:ctrlp_match_func = {'match': 'ctrlp_matchfuzzy#matcher'}
+

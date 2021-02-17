@@ -18,5 +18,5 @@ highlight link cljEmpty cMyWarning
 highlight link myComment cMyWarning
 
 " テストがとこから始まるのかわかりやすくするためのハイライト
-syntax match cljDefTest 't/deftest.*$' contains=clojureMeta,clojureKeyword
+syntax match cljDefTest '\(t/\)\?deftest.*$' contains=clojureMeta,clojureKeyword
 highlight default link cljDefTest Todo

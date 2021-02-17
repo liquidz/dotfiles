@@ -1,4 +1,4 @@
-.PHONY: repl run test outdated pom uberjar jar clean
+.PHONY: repl run test outdated pom uberjar jar install clean
 
 PLATFORM = $(shell uname -s)
 ifeq ($(PLATFORM), Darwin)
@@ -11,22 +11,34 @@ repl:
 	iced repl -A:dev
 
 run:
-	clj -m __dummy__.core
+	clj -M -m __dummy__.core
 
 test:
-	clojure -R:dev -A:test
+	clojure -M:dev:test
+
+lint:
+	cljstyle check
+	clj-kondo --lint src:test
 
 outdated:
-	clojure -A:outdated
+	clojure -M:outdated
 
 pom:
 	clojure -Spom
 
-uberjar: pom
-	clojure -A:depstar -m hf.depstar.uberjar target/__dummy__-standalone.jar -C -m __dummy__.core
+target/__dummy__-standalone.jar: pom
+	clojure -X:depstar uberjar :jar $@ :aot true :main-class __dummy__.core
+uberjar: clean target/__dummy__-standalone.jar
 
-jar: pom
-	clojure -A:depstar -m hf.depstar.jar target/__dummy__.jar
+target/__dummy__.jar: pom
+	clojure -X:depstar jar :jar $@
+jar: clean target/__dummy__.jar
+
+install: clean target/__dummy__.jar
+	clj -M:deploy install target/__dummy__.jar
+
+coverage:
+	clojure -M:coverage:dev --src-ns-path=src --test-ns-path=test --codecov
 
 native-image: uberjar
 	$(GRAALVM_HOME)/bin/native-image \

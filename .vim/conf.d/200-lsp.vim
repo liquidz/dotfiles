@@ -27,11 +27,12 @@ else
   let g:lsp_settings = {
        \  'clojure-lsp': {'disabled': v:true},
        \  'json-languageserver': {'disabled': v:true},
+       \  'typescript-language-server': {'disabled': v:true},
        \  'efm-langserver': {
        \     'disabled': v:false,
        \     'whitelist': ['vim', 'clojure'],
        \   },
-       \  'vim-language-server': {'disabled': v:false},
+       \  'vim-language-server': {'disabled': v:true},
        \}
 
   aug VimLspSetting
@@ -50,19 +51,15 @@ else
   "   aug END
   " endif " }}}
 
-  " if executable('vim-language-server') " {{{
-  "   aug LspVimScript
+  " if executable('vimscript-language-server')
+  "   aug LspVim
   "     au!
   "     au User lsp_setup call lsp#register_server({
-  "         \ 'name': 'vim-language-server',
-  "         \ 'cmd': {server_info->['vim-language-server', '--stdio']},
-  "         \ 'whitelist': ['vim'],
-  "         \ })
-  "     "au FileType vim setlocal omnifunc=lsp#complete
-  "     au FileType vim nnoremap <C-]> :<C-u>LspDefinition<CR>
-  "     au FileType vim nnoremap K :<C-u>LspHover<CR>
+  "          \ 'name': 'vimscript-language-server',
+  "          \ 'cmd': {server_info->['vimscript-language-server']},
+  "          \ 'whitelist': ['vim'],
+  "          \ })
   "   aug END
-  " endif " }}}
-
+  " endif
 endif
 " vim:foldlevel=0

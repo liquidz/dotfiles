@@ -22,8 +22,8 @@ fi
 #     source "$HOME/.sdkman/bin/sdkman-init.sh"
 # fi
 
-if [[ -e /usr/local/Cellar/libpq/12.2_1/bin ]]; then
-	PATH=$PATH:/usr/local/Cellar/libpq/12.2_1/bin
+if [[ -e ~/src/github.com/google/vimscript-language-server/target/debug ]]; then
+  PATH="$PATH:${HOME}/src/github.com/google/vimscript-language-server/target/debug"
 fi
 
 export PATH
@@ -224,6 +224,10 @@ alias antq='java -jar /Users/uochan/src/github.com/liquidz/antq/target/antq-stan
 if which fd > /dev/null 2>&1; then
   export FZF_DEFAULT_COMMAND='fd --type f --hidden'
 fi
+
+# Deno
+export DENO_INSTALL="/Users/uochan/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
 
 if [[ -e ~/.zshenv.local ]]; then
     source ~/.zshenv.local

@@ -182,6 +182,8 @@ fi
 source ~/.zshrc.antigen
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+[ -f ~/.glam/scripts/glam.sh ] && source ~/.glam/scripts/glam.sh
+
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
@@ -205,3 +207,7 @@ if [[ ! -n $TMUX && $- == *l* ]]; then
       :  # Start terminal normally
     fi
 fi
+
+export WASMTIME_HOME="$HOME/.wasmtime"
+
+export PATH="$WASMTIME_HOME/bin:$PATH"

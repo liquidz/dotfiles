@@ -1,10 +1,11 @@
 {:user
- {
-  :plugins [
-            [lein-ancient "0.6.15"]
-            [lein-codox "0.10.7"]
-            [lein-pprint "1.2.0"]
-            ]
+ {:plugins []
+
+  ; :dependencies [[lambdaisland/kaocha "1.0.681"]
+  ;                [antq "RELEASE"]]
+  ;
+  ; :aliases {"antq" ["run" "-m" "antq.core"]
+  ;           "kaocha" ["run" "-m" "kaocha.runner"]}
+
   ;;:signing {:gpg-passphrase :env/gpgpass}
-  :repl-options {:timeout 3600000}
-  }}
+  :repl-options {:timeout 3600000}}}

@@ -354,6 +354,10 @@ set grepprg=git\ grep\ --no-index\ -I\ --line-number\ --no-color
 
 set runtimepath+=$HOME/.vim/
 runtime! conf.d/*.vim
+if has('nvim')
+  runtime! conf.nvim.d/*.vim
+endif
+"runtime! conf.test/*.vim
 exec printf(':runtime! conf.d/%s/*.vim', hostname())
 
 " }}}

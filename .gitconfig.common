@@ -6,6 +6,9 @@
 	default = current
 [core]
 	editor = /usr/local/bin/vim
+	pager = delta --color-only --theme OneHalfDark
+[interactive]
+	diffFilter = delta --color-only --theme OneHalfDark
 [url "git@github.com:"]
 	pushinsteadof = https://liquidz@github.com/
 [alias]
@@ -41,6 +44,7 @@
 	main    = R       ?git rebase -i %(commit) --autosquash --keep-empty
 	main    = S       ?git stash save %(promptStashMessage:)
 	main    = W       ?git commit --allow-empty -m 'Work In Progress'
+	main    = <Esc>p  ?git cherry-pick %(commit)
 	refs    = !       none
 	refs    = B       ?git checkout -b %(promptBranchName:)
 	refs    = c       ?git checkout %(branch)
@@ -54,7 +58,7 @@
 	refs    = x       ?!git branch -d %(branch)
 	refs    = X       ?!git branch -D %(branch)
 	refs    = <Esc>f  ?!git fetch origin pull/%(promptPullRequestID:)/head:PullRequest
-	refs    = <Esc>p  !git remote prune --dry-run origin
+	refs    = <Esc>p  ?!git remote prune --dry-run origin
 	refs    = <Esc>P  ?!git remote prune origin
 	stage   = v       stage-update-line
 	stage   = x       status-revert
