@@ -97,18 +97,21 @@ let g:iced#hook = {
 
 let s:counter = 0
 function! s:test_finished(v) abort
-  let s:counter += 1
-  if s:counter > 10
-    let s:counter = 0
-  endif
-
-  let success_color = ['AACF53', '7BA23F']
-  let failure_color = ['E95464', 'D0104C']
-
-  let idx = s:counter % 2
-  let color = (a:v.result ==# 'succeeded' ? success_color[idx] : failure_color[idx])
-
-  return ['curl', '-XPOST', printf('localhost:8890/%s', color)]
+  " let s:counter += 1
+  " if s:counter > 10
+  "   let s:counter = 0
+  " endif
+  "
+  " let success_color = ['AACF53', '7BA23F']
+  " let failure_color = ['E95464', 'D0104C']
+  "
+  " let idx = s:counter % 2
+  " let color = (a:v.result ==# 'succeeded' ? success_color[idx] : failure_color[idx])
+  "
+  " return ['curl', '-XPOST', printf('localhost:8890/%s', color)]
+  let label = (a:v.result ==# 'succeeded' ? 'Succeeded' : 'Failed')
+  let text = printf("Test Finished\nResult: %s\n%s", label, a:v.summary)
+  return ['osascript', '-e', printf('display notification "%s"', text)]
 endfunction
 
 let g:iced#hook['test_finished'] = {'type': 'shell', 'exec': funcref('s:test_finished')}
@@ -143,7 +146,7 @@ endfunction
 nmap <silent> <C-]> :call MyClojureDefJump()<CR>
 nmap <Nop>(disable_def_jump) <Plug>(iced_def_jump)
 
-nmap silent <Leader>hn <Plug>(iced_ns_popup_show_form)
+nmap <Leader>hn <Plug>(iced_ns_popup_show_form)
 nmap <Nop>(disable_next_use_case) <Plug>(iced_next_use_case)
 
 aug MyClojureSetting

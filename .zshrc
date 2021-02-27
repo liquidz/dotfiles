@@ -14,22 +14,23 @@ autoload -U colors && colors
 # c.f. color codes
 # for c in {000..255}; do echo -n "\e[38;5;${c}m $c" ; [ $(($c%16)) -eq 15 ] && echo;done;echo
 
-autoload -Uz vcs_info
-setopt prompt_subst
-zstyle ':vcs_info:*'     enable            git
-zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:git:*' stagedstr         "!"
-zstyle ':vcs_info:git:*' unstagedstr       "+"
-zstyle ':vcs_info:*'     formats           "%b%c%u"
-zstyle ':vcs_info:*'     actionformats     '%b(%a)%c%u'
+# autoload -Uz vcs_info
+# setopt prompt_subst
+# zstyle ':vcs_info:*'     enable            git
+# zstyle ':vcs_info:git:*' check-for-changes true
+# zstyle ':vcs_info:git:*' stagedstr         "!"
+# zstyle ':vcs_info:git:*' unstagedstr       "+"
+# zstyle ':vcs_info:*'     formats           "%b%c%u"
+# zstyle ':vcs_info:*'     actionformats     '%b(%a)%c%u'
 
 precmd () {
     psvar=()
-    LANG=en_US.UTF-8 vcs_info
-    [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
+    #LANG=en_US.UTF-8 vcs_info
+    #[[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
+    LANG=en_US.UTF-8
 }
 
-PROMPT="%K{237} %F{032}%2~%f %1v %F{243}(%*)%f %? %k
+PROMPT="%K{237} %F{032}%2~%f %F{243}(%*)%f %? %k
 $ "
 
 # cd 先をディレクトリスタックに追加

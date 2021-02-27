@@ -15,3 +15,4 @@ aug MyDenoConfig
 aug END
 
 nmap <Leader>tt :QuickRun typescript_test<CR>
+inoremap ;; <Esc>A;

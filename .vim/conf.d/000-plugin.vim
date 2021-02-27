@@ -5,23 +5,23 @@ call plug#begin('~/.vim/repos')
 " default {{{
 
 
-Plug 'rbtnn/vim-pterm'
-Plug 'prabirshrestha/callbag.vim'
-Plug 'lambdalisue/vital-Whisky'
+" Plug 'rbtnn/vim-pterm'
+" Plug 'prabirshrestha/callbag.vim'
+" Plug 'lambdalisue/vital-Whisky'
 
-Plug 'sainnhe/forest-night'
-Plug 'NLKNguyen/papercolor-theme'
+
 Plug 'sainnhe/edge'
 
 " Deno/Denops
 Plug 'vim-denops/denops.vim'
 Plug 'vim-denops/denops-helloworld.vim'
 
+"Plug 'LeafCage/yankround.vim'
 
-Plug 'powerman/vim-plugin-AnsiEsc'
+"Plug 'powerman/vim-plugin-AnsiEsc'
 
 Plug 'aklt/plantuml-syntax'
-Plug 'camspiers/lens.vim'
+"Plug 'camspiers/lens.vim'
 Plug 'cespare/vim-toml'
 Plug 'cocopon/iceberg.vim'
 Plug 'ConradIrwin/vim-bracketed-paste'
@@ -36,7 +36,7 @@ Plug 'JuliaEditorSupport/julia-vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'kana/vim-operator-replace'
+Plug 'yuki-yano/vim-operator-replace'
 Plug 'kana/vim-operator-user'
 Plug 'kana/vim-submode'
 Plug 'kana/vim-textobj-indent'
@@ -54,11 +54,11 @@ Plug 'machakann/vim-sandwich'
 Plug 'mattn/vim-sonictemplate'
 Plug 'osyo-manga/vim-anzu'
 Plug 'previm/previm'
-Plug 'rhysd/vim-color-spring-night'
-Plug 'sentriz/vim-print-debug'
-Plug 'skanehira/gh.vim'
+"Plug 'rhysd/vim-color-spring-night'
+"Plug 'sentriz/vim-print-debug'
+"Plug 'skanehira/gh.vim'
 Plug 'skanehira/translate.vim'
-Plug 't9md/vim-choosewin'
+" Plug 't9md/vim-choosewin'
 Plug 't9md/vim-quickhl'
 Plug 'thinca/vim-localrc'
 Plug 'thinca/vim-quickrun'
@@ -71,9 +71,9 @@ Plug 'tyru/caw.vim'
 Plug 'tyru/columnskip.vim'
 Plug 'tyru/open-browser.vim'
 Plug 'vim-jp/vital.vim'
-Plug 'vim-scripts/confluencewiki.vim'
-Plug 'w0ng/vim-hybrid'
-Plug 'zenlang/zen.vim'
+" Plug 'vim-scripts/confluencewiki.vim'
+" Plug 'w0ng/vim-hybrid'
+" Plug 'zenlang/zen.vim'
 
 " /default }}}
 " filetype {{{
@@ -103,7 +103,7 @@ if has('unix')
   " Plug 'rhysd/rust-doc.vim',      {'for': 'rust'}
 
   "" Lua
-  Plug 'rhysd/reply.vim', {'for': 'lua'}
+  Plug 'rhysd/reply.vim', {'for': ['lua', 'typescript']}
 
   Plug 'ziglang/zig.vim'
 
@@ -379,6 +379,18 @@ let g:print_debug_templates = {
       \ 'vim': 'echom printf(''+++ {}'')',
       \ }
 nnoremap <localleader>p :call print_debug#print_debug()<cr>
+
+
+" FIXME https://github.com/LeafCage/yankround.vim
+" nmap p <Plug>(yankround-p)
+" xmap p <Plug>(yankround-p)
+" nmap P <Plug>(yankround-P)
+" nmap gp <Plug>(yankround-gp)
+" xmap gp <Plug>(yankround-gp)
+" nmap gP <Plug>(yankround-gP)
+" nmap <Up> <Plug>(yankround-prev)
+" nmap <Down> <Plug>(yankround-next)
+"let g:yankround_use_region_hl = 1
 
 let g:pterm_options = { 'border' : [] }
 

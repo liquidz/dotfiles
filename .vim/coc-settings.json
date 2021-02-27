@@ -5,6 +5,10 @@
     "suggest.triggerCompletionWait": 300,
     "suggest.timeout": 5000,
 
+    "deno.enable": true,
+    "deno.lint": true,
+    "deno.unstable": true,
+
     "languageserver": {
         "clojure-lsp": {
             "command": "bash",

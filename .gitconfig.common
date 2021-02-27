@@ -24,7 +24,9 @@
 
 [tig]
 	ignore-case = true
-    main-view   = id date author:email-user commit-title:graph=yes,refs=yes
+	main-view   = id date author:email-user,maxwidth=10 commit-title:graph=no,refs=yes
+	refs-view	  = line-number:no id:no date:default author:email-user,maxwidth=10 ref commit-title
+
 [tig "bind"]
 	diff    = F       ?git commit --fixup %(commit)
 	diff    = R       !git rebase -i %(commit) --autosquash --keep-empty

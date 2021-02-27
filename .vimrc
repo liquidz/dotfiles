@@ -91,9 +91,9 @@ augroup cch
   autocmd WinLeave * set nocursorline
   autocmd WinEnter,BufRead * set cursorline
 augroup END
-:hi clear CursorLine
-:hi CursorLine gui=underline
-highlight CursorLine ctermbg=black guibg=black
+" :hi clear CursorLine
+" :hi CursorLine gui=underline
+" highlight CursorLine ctermbg=black guibg=black
 
 " }}}
 " fold {{{
