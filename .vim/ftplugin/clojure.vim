@@ -30,7 +30,6 @@ let g:iced#grep#prg = 'git grep -I --line-number --no-color'
 let g:iced#nrepl#auto#does_switch_session = v:true
 let g:iced#nrepl#complete#ignore_context = v:true
 let g:iced#nrepl#skip_evaluation_when_buffer_size_is_exceeded = v:true
-let g:iced#repl#babashka_repl_type = 'nrepl'
 let g:iced_enable_auto_indent = v:false
 let g:iced_enable_default_key_mappings = v:true
 "let g:iced#message#enable_notify = v:true

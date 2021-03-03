@@ -12,18 +12,20 @@ call plug#begin('~/.vim/repos')
 
 Plug 'sainnhe/edge'
 
+Plug 'thinca/vim-qfreplace'
+
 " Deno/Denops
 Plug 'vim-denops/denops.vim'
 Plug 'vim-denops/denops-helloworld.vim'
 
-"Plug 'LeafCage/yankround.vim'
+Plug 'LeafCage/yankround.vim'
 
-"Plug 'powerman/vim-plugin-AnsiEsc'
+Plug 'powerman/vim-plugin-AnsiEsc', {'for': 'quickrun'}
 
 Plug 'aklt/plantuml-syntax'
-"Plug 'camspiers/lens.vim'
 Plug 'cespare/vim-toml'
 Plug 'cocopon/iceberg.vim'
+Plug 'mtth/scratch.vim'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'easymotion/vim-easymotion'
 Plug 'haya14busa/vim-metarepeat'
@@ -87,7 +89,7 @@ if has('unix')
   "" Clojure {{{
   Plug 'guns/vim-sexp',           {'for': ['lisp', 'clojure']}
   "Plug 'eraserhd/parinfer-rust',  {'for': 'clojure', 'do': 'cargo build --release'}
-  Plug 'kovisoft/paredit',        {'for': ['lisp', 'clojure']}
+  Plug 'liquidz/paredit',         {'for': ['lisp', 'clojure']}
   Plug '~/src/github.com/liquidz/vim-iced',               {'for': 'clojure'}
   Plug '~/src/github.com/liquidz/vim-iced-fern-debugger', {'for': 'clojure'}
   Plug '~/src/github.com/liquidz/vim-iced-coc-source', {'for': 'clojure'}
@@ -382,17 +384,18 @@ nnoremap <localleader>p :call print_debug#print_debug()<cr>
 
 
 " FIXME https://github.com/LeafCage/yankround.vim
-" nmap p <Plug>(yankround-p)
-" xmap p <Plug>(yankround-p)
-" nmap P <Plug>(yankround-P)
-" nmap gp <Plug>(yankround-gp)
-" xmap gp <Plug>(yankround-gp)
-" nmap gP <Plug>(yankround-gP)
-" nmap <Up> <Plug>(yankround-prev)
-" nmap <Down> <Plug>(yankround-next)
-"let g:yankround_use_region_hl = 1
+nmap p <Plug>(yankround-p)
+xmap p <Plug>(yankround-p)
+nmap P <Plug>(yankround-P)
+nmap gp <Plug>(yankround-gp)
+xmap gp <Plug>(yankround-gp)
+nmap gP <Plug>(yankround-gP)
+nmap <Up> <Plug>(yankround-prev)
+nmap <Down> <Plug>(yankround-next)
+let g:yankround_use_region_hl = 1
 
-let g:pterm_options = { 'border' : [] }
+" FIXME
+let g:scratch_persistence_file = '/tmp/scratch.txt'
 
 " developing plugins {{{
 " http://www.kaoriya.net/blog/2015/12/01/vim-switch-developing-plugin/
