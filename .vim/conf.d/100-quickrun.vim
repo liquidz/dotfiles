@@ -44,11 +44,11 @@ let g:quickrun_config = {
       \   },
       \   'typescript': {
       \     'command': 'deno',
-      \     'exec'   : '%c run --allow-all %s'
+      \     'exec'   : '%c run --allow-all --unstable %s'
       \   },
       \   'typescript_test': {
       \     'command': 'deno',
-      \     'exec'   : '%c test'
+      \     'exec'   : '%c --unstable test --allow-all'
       \   },
       \   'watchdogs_checker/phpcs': {
       \     'command' : 'phpcs',

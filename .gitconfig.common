@@ -4,6 +4,8 @@
 	root = ~/src
 [push]
 	default = current
+[pull]
+	rebase = true
 [core]
 	editor = /usr/local/bin/vim
 	pager = delta --color-only --theme OneHalfDark
@@ -15,6 +17,7 @@
 	st   = status
 	ci   = ci-status
 	co   = checkout
+	sh   = switch
 	ss   = stash
 	pr   = pull-request
 	b    = branch

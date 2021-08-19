@@ -5,14 +5,17 @@ if exists('g:loaded_clojure_ftplugin')
 endif
 let g:loaded_clojure_ftplugin = 1
 
+"let g:iced#debug = v:true
+
 let g:iced_formatter = 'cljstyle'
+"let g:iced_formatter = 'joker'
 "let g:iced_formatter = 'zprint'
 let g:iced_enable_clj_kondo_analysis = v:true
 let g:iced_enable_clj_kondo_local_analysis = v:true
 let g:iced_enable_enhanced_definition_extraction = v:false
+let g:iced_enable_auto_document = 'insert'
+
 "let g:iced_enable_enhanced_cljs_completion = v:false
-
-
 "let g:iced_formatter = 'joker'
 "let g:iced_formatter = 'zprint'
 
@@ -34,6 +37,7 @@ let g:iced_enable_auto_indent = v:false
 let g:iced_enable_default_key_mappings = v:true
 "let g:iced#message#enable_notify = v:true
 let g:iced#navigate#prefer_local_jump = v:true
+let g:iced#nrepl#auto#document_delay = 200
 
 
 let g:iced_multi_session#does_switch_session = v:true
@@ -93,6 +97,8 @@ let g:iced#hook = {
 "      \ 'type': 'function',
 "      \ 'exec': funcref('s:fixme'),
 "      \ })
+
+
 
 let s:counter = 0
 function! s:test_finished(v) abort
@@ -165,16 +171,15 @@ aug MyClojureSetting
   au FileType clojure nnoremap <buffer> <Leader>stop :<C-u>IcedEval (user/stop)<CR>
   au FileType clojure nnoremap <buffer> <Leader>Go :<C-u>IcedEval (user/reset)<CR>
 
-  au FileType clojure nmap <buffer> <Leader>jss :<C-u>IcedStartCljsRepl<CR>
-  au FileType clojure nmap <buffer> <Leader>jsq :<C-u>IcedQuitCljsRepl<CR>
-
-  au FileType clojure setl completeopt=menu
-  au FileType clojure setl updatetime=1000
-  au CursorHoldI *.clj,*.cljs,*.cljc call iced#nrepl#document#current_form()
+  "au FileType clojure setl completeopt=menu
+  " au FileType clojure setl updatetime=1000
+  " "au CursorHoldI *.clj,*.cljs,*.cljc call iced#nrepl#document#current_form()
 
   au FileType qf nnoremap <buffer> q :<C-u>q<CR>
 
   "au FileType clojure nmap <buffer> <Leader>et <Plug>(iced_eval)<Plug>(sexp_outer_top_list)``
+
+  "au FileType clojure nmap <buffer> <localleader>ee    m`<Plug>(iced_eval):<c-u>call SelectOuterTopList()<cr>g``
 
   au FileType clojure nmap <buffer> <Leader>eae <Plug>(iced_eval_and_tap)<Plug>(sexp_outer_list)``
   au FileType clojure nmap <buffer> <Leader>eat <Plug>(iced_eval_and_tap)<Plug>(sexp_outer_top_list)``
@@ -186,6 +191,10 @@ aug MyClojureSetting
   au FileType clojure nmap <buffer> <Leader>ect <Plug>(iced_eval_and_comment)<Plug>(sexp_outer_top_list)``
 
   au FileType clojure nmap <buffer> <Leader>epe <Plug>(iced_eval_and_print)<Plug>(sexp_outer_list)``
+
+  au FileType clojure nmap <silent> <buffer> <C-w><C-]> :<C-u>IcedDefJump . tabedit<CR>
+  au FileType clojure nmap <silent> <buffer> g<C-]> :<C-u>IcedDefJump . tabedit<CR>
+  au FileType clojure nmap <silent> <buffer> v<C-]> :<C-u>IcedDefJump . vsplit<CR>
 
   " mapping for yanking (like `"xee"`)
   " au FileType clojure nmap <silent> ee <Plug>(iced_eval)<Plug>(sexp_outer_list)``
@@ -201,6 +210,37 @@ aug MyClojureSetting
   au FileType clojure nmap <silent><buffer> <LocalLeader>kl <Plug>(sexp_swap_element_forward)
   au FileType clojure xmap <silent><buffer> <LocalLeader>kl <Plug>(sexp_swap_element_forward)
 
+  au FileType clojure nmap <silent><buffer> <LocalLeader>ks <Plug>(sexp_capture_next_element)
+  au FileType clojure nmap <silent><buffer> <LocalLeader>kb <Plug>(sexp_emit_tail_element)
+
+"   <M-S-j>                                       *<Plug>(sexp_emit_head_element)*
+" <M-S-k>                                       *<Plug>(sexp_emit_tail_element)*
+" <M-S-h>                                    *<Plug>(sexp_capture_prev_element)*
+" <M-S-l>                                    *<Plug>(sexp_capture_next_element)*
+
+
+  " "" NOTE: &<< and &>> are binded to <Alt-.> and <Alt-,> by Alaritty
+  " au FileType clojure nmap <silent><buffer> &<< <Plug>(dps_paredit_slurp)
+  " au FileType clojure nmap <silent><buffer> &>> <Plug>(dps_paredit_barf)
+  " au FileType clojure imap <silent><buffer> &<< <Esc><Plug>(dps_paredit_slurp)
+  " au FileType clojure imap <silent><buffer> &>> <Esc><Plug>(dps_paredit_barf)
+  " au FileType clojure nmap <silent><buffer> &space <Plug>(dps_paredit_sexp_range)
+  " au FileType clojure vmap <silent><buffer> &space <Plug>(dps_paredit_sexp_range_expansion)
+
+  " au FileType clojure nmap <silent><buffer> x <Plug>(dps_paredit_delete)
+  " au FileType clojure imap <silent><buffer> <BS> <Esc><Plug>(dps_paredit_delete_backward)
+  " au FileType clojure nmap <silent><buffer> D <Plug>(dps_paredit_kill_line)
+  " au FileType clojure nmap <silent><buffer> dd V<Plug>(dps_paredit_kill_range)
+  " au FileType clojure vmap <silent><buffer> x <Plug>(dps_paredit_kill_range)
+  " au FileType clojure vmap <silent><buffer> d <Plug>(dps_paredit_kill_range)
+
+  au FileType clojure vmap <silent><buffer> <LocalLeader>ke <Plug>(dps_paredit_sexp_range_expansion)
+
+  " au FileType clojure nmap <silent><buffer> &<< :<C-u>IcedSlurp<CR>
+  " au FileType clojure nmap <silent><buffer> &>> :<C-u>IcedBarf<CR>
+  " au FileType clojure imap <silent><buffer> &<< :<C-u>IcedSlurp<CR>
+  " au FileType clojure imap <silent><buffer> &>> :<C-u>IcedBarf<CR>
+
   "au FileType clojure xmap <silent><buffer> <LocalLeader>O <Plug>(sexp_insert_at_list_head)
   au FileType clojure nmap <silent><buffer> <LocalLeader>L <Plug>(sexp_insert_at_list_tail)<Right><CR>
 
@@ -210,10 +250,17 @@ aug MyClojureSetting
   au FileType clojure nmap <silent><buffer> <Leader>ktr <Plug>(iced_kaocha_test_redo)
   au FileType clojure nmap <silent><buffer> <Leader>ktl <Plug>(iced_kaocha_test_rerun_last)
 
-  " vim-iced-multi-session
-  au FileType clojure nmap <silent><buffer> <Leader>_ <Plug>(iced_connect)
-  au FileType clojure nmap <silent><buffer> <Leader>' <Plug>(iced_multi_session_connect)
+  " " vim-iced-multi-session
+  " au FileType clojure nmap <silent><buffer> <Leader>_ <Plug>(iced_connect)
+  " au FileType clojure nmap <silent><buffer> <Leader>' <Plug>(iced_multi_session_connect)
 
   "" cljstyle auto fix
-  au BufWritePre *.clj,*.cljs,*.cljc,*.edn  call s:auto_format_current_form()
+  "au BufWritePre *.clj,*.cljs,*.cljc,*.edn execute ':IcedFormatSyncAll'
+  au BufWritePre *.clj,*.cljs,*.cljc,*.edn execute ':IcedFormatSync'
+
+  " jiangmiao/auto-pairs
+  au Filetype clojure let b:AutoPairs = {
+        \ '"':'"',
+        \ '```':'```',
+        \ }
 aug END

@@ -4,28 +4,24 @@ let g:dotfiles = $HOME.'/src/github.com/liquidz/dotfiles'
 call plug#begin('~/.vim/repos')
 " default {{{
 
-
-" Plug 'rbtnn/vim-pterm'
-" Plug 'prabirshrestha/callbag.vim'
-" Plug 'lambdalisue/vital-Whisky'
-
-
-Plug 'sainnhe/edge'
-
-Plug 'thinca/vim-qfreplace'
-
 " Deno/Denops
 Plug 'vim-denops/denops.vim'
-Plug 'vim-denops/denops-helloworld.vim'
+"Plug 'vim-denops/denops-helloworld.vim'
+"Plug '~/src/github.com/liquidz/denops-helloworld.vim'
+"Plug '~/src/github.com/liquidz/dps-paredit'
 
-Plug 'LeafCage/yankround.vim'
+" Plug 'cespare/vim-toml'
+" Plug 'cocopon/iceberg.vim'
+" Plug 'JuliaEditorSupport/julia-vim'
+" Plug 'lambdalisue/fern-bookmark.vim'
+" Plug 'lambdalisue/gina.vim'
+" Plug 'mtth/scratch.vim'
+" Plug 'sainnhe/edge'
 
-Plug 'powerman/vim-plugin-AnsiEsc', {'for': 'quickrun'}
+Plug 'ayu-theme/ayu-vim'
 
+" Plug 'thinca/vim-themis'
 Plug 'aklt/plantuml-syntax'
-Plug 'cespare/vim-toml'
-Plug 'cocopon/iceberg.vim'
-Plug 'mtth/scratch.vim'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'easymotion/vim-easymotion'
 Plug 'haya14busa/vim-metarepeat'
@@ -34,37 +30,32 @@ Plug 'iberianpig/tig-explorer.vim'
 Plug 'inside/vim-search-pulse'
 Plug 'itchyny/lightline.vim'
 Plug 'jiangmiao/auto-pairs'
-Plug 'JuliaEditorSupport/julia-vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'yuki-yano/vim-operator-replace'
 Plug 'kana/vim-operator-user'
 Plug 'kana/vim-submode'
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-line'
 Plug 'kana/vim-textobj-user'
 Plug 'kshenoy/vim-signature'
-Plug 'lambdalisue/fern-bookmark.vim'
 Plug 'lambdalisue/fern-hijack.vim'
 Plug 'lambdalisue/fern.vim'
 Plug 'lambdalisue/readablefold.vim'
+Plug 'LeafCage/yankround.vim'
 Plug 'liquidz/vim-textobj-value'
 Plug 'liuchengxu/vim-which-key'
 Plug 'luochen1990/rainbow'
 Plug 'machakann/vim-sandwich'
 Plug 'mattn/vim-sonictemplate'
 Plug 'osyo-manga/vim-anzu'
+Plug 'powerman/vim-plugin-AnsiEsc', {'for': 'quickrun'}
 Plug 'previm/previm'
-"Plug 'rhysd/vim-color-spring-night'
-"Plug 'sentriz/vim-print-debug'
-"Plug 'skanehira/gh.vim'
 Plug 'skanehira/translate.vim'
-" Plug 't9md/vim-choosewin'
 Plug 't9md/vim-quickhl'
 Plug 'thinca/vim-localrc'
+Plug 'thinca/vim-qfreplace'
 Plug 'thinca/vim-quickrun'
-Plug 'thinca/vim-themis'
 Plug 'thinca/vim-visualstar'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
@@ -72,10 +63,11 @@ Plug 'tpope/vim-repeat'
 Plug 'tyru/caw.vim'
 Plug 'tyru/columnskip.vim'
 Plug 'tyru/open-browser.vim'
+" Plug 'ulwlu/elly.vim'
+" Plug 'ghifarit53/tokyonight-vim'
+
 Plug 'vim-jp/vital.vim'
-" Plug 'vim-scripts/confluencewiki.vim'
-" Plug 'w0ng/vim-hybrid'
-" Plug 'zenlang/zen.vim'
+Plug 'yuki-yano/vim-operator-replace'
 
 " /default }}}
 " filetype {{{
@@ -83,16 +75,27 @@ Plug 'vim-jp/vital.vim'
 Plug 'nelstrom/vim-textobj-rubyblock', {'for': 'ruby'}
 Plug 'thinca/vim-prettyprint',         {'for': 'vim'}
 Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
+
+" Plug 'Shougo/ddc.vim'
+" Plug 'Shougo/ddc-around'
+" Plug 'Shougo/ddc-nextword'
+" "Plug 'matsui54/ddc-filter_editdistance'
+" Plug 'matsui54/ddc-matcher_fuzzy'
+" "Plug 'shun/ddc-vim-lsp'
+
 if has('unix')
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
   "" Clojure {{{
   Plug 'guns/vim-sexp',           {'for': ['lisp', 'clojure']}
-  "Plug 'eraserhd/parinfer-rust',  {'for': 'clojure', 'do': 'cargo build --release'}
-  Plug 'liquidz/paredit',         {'for': ['lisp', 'clojure']}
+  Plug 'eraserhd/parinfer-rust',  {'for': 'clojure', 'do': 'cargo build --release'}
+  "Plug 'liquidz/paredit',         {'for': ['lisp', 'clojure']}
   Plug '~/src/github.com/liquidz/vim-iced',               {'for': 'clojure'}
-  Plug '~/src/github.com/liquidz/vim-iced-fern-debugger', {'for': 'clojure'}
   Plug '~/src/github.com/liquidz/vim-iced-coc-source', {'for': 'clojure'}
+  " Plug '~/src/github.com/liquidz/vim-iced-ddc-source', {'for': 'clojure'}
+
+  Plug '~/src/github.com/liquidz/vim-iced-fern-debugger', {'for': 'clojure'}
+
   " }}}
 
   "" Common Lisp
@@ -111,14 +114,19 @@ if has('unix')
 
   if has('nvim')
     " ---- NEOVIM ----
-    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    "Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+    Plug 'subnut/nvim-ghost.nvim', {'do': ':call nvim_ghost#installer#install()'}
+
+    "Plug 'abecodes/tabout.nvim'
+
 
     "Plug 'Olical/conjure', {'tag': 'v4.3.1'}
   else
     " ---- VIM ----
-    Plug 'prabirshrestha/async.vim'
-    Plug 'prabirshrestha/vim-lsp'
-    Plug 'mattn/vim-lsp-settings'
+    " Plug 'prabirshrestha/async.vim'
+    " Plug 'prabirshrestha/vim-lsp'
+    " Plug 'mattn/vim-lsp-settings'
 
     " Plug 'prabirshrestha/asyncomplete.vim'
     " Plug 'prabirshrestha/asyncomplete-lsp.vim'
@@ -130,6 +138,7 @@ if has('unix')
 endif
 
 " /filetype }}}
+
 call plug#end()
 
 " =search puls {{{
@@ -158,14 +167,6 @@ aug PrevimSettings
   au!
   au BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set filetype=markdown
 aug END
-
-" }}}
-" =quickhl {{{
-
-nmap <LocalLeader>m <Plug>(quickhl-manual-this)
-xmap <LocalLeader>m <Plug>(quickhl-manual-this)
-nmap <LocalLeader>M <Plug>(quickhl-manual-reset)
-xmap <LocalLeader>M <Plug>(quickhl-manual-reset)
 
 " }}}
 " =vim-easy-align {{{
@@ -214,19 +215,19 @@ try
   call submode#map('window', 'n', '', '+', '<C-w>5+')
   call submode#map('window', 'n', '', '-', '<C-w>5-')
 
-  " c.f. ftplugin/clojure.vim
-  call submode#enter_with('slurp', 'n', '', '<LocalLeader>ks', ':<C-u>IcedSlurp<CR>')
-  call submode#enter_with('slurp', 'n', '', '<LocalLeader>kb', ':<C-u>IcedBarf<CR>')
-  call submode#leave_with('slurp', 'n', '', '<Esc>')
-  call submode#map('slurp', 'n', '', 's', ':<C-u>IcedSlurp<CR>')
-  call submode#map('slurp', 'n', '', 'b', ':<C-u>IcedBarf<CR>')
-
   " c.f. vim-iced jumping signs
   call submode#enter_with('sign_jump', 'n', '', '<LocalLeader>n', ':<C-u>IcedJumpToNextSign<CR>')
   call submode#enter_with('sign_jump', 'n', '', '<LocalLeader>N', ':<C-u>IcedJumpToPrevSign<CR>')
   call submode#leave_with('sign_jump', 'n', '', '<Esc>')
   call submode#map('sign_jump', 'n', '', 'n', ':<C-u>IcedJumpToNextSign<CR>')
   call submode#map('sign_jump', 'n', '', 'N', ':<C-u>IcedJumpToPrevSign<CR>')
+
+  " " c.f. ftplugin/clojure.vim
+  " call submode#enter_with('slurp', 'n', '', '<LocalLeader><', ':<C-u>DPSlurpSexp<CR>')
+  " call submode#enter_with('slurp', 'n', '', '<LocalLeader>>', ':<C-u>DPBarfSexp<CR>')
+  " call submode#leave_with('slurp', 'n', '', '<Esc>')
+  " call submode#map('slurp', 'n', '', 's', ':<C-u>DPSlurpSexp<CR>')
+  " call submode#map('slurp', 'n', '', 'b', ':<C-u>DPBarfSexp<CR>')
 
   call submode#enter_with('window', 'v', '', '<', '<Nop>')
   call submode#leave_with('window', 'v', '', '<Esc>')
@@ -333,12 +334,6 @@ let g:vlime_window_settings = {
 let g:vlime_compiler_policy = { 'DEBUG': 3 }
 
 " }}}
-" =caw {{{
-
-nmap <LocalLeader>g <Plug>(caw:prefix)
-xmap <LocalLeader>g <Plug>(caw:prefix)
-
-" }}}
 " =ale {{{
 
 let g:ale_lint_on_text_changed = 'never'
@@ -347,9 +342,10 @@ let b:ale_linters = {'clojure': ['clj-kondo']}
 " }}}
 " =vim-clap {{{
 
-if !empty(globpath(&rtp, 'autoload/clap.vim'))
-  nnoremap <C-p> :<C-u>Clap rg_root_files ++externalfilter=fzf +async<CR>
-endif
+" if !empty(globpath(&rtp, 'autoload/clap.vim'))
+"   "nnoremap <C-p> :<C-u>Clap rg_root_files ++externalfilter=fzf +async<CR>
+"   nnoremap <C-p> :<C-u>Clap files ++externalfilter=fzf +async<CR>
+" endif
 
 " }}}
 " =quickpick {{{
@@ -390,17 +386,24 @@ nmap P <Plug>(yankround-P)
 nmap gp <Plug>(yankround-gp)
 xmap gp <Plug>(yankround-gp)
 nmap gP <Plug>(yankround-gP)
-nmap <Up> <Plug>(yankround-prev)
-nmap <Down> <Plug>(yankround-next)
+nmap <Tab> <Plug>(yankround-prev)
+nmap <S-Tab> <Plug>(yankround-next)
 let g:yankround_use_region_hl = 1
 
 " FIXME
 let g:scratch_persistence_file = '/tmp/scratch.txt'
 
+let g:translator_target_lang = ''
+let g:translator_source_lang = ''
+
+
+let g:translator_default_engines = ['google']
+
+
 " developing plugins {{{
 " http://www.kaoriya.net/blog/2015/12/01/vim-switch-developing-plugin/
 let dirs = [ $HOME.'/src/github.com/liquidz' ]
-for pattern in [ 'vim*', '*vim' ]
+for pattern in [ 'vim*', '*vim', 'dps*' ]
   for path in globpath(join(dirs, ','), pattern, 0, 1)
     if isdirectory(path) && filereadable(path . '/VIM_AUTO_RTP')
       "echomsg "VIM_AUTO_RTP: ".path

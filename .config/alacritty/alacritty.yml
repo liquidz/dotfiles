@@ -2,6 +2,7 @@ font:
   size: 15
   # blog
   #size: 17
+  #size: 20
   normal:
     family: "Utatane Nerd Font"
   bold:
@@ -44,3 +45,10 @@ colors:
     magenta: '#ada0d3'
     cyan:    '#95c4ce'
     white:   '#d2d4de'
+
+key_bindings:
+  - { key: N, mods: Command, action: SpawnNewInstance }
+  ## for vim
+  - { key: Period, mods: Alt, chars: "&>>" }
+  - { key: Comma, mods: Alt, chars: "&<<" }
+  - { key: Space, mods: Alt, chars: "&space" }
