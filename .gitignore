@@ -1,10 +1,12 @@
 .vim/autoload/plug.vim
+.vim/conf.d/500-local.vim
 .vim/repos
 .vim/backup
 .vim/memo
 .vim/vim-ref
 .vim/.netrwhist
 .vim/.netrwbook
+.vim/plugged
 *_local*
 Gemfile.lock
 bats
@@ -16,3 +18,4 @@ test/.workspace
 .w3m/cgi-bin/quickcmd
 bin/dad
 .cache
+**/.lsp
