@@ -1,0 +1,1 @@
+[:sequential {{_cursor_}}]

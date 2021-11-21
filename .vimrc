@@ -129,24 +129,7 @@ inoremap jk <Esc>
 
 nnoremap mz :<C-u>10messages<CR>
 
-nnoremap zk ^
-nnoremap zp %
-nnoremap zh 0
-nnoremap zl $
-
-inoremap zp %
-inoremap zk ^
-inoremap zl -
-inoremap zj _
-
-cnoremap zk ^
-cnoremap zl -
-cnoremap zj _
-
 nnoremap <LocalLeader>sh :<C-u>terminal ++close zsh<CR>
-tnoremap zk ^
-tnoremap zl -
-tnoremap zj _
 
 " git commit の画面である場合
 if $HOME ==# $USERPROFILE || $GIT_EXEC_PATH !=# ''
@@ -164,9 +147,6 @@ if system('uname') !=# "Darwin\n"
   nnoremap ; :
   nnoremap : ;
 endif
-
-nnoremap > %
-nnoremap < %
 
 " command-line window を開く
 cnoremap <C-e> <C-f>
@@ -204,6 +184,12 @@ nnoremap O OX<C-h>
 inoremap <CR> <CR>X<C-h>
 
 nnoremap QQ :<C-u>bd!<CR>
+
+" コマンドラインでのTab補完時に smartcase を無効にする
+" 途中まで case sensitive、途中から case insensible で書いても
+" 補完できるようにする
+set wildcharm=<Tab>
+cnoremap <expr> <Tab> '<Cmd>set nosmartcase<CR><Tab><Cmd>let &smartcase = ' .. &smartcase .. '<CR>'
 
 " }}}
 " copy to clipboard {{{
@@ -349,14 +335,22 @@ set wildignore=*.o,*.bk,*.org,*.exe,*.so
 
 set grepprg=git\ grep\ --no-index\ -I\ --line-number\ --no-color
 
+" zip ファイルの更新は行えないようにする
+" これにより Clojure の REPL 上で定義ジャンプした先への変更を誤って記録しないようにする
+" https://vim-jp.org/vimdoc-ja/pi_zip.html
+let g:zip_zipcmd= ''
+
 " }}}
 " load conf.d {{{
 
-set runtimepath+=$HOME/.vim/
-runtime! conf.d/*.vim
 if has('nvim')
-  runtime! conf.nvim.d/*.vim
+  set runtimepath+=$HOME/.vim/
 endif
+" if has('nvim')
+"   runtime! conf.nvim.d/*.vim
+" endif
+
+runtime! conf.d/*.vim
 "runtime! conf.test/*.vim
 exec printf(':runtime! conf.d/%s/*.vim', hostname())
 

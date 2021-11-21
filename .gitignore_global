@@ -1,0 +1,5 @@
+**/.lsp
+.DS_Store
+.local.vimrc
+*.bk
+*.org

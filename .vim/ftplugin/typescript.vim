@@ -16,10 +16,21 @@ aug END
 
 nmap <Leader>tt :QuickRun typescript_test<CR>
 
-nmap <C-]> <Plug>(coc-definition)
-nmap K <Plug>(coc-diagnostic-info)
+
+
+if ! empty(globpath(&rtp, 'autoload/lsp.vim'))
+  " vim-lsp
+  nmap <C-]> <plug>(lsp-definition)
+  nmap K <plug>(lsp-hover)
+else
+  " coc
+  nmap <C-]> <Plug>(coc-definition)
+  nmap K <Plug>(coc-diagnostic-info)
+  nmap <Leader>jt <Plug>(coc-type-definition)
+  nmap <Leader>hh <Plug>(coc-codeaction-selected)
+endif
+
 "nmap K <Plug>(coc-codelens-action)
-nmap <Leader>jt <Plug>(coc-type-definition)
-nmap <Leader>hh <Plug>(coc-codeaction-selected)
+
 
 inoremap ;; <Esc>A;

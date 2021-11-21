@@ -1,0 +1,20 @@
+[branchname]
+# feat: TITLE (feature)
+# fix: TITLE (bug fix)
+# deps: TITLE (bug fix)
+# breaking: TITLE
+# docs: TITLE (documentation)
+# style: TITLE (formatting, missing semi colons, …)
+# refactor: TITLE
+# test: TITLE (when adding missing tests)
+# chore: TITLE (maintain)
+
+# [optional body]
+
+# [optional footer(s)]
+
+# ==========
+# Conventional Commits
+# - https://www.conventionalcommits.org/ja/v1.0.0/
+# AngularJS Git Commit Message Conventions
+# - https://gist.github.com/stephenparish/9941e89d80e2bc58a153#allowed-type

@@ -8,6 +8,14 @@ if which hub > /dev/null 2>&1; then
     compdef hub=git
 fi
 
+# https://book.babashka.org/#_terminal_tab_completion
+_bb_tasks() {
+    local matches=(`bb tasks |tail -n +3 |cut -f1 -d ' '`)
+    compadd -a matches
+    _files # autocomplete filenames as well
+}
+compdef _bb_tasks bb
+
 autoload -U promptinit && promptinit
 autoload -U colors && colors
 
@@ -180,8 +188,7 @@ if [[ -e ~/.dircolors ]]; then
     eval $(dircolors ~/.dircolors)
 fi
 
-source ~/.zshrc.antigen
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+#source ~/.zshrc.antigen
 
 [ -f ~/.glam/scripts/glam.sh ] && source ~/.glam/scripts/glam.sh
 
@@ -212,3 +219,38 @@ fi
 export WASMTIME_HOME="$HOME/.wasmtime"
 
 export PATH="$WASMTIME_HOME/bin:$PATH"
+export PATH="/usr/local/opt/curl/bin:$PATH"
+
+## jog
+# https://github.com/natethinks/jog
+function zshaddhistory() {
+  cmd="${1%%$'\n'}"
+  if [ "${cmd}" != "" -a "${cmd}" != "j" ]; then
+    echo "${cmd}|${PWD}   " >> ~/.zsh_history_ext
+  fi
+}
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+if [ -f ~/.zinit/bin/zinit.zsh ] ; then
+    source "$HOME/.zinit/bin/zinit.zsh"
+    autoload -Uz _zinit
+    (( ${+_comps} )) && _comps[zinit]=_zinit
+    # Load a few important annexes, without Turbo
+    # (this is currently required for annexes)
+    zinit light-mode for \
+        zdharma-continuum/z-a-rust \
+        zdharma-continuum/z-a-as-monitor \
+        zdharma-continuum/z-a-patch-dl \
+        zdharma-continuum/z-a-bin-gem-node
+
+    zinit light-mode for \
+        zsh-users/zsh-autosuggestions \
+        zdharma-continuum/fast-syntax-highlighting \
+        Aloxaf/fzf-tab
+
+    # .zshでないファイルをcompletionファイルとして認識させつつバルクロード
+    zinit wait lucid is-snippet as"completion" for \
+        OMZP::docker/_docker \
+        OMZP::docker-compose/_docker-compose
+fi

@@ -5,6 +5,24 @@ if exists('g:loaded_clojure_ftplugin')
 endif
 let g:loaded_clojure_ftplugin = 1
 
+if g:use_vim_diced
+  aug myDicedSetting
+    au!
+    au FileType clojure nmap <silent> <buffer> <Leader>' <Plug>(diced_connect)
+    au FileType clojure nmap <silent> <buffer> <Leader>ee <Plug>(diced_eval_outer_list)
+    au FileType clojure nmap <silent> <buffer> <Leader>et <Plug>(diced_eval_outer_top_list)
+    au FileType clojure nmap <silent> <buffer> <Leader>eb <Plug>(diced_eval_buffer)
+    au FileType clojure nmap <silent> <buffer> <Leader>em <Plug>(diced_eval_at_mark)
+    au FileType clojure nmap <silent> <buffer> <Leader>tt <Plug>(diced_test_under_cursor)
+    au FileType clojure nmap <silent> <buffer> <Leader>ss <Plug>(diced_open_info_buffer)
+    au FileType clojure nmap <silent> <buffer> <Leader>hs <Plug>(diced_show_source)
+    au FileType clojure nmap <silent> <buffer> K <Plug>(diced_show_document)
+    au FileType clojure nmap <silent> <buffer> <C-]> <Plug>(diced_jump_to_definition)
+    au FileType clojure nmap <silent> <buffer> g<C-]> :<C-u>DicedJumpToDefinition ++cmd=tabedit<CR>
+    au FileType clojure nmap <silent> <buffer> v<C-]> :<C-u>DicedJumpToDefinition ++cmd=vsplit<CR>
+  aug END
+endif
+
 "let g:iced#debug = v:true
 
 let g:iced_formatter = 'cljstyle'
@@ -34,11 +52,13 @@ let g:iced#nrepl#auto#does_switch_session = v:true
 let g:iced#nrepl#complete#ignore_context = v:true
 let g:iced#nrepl#skip_evaluation_when_buffer_size_is_exceeded = v:true
 let g:iced_enable_auto_indent = v:false
-let g:iced_enable_default_key_mappings = v:true
+"let g:iced_enable_default_key_mappings = v:true
+let g:iced_enable_default_key_mappings = (! g:use_vim_diced)
 "let g:iced#message#enable_notify = v:true
 let g:iced#navigate#prefer_local_jump = v:true
 let g:iced#nrepl#auto#document_delay = 200
 
+"let g:iced#buffer#stdout#size = 28
 
 let g:iced_multi_session#does_switch_session = v:true
 
@@ -166,10 +186,11 @@ aug MyClojureSetting
   au FileType clojure inoremap <buffer> ## #_
 
   au FileType clojure nmap <buffer> tt <Plug>(iced_cycle_src_and_test)
-  au FileType clojure nmap <buffer> <C-l><C-l><C-l> <Plug>(iced_clean_all)
+  "au FileType clojure nmap <buffer> <C-l><C-l><C-l> <Plug>(iced_clean_all)
   au FileType clojure nnoremap <buffer> <Leader>go :<C-u>IcedEval (user/go)<CR>
   au FileType clojure nnoremap <buffer> <Leader>stop :<C-u>IcedEval (user/stop)<CR>
   au FileType clojure nnoremap <buffer> <Leader>Go :<C-u>IcedEval (user/reset)<CR>
+
 
   "au FileType clojure setl completeopt=menu
   " au FileType clojure setl updatetime=1000
@@ -192,9 +213,9 @@ aug MyClojureSetting
 
   au FileType clojure nmap <buffer> <Leader>epe <Plug>(iced_eval_and_print)<Plug>(sexp_outer_list)``
 
-  au FileType clojure nmap <silent> <buffer> <C-w><C-]> :<C-u>IcedDefJump . tabedit<CR>
-  au FileType clojure nmap <silent> <buffer> g<C-]> :<C-u>IcedDefJump . tabedit<CR>
-  au FileType clojure nmap <silent> <buffer> v<C-]> :<C-u>IcedDefJump . vsplit<CR>
+  " au FileType clojure nmap <silent> <buffer> <C-w><C-]> :<C-u>IcedDefJump . tabedit<CR>
+  " au FileType clojure nmap <silent> <buffer> g<C-]> :<C-u>IcedDefJump . tabedit<CR>
+  " au FileType clojure nmap <silent> <buffer> v<C-]> :<C-u>IcedDefJump . vsplit<CR>
 
   " mapping for yanking (like `"xee"`)
   " au FileType clojure nmap <silent> ee <Plug>(iced_eval)<Plug>(sexp_outer_list)``
@@ -242,7 +263,8 @@ aug MyClojureSetting
   " au FileType clojure imap <silent><buffer> &>> :<C-u>IcedBarf<CR>
 
   "au FileType clojure xmap <silent><buffer> <LocalLeader>O <Plug>(sexp_insert_at_list_head)
-  au FileType clojure nmap <silent><buffer> <LocalLeader>L <Plug>(sexp_insert_at_list_tail)<Right><CR>
+  au FileType clojure nmap <silent><buffer> <Leader>l <Plug>(sexp_insert_at_list_tail)<CR>
+  au FileType clojure nmap <silent><buffer> <Leader>o <Plug>(sexp_insert_at_list_tail)<Right><CR>
 
   "" vim-iced-kaocha
   au FileType clojure nmap <silent><buffer> <Leader>ktt <Plug>(iced_kaocha_test_under_cursor)
@@ -256,7 +278,12 @@ aug MyClojureSetting
 
   "" cljstyle auto fix
   "au BufWritePre *.clj,*.cljs,*.cljc,*.edn execute ':IcedFormatSyncAll'
-  au BufWritePre *.clj,*.cljs,*.cljc,*.edn execute ':IcedFormatSync'
+
+  if !g:use_vim_diced
+    au BufWritePre *.clj,*.cljs,*.cljc,*.edn execute ':IcedFormatSync'
+  endif
+
+  "au FileType clojure setl formatprg=cljstyle\ pipe
 
   " jiangmiao/auto-pairs
   au Filetype clojure let b:AutoPairs = {

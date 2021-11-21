@@ -15,7 +15,11 @@
       :url "https://github.com/liquidz/dotfiles"})
 
 ;; 必要なディレクトリを作成
-(doseq [dir [".boot" ".config/nvim" ".lein" ".tags" ".config/karabiner/assets/complex_modifications"]]
+(doseq [dir [".boot"
+             ".config/nvim"
+             ".lein"
+             ".tags"
+             ".config/karabiner/assets/complex_modifications"]]
   (directory (home dir)))
 
 ;; dotfiles のシンボリックリンクを貼る
@@ -24,9 +28,11 @@
               ".config/alacritty"
               ".config/efm-langserver"
               ".config/karabiner/assets/complex_modifications/mine.json"
+              ".config/zeno"
               ".ctags"
               ".gemrc"
-              ".gitconfig.common"
+              ;; ".gitconfig.common"
+              ;; ".gitignore_global"
               ".joker"
               ".lein/profiles.clj"
               ".rubocop.yml"
@@ -38,8 +44,7 @@
               ".xkb"
               ".zsh"
               ".zshenv"
-              ".zshrc"
-              ".zshrc.antigen"]]
+              ".zshrc"]]
   (link {:path (home file)
          :to (install-dir file)}))
 
@@ -52,7 +57,8 @@
 
 ;; neovim の設定
 (doseq [[k v] {".config/nvim/init.vim" ".vimrc"
-               ".config/nvim/ftplugin" ".vim/ftplugin"}]
+               ".config/nvim/ftplugin" ".vim/ftplugin"
+               ".config/nvim/coc-settings.json" ".vim/coc-settings.json"}]
   (link {:path (home k) :to (install-dir v)}))
 
 ;; zsh の設定
@@ -64,12 +70,23 @@
     :url (str "https://raw.githubusercontent.com/git/git/master/contrib/completion/" v)}))
 
 ;;;; antigen
-(git {:path (home "src/github.com/zsh-users/antigen")
-      :url "https://github.com/zsh-users/antigen"})
+;; (git {:path (home "src/github.com/zsh-users/antigen")
+;;       :url "https://github.com/zsh-users/antigen"})
+;; zinit
+(directory (home ".zinit"))
+(git {:path (home ".zinit/bin")
+      :url "https://github.com/zdharma-continuum/zinit"})
+
+
+;; tmux の設定
+(git {:path (home ".tmux/plugins/tpm")
+      :url "https://github.com/tmux-plugins/tpm"})
 
 ;; git config
 (execute
- {:command [(str "git config --global include.path " (home ".gitconfig.common"))
-            (str "git config --global user.name    " (:name git-user))
-            (str "git config --global user.email   " (:email git-user))]
-  :pre-not (str "test $(git config user.name) = " (:name git-user))})
+  {:command [(str "git config --global include.path " (install-dir ".gitconfig.common"))
+             (str "git config --global core.excludesfile " (install-dir ".gitignore_global"))
+             (str "git config --global user.name    " (:name git-user))
+             (str "git config --global user.email   " (:email git-user))
+             (str "git config --global commit.template " (install-dir ".gitmessage"))]
+   :pre-not (str "test $(git config user.name) = " (:name git-user))})

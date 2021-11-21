@@ -27,4 +27,5 @@ function! s:my_sonictemplate() abort
 endfunction
 command! MyTemplate call s:my_sonictemplate()
 
+nnoremap <silent> <C-l> :<C-u>MyTemplate<CR>
 inoremap <silent> <C-l> <Esc>:<C-u>MyTemplate<CR>

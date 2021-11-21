@@ -38,9 +38,17 @@ let g:quickrun_config = {
       \     'command': 'julia',
       \     'exec'   : '%c %s'
       \   },
+      \   'yaml': {
+      \     'command': 'actionlint',
+      \     'exec'   : '%c %s'
+      \   },
       \   'zig': {
       \     'command': 'zig',
       \     'exec'   : '%c test %s'
+      \   },
+      \   'liz': {
+      \     'command': 'sh',
+      \     'exec'   : '%c -c ''liz %s && zig version''',
       \   },
       \   'typescript': {
       \     'command': 'deno',
@@ -48,7 +56,7 @@ let g:quickrun_config = {
       \   },
       \   'typescript_test': {
       \     'command': 'deno',
-      \     'exec'   : '%c --unstable test --allow-all'
+      \     'exec'   : '%c --unstable test --allow-all %s'
       \   },
       \   'watchdogs_checker/phpcs': {
       \     'command' : 'phpcs',

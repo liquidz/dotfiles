@@ -6,7 +6,6 @@ PATH=$PATH:/usr/local/nodejs/bin
 PATH=$PATH:/usr/local/cmake/bin
 PATH=$PATH:/usr/local/julia/bin
 PATH=$PATH:/usr/local/zen
-PATH=$PATH:/usr/local/nvim/bin
 PATH=$PATH:~/.cargo/bin
 PATH=$PATH:~/.skim/bin
 PATH=$PATH:~/.roswell/bin
@@ -16,6 +15,18 @@ PATH="/usr/local/bin:$PATH:/usr/local/sbin"
 
 if [[ -e ~/.ebcli-virtual-env ]]; then
     PATH="${HOME}/.ebcli-virtual-env/executables:$PATH"
+fi
+
+if [[ -e /usr/local/Cellar/tmux/3.2/bin ]]; then
+    PATH=$PATH:/usr/local/Cellar/tmux/3.2/bin
+fi
+
+if [[ -e ${HOME}/Library/Python/3.9/bin ]]; then
+    PATH=$PATH:${HOME}/Library/Python/3.9/bin
+fi
+
+if [[ -e ${HOME}/src/github.com/natethinks/jog ]]; then
+    PATH=$PATH:${HOME}/src/github.com/natethinks/jog
 fi
 
 # if [[ -e ~/.sdkman/bin/sdkman-init.sh ]]; then
@@ -74,9 +85,11 @@ export NEXTWORD_DATA_PATH="${HOME}/opt/nextword-data-large"
 
 # vim {{{
 alias rebuild_vim='(cd /usr/local/src/vim && sudo ./rebuild.sh)'
-#if which nvim > /dev/null 2>&1; then
-#    alias vim=nvim
-#fi
+if which nvim > /dev/null 2>&1; then
+   alias v=nvim
+ else
+   alias v=vim
+fi
 # }}}
 # docker {{{
 #export DOCKER_TLS_VERIFY="1"
@@ -181,9 +194,8 @@ export SKIM_DEFAULT_OPTIONS='--ansi -m'
 alias gg='sk -i -c "git grep -i \"{}\""'
 alias sq='sk -i -c "scrapq search {}" | cut -f1 | xargs -i scrapq get {} | vim -R -c "setf scrapbox" -'
 # }}}
-# vlime {{{
-alias vlime-start='ros run -- --load ~/.vim/repos/vlime/lisp/start-vlime.lisp'
-alias kill-vlime='sudo kill -9 $(ps -ef | grep sbcl | grep -v grep | awk "{print \$2}")'
+# newsboat {{{
+alias nb='newsboat'
 # }}}
 # mitamae {{{
 #alias mita='sudo mitamae local -y ~/src/github.com/liquidz/cookbooks/nodes/$(hostname).yaml'
@@ -212,12 +224,26 @@ elif [ -e /usr/local/graalvm ]; then
 fi
 
 # }}}
+# jog {{{
+
+if [[ -e ${HOME}/src/github.com/natethinks/jog ]]; then
+  alias j='$(jog | fzf)'
+fi
+if [ -e /usr/local/graalvm/Contents/Home ]; then
+    export GRAALVM_HOME='/usr/local/graalvm/Contents/Home'
+    alias -g GRAALVM='PATH=/usr/local/graalvm/Contents/Home/bin:$PATH'
+elif [ -e /usr/local/graalvm ]; then
+    export GRAALVM_HOME='/usr/local/graalvm'
+    alias -g GRAALVM='PATH=/usr/local/graalvm/bin:$PATH'
+fi
+
+# }}}
 # my commands {{{
 alias server='python ~/src/github.com/liquidz/dotfiles/bin/server.py'
 alias suteneko='docker run -it uochan/suteneko'
 export BECOROOT=/Users/uochan/src/github.com/liquidz/beco
 
-alias antq='java -jar /Users/uochan/src/github.com/liquidz/antq/target/antq-standalone.jar'
+alias antq='clojure -Tantq outdated'
 
 # }}}
 
@@ -229,6 +255,12 @@ fi
 export DENO_INSTALL="/Users/uochan/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 
+if which bat > /dev/null 2>&1; then
+    alias cat=bat
+fi
+
 if [[ -e ~/.zshenv.local ]]; then
     source ~/.zshenv.local
 fi
+
+. "$HOME/.cargo/env"

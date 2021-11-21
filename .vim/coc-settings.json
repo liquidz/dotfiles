@@ -1,27 +1,69 @@
 {
     "coc.source.iced.enable": true,
-    "nextword.filetypes": ["markdown", "asciidoc", "gitcommit", "clojure", "vim", "help"],
-    "suggest.minTriggerInputLength": 2,
-    "suggest.triggerCompletionWait": 300,
-    "suggest.timeout": 5000,
+    "nextword.filetypes": ["markdown", "asciidoc", "gitcommit", "clojure", "vim", "help", "text"],
+    // neovim ではこれがあると、意図せず候補が確定されなくていいかも？
+    // まだ検証が不十分だけど
+    //"suggest.keepCompleteopt": true,
 
     "deno.enable": true,
     "deno.lint": true,
     "deno.unstable": true,
 
-    "languageserver": {
-        "clojure-lsp": {
-            "command": "bash",
-            "args": ["-c", "clojure-lsp"],
-            "filetypes": ["clojure"],
-            "rootPatterns": ["project.clj", "deps.edn", "shadow-cljs.edn"],
-            "additionalSchemes": ["jar", "zipfile"],
-            "disableDiagnostics": true,
-            "disableCompletion": true,
-            "trace.server": "verbose",
-            "initializationOptions": {
-                "ignore-classpath-directories": true
+    "diagnostic-languageserver.linters": {
+        "clj_kondo_lint": {
+            "command": "clj-kondo",
+            "debounce": 100,
+            "args": [ "--lint", "%filepath"],
+            "offsetLine": 0,
+            "offsetColumn": 0,
+            "sourceName": "clj-kondo",
+            "formatLines": 1,
+            "formatPattern": [
+                "^[^:]+:(\\d+):(\\d+):\\s+([^:]+):\\s+(.*)$",
+                {
+                    "line": 1,
+                    "column": 2,
+                    "message": 4,
+                    "security": 3
+                }
+            ],
+            "securities": {
+                    "error": "error",
+                    "warning": "warning",
+                    "note": "info"
             }
+
         }
-    }
+    },
+    "diagnostic-languageserver.filetypes": {
+      "clojure": "clj_kondo_lint"
+    },
+
+    "codeLens.enable": true,
+    //"languageserver": {
+    //    //"efm": {
+    //    //  "command": "efm-langserver",
+    //    //  "args": [],
+    //    //  "filetypes": ["yaml"]
+    //    //},
+    //    "clojure-lsp": {
+    //        "command": "bash",
+    //        "args": ["-c", "clojure-lsp"],
+    //        "filetypes": ["clojure"],
+    //        "rootPatterns": ["project.clj", "deps.edn", "shadow-cljs.edn"],
+    //        "additionalSchemes": ["jar", "zipfile"],
+    //        // 大きいファイルだとカーソル移動もままならないくらい遅くなるので無効化した
+    //        "disableDiagnostics": true,
+    //        "disableCompletion": true,
+    //        "trace.server": "verbose",
+    //        "initializationOptions": {
+    //            "auto-add-ns-to-new-files?": false,
+    //            "ignore-classpath-directories": true
+    //        }
+    //    }
+    //},
+
+    "suggest.minTriggerInputLength": 2,
+    "suggest.triggerCompletionWait": 300,
+    "suggest.timeout": 5000
 }

@@ -1,7 +1,7 @@
 {:user
  {:plugins []
 
-  :dependencies [[lambdaisland/kaocha "1.0.681"]]
+  ;; :dependencies [[lambdaisland/kaocha "1.0.681"]]
   ;;
   ;; :aliases {"antq" ["run" "-m" "antq.core"]
   ;;           "kaocha" ["run" "-m" "kaocha.runner"]}

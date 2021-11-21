@@ -21,23 +21,23 @@ system_charset UTF-8
 auto_detect 2
 document_charset UTF-8
 display_charset UTF-8
-cookie_avoid_wrong_number_of_dots 
-cookie_accept_domains 
-cookie_reject_domains 
+cookie_avoid_wrong_number_of_dots
+cookie_accept_domains
+cookie_reject_domains
 accept_bad_cookie 0
 accept_cookie 1
 show_cookie 1
 use_cookie 1
-ssl_ca_file 
+ssl_ca_file
 ssl_ca_path /etc/pki/tls/certs/
-ssl_key_file 
-ssl_cert_file 
+ssl_key_file
+ssl_cert_file
 ssl_verify_server 1
-ssl_forbid_method 
+ssl_forbid_method
 no_cache 0
 max_news 50
-nntpmode 
-nntpserver 
+nntpmode
+nntpserver
 dns_order 0
 meta_refresh 1
 follow_redirection 10
@@ -48,16 +48,16 @@ accept_media text/html, text/*;q=0.5, image/*, audio/*, application/*
 accept_encoding gzip, compress, bzip, bzip2, deflate
 accept_language en;q=1.0
 no_referer 0
-user_agent 
+user_agent
 pre_form_file ~/.w3m/pre_form
 ftppass_hostnamegen 0
-ftppasswd 
+ftppasswd
 disable_secret_security_check 0
 passwd_file ~/.w3m/passwd
 use_lessopen 0
 bgextviewer 1
-extbrowser3 
-extbrowser2 
+extbrowser3
+extbrowser2
 extbrowser gnome-open
 mailer gnome-open mailto:%s
 mailto_options 1
@@ -65,10 +65,10 @@ editor /usr/local/bin/vim
 urimethodmap ~/.w3m/urimethodmap, /etc/w3m/urimethodmap
 mailcap ~/.w3m/mailcap, /etc/w3m/mailcap, /etc/mailcap
 mime_types ~/.w3m/mime.types, /etc/mime.types
-index_file 
+index_file
 cgi_bin ~/.w3m/cgi-bin
-personal_document_root 
-document_root 
+personal_document_root
+document_root
 keymap_file keymap
 preserve_timestamp 1
 auto_uncompress 0
@@ -122,7 +122,7 @@ fold_textarea 0
 graphic_char 0
 alt_entity 0
 multicol 0
-dictcommand file:///cgi-bin/quickcmd.ros
+dictcommand file:///cgi-bin/quickcmd.clj
 use_dictcommand 1
 dirlist_cmd file://.w3m/cgi-bin/search.cgi
 ext_dirlist 1

@@ -1,7 +1,11 @@
 scriptencoding utf-8
 let g:dotfiles = $HOME.'/src/github.com/liquidz/dotfiles'
 
+let s:use_ddc = v:false
+let g:use_vim_diced = v:false
+
 call plug#begin('~/.vim/repos')
+
 " default {{{
 
 " Deno/Denops
@@ -10,22 +14,18 @@ Plug 'vim-denops/denops.vim'
 "Plug '~/src/github.com/liquidz/denops-helloworld.vim'
 "Plug '~/src/github.com/liquidz/dps-paredit'
 
-" Plug 'cespare/vim-toml'
-" Plug 'cocopon/iceberg.vim'
-" Plug 'JuliaEditorSupport/julia-vim'
-" Plug 'lambdalisue/fern-bookmark.vim'
-" Plug 'lambdalisue/gina.vim'
-" Plug 'mtth/scratch.vim'
-" Plug 'sainnhe/edge'
-
-Plug 'ayu-theme/ayu-vim'
+Plug 'github/copilot.vim'
 
 " Plug 'thinca/vim-themis'
+
+"Plug 'szw/vim-maximizer'
+
 Plug 'aklt/plantuml-syntax'
+Plug 'ayu-theme/ayu-vim'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'easymotion/vim-easymotion'
 Plug 'haya14busa/vim-metarepeat'
-Plug 'hrsh7th/vim-eft'
+"Plug 'hrsh7th/vim-eft'
 Plug 'iberianpig/tig-explorer.vim'
 Plug 'inside/vim-search-pulse'
 Plug 'itchyny/lightline.vim'
@@ -49,6 +49,7 @@ Plug 'luochen1990/rainbow'
 Plug 'machakann/vim-sandwich'
 Plug 'mattn/vim-sonictemplate'
 Plug 'osyo-manga/vim-anzu'
+Plug 'osyo-manga/vim-brightest'
 Plug 'powerman/vim-plugin-AnsiEsc', {'for': 'quickrun'}
 Plug 'previm/previm'
 Plug 'skanehira/translate.vim'
@@ -63,9 +64,6 @@ Plug 'tpope/vim-repeat'
 Plug 'tyru/caw.vim'
 Plug 'tyru/columnskip.vim'
 Plug 'tyru/open-browser.vim'
-" Plug 'ulwlu/elly.vim'
-" Plug 'ghifarit53/tokyonight-vim'
-
 Plug 'vim-jp/vital.vim'
 Plug 'yuki-yano/vim-operator-replace'
 
@@ -76,25 +74,49 @@ Plug 'nelstrom/vim-textobj-rubyblock', {'for': 'ruby'}
 Plug 'thinca/vim-prettyprint',         {'for': 'vim'}
 Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 
-" Plug 'Shougo/ddc.vim'
-" Plug 'Shougo/ddc-around'
-" Plug 'Shougo/ddc-nextword'
-" "Plug 'matsui54/ddc-filter_editdistance'
-" Plug 'matsui54/ddc-matcher_fuzzy'
-" "Plug 'shun/ddc-vim-lsp'
+if s:use_ddc
+  Plug 'Shougo/ddc.vim'
+  Plug 'Shougo/pum.vim'
+  Plug 'Shougo/ddc-around'
+  Plug 'Shougo/ddc-nextword'
+  Plug 'Shougo/ddc-cmdline-history'
+  "Plug 'matsui54/ddc-filter_editdistance'
+  Plug 'matsui54/ddc-matcher_fuzzy'
+  Plug 'shun/ddc-vim-lsp'
+endif
 
 if has('unix')
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  if !s:use_ddc
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  endif
 
   "" Clojure {{{
   Plug 'guns/vim-sexp',           {'for': ['lisp', 'clojure']}
   Plug 'eraserhd/parinfer-rust',  {'for': 'clojure', 'do': 'cargo build --release'}
   "Plug 'liquidz/paredit',         {'for': ['lisp', 'clojure']}
-  Plug '~/src/github.com/liquidz/vim-iced',               {'for': 'clojure'}
-  Plug '~/src/github.com/liquidz/vim-iced-coc-source', {'for': 'clojure'}
-  " Plug '~/src/github.com/liquidz/vim-iced-ddc-source', {'for': 'clojure'}
+  if g:use_vim_diced
+    Plug '~/src/github.com/liquidz/vim-diced',              {'for': 'clojure'}
+  else
+    Plug '~/src/github.com/liquidz/vim-iced',               {'for': 'clojure'}
+    Plug '~/src/github.com/liquidz/vim-iced-fern-debugger', {'for': 'clojure'}
+    Plug '~/src/github.com/liquidz/vim-iced-function-list', {'for': 'clojure'}
+    Plug '~/src/github.com/liquidz/vim-iced-kaocha',        {'for': 'clojure'}
+    Plug '~/src/github.com/liquidz/vim-iced-multi-session', {'for': 'clojure'}
+  endif
+  if s:use_ddc
+    if g:use_vim_diced
+      Plug '~/src/github.com/liquidz/vim-diced-ddc-source', {'for': 'clojure'}
+    else
+      Plug '~/src/github.com/liquidz/vim-iced-ddc-source', {'for': 'clojure'}
+    endif
+  else
+    if g:use_vim_diced
+		else
+			Plug '~/src/github.com/liquidz/vim-iced-coc-source', {'for': 'clojure'}
+		endif
+    " Plug '~/src/github.com/liquidz/vim-diced-coc-source', {'for': 'clojure'}
+  endif
 
-  Plug '~/src/github.com/liquidz/vim-iced-fern-debugger', {'for': 'clojure'}
 
   " }}}
 
@@ -124,9 +146,12 @@ if has('unix')
     "Plug 'Olical/conjure', {'tag': 'v4.3.1'}
   else
     " ---- VIM ----
-    " Plug 'prabirshrestha/async.vim'
-    " Plug 'prabirshrestha/vim-lsp'
-    " Plug 'mattn/vim-lsp-settings'
+
+    if s:use_ddc
+      Plug 'prabirshrestha/vim-lsp'
+      Plug 'mattn/vim-lsp-settings'
+    endif
+
 
     " Plug 'prabirshrestha/asyncomplete.vim'
     " Plug 'prabirshrestha/asyncomplete-lsp.vim'
@@ -399,14 +424,18 @@ let g:translator_source_lang = ''
 
 let g:translator_default_engines = ['google']
 
+" TEMP: vim-maximizer
+nnoremap <silent> <C-w>o <Cmd>MaximizerMaximize<CR>
+nnoremap <silent> <C-w>O <C-w>o
+nnoremap <silent> <C-w>m <Cmd>MaximizerRestore<CR>
 
 " developing plugins {{{
 " http://www.kaoriya.net/blog/2015/12/01/vim-switch-developing-plugin/
-let dirs = [ $HOME.'/src/github.com/liquidz' ]
+let s:dirs = [ $HOME.'/src/github.com/liquidz' ]
 for pattern in [ 'vim*', '*vim', 'dps*' ]
-  for path in globpath(join(dirs, ','), pattern, 0, 1)
+  for path in globpath(join(s:dirs, ','), pattern, 0, 1)
     if isdirectory(path) && filereadable(path . '/VIM_AUTO_RTP')
-      "echomsg "VIM_AUTO_RTP: ".path
+      "echom printf('VIM_AUTO_RTP: %s', path)
       let &runtimepath = &runtimepath.','.path
     end
   endfor
