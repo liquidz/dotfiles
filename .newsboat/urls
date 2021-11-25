@@ -1,0 +1,39 @@
+# IMPORTANT
+"query:Exchange Online Basic Authentication:( tags # \"exchange\" ) and ( title =~ \"Basic Authentication\" )"
+"query:Google Workspace Updates:( tags # \"google\" ) and ( title =~ \"Less secure app\" )"
+
+---Feeds---
+
+"query:Open Source:( tags # \"oss\" )
+"query:Clojure:( tags # \"clojure\" )
+"query:Vim:( tags # \"vim\" )
+"query:Deno:( tags # \"deno\" )
+https://github.blog/changelog/feed/ "~GitHub Changelog" github
+http://b.hatena.ne.jp/hotentry/it.rss "~はてなホットエントリ テクノロジー" hatena news
+http://feeds.feedburner.com/Workflowy "~Workflowy" outliner tool
+
+---Queries---
+"query:# GitHub Links:content =~ \"github.com\""
+"query:# Vim News:content =~ \"vim\""
+
+# HIDDEN
+http://googleappsupdates.blogspot.com/atom.xml !hidden google
+https://techcommunity.microsoft.com/plugins/custom/microsoft/o365/custom-blog-rss?tid=-8723788122276908667&board=Exchange&label=&messages=&size=10 !hidden exchange
+
+# Open Source
+https://lemmy.ml/feeds/c/opensource.xml?sort=New !hidden oss lemmy
+https://hnrss.org/newest?points=100 !hidden oss
+https://www.reddit.com/r/opensource/.rss !hidden oss reddit
+https://nitter.net/lobsters/rss "~Lobsters" !hidden oss
+
+# Clojure
+https://www.reddit.com/r/Clojure/.rss !hidden clojure reddit
+https://lemmy.ml/feeds/c/clojure.xml?sort=New !hidden clojure
+
+# Deno
+https://www.reddit.com/r/Deno/.rss !hidden deno reddit
+https://lemmy.ml/feeds/c/deno.xml?sort=New !hidden deno
+
+# Vim
+https://www.reddit.com/r/vim/.rss !hidden vim reddit
+https://lemmy.ml/feeds/c/vim.xml?sort=New !hidden vim
