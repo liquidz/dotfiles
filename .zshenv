@@ -37,6 +37,10 @@ if [[ -e ~/src/github.com/google/vimscript-language-server/target/debug ]]; then
   PATH="$PATH:${HOME}/src/github.com/google/vimscript-language-server/target/debug"
 fi
 
+if [[ -e /usr/local/opt/libpq/bin ]]; then
+    PATH="$PATH:/usr/local/opt/libpq/bin"
+fi
+
 export PATH
 # }}}
 
@@ -66,20 +70,20 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib:$HOME/.rustup/toolchains/
 export RLS_ROOT=$HOME/src/github.com/rust-lang-nursery/rls
 
 # Add environment variable COCOS_CONSOLE_ROOT for cocos2d-x
-export COCOS_CONSOLE_ROOT=/Users/uochan/app/cocos2d-x-3.3rc0/tools/cocos2d-console/bin
+export COCOS_CONSOLE_ROOT=${HOME}/app/cocos2d-x-3.3rc0/tools/cocos2d-console/bin
 export PATH=$COCOS_CONSOLE_ROOT:$PATH
 # Add environment variable NDK_ROOT for cocos2d-x
-export NDK_ROOT=/Users/uochan/app/android-ndk-r10c
+export NDK_ROOT=${HOME}/app/android-ndk-r10c
 export PATH=$NDK_ROOT:$PATH
 # Add environment variable ANT_ROOT for cocos2d-x
 export ANT_ROOT=/usr/local/ant/bin
 export PATH=$ANT_ROOT:$PATH
 # Add environment variable ANDROID_SDK_ROOT for cocos2d-x
-export ANDROID_SDK_ROOT=/Users/uochan/app/adt-bundle-mac-x86_64-20140702/sdk
+export ANDROID_SDK_ROOT=${HOME}/app/adt-bundle-mac-x86_64-20140702/sdk
 export PATH=$ANDROID_SDK_ROOT:$PATH
 export PATH=$ANDROID_SDK_ROOT/tools:$ANDROID_SDK_ROOT/platform-tools:$PATH
 
-export CPLUS_INCLUDE_PATH="/Users/uochan/app/cocos2d-x-3.3rc0/cocos:/Users/uochan/app/./cocos2d-x-3.3rc0/external/glfw3/include/mac/"
+export CPLUS_INCLUDE_PATH="${HOME}/app/cocos2d-x-3.3rc0/cocos:${HOME}/app/./cocos2d-x-3.3rc0/external/glfw3/include/mac/"
 
 export NEXTWORD_DATA_PATH="${HOME}/opt/nextword-data-large"
 
@@ -241,7 +245,7 @@ fi
 # my commands {{{
 alias server='python ~/src/github.com/liquidz/dotfiles/bin/server.py'
 alias suteneko='docker run -it uochan/suteneko'
-export BECOROOT=/Users/uochan/src/github.com/liquidz/beco
+export BECOROOT=${HOME}/src/github.com/liquidz/beco
 
 alias antq='clojure -Tantq outdated'
 
@@ -252,7 +256,7 @@ if which fd > /dev/null 2>&1; then
 fi
 
 # Deno
-export DENO_INSTALL="/Users/uochan/.deno"
+export DENO_INSTALL="${HOME}/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 
 if which bat > /dev/null 2>&1; then
