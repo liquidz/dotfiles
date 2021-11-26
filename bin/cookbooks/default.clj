@@ -19,7 +19,8 @@
              ".config/nvim"
              ".lein"
              ".tags"
-             ".config/karabiner/assets/complex_modifications"]]
+             ".config/karabiner/assets/complex_modifications"
+             ".newsboat"]]
   (directory (home dir)))
 
 ;; dotfiles のシンボリックリンクを貼る
@@ -31,10 +32,11 @@
               ".config/zeno"
               ".ctags"
               ".gemrc"
-              ;; ".gitconfig.common"
-              ;; ".gitignore_global"
               ".joker"
               ".lein/profiles.clj"
+              ".newsboat/config"
+              ".newsboat/urls"
+              ".newsboat/newsboat-bookmark.clj"
               ".rubocop.yml"
               ".spacemacs.d"
               ".tmux.conf"
@@ -90,3 +92,7 @@
              (str "git config --global user.email   " (:email git-user))
              (str "git config --global commit.template " (install-dir ".gitmessage"))]
    :pre-not (str "test $(git config user.name) = " (:name git-user))})
+
+;; Only for Mac
+;; defaults write -g InitialKeyRepeat -int 15
+;; defaults write -g KeyRepeat -int 2
