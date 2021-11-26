@@ -12,20 +12,15 @@ function! s:my_sonictemplate() abort
   let pos = getcurpos()
 
   if empty(input)
-    call feedkeys(':Template ', 'n')
+    call fzf#sonictemplate#run()
   else
     call sonictemplate#postfix()
-
     " 何も展開されなかった
     if pos == getcurpos()
-      " Esc された分、1つ左にずれているため
-      let pos[2] += 1
-      call setpos('.', pos)
-      call feedkeys(':Template ', 'n')
+      call fzf#sonictemplate#run()
     endif
   endif
 endfunction
-command! MyTemplate call s:my_sonictemplate()
 
-nnoremap <silent> <C-l> :<C-u>MyTemplate<CR>
-inoremap <silent> <C-l> <Esc>:<C-u>MyTemplate<CR>
+nnoremap <silent> <C-l> <Cmd>call <SID>my_sonictemplate()<CR>
+inoremap <silent> <C-l> <Cmd>call <SID>my_sonictemplate()<CR>
