@@ -51,7 +51,7 @@ Plug 'mattn/vim-sonictemplate'
 Plug 'osyo-manga/vim-anzu'
 Plug 'osyo-manga/vim-brightest'
 Plug 'powerman/vim-plugin-AnsiEsc', {'for': 'quickrun'}
-Plug 'previm/previm'
+Plug 'previm/previm', {'for': ['markdown', 'asciidoc']}
 Plug 'skanehira/translate.vim'
 Plug 't9md/vim-quickhl'
 Plug 'thinca/vim-localrc'
@@ -59,12 +59,12 @@ Plug 'thinca/vim-qfreplace'
 Plug 'thinca/vim-quickrun'
 Plug 'thinca/vim-visualstar'
 Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-fugitive'
+"Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tyru/caw.vim'
 Plug 'tyru/columnskip.vim'
 Plug 'tyru/open-browser.vim'
-Plug 'vim-jp/vital.vim'
+Plug 'vim-jp/vital.vim', {'for': 'vim'}
 Plug 'yuki-yano/vim-operator-replace'
 
 " /default }}}
@@ -132,7 +132,7 @@ if has('unix')
   "" Lua
   Plug 'rhysd/reply.vim', {'for': ['lua', 'typescript']}
 
-  Plug 'ziglang/zig.vim'
+  Plug 'ziglang/zig.vim', {'for': 'zig'}
 
   if has('nvim')
     " ---- NEOVIM ----
@@ -172,10 +172,6 @@ nmap n <Plug>(anzu-n)<Plug>Pulse
 nmap N <Plug>(anzu-N)<Plug>Pulse
 nmap * <Plug>(anzu-star)<Plug>Pulse
 nmap # <Plug>(anzu-sharp)<Plug>Pulse
-
-" }}}
-" =quickrun {{{
-
 
 " }}}
 " =previm {{{
