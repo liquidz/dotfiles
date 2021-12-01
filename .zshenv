@@ -168,6 +168,8 @@ alias -g L='$(l)'
 alias s='git status -s | fzf | cut -b 4-'
 alias -g S='$(s)'
 alias -g root='$(git rev-parse --show-toplevel)'
+
+alias wip-commit='git commit --allow-empty -am "WIP [skip ci]"'
 # }}}
 # ssh {{{
 alias ss='ssh $(grep "Host " ~/.ssh/config | cut -c6- | fzf)'
