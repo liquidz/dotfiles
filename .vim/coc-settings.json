@@ -5,6 +5,9 @@
     // まだ検証が不十分だけど
     //"suggest.keepCompleteopt": true,
 
+    "tree.key.close": "q",
+    "tree.key.toggle": "l",
+
     "deno.enable": true,
     "deno.lint": true,
     "deno.unstable": true,
@@ -40,28 +43,23 @@
     },
 
     "codeLens.enable": true,
-    //"languageserver": {
-    //    //"efm": {
-    //    //  "command": "efm-langserver",
-    //    //  "args": [],
-    //    //  "filetypes": ["yaml"]
-    //    //},
-    //    "clojure-lsp": {
-    //        "command": "bash",
-    //        "args": ["-c", "clojure-lsp"],
-    //        "filetypes": ["clojure"],
-    //        "rootPatterns": ["project.clj", "deps.edn", "shadow-cljs.edn"],
-    //        "additionalSchemes": ["jar", "zipfile"],
-    //        // 大きいファイルだとカーソル移動もままならないくらい遅くなるので無効化した
-    //        "disableDiagnostics": true,
-    //        "disableCompletion": true,
-    //        "trace.server": "verbose",
-    //        "initializationOptions": {
-    //            "auto-add-ns-to-new-files?": false,
-    //            "ignore-classpath-directories": true
-    //        }
-    //    }
-    //},
+    // "languageserver": {
+    //     "clojure-lsp": {
+    //         "command": "bash",
+    //         "args": ["-c", "clojure-lsp"],
+    //         "filetypes": ["clojure"],
+    //         "rootPatterns": ["project.clj", "deps.edn"],
+    //         "additionalSchemes": ["jar", "zipfile"],
+    //         // 大きいファイルだとカーソル移動もままならないくらい遅くなるので無効化した
+    //         "disableDiagnostics": true,
+    //         "disableCompletion": true,
+    //         "trace.server": "verbose",
+    //         "initializationOptions": {
+    //             "auto-add-ns-to-new-files?": false,
+    //             "ignore-classpath-directories": true
+    //         }
+    //     }
+    // },
 
     "suggest.minTriggerInputLength": 2,
     "suggest.triggerCompletionWait": 300,

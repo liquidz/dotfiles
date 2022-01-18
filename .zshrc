@@ -31,6 +31,10 @@ autoload -U colors && colors
 # zstyle ':vcs_info:*'     formats           "%b%c%u"
 # zstyle ':vcs_info:*'     actionformats     '%b(%a)%c%u'
 
+# vim では画像ファイルは扱わない
+zstyle ':completion:*:*:vim:*:*files' ignored-patterns '*.png' '*.jpg' '*.jpeg' '*.pdf'
+zstyle ':completion:*:*:view:*:*files' ignored-patterns '*.png' '*.jpg' '*.jpeg' '*.pdf'
+
 precmd () {
     psvar=()
     #LANG=en_US.UTF-8 vcs_info

@@ -58,6 +58,8 @@ let g:iced_enable_default_key_mappings = (! g:use_vim_diced)
 let g:iced#navigate#prefer_local_jump = v:true
 let g:iced#nrepl#auto#document_delay = 200
 
+let g:iced#eval#keep_inline_result = v:true
+
 "let g:iced#buffer#stdout#size = 28
 
 let g:iced_multi_session#does_switch_session = v:true
@@ -118,6 +120,10 @@ let g:iced#hook = {
 "      \ 'exec': funcref('s:fixme'),
 "      \ })
 
+" call iced#hook#add('connected', {
+"      \ 'type': 'function',
+"      \ 'exec': {_ -> lsp#disable_diagnostics_for_buffer(bufnr('iced_stdout'))},
+"      \ })
 
 
 let s:counter = 0
@@ -191,12 +197,15 @@ aug MyClojureSetting
   au FileType clojure nnoremap <buffer> <Leader>stop :<C-u>IcedEval (user/stop)<CR>
   au FileType clojure nnoremap <buffer> <Leader>Go :<C-u>IcedEval (user/reset)<CR>
 
+  au FileType clojure nmap <buffer> <Leader><Esc> <Cmd>IcedClearInlineResult<CR>
+
 
   "au FileType clojure setl completeopt=menu
   " au FileType clojure setl updatetime=1000
   " "au CursorHoldI *.clj,*.cljs,*.cljc call iced#nrepl#document#current_form()
 
   au FileType qf nnoremap <buffer> q :<C-u>q<CR>
+
 
   "au FileType clojure nmap <buffer> <Leader>et <Plug>(iced_eval)<Plug>(sexp_outer_top_list)``
 
@@ -214,8 +223,8 @@ aug MyClojureSetting
   au FileType clojure nmap <buffer> <Leader>epe <Plug>(iced_eval_and_print)<Plug>(sexp_outer_list)``
 
   " au FileType clojure nmap <silent> <buffer> <C-w><C-]> :<C-u>IcedDefJump . tabedit<CR>
-  " au FileType clojure nmap <silent> <buffer> g<C-]> :<C-u>IcedDefJump . tabedit<CR>
-  " au FileType clojure nmap <silent> <buffer> v<C-]> :<C-u>IcedDefJump . vsplit<CR>
+  au FileType clojure nmap <silent> <buffer> g<C-]> <Cmd>IcedDefJump . tabedit<CR>
+  au FileType clojure nmap <silent> <buffer> v<C-]> <Cmd>IcedDefJump . vsplit<CR>
 
   " mapping for yanking (like `"xee"`)
   " au FileType clojure nmap <silent> ee <Plug>(iced_eval)<Plug>(sexp_outer_list)``
@@ -233,12 +242,6 @@ aug MyClojureSetting
 
   au FileType clojure nmap <silent><buffer> <LocalLeader>ks <Plug>(sexp_capture_next_element)
   au FileType clojure nmap <silent><buffer> <LocalLeader>kb <Plug>(sexp_emit_tail_element)
-
-"   <M-S-j>                                       *<Plug>(sexp_emit_head_element)*
-" <M-S-k>                                       *<Plug>(sexp_emit_tail_element)*
-" <M-S-h>                                    *<Plug>(sexp_capture_prev_element)*
-" <M-S-l>                                    *<Plug>(sexp_capture_next_element)*
-
 
   " "" NOTE: &<< and &>> are binded to <Alt-.> and <Alt-,> by Alaritty
   " au FileType clojure nmap <silent><buffer> &<< <Plug>(dps_paredit_slurp)

@@ -13,6 +13,27 @@
             ]
         },
         {
+            "description": "Disable left_shift",
+            "type": "basic",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": {"key_code": "left_shift"},
+                    "to": [{ "key_code": "out"}]
+                }
+            ]
+        },
+        {
+            "description": "Right command to F13",
+            "manipulators": [
+                {
+                    "type": "basic",
+                    "from": { "key_code": "right_command", "modifiers": {"optional": ["any"]}},
+                    "to": [ {"key_code": "f13"} ]
+                }
+            ]
+        },
+        {
             "description": "Exchange semicolon and colon",
             "manipulators": [
                 {
@@ -66,29 +87,21 @@
         },
 
         {
-            "description": "Change spacebar to left_shift. (Post spacebar if pressed alone)!!",
+            "description": "Change spacebar to right_shift. (Post spacebar if pressed alone)!?",
             "manipulators": [
                 {
                     "type": "basic",
                     "from": {
                         "key_code": "spacebar",
-                        "modifiers": {
-                            "optional": [
-                                "any"
-                            ]
-                        }
+                        "modifiers": {"optional": ["any"]}
                     },
-                    "to": [
-                        {
-                            "key_code": "left_shift"
-                        }
-                    ],
-                    "to_if_alone": [
-                        {
-                            "key_code": "spacebar"
-                        }
-                    ]
+                    "to": [{"key_code": "right_shift"}],
+                    "parameters": {
+                        "basic.to_if_alone_timeout_milliseconds": 750
+                    },
+                    "to_if_alone": [{"key_code": "spacebar"}]
                 }
+
             ]
         },
 

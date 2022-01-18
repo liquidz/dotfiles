@@ -122,6 +122,9 @@ alias -g DA='$(da)'
 alias -g DI='$(di)'
 alias -g DC='$(dc)'
 # }}}
+# plantuml {{{
+alias plantuml="java -jar ~/Downloads/plantuml-1.2021.15.jar -gui $(pwd)"
+# }}}
 # heroku {{{
 export PATH=$PATH:/usr/local/heroku/bin
 # }}}

@@ -190,7 +190,7 @@ inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
 
 nnoremap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
 
-nnoremap <LocalLeader><LocalLeader> :<C-u>Ex<CR>
+nnoremap <LocalLeader><LocalLeader> <Cmd>e %:h<CR>
 nnoremap <C-]> g<C-]>
 
 " <Nul> means Ctrl+Space in terminal

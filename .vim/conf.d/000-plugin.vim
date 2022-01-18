@@ -13,7 +13,7 @@ call plug#begin('~/.vim/repos')
 " default {{{
 
 " Deno/Denops
-Plug 'vim-denops/denops.vim', {'on': []}
+Plug 'vim-denops/denops.vim'
 "Plug 'vim-denops/denops-helloworld.vim'
 "Plug '~/src/github.com/liquidz/denops-helloworld.vim'
 "Plug '~/src/github.com/liquidz/dps-paredit'
@@ -22,9 +22,11 @@ Plug 'vim-denops/denops.vim', {'on': []}
 
 " Plug 'thinca/vim-themis'
 
-"Plug 'szw/vim-maximizer'
+Plug 'hrsh7th/vim-searchx'
+
 
 Plug 'aklt/plantuml-syntax', {'on': []}
+"Plug '~/src/github.com/liquidz/plantuml-syntax', {'on': []}
 Plug 'ayu-theme/ayu-vim'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'easymotion/vim-easymotion', {'on': '<Plug>(easymotion-prefix)'}
@@ -79,12 +81,13 @@ Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 
 if s:use_ddc
   Plug 'Shougo/ddc.vim'
-  Plug 'Shougo/pum.vim'
+  "Plug 'Shougo/pum.vim'
   Plug 'Shougo/ddc-around'
-  Plug 'Shougo/ddc-nextword'
   Plug 'Shougo/ddc-cmdline-history'
   "Plug 'matsui54/ddc-filter_editdistance'
   Plug 'matsui54/ddc-matcher_fuzzy'
+  Plug 'Shougo/ddc-matcher_head'
+  Plug 'Shougo/ddc-matcher_length'
   Plug 'shun/ddc-vim-lsp'
 endif
 
@@ -92,6 +95,48 @@ if has('unix')
   if !s:use_ddc
     Plug 'neoclide/coc.nvim', {'on': [], 'for': 'clojure', 'branch': 'release'}
     "Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  endif
+
+
+  "" Common Lisp
+  Plug 'l04m33/vlime',            {'for': 'lisp', 'rtp': 'vim'}
+
+  "" Rust
+  Plug 'rust-lang/rust.vim',      {'for': 'rust'}
+
+  "" Lua
+  Plug 'rhysd/reply.vim', {'for': ['lua', 'typescript']}
+
+  Plug 'ziglang/zig.vim', {'for': 'zig'}
+
+  if has('nvim')
+    if s:use_ddc
+      Plug 'prabirshrestha/vim-lsp'
+      Plug 'mattn/vim-lsp-settings'
+    endif
+    " ---- NEOVIM ----
+    "Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+    " Plug 'subnut/nvim-ghost.nvim', {'do': ':call nvim_ghost#installer#install()'}
+
+    "Plug 'abecodes/tabout.nvim'
+
+
+    "Plug 'Olical/conjure', {'tag': 'v4.3.1'}
+  else
+    " ---- VIM ----
+
+    if s:use_ddc
+      Plug 'prabirshrestha/vim-lsp'
+      Plug 'mattn/vim-lsp-settings'
+    endif
+
+
+    " Plug 'prabirshrestha/asyncomplete.vim'
+    " Plug 'prabirshrestha/asyncomplete-lsp.vim'
+    " Plug '~/src/github.com/liquidz/vim-iced-asyncomplete',  {'for': 'clojure'}
+
+
   endif
 
   "" Clojure {{{
@@ -123,44 +168,6 @@ if has('unix')
 
 
   " }}}
-
-  "" Common Lisp
-  Plug 'l04m33/vlime',            {'for': 'lisp', 'rtp': 'vim'}
-
-  "" Rust
-  Plug 'rust-lang/rust.vim',      {'for': 'rust'}
-
-  "" Lua
-  Plug 'rhysd/reply.vim', {'for': ['lua', 'typescript']}
-
-  Plug 'ziglang/zig.vim', {'for': 'zig'}
-
-  if has('nvim')
-    " ---- NEOVIM ----
-    "Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-
-    Plug 'subnut/nvim-ghost.nvim', {'do': ':call nvim_ghost#installer#install()'}
-
-    "Plug 'abecodes/tabout.nvim'
-
-
-    "Plug 'Olical/conjure', {'tag': 'v4.3.1'}
-  else
-    " ---- VIM ----
-
-    if s:use_ddc
-      Plug 'prabirshrestha/vim-lsp'
-      Plug 'mattn/vim-lsp-settings'
-    endif
-
-
-    " Plug 'prabirshrestha/asyncomplete.vim'
-    " Plug 'prabirshrestha/asyncomplete-lsp.vim'
-    " Plug 'high-moctane/asyncomplete-nextword.vim'
-    " Plug '~/src/github.com/liquidz/vim-iced-asyncomplete',  {'for': 'clojure'}
-
-
-  endif
 endif
 
 " /filetype }}}
@@ -230,10 +237,9 @@ if s:has_plug('coc.nvim') " {{{
         \ <SID>coc_check_back_space() ? "\<Tab>" :
         \ coc#refresh()
 
-  nmap <silent> <LocalLeader>cr            <Plug>(coc-rename)
-  nmap <silent> <LocalLeader>cf            <Plug>(coc-references)
-  xmap <silent> <LocalLeader>cc             <Plug>(coc-codeaction-selected)
-  nmap <silent> <LocalLeader>cc             <Plug>(coc-codeaction-line)
+  nmap <silent> <LocalLeader>cr  <Cmd>call CocAction('rename')<CR>
+  nmap <silent> <LocalLeader>cf  <Cmd>call CocAction('jumpReferences')<CR>
+  nmap <silent> <LocalLeader>cic <Cmd>call CocAction('showIncomingCalls')<CR>
   "nmap <silent> gd                    <Plug>(coc-definition)
 
   command! LspRenameSymbol :call CocActionAsync('rename')
@@ -286,12 +292,12 @@ if s:has_plug('ddc.vim') " {{{
   " Customize global settings
   " Use around source.
   " https://github.com/Shougo/ddc-around
-  call ddc#custom#patch_global('sources', [
-        \ 'around',
-        \ 'vim-lsp',
-        \ 'iced',
-        \ 'nextword',
-        \ ])
+  " call ddc#custom#patch_global('sources', [
+  "      \ 'around',
+  "      \ 'vim-lsp',
+  "      \ 'iced',
+  "      \ ])
+  call ddc#custom#patch_global('sources', [ 'around' ])
 
   call ddc#custom#patch_global('backspaceCompletion', v:true)
   if s:pum_loaded
@@ -312,26 +318,28 @@ if s:has_plug('ddc.vim') " {{{
 
   " Change source options
   call ddc#custom#patch_global('sourceOptions', {
-        \ 'around': {'mark': 'A'},
-        \ 'nextword': {
-          \     'mark': 'nextword',
-          \     'minAutoCompleteLength': 3,
-          \     'isVolatile': v:true,
-          \ },
-          \ 'vim-lsp': {
-            \     'mark': 'lsp',
-            \     'forceCompletionPattern': '\.',
-            \ },
-            \ 'iced': {'mark': 'iced'},
-            \ 'cmdline-history': {'mark': 'history'},
-            \ })
+        \ 'around': {
+        \     'mark': 'A',
+        \     'matchers': ['matcher_head', 'matcher_length'],
+        \ },
+        \ 'vim-lsp': {
+        \     'mark': 'lsp',
+        \     'forceCompletionPattern': '\.',
+        \ },
+        \ 'iced': {
+        \     'mark': 'iced',
+        \ 'keywordPattern': '[a-zA-Z_]\w*',
+        \     'forceCompletionPattern': '\w\/\w*',
+        \ },
+        \ 'cmdline-history': {'mark': 'history'},
+        \ })
 
   call ddc#custom#patch_global('sourceParams', {
         \ 'around': {'maxSize': 500},
         \ })
 
   " Customize settings on a filetype
-  call ddc#custom#patch_filetype(['txt'], 'sources', ['around', 'nextword'])
+  call ddc#custom#patch_filetype(['txt'], 'sources', ['around'])
   " call ddc#custom#patch_filetype(['c', 'cpp'], 'sources', ['around', 'clangd'])
   " call ddc#custom#patch_filetype(['c', 'cpp'], 'sourceOptions', {
   "      \ 'clangd': {'mark': 'C'},
@@ -339,9 +347,9 @@ if s:has_plug('ddc.vim') " {{{
   " call ddc#custom#patch_filetype('markdown', 'sourceParams', {
   "      \ 'around': {'maxSize': 100},
   "      \ })
-  call ddc#custom#patch_filetype('typescript', 'sources', ['vim-lsp', 'nextword', 'around'])
-  call ddc#custom#patch_filetype('clojure', 'sources', ['iced',  'nextword', 'around'])
-  call ddc#custom#patch_filetype('vim', 'sources', ['vim-lsp',  'nextword', 'around'])
+  call ddc#custom#patch_filetype('typescript', 'sources', ['vim-lsp', 'around'])
+  call ddc#custom#patch_filetype('clojure', 'sources', ['iced', 'around'])
+  call ddc#custom#patch_filetype('vim', 'sources', ['vim-lsp', 'around'])
   call ddc#custom#patch_filetype('sql', 'sources', ['vim-lsp', 'around'])
 
   " Mappings
@@ -412,7 +420,7 @@ if s:has_plug('vim-eft') " {{{
 endif " }}}
 
 if s:has_plug('fern.vim') " {{{
-  nnoremap <LocalLeader><LocalLeader> <Cmd>Fern %:h<CR>
+  " nnoremap <LocalLeader><LocalLeader> <Cmd>Fern %:h<CR>
 
   aug MyFernFileSetting
     au!
@@ -696,9 +704,6 @@ if s:has_plug('vim-lsp') " {{{
   let g:lsp_settings = {
         \ 'clojure-lsp': {
         \   'disabled': v:false,
-        \   'initialization_options': {
-        \     'linters': {'clj-kondo': {'level': 'off'}},
-        \   }
         \ },
         \ 'json-languageserver': {'disabled': v:true},
         \ 'efm-langserver': { 'disabled': v:false, 'allowlist': ['vim', 'yaml'] },
@@ -856,13 +861,54 @@ if s:has_plug('yankround.vim') " {{{
   let g:yankround_use_region_hl = 1
 endif " }}}
 
+if s:has_plug('vim-searchx') " {{{
+  " Overwrite / and ?.
+  nnoremap ? <Cmd>call searchx#start({ 'dir': 0 })<CR>
+  nnoremap / <Cmd>call searchx#start({ 'dir': 1 })<CR>
+  xnoremap ? <Cmd>call searchx#start({ 'dir': 0 })<CR>
+  xnoremap / <Cmd>call searchx#start({ 'dir': 1 })<CR>
+  nnoremap ; <Cmd>call searchx#select()<CR>
+
+  " Move to next/prev match.
+  nnoremap N <Cmd>call searchx#prev_dir()<CR>
+  nnoremap n <Cmd>call searchx#next_dir()<CR>
+  xnoremap N <Cmd>call searchx#prev_dir()<CR>
+  xnoremap n <Cmd>call searchx#next_dir()<CR>
+  nnoremap <Up> <Cmd>call searchx#prev()<CR>
+  nnoremap <Down> <Cmd>call searchx#next()<CR>
+  xnoremap <Up> <Cmd>call searchx#prev()<CR>
+  xnoremap <Down> <Cmd>call searchx#next()<CR>
+  cnoremap <Up> <Cmd>call searchx#prev()<CR>
+  cnoremap <Down> <Cmd>call searchx#next()<CR>
+
+  " Clear highlights
+  " nnoremap <Esc><Esc> <Cmd>call searchx#clear()<CR>
+
+  let g:searchx = {}
+
+  " Auto jump if the recent input matches to any marker.
+  let g:searchx.auto_accept = v:true
+
+  " The scrolloff value for moving to next/prev.
+  let g:searchx.scrolloff = &scrolloff
+
+  " To enable scrolling animation.
+  let g:searchx.scrolltime = 500
+
+  " Marker characters.
+  let g:searchx.markers = split('ABCDEFHIJKLMNOPQRSTUVWXYZ', '.\zs')
+
+  " Convert search pattern.
+  function g:searchx.convert(input) abort
+    if a:input !~# '\k'
+      return '\V' .. a:input
+    endif
+    return join(split(a:input, ' '), '.\{-}')
+  endfunction
+endif " }}}
+
 " if s:has_plug('fixme') " {{{
 " endif " }}}
-
-" TEMP: vim-maximizer
-nnoremap <silent> <C-w>o <Cmd>MaximizerMaximize<CR>
-nnoremap <silent> <C-w>O <C-w>o
-nnoremap <silent> <C-w>m <Cmd>MaximizerRestore<CR>
 
 " タイマーによる遅延読み込み {{{
 function! s:load_plug(timer_id) abort
@@ -884,7 +930,7 @@ function! s:load_plug(timer_id) abort
   "call call('plug#load', l:load_plug_names)
 endfunction
 
-call timer_start(500, funcref('s:load_plug'))
+call timer_start(200, funcref('s:load_plug'))
 " }}}
 
 " developing plugins {{{
