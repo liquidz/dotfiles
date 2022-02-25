@@ -20,10 +20,30 @@ Plug 'vim-denops/denops.vim'
 
 "Plug 'github/copilot.vim'
 
+Plug 'Shougo/ddu.vim'
+" Install your UIs
+Plug 'Shougo/ddu-ui-ff'
+" Install your sources
+Plug 'Shougo/ddu-source-action'
+Plug 'Shougo/ddu-source-file_rec'
+Plug 'Shougo/ddu-source-line'
+Plug 'shun/ddu-source-buffer'
+Plug 'Shougo/ddu-source-file_old'
+Plug 'matsui54/ddu-source-file_external'
+
+" Install your filters
+Plug 'yuki-yano/ddu-filter-fzf'
+Plug 'Shougo/ddu-filter-matcher_substring'
+" Install your kinds
+Plug 'Shougo/ddu-kind-file'
+Plug 'Shougo/ddu-commands.vim'
+
+
 " Plug 'thinca/vim-themis'
 
 Plug 'hrsh7th/vim-searchx'
 
+Plug 'mracos/mermaid.vim'
 
 Plug 'aklt/plantuml-syntax', {'on': []}
 "Plug '~/src/github.com/liquidz/plantuml-syntax', {'on': []}
@@ -48,7 +68,7 @@ Plug 'kana/vim-textobj-user'
 Plug 'lambdalisue/fern.vim', {'on': 'Fern', 'for': 'clojure'}
      \ | Plug 'lambdalisue/fern-hijack.vim', {'on': 'Fern'}
 Plug 'lambdalisue/readablefold.vim', {'on': []}
-Plug 'LeafCage/yankround.vim', {'on': []}
+" Plug 'LeafCage/yankround.vim', {'on': []}
 "Plug 'liuchengxu/vim-which-key'
 Plug 'luochen1990/rainbow', {'on': []}
 Plug 'machakann/vim-sandwich', {'on': []}
@@ -151,6 +171,7 @@ if has('unix')
     Plug '~/src/github.com/liquidz/vim-iced-function-list', {'for': 'clojure'}
     Plug '~/src/github.com/liquidz/vim-iced-kaocha',        {'for': 'clojure'}
     Plug '~/src/github.com/liquidz/vim-iced-multi-session', {'for': 'clojure'}
+    Plug '~/src/github.com/liquidz/vim-clojuredocs-help',   {'for': 'clojure'}
   endif
   if s:use_ddc
     if g:use_vim_diced
@@ -436,7 +457,7 @@ if s:has_plug('fzf.vim') " {{{
 
   command! FzfProjectFiles execute 'Files' s:find_git_root()
 
-  nnoremap <C-p> :<C-u>FzfProjectFiles<CR>
+  " nnoremap <C-p> :<C-u>FzfProjectFiles<CR>
   nnoremap <C-b> :<C-u>Buffers<CR>
 endif " }}}
 
@@ -861,6 +882,109 @@ if s:has_plug('yankround.vim') " {{{
   let g:yankround_use_region_hl = 1
 endif " }}}
 
+if s:has_plug('ddu.vim') " {{{
+
+  call ddu#custom#patch_global({
+    \ 'ui': 'ff',
+    \ 'sources': [
+    \   {'name': 'file_rec', 'params': {}},
+    \ ],
+    \ 'sourceOptions': {
+    \   '_': {
+    \     'matchers': ['matcher_fzf'],
+    \   },
+    \ },
+    \ 'sourceParams': {
+    \   'file_rec': {
+    \     'path': trim(system('git rev-parse --show-toplevel')),
+    \     'ignoredDirectories': ['.git', '.cache', 'target', 'postgres', 'node_modules', '.shadow-cljs', '.cpcache'],
+    \   },
+    \   'file_external': {
+    \     'cmd': ['fd', '.', '--type', 'f', '--hidden'],
+    \   },
+    \ },
+    \ 'uiParams': {
+    \   'ff': {
+    \     'startFilter': v:true,
+    \   },
+    \ },
+    \ 'kindOptions': {
+    \   'file': {
+    \     'defaultAction': 'open',
+    \   },
+    \   'iced': {
+    \     'defaultAction': 'select',
+    \   },
+    \   'action': {
+    \     'defaultAction': 'do',
+    \   },
+    \ }
+    \ })
+
+
+
+  call ddu#custom#patch_local('files', {
+    \ 'uiParams': {
+    \   'ff': {
+    \     'split': has('nvim') ? 'floating' : 'horizontal',
+    \   }
+    \ },
+    \ })
+
+
+  function! s:resumable_ddu(...) abort
+    let g:last_ddu_name = a:1
+    exec printf('Ddu -name=%s %s', g:last_ddu_name, join(a:000[1:], ' '))
+  endfunction
+
+  function! s:ddu_resume() abort
+    if exists('g:last_ddu_name')
+      exec printf('Ddu -name=%s -resume -ui-param-startFilter=v:false', g:last_ddu_name)
+    endif
+  endfunction
+
+  command! -nargs=* ResumableDdu call s:resumable_ddu(<f-args>)
+  command! DduResumeLast call s:ddu_resume(<f-args>)
+
+  function! s:ddu_file_rec(name) abort
+    let g:last_ddu_name = a:name
+    let has_git_dir = (finddir('.git', ';') !=# '')
+    let source = (has_git_dir ? 'file_external' : 'file_rec')
+    let path = trim(has_git_dir ? system('git rev-parse --show-toplevel') : '.')
+
+    call ddu#start({
+         \ 'sources': [{'name': source, 'params': {'path': path}},
+         \             {'name': 'file_old'}],
+         \ 'uiParams': {'_': {'displaySourceName': 'short'}},
+         \ })
+  endfunction
+
+  nnoremap <Leader>dd <Cmd>DduResumeLast<CR>
+  nnoremap <C-p>      <Cmd>call <SID>ddu_file_rec('file')<CR>
+  nnoremap <Leader>dl <Cmd>ResumableDdu search line<CR>
+  nnoremap <Leader>db <Cmd>ResumableDdu buffer buffer<CR>
+
+  autocmd FileType ddu-ff call s:ddu_ff_my_settings()
+  function! s:ddu_ff_my_settings() abort
+    nnoremap <buffer><silent> <CR> <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
+    nnoremap <buffer><silent> <Space> <Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>
+    nnoremap <buffer><silent> i <Cmd>call ddu#ui#ff#do_action('openFilterWindow')<CR>
+    nnoremap <buffer><silent> a <Cmd>call ddu#ui#ff#do_action('chooseAction')<CR>
+    nnoremap <buffer><silent> v <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'open', 'params': {'command': 'vsplit'}})<CR>
+    nnoremap <buffer><silent> t <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'open', 'params': {'command': 'tabedit'}})<CR>
+    nnoremap <buffer><silent> q <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+    nnoremap <buffer><silent> <Esc> <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+  endfunction
+
+  autocmd FileType ddu-ff-filter call s:ddu_filter_my_settings()
+  function! s:ddu_filter_my_settings() abort
+    inoremap <buffer><silent> <CR> <Esc><Cmd>close<CR>
+    nnoremap <buffer><silent> <CR> <Cmd>close<CR>
+    nnoremap <buffer><silent> q <Cmd>close<CR>
+    nnoremap <buffer><silent> <Esc> <Cmd>close<CR>
+  endfunction
+endif " }}}
+
 if s:has_plug('vim-searchx') " {{{
   " Overwrite / and ?.
   nnoremap ? <Cmd>call searchx#start({ 'dir': 0 })<CR>
@@ -893,7 +1017,8 @@ if s:has_plug('vim-searchx') " {{{
   let g:searchx.scrolloff = &scrolloff
 
   " To enable scrolling animation.
-  let g:searchx.scrolltime = 500
+  "let g:searchx.scrolltime = 500
+  let g:searchx.scrolltime = 0
 
   " Marker characters.
   let g:searchx.markers = split('ABCDEFHIJKLMNOPQRSTUVWXYZ', '.\zs')

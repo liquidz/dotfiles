@@ -37,6 +37,7 @@
 if &compatible
   set nocompatible " for gvim on windows
 endif
+language messages en_US.UTF-8
 set modeline
 set modelines=3
 set textwidth=0

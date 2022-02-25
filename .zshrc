@@ -18,6 +18,7 @@ compdef _bb_tasks bb
 
 autoload -U promptinit && promptinit
 autoload -U colors && colors
+autoload -Uz edit-command-line
 
 # c.f. color codes
 # for c in {000..255}; do echo -n "\e[38;5;${c}m $c" ; [ $(($c%16)) -eq 15 ] && echo;done;echo
@@ -138,10 +139,14 @@ if hash ig 2>/dev/null; then
     bindkey '^g' interactive-git
 fi
 
-## cd したら ls する
-#function cd() {
-#    builtin cd $@ && ls;
-#}
+# cd したら ls する
+function cd() {
+   builtin cd $@ && ls;
+}
+
+export EDITOR=vim
+zle -N edit-command-line
+bindkey '^e'  edit-command-line
 
 # generate template
 function tmpl() {
@@ -168,31 +173,9 @@ function dad-repl() {
     cat /tmp/dadf | /usr/local/bin/dad ~/src/github.com/liquidz/cookbooks/nodes/$(hostname).clj --no-color --repl 2>&1 | nc -lk 0.0.0.0 5555 > /tmp/dadf
 }
 
-function es-indexes() {
-    curl -XGET 'localhost:9200/_aliases?pretty'
-}
-
-function es-create-index() {
-    curl -XPUT "localhost:9200/${1}?pretty"
-}
-
-function es-delete-index() {
-    curl -XDELETE "localhost:9200/${1}?pretty"
-}
-
-function es-search-index() {
-    curl -XGET "localhost:9200/${1}/_search?pretty"
-}
-
-function es-get-index-mapping() {
-    curl -XGET "localhost:9200/${1}/_mapping?pretty"
-}
-
 if [[ -e ~/.dircolors ]]; then
     eval $(dircolors ~/.dircolors)
 fi
-
-#source ~/.zshrc.antigen
 
 [ -f ~/.glam/scripts/glam.sh ] && source ~/.glam/scripts/glam.sh
 
@@ -225,13 +208,24 @@ export WASMTIME_HOME="$HOME/.wasmtime"
 export PATH="$WASMTIME_HOME/bin:$PATH"
 export PATH="/usr/local/opt/curl/bin:$PATH"
 
-## jog
-# https://github.com/natethinks/jog
-function zshaddhistory() {
-  cmd="${1%%$'\n'}"
-  if [ "${cmd}" != "" -a "${cmd}" != "j" ]; then
-    echo "${cmd}|${PWD}   " >> ~/.zsh_history_ext
-  fi
+# # cf. https://mollifier.hatenablog.com/entry/20090728/p1
+# function zshaddhistory() {
+#     local line=${1%%$'\n'}
+#     local cmd=${line%% *}
+#
+#     # 以下の条件をすべて満たすものだけをヒストリに追加する
+#     # 5文字未満
+#     [[ ${#line} -ge 5
+#         && ${cmd} != (l[sal])
+#         && ${cmd} != (cd)
+#         && ${cmd} != (man)
+#     ]]
+# }
+zshaddhistory() {
+   local line cmd fullpath
+   line=${1%%$'\n'}
+   cmd=${line%% *}
+   [[ "$(command -v $cmd)" != '' ]]
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
