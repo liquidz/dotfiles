@@ -58,7 +58,8 @@ let g:iced_enable_default_key_mappings = (! g:use_vim_diced)
 let g:iced#navigate#prefer_local_jump = v:true
 let g:iced#nrepl#auto#document_delay = 200
 
-let g:iced#eval#popup_highlight = 'SpellCap'
+highlight icedEvalPopup ctermfg=5 guifg=#FF7BA9
+let g:iced#eval#popup_highlight = 'icedEvalPopup'
 
 " let g:iced#eval#keep_inline_result = v:true
 
