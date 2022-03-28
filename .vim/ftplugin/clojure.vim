@@ -58,18 +58,29 @@ let g:iced_enable_default_key_mappings = (! g:use_vim_diced)
 let g:iced#navigate#prefer_local_jump = v:true
 let g:iced#nrepl#auto#document_delay = 200
 
+let g:iced#eval#popup_highlight = 'SpellCap'
+
 " let g:iced#eval#keep_inline_result = v:true
 
 "let g:iced#buffer#stdout#size = 28
 
 let g:iced_multi_session#does_switch_session = v:true
 
+let g:iced#selector#search_order = ['ddu', 'fzf']
+
+let g:iced#ddu#selector#ddu_options = {
+      \ 'uiParams': {'ff': {'startFilter': v:true}},
+      \ }
+
 " https://clojure-lsp.github.io/clojure-lsp/capabilities/
 " https://github.com/snoe/dotfiles/blob/master/home/.vimrc
 let g:iced#palette = {
       \ 'LspRenameSymbol': ":call CocActionAsync('rename')",
-      \ 'LspBrowseReferences': ":call CocActionAsync('jumpReferences')",
       \ }
+" let g:iced#palette = {
+"      \ 'LspRenameSymbol': ":call CocActionAsync('rename')",
+"      \ 'LspBrowseReferences': ":call CocActionAsync('jumpReferences')",
+"      \ }
 
 
 nnoremap <silent> crth :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'thread-first', 'arguments': [expand('%:p'), line('.') - 1, col('.') - 1]})<CR>

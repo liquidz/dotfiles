@@ -210,14 +210,14 @@ alias nb='newsboat'
 # mitamae {{{
 #alias mita='sudo mitamae local -y ~/src/github.com/liquidz/cookbooks/nodes/$(hostname).yaml'
 
-case "${OSTYPE}" in
-linux*)
-    alias dad='sudo dad ~/src/github.com/liquidz/cookbooks/nodes/$(hostname).clj'
-    ;;
-darwin*)
-    alias dad='dad ~/src/github.com/liquidz/cookbooks/nodes/$(hostname).clj'
-    ;;
-esac
+# case "${OSTYPE}" in
+# linux*)
+#     alias dad='sudo dad ~/src/github.com/liquidz/cookbooks/nodes/$(hostname).clj'
+#     ;;
+# darwin*)
+#     alias dad='dad ~/src/github.com/liquidz/cookbooks/nodes/$(hostname).clj'
+#     ;;
+# esac
 
 # }}}
 # spacemacs {{{

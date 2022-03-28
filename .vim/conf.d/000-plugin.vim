@@ -2,6 +2,7 @@ scriptencoding utf-8
 let g:dotfiles = $HOME.'/src/github.com/liquidz/dotfiles'
 
 let s:use_ddc = v:false
+let g:use_ddu = v:true
 let g:use_vim_diced = v:false
 
 function! s:has_plug(name) abort
@@ -20,28 +21,31 @@ Plug 'vim-denops/denops.vim'
 
 "Plug 'github/copilot.vim'
 
-Plug 'Shougo/ddu.vim'
-" Install your UIs
-Plug 'Shougo/ddu-ui-ff'
-" Install your sources
-Plug 'Shougo/ddu-source-action'
-Plug 'Shougo/ddu-source-file_rec'
-Plug 'Shougo/ddu-source-line'
-Plug 'shun/ddu-source-buffer'
-Plug 'Shougo/ddu-source-file_old'
-Plug 'matsui54/ddu-source-file_external'
 
-" Install your filters
-Plug 'yuki-yano/ddu-filter-fzf'
-Plug 'Shougo/ddu-filter-matcher_substring'
-" Install your kinds
-Plug 'Shougo/ddu-kind-file'
-Plug 'Shougo/ddu-commands.vim'
+if g:use_ddu
+  Plug 'Shougo/ddu.vim'
+  " Install your UIs
+  Plug 'Shougo/ddu-ui-ff'
+  " Install your sources
+  Plug 'Shougo/ddu-source-action'
+  Plug 'Shougo/ddu-source-file_rec'
+  Plug 'Shougo/ddu-source-line'
+  Plug 'shun/ddu-source-buffer'
+  Plug 'Shougo/ddu-source-file_old'
+  Plug 'matsui54/ddu-source-file_external'
+  Plug '~/src/github.com/liquidz/ddu-source-custom-list'
+
+  " Install your filters
+  Plug 'yuki-yano/ddu-filter-fzf'
+  Plug 'Shougo/ddu-filter-matcher_substring'
+  Plug 'Shougo/ddu-filter-matcher_hidden'
+  " Install your kinds
+  Plug 'Shougo/ddu-kind-file'
+  Plug 'Shougo/ddu-commands.vim'
+endif
 
 
 " Plug 'thinca/vim-themis'
-
-Plug 'hrsh7th/vim-searchx'
 
 Plug 'mracos/mermaid.vim'
 
@@ -66,7 +70,7 @@ Plug 'kana/vim-textobj-user'
 "Plug 'kshenoy/vim-signature', {'on': []}
 
 Plug 'lambdalisue/fern.vim', {'on': 'Fern', 'for': 'clojure'}
-     \ | Plug 'lambdalisue/fern-hijack.vim', {'on': 'Fern'}
+    \ | Plug 'lambdalisue/fern-hijack.vim', {'on': 'Fern'}
 Plug 'lambdalisue/readablefold.vim', {'on': []}
 " Plug 'LeafCage/yankround.vim', {'on': []}
 "Plug 'liuchengxu/vim-which-key'
@@ -172,6 +176,9 @@ if has('unix')
     Plug '~/src/github.com/liquidz/vim-iced-kaocha',        {'for': 'clojure'}
     Plug '~/src/github.com/liquidz/vim-iced-multi-session', {'for': 'clojure'}
     Plug '~/src/github.com/liquidz/vim-clojuredocs-help',   {'for': 'clojure'}
+    if g:use_ddu
+      Plug '~/src/github.com/liquidz/vim-iced-ddu-selector',  {'for': 'clojure'}
+    endif
   endif
   if s:use_ddc
     if g:use_vim_diced
@@ -457,7 +464,9 @@ if s:has_plug('fzf.vim') " {{{
 
   command! FzfProjectFiles execute 'Files' s:find_git_root()
 
-  " nnoremap <C-p> :<C-u>FzfProjectFiles<CR>
+  if ! g:use_ddu
+    nnoremap <C-p> :<C-u>FzfProjectFiles<CR>
+  endif
   nnoremap <C-b> :<C-u>Buffers<CR>
 endif " }}}
 
@@ -610,13 +619,28 @@ endif " }}}
 if s:has_plug('vim-sonictemplate') " {{{
   let g:sonictemplate_vim_template_dir = '$HOME/.vim/template'
 
+  function! s:ddu_sonictemplate() abort
+    let candidates = sonictemplate#complete('', '', 0)
+    let id = denops#callback#register(
+          \ {s -> sonictemplate#apply(s, 'n')},
+          \ {'once': v:true})
+
+    stopinsert
+    call ddu#start({
+         \ 'sources': [{'name': 'custom-list',
+         \              'params': {'texts': candidates, 'callbackId': id}}],
+         \ 'uiParams': {'ff': {'startFilter': v:true}},
+         \ })
+  endfunction
+
   function! s:my_sonictemplate() abort
     let line = getline(line('.'))
     let input = trim(strpart(line, 0, col('.')))
     let pos = getcurpos()
 
     if empty(input)
-      call fzf#sonictemplate#run()
+      " call fzf#sonictemplate#run()
+      call s:ddu_sonictemplate()
     else
       call sonictemplate#postfix()
       " 何も展開されなかった
@@ -626,6 +650,7 @@ if s:has_plug('vim-sonictemplate') " {{{
     endif
   endfunction
 
+  command! DduSonicTemplate call <SID>my_sonictemplate()
   nnoremap <silent> <C-l> <Cmd>call <SID>my_sonictemplate()<CR>
   inoremap <silent> <C-l> <Cmd>call <SID>my_sonictemplate()<CR>
 endif " }}}
@@ -893,6 +918,12 @@ if s:has_plug('ddu.vim') " {{{
     \   '_': {
     \     'matchers': ['matcher_fzf'],
     \   },
+    \   'file_rec': {
+    \     'matchers': ['matcher_fzf', 'matcher_hidden'],
+    \   },
+    \   'file_external': {
+    \     'matchers': ['matcher_fzf', 'matcher_hidden'],
+    \   },
     \ },
     \ 'sourceParams': {
     \   'file_rec': {
@@ -905,15 +936,15 @@ if s:has_plug('ddu.vim') " {{{
     \ },
     \ 'uiParams': {
     \   'ff': {
-    \     'startFilter': v:true,
+    \     'filterSplitDirection': has('nvim') ? 'floating' : 'botright',
     \   },
     \ },
     \ 'kindOptions': {
     \   'file': {
     \     'defaultAction': 'open',
     \   },
-    \   'iced': {
-    \     'defaultAction': 'select',
+    \   'custom-list': {
+    \     'defaultAction': 'callback',
     \   },
     \   'action': {
     \     'defaultAction': 'do',
@@ -922,6 +953,12 @@ if s:has_plug('ddu.vim') " {{{
     \ })
 
 
+  call ddu#custom#patch_global({
+    \ 'filterParams': {
+    \   'matcher_fzf': {
+    \     'highlightMatched': 'SpellLocal',
+    \   },
+    \ }})
 
   call ddu#custom#patch_local('files', {
     \ 'uiParams': {
@@ -953,16 +990,18 @@ if s:has_plug('ddu.vim') " {{{
     let path = trim(has_git_dir ? system('git rev-parse --show-toplevel') : '.')
 
     call ddu#start({
-         \ 'sources': [{'name': source, 'params': {'path': path}},
-         \             {'name': 'file_old'}],
-         \ 'uiParams': {'_': {'displaySourceName': 'short'}},
-         \ })
+        \ 'sources': [{'name': source, 'params': {'path': path}},
+        \             {'name': 'file_old'}],
+        \ 'uiParams': {'_': {'displaySourceName': 'short'},
+        \              'ff': {'startFilter': v:true}},
+        \ })
   endfunction
 
   nnoremap <Leader>dd <Cmd>DduResumeLast<CR>
   nnoremap <C-p>      <Cmd>call <SID>ddu_file_rec('file')<CR>
-  nnoremap <Leader>dl <Cmd>ResumableDdu search line<CR>
-  nnoremap <Leader>db <Cmd>ResumableDdu buffer buffer<CR>
+  nnoremap <Leader>dl <Cmd>ResumableDdu search line -ui-param-startFilter<CR>
+  nnoremap <Leader>d* <Cmd>ResumableDdu search line -input=`expand('<cword>')` -ui-param-startFilter=v:false<CR>
+  nnoremap <Leader>db <Cmd>ResumableDdu buffer buffer -ui-param-startFilter<CR>
 
   autocmd FileType ddu-ff call s:ddu_ff_my_settings()
   function! s:ddu_ff_my_settings() abort
@@ -982,53 +1021,6 @@ if s:has_plug('ddu.vim') " {{{
     nnoremap <buffer><silent> <CR> <Cmd>close<CR>
     nnoremap <buffer><silent> q <Cmd>close<CR>
     nnoremap <buffer><silent> <Esc> <Cmd>close<CR>
-  endfunction
-endif " }}}
-
-if s:has_plug('vim-searchx') " {{{
-  " Overwrite / and ?.
-  nnoremap ? <Cmd>call searchx#start({ 'dir': 0 })<CR>
-  nnoremap / <Cmd>call searchx#start({ 'dir': 1 })<CR>
-  xnoremap ? <Cmd>call searchx#start({ 'dir': 0 })<CR>
-  xnoremap / <Cmd>call searchx#start({ 'dir': 1 })<CR>
-  nnoremap ; <Cmd>call searchx#select()<CR>
-
-  " Move to next/prev match.
-  nnoremap N <Cmd>call searchx#prev_dir()<CR>
-  nnoremap n <Cmd>call searchx#next_dir()<CR>
-  xnoremap N <Cmd>call searchx#prev_dir()<CR>
-  xnoremap n <Cmd>call searchx#next_dir()<CR>
-  nnoremap <Up> <Cmd>call searchx#prev()<CR>
-  nnoremap <Down> <Cmd>call searchx#next()<CR>
-  xnoremap <Up> <Cmd>call searchx#prev()<CR>
-  xnoremap <Down> <Cmd>call searchx#next()<CR>
-  cnoremap <Up> <Cmd>call searchx#prev()<CR>
-  cnoremap <Down> <Cmd>call searchx#next()<CR>
-
-  " Clear highlights
-  " nnoremap <Esc><Esc> <Cmd>call searchx#clear()<CR>
-
-  let g:searchx = {}
-
-  " Auto jump if the recent input matches to any marker.
-  let g:searchx.auto_accept = v:true
-
-  " The scrolloff value for moving to next/prev.
-  let g:searchx.scrolloff = &scrolloff
-
-  " To enable scrolling animation.
-  "let g:searchx.scrolltime = 500
-  let g:searchx.scrolltime = 0
-
-  " Marker characters.
-  let g:searchx.markers = split('ABCDEFHIJKLMNOPQRSTUVWXYZ', '.\zs')
-
-  " Convert search pattern.
-  function g:searchx.convert(input) abort
-    if a:input !~# '\k'
-      return '\V' .. a:input
-    endif
-    return join(split(a:input, ' '), '.\{-}')
   endfunction
 endif " }}}
 

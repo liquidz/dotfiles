@@ -25,9 +25,9 @@ if [[ -e ${SCRIPT_DIR}/cookbooks ]]; then
     ### Local test
     if [[ ! -e ${SCRIPT_DIR}/dad ]]; then
         (cd ${SCRIPT_DIR} && \
-            curl -L https://raw.githubusercontent.com/liquidz/dad/master/script/download | bash)
+            curl -L https://raw.githubusercontent.com/liquidz/dad/main/script/download | bash)
     fi
-    ${SCRIPT_DIR}/dad ${SCRIPT_DIR}/cookbooks/default.clj
+    ${SCRIPT_DIR}/dad ${SCRIPT_DIR}/../setup.clj
 else
     if [[ ! -d ${BASE_DIR} ]]; then
         git clone https://github.com/liquidz/dotfiles ${BASE_DIR}
@@ -35,9 +35,9 @@ else
 
     if [[ ! -e ${BASE_DIR}/bin/dad ]]; then
         (cd ${BASE_DIR}/bin && \
-            curl -L https://raw.githubusercontent.com/liquidz/dad/master/script/download | bash)
+            curl -L https://raw.githubusercontent.com/liquidz/dad/main/script/download | bash)
     fi
 
-    ${BASE_DIR}/bin/dad ${BASE_DIR}/bin/cookbooks/default.clj
+    ${BASE_DIR}/bin/dad ${BASE_DIR}/setup.clj
 fi
 
