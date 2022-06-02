@@ -36,10 +36,28 @@
                     "note": "info"
             }
 
+        },
+        "actionlint": {
+            "command": "actionlint",
+            "debounce": 100,
+            "offsetLine": 0,
+            "offsetColumn": 0,
+            "args": ["-oneline", "%relativepath"],
+            "sourceName": "actionlint",
+            "formatLines": 1,
+            "formatPattern": [
+              "^([^:]+):(\\d+):(\\d+):\\s+(.*)$",
+              {
+                "line": 2,
+                "column": 3,
+                "message": 4
+              }
+            ]
         }
     },
     "diagnostic-languageserver.filetypes": {
-      "clojure": "clj_kondo_lint"
+      "clojure": "clj_kondo_lint",
+      "yaml": "actionlint"
     },
 
     "codeLens.enable": true,
