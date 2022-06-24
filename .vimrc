@@ -154,6 +154,11 @@ nnoremap mz :<C-u>10messages<CR>
 
 nnoremap <LocalLeader>sh :<C-u>terminal ++close zsh<CR>
 
+" https://medium.com/@vinodkri/zooming-vim-window-splits-like-a-pro-d7a9317d40
+" noremap <C-w>O <c-w>o
+" noremap <C-w>o <c-w>_ \| <c-w>\|
+" noremap <C-w>z <c-w>=
+
 " git commit の画面である場合
 if $HOME ==# $USERPROFILE || $GIT_EXEC_PATH !=# ''
   " Esc で terminal から抜け出せるようにする
@@ -191,7 +196,15 @@ inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
 
 nnoremap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
 
-nnoremap <LocalLeader><LocalLeader> <Cmd>e %:h<CR>
+function! s:ex() abort
+  try
+    silent execute ':e %:h'
+  catch
+    silent execute ':Ex'
+  endtry
+endfunction
+
+nnoremap <LocalLeader><LocalLeader> <Cmd>call <SID>ex()<CR>
 nnoremap <C-]> g<C-]>
 
 " <Nul> means Ctrl+Space in terminal
@@ -271,7 +284,6 @@ aug MyAutoDeleteExtraSpaces
   au!
   autocmd BufWritePre * call s:clean_extra_spaces()
 aug END
-
 
 if !has('nvim')
   aug MyWinColor
@@ -369,12 +381,8 @@ let g:zip_zipcmd= ''
 if has('nvim')
   set runtimepath+=$HOME/.vim/
 endif
-" if has('nvim')
-"   runtime! conf.nvim.d/*.vim
-" endif
 
 runtime! conf.d/*.vim
-"runtime! conf.test/*.vim
 exec printf(':runtime! conf.d/%s/*.vim', hostname())
 
 " }}}

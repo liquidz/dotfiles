@@ -177,8 +177,8 @@ alias wip-commit='git commit --allow-empty -am "WIP [skip ci]"'
 # }}}
 # ssh {{{
 alias ss='ssh $(grep "Host " ~/.ssh/config | cut -c6- | fzf)'
-alias sss='tmux split-window ss'
-alias ssn='tmux new-window ss'
+# alias sss='tmux split-window ss'
+# alias ssn='tmux new-window ss'
 # }}}
 # cakephp {{{
 # To enable these aliases, you must export CAKE_PROJECT_ROOT in /etc/zshenv
@@ -254,6 +254,7 @@ alias suteneko='docker run -it uochan/suteneko'
 export BECOROOT=${HOME}/src/github.com/liquidz/beco
 
 alias antq='clojure -Tantq outdated'
+alias antq-jar='java -jar ~/src/github.com/liquidz/antq/target/antq-standalone.jar'
 
 # }}}
 

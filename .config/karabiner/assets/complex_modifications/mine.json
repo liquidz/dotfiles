@@ -87,7 +87,7 @@
         },
 
         {
-            "description": "Change spacebar to right_shift. (Post spacebar if pressed alone)!?",
+            "description": "Change spacebar to Ctrl. (Post spacebar if pressed alone)!?",
             "manipulators": [
                 {
                     "type": "basic",
@@ -95,9 +95,9 @@
                         "key_code": "spacebar",
                         "modifiers": {"optional": ["any"]}
                     },
-                    "to": [{"key_code": "right_shift"}],
+                    "to": [{"key_code": "left_control"}],
                     "parameters": {
-                        "basic.to_if_alone_timeout_milliseconds": 750
+                        "basic.to_if_alone_timeout_milliseconds": 200
                     },
                     "to_if_alone": [{"key_code": "spacebar"}]
                 }

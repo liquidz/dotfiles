@@ -20,7 +20,12 @@ Plug 'vim-denops/denops.vim'
 "Plug '~/src/github.com/liquidz/dps-paredit'
 
 "Plug 'github/copilot.vim'
+" Plug 'nathanaelkane/vim-indent-guides'
 
+Plug 'mattn/vim-notification'
+" gin と tig-explorer を両方有効にすると tig-explorer でのコミット時に
+" コミットメッセージ入力画面が別タブに移動してしまってコミット後に元のタブに戻れなくなる
+" Plug 'lambdalisue/gin.vim'
 
 if g:use_ddu
   Plug 'Shougo/ddu.vim'
@@ -34,6 +39,7 @@ if g:use_ddu
   Plug 'Shougo/ddu-source-file_old'
   Plug 'matsui54/ddu-source-file_external'
   Plug '~/src/github.com/liquidz/ddu-source-custom-list'
+  Plug 'shun/ddu-source-rg'
 
   " Install your filters
   Plug 'yuki-yano/ddu-filter-fzf'
@@ -47,8 +53,10 @@ endif
 
 " Plug 'thinca/vim-themis'
 
-Plug 'mracos/mermaid.vim'
+" Plug 'ctrlpvim/ctrlp.vim'
+" Plug 'mattn/ctrlp-matchfuzzy'
 
+Plug 'mracos/mermaid.vim'
 Plug 'aklt/plantuml-syntax', {'on': []}
 "Plug '~/src/github.com/liquidz/plantuml-syntax', {'on': []}
 Plug 'ayu-theme/ayu-vim'
@@ -56,7 +64,8 @@ Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'easymotion/vim-easymotion', {'on': '<Plug>(easymotion-prefix)'}
 "Plug 'haya14busa/vim-metarepeat'
 "Plug 'hrsh7th/vim-eft'
-Plug 'iberianpig/tig-explorer.vim', {'on': ['TigStatus', 'TigGrep', 'TigBlame']}
+"Plug 'iberianpig/tig-explorer.vim', {'on': ['TigStatus', 'TigGrep', 'TigBlame']}
+Plug 'iberianpig/tig-explorer.vim'
 Plug 'inside/vim-search-pulse', {'on': []}
 Plug 'itchyny/lightline.vim'
 Plug 'jiangmiao/auto-pairs', {'on': []}
@@ -95,6 +104,7 @@ Plug 'tyru/columnskip.vim', {'on': ['<Plug>(columnskip-j)', '<Plug>(columnskip-k
 Plug 'tyru/open-browser.vim', {'on': []}
 Plug 'vim-jp/vital.vim', {'for': ['vim', 'asciidoc']}
 Plug 'yuki-yano/vim-operator-replace', {'on': []}
+Plug 'liquidz/vim-file-to-file', {'on': []}
 
 " /default }}}
 " filetype {{{
@@ -171,10 +181,13 @@ if has('unix')
     Plug '~/src/github.com/liquidz/vim-diced',              {'for': 'clojure'}
   else
     Plug '~/src/github.com/liquidz/vim-iced',               {'for': 'clojure'}
-    Plug '~/src/github.com/liquidz/vim-iced-fern-debugger', {'for': 'clojure'}
+    if ! has('nvim')
+      Plug '~/src/github.com/liquidz/vim-iced-fern-debugger', {'for': 'clojure'}
+    endif
     Plug '~/src/github.com/liquidz/vim-iced-function-list', {'for': 'clojure'}
     Plug '~/src/github.com/liquidz/vim-iced-kaocha',        {'for': 'clojure'}
     Plug '~/src/github.com/liquidz/vim-iced-multi-session', {'for': 'clojure'}
+    Plug '~/src/github.com/liquidz/vim-iced-neil',          {'for': 'clojure'}
     Plug '~/src/github.com/liquidz/vim-clojuredocs-help',   {'for': 'clojure'}
     if g:use_ddu
       Plug '~/src/github.com/liquidz/vim-iced-ddu-selector',  {'for': 'clojure'}
@@ -188,9 +201,9 @@ if has('unix')
     endif
   else
     if g:use_vim_diced
-		else
-			Plug '~/src/github.com/liquidz/vim-iced-coc-source', {'on': [], 'for': 'clojure'}
-		endif
+    else
+      Plug '~/src/github.com/liquidz/vim-iced-coc-source', {'on': [], 'for': 'clojure'}
+    endif
     " Plug '~/src/github.com/liquidz/vim-diced-coc-source', {'for': 'clojure'}
   endif
 
@@ -293,7 +306,7 @@ if s:has_plug('ctrlp.vim') " {{{
   let g:ctrlp_follow_symlinks     = 1
   let g:ctrlp_root_markers        = ['.root', 'project.clj', 'deps.edn', 'Cargo.toml', 'pom.xml', 'README.md']
   let g:ctrlp_custom_ignore = {
-        \   'dir' : '\v[\/](\.git|\.hg|\.svn|cookbooks|target|Vendor|.dein|cache|node_modules|\.cache|\.cpcache)$',
+        \   'dir' : '\v[\/](\.git|cookbooks|target|Vendor|cache|node_modules|\.cache|\.cpcache|\.shadow-cljs)$',
         \   'file': '\v\.(o|bk|org|exe|so|dll|skl|cgi|gitkeep|png|gif|jpg)$',
         \   'link': 'some_bad_symbolic_links',
         \ }
@@ -308,6 +321,7 @@ if s:has_plug('ctrlp.vim') " {{{
   nnoremap <LocalLeader>pcc :CtrlPClearCache<CR>
 
   let g:ctrlp_match_func = {'match': 'ctrlp_matchfuzzy#matcher'}
+
 endif " }}}
 
 if s:has_plug('ddc.vim') " {{{
@@ -671,10 +685,10 @@ if s:has_plug('tig-explorer.vim') " {{{
     endtry
   endfunction
 
-  nnoremap <LocalLeader>gf :<C-u>TigOpenCurrentFile<CR>
+  nnoremap <LocalLeader>gf <Cmd>TigOpenCurrentFile<CR>
   nnoremap <silent> <LocalLeader>gg :call <SID>tig_grep()<CR>
-  nnoremap <LocalLeader>gs :<C-u>TigStatus<CR>
-  nnoremap <LocalLeader>gb :<C-u>TigBlame<CR>
+  nnoremap <LocalLeader>gs <Cmd>TigStatus<CR>
+  nnoremap <LocalLeader>gb <Cmd>TigBlame<CR>
 endif " }}}
 
 if s:has_plug('vim-which-key') " {{{
@@ -933,9 +947,13 @@ if s:has_plug('ddu.vim') " {{{
     \   'file_external': {
     \     'cmd': ['fd', '.', '--type', 'f', '--hidden'],
     \   },
+    \   'rg': {
+    \     'args': ['--column', '--no-heading', '--color', 'never'],
+    \   },
     \ },
     \ 'uiParams': {
     \   'ff': {
+    \     'winHeight': 10,
     \     'filterSplitDirection': has('nvim') ? 'floating' : 'botright',
     \   },
     \ },
@@ -997,11 +1015,30 @@ if s:has_plug('ddu.vim') " {{{
         \ })
   endfunction
 
+  function! s:ddu_rg_live() abort
+    call ddu#start({
+          \   'volatile': v:true,
+          \   'sources': [{
+          \     'name': 'rg',
+          \     'options': {'matchers': []},
+          \   }],
+          \   'uiParams': {'ff': {
+          \     'ignoreEmpty': v:false,
+          \     'autoResize': v:false,
+          \   }},
+          \ })
+  endfunction
+
   nnoremap <Leader>dd <Cmd>DduResumeLast<CR>
-  nnoremap <C-p>      <Cmd>call <SID>ddu_file_rec('file')<CR>
+
+  if !s:has_plug('ctrlp.vim')
+    nnoremap <C-p>      <Cmd>call <SID>ddu_file_rec('file')<CR>
+  endif
   nnoremap <Leader>dl <Cmd>ResumableDdu search line -ui-param-startFilter<CR>
   nnoremap <Leader>d* <Cmd>ResumableDdu search line -input=`expand('<cword>')` -ui-param-startFilter=v:false<CR>
   nnoremap <Leader>db <Cmd>ResumableDdu buffer buffer -ui-param-startFilter<CR>
+  nnoremap <Leader>dg <Cmd>call <SID>ddu_rg_live()<CR>
+  "command! DduRgLive call <SID>ddu_rg_live()
 
   autocmd FileType ddu-ff call s:ddu_ff_my_settings()
   function! s:ddu_ff_my_settings() abort
@@ -1017,12 +1054,22 @@ if s:has_plug('ddu.vim') " {{{
 
   autocmd FileType ddu-ff-filter call s:ddu_filter_my_settings()
   function! s:ddu_filter_my_settings() abort
-    inoremap <buffer><silent> <CR> <Esc><Cmd>close<CR>
+    "inoremap <buffer><silent> <CR> <Esc><Cmd>close<CR>
+    inoremap <buffer><silent> <CR>
+        \ <Esc><Cmd>close<CR>
+        \ <Cmd>call win_gotoid(g:ddu#ui#ff#_filter_parent_winid)<CR>
     nnoremap <buffer><silent> <CR> <Cmd>close<CR>
     nnoremap <buffer><silent> q <Cmd>close<CR>
     nnoremap <buffer><silent> <Esc> <Cmd>close<CR>
   endfunction
 endif " }}}
+
+if s:has_plug('gin.vim') " {{{
+  nmap <buffer> <LocalLeader>gh <Plug>(gin-action-help)
+endif " }}}
+
+
+let g:denops_server_addr = '127.0.0.1:32123'
 
 " if s:has_plug('fixme') " {{{
 " endif " }}}

@@ -5,6 +5,11 @@ if exists('g:loaded_clojure_ftplugin')
 endif
 let g:loaded_clojure_ftplugin = 1
 
+if !exists('g:use_vim_diced')
+  let g:use_vim_diced = v:false
+endif
+
+
 if g:use_vim_diced
   aug myDicedSetting
     au!
@@ -24,6 +29,8 @@ if g:use_vim_diced
 endif
 
 "let g:iced#debug = v:true
+"let g:iced#debug#debugger = 'stdout'
+
 
 let g:iced_formatter = 'cljstyle'
 "let g:iced_formatter = 'joker'
@@ -73,18 +80,45 @@ let g:iced#ddu#selector#ddu_options = {
       \ 'uiParams': {'ff': {'startFilter': v:true}},
       \ }
 
-" https://clojure-lsp.github.io/clojure-lsp/capabilities/
-" https://github.com/snoe/dotfiles/blob/master/home/.vimrc
+
+function! MyCocExecuteCommand(command, extra_args) abort
+  let file = expand('%:p')
+  let uri = (file ==# '' ? '' : printf('file://%s', file))
+  let arguments = extend([uri, line('.') - 1, col('.') - 1], a:extra_args)
+  return CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': a:command, 'arguments': arguments})
+endfunction
+
+nnoremap <silent> <Leader>cltf :call MyCocExecuteCommand('thread-first-all', [])<CR>
+nnoremap <silent> <Leader>cltl :call MyCocExecuteCommand('thread-last-all', [])<CR>
+nnoremap <silent> <Leader>clcc :call MyCocExecuteCommand('cycle-coll', [])<CR>
+nnoremap <silent> <Leader>clcp :call MyCocExecuteCommand('cycle-privacy', [])<CR>
+nnoremap <silent> <Leader>clsm :call MyCocExecuteCommand('sort-map', [])<CR>
+nnoremap <silent> <Leader>clml :call MyCocExecuteCommand('move-to-let', [input('name: ')])<CR>
+nnoremap <silent> <Leader>clil :call MyCocExecuteCommand('introduce-let', [input('name: ')])<CR>
+nnoremap <silent> <Leader>clis :call MyCocExecuteCommand('inline-symbol', [])<CR>
+nnoremap <silent> <Leader>clef :call MyCocExecuteCommand('extract-function', [input('name: ')])<CR>
+nnoremap <silent> <Leader>cldf :call MyCocExecuteCommand('demote-fn', [])<CR>
+
 let g:iced#palette = {
-      \ 'LspRenameSymbol': ":call CocActionAsync('rename')",
+      \ 'LspDemoteFn': ":call MyCocExecuteCommand('demote-fn', [])",
+      \ 'LspPromoteFn': ":call MyCocExecuteCommand('promote-fn', [])",
+      \ 'LspCreateFunction': ":call MyCocExecuteCommand('create-function', [])",
+      \ 'LspCyclePrivacy': ":call MyCocExecuteCommand('cycle-privacy', [])",
+      \ 'LspSortMap': ":call MyCocExecuteCommand('sort-map', [])",
+      \ 'LspIntroduceLet': ":call MyCocExecuteCommand('introduce-let', [])",
+      \ 'LspBrowseReferences': ":call CocActionAsync('jumpReferences')",
       \ }
 " let g:iced#palette = {
 "      \ 'LspRenameSymbol': ":call CocActionAsync('rename')",
 "      \ 'LspBrowseReferences': ":call CocActionAsync('jumpReferences')",
 "      \ }
 
+aug MyCoCSetting
+  au!
+  au CursorHold * silent call CocActionAsync('highlight')
+  au BufEnter list://* highlight CursorLine ctermbg=242 guibg=#343F4C
+aug END
 
-nnoremap <silent> crth :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'thread-first', 'arguments': [expand('%:p'), line('.') - 1, col('.') - 1]})<CR>
 
 
 " let g:iced_cache_directory = '/tmp'
@@ -103,6 +137,10 @@ let g:iced_sign = {'error': "\uf1e2", 'trace': 'T', 'lint': 'L'}
 
 " tonsky
 let g:iced#format#rule = {'#"^\w"': '[[:inner 0]]'}
+let g:iced#format#options = {
+    \ 'remove-consecutive-blank-lines?': v:false,
+    \ 'remove-multiple-non-indenting-spaces?': v:true,
+    \ }
 
 let g:iced#hook = {
       \ 'session_switched': {'type': 'shell',
@@ -131,6 +169,10 @@ let g:iced#hook = {
 "      \ 'type': 'function',
 "      \ 'exec': funcref('s:fixme'),
 "      \ })
+" call iced#hook#add('evaluated', {
+"     \ 'type': 'function',
+"     \ 'exec': {d -> iced#buffer#stdout#append(d['result']['value'])},
+"     \ })
 
 " call iced#hook#add('connected', {
 "      \ 'type': 'function',
@@ -157,6 +199,11 @@ function! s:test_finished(v) abort
   return ['osascript', '-e', printf('display notification "%s"', text)]
 endfunction
 
+
+if ! has('nvim')
+  let g:iced#hook['connected'] = {'type': 'function', 'exec': {_ -> notification#show('✅ Connected')}}
+endif
+let g:iced#hook['test_finished'] = {'type': 'function', 'exec': {v -> notification#show(printf('%s %s', (v.result ==# 'succeeded' ? '😊' : '😱'), v.result))}}
 let g:iced#hook['test_finished'] = {'type': 'shell', 'exec': funcref('s:test_finished')}
 
 function! s:auto_connect() abort
@@ -186,11 +233,33 @@ function! MyClojureDefJump() abort
     exe "normal \<Plug>(coc-definition)"
   endif
 endfunction
+
 nmap <silent> <C-]> :call MyClojureDefJump()<CR>
 nmap <Nop>(disable_def_jump) <Plug>(iced_def_jump)
 
+if has('nvim')
+  aug MyNeovimClojureSetting
+    au!
+    au FileType clojure nmap <silent> <C-]> :call MyClojureDefJump()<CR>
+  aug END
+endif
+
+
+function! MyClojureShowDocument() abort
+  if iced#repl#is_connected()
+    exe "normal \<Plug>(iced_document_popup_open)"
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
 nmap <Leader>hn <Plug>(iced_ns_popup_show_form)
 nmap <Nop>(disable_next_use_case) <Plug>(iced_next_use_case)
+
+aug Fixme
+  au!
+  au FileType clojure nmap <buffer> <Leader>eat <Plug>(iced_eval_and_time)<Plug>(sexp_outer_list)``
+aug END
 
 aug MyClojureSetting
   au!
@@ -224,7 +293,7 @@ aug MyClojureSetting
   "au FileType clojure nmap <buffer> <localleader>ee    m`<Plug>(iced_eval):<c-u>call SelectOuterTopList()<cr>g``
 
   au FileType clojure nmap <buffer> <Leader>eae <Plug>(iced_eval_and_tap)<Plug>(sexp_outer_list)``
-  au FileType clojure nmap <buffer> <Leader>eat <Plug>(iced_eval_and_tap)<Plug>(sexp_outer_top_list)``
+  "au FileType clojure nmap <buffer> <Leader>eat <Plug>(iced_eval_and_tap)<Plug>(sexp_outer_top_list)``
 
   au FileType clojure nmap <buffer> <Leader>ere <Plug>(iced_eval_and_replace)<Plug>(sexp_outer_list)``
   au FileType clojure nmap <buffer> <Leader>ert <Plug>(iced_eval_and_replace)<Plug>(sexp_outer_top_list)``

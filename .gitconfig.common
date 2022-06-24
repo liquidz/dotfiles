@@ -11,6 +11,8 @@
 	pager = delta --color-only --theme OneHalfDark
 [interactive]
 	diffFilter = delta --color-only --theme OneHalfDark
+[diff]
+	external = difft
 [url "git@github.com:"]
 	pushinsteadof = https://liquidz@github.com/
 [alias]
@@ -47,8 +49,10 @@
 	main    = C       !git commit
 	main    = F       ?git commit --fixup %(commit)
 	main    = R       ?git rebase -i %(commit) --autosquash --keep-empty
+	main    = <Esc>c  ?git rebase --continue
+	main    = <Esc>a  ?git rebase --abort
 	main    = S       ?git stash save %(promptStashMessage:)
-	main    = W       ?git commit --allow-empty -m 'Work In Progress'
+	main    = W       ?git commit --allow-empty -m 'WIP [skip ci]'
 	main    = <Esc>p  ?git cherry-pick %(commit)
 	refs    = !       none
 	refs    = B       ?git checkout -b %(promptBranchName:)
@@ -74,5 +78,5 @@
 	stash   = P       none
 	stash   = x       ?git stash drop %(stash)
 	status  = x       ?git checkout %(file)
-	status  = C       !git commit -v
+	status  = C       >git commit -v
 	status  = d       enter
