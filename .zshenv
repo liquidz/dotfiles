@@ -11,6 +11,9 @@ PATH=$PATH:~/.skim/bin
 PATH=$PATH:~/.roswell/bin
 PATH=$PATH:~/src/github.com/liquidz/vim-iced/bin
 PATH=$PATH:~/.nodebrew/current/bin
+PATH=$PATH:/opt/homebrew/bin
+PATH=/opt/homebrew/bin:$PATH
+
 PATH="/usr/local/bin:$PATH:/usr/local/sbin"
 
 if [[ -e ~/.ebcli-virtual-env ]]; then
@@ -29,6 +32,10 @@ if [[ -e ${HOME}/src/github.com/natethinks/jog ]]; then
     PATH=$PATH:${HOME}/src/github.com/natethinks/jog
 fi
 
+if [[ -e ${HOME}/.babashka/bbin/bin ]]; then
+    PATH=$PATH:${HOME}/.babashka/bbin/bin
+fi
+
 # if [[ -e ~/.sdkman/bin/sdkman-init.sh ]]; then
 #     source "$HOME/.sdkman/bin/sdkman-init.sh"
 # fi
@@ -41,6 +48,10 @@ if [[ -e /usr/local/opt/libpq/bin ]]; then
     PATH="$PATH:/usr/local/opt/libpq/bin"
 fi
 
+if [[ -e /usr/local/zig ]]; then
+    PATH=$PATH:/usr/local/zig
+fi
+
 export PATH
 # }}}
 
@@ -50,6 +61,15 @@ fi
 
 alias ll='ls -l'
 alias la='ls -a'
+alias k='cd'
+alias kk='cd ..'
+alias kkk='cd ../..'
+alias kkkk='cd ../../..'
+alias kr='cd root'
+alias kd='cd $(git rev-parse --show-toplevel) && cd $(fd -t d . | fzf)'
+
+alias ok='curl -d "ok" "ntfy.sh/${NTFY_TOPIC}"'
+alias ng='curl -H "Priority: high" -d "ng" ntfy.sh/${NTFY_TOPIC}'
 
 case "${OSTYPE}" in
 linux*)
@@ -95,6 +115,7 @@ if which nvim > /dev/null 2>&1; then
    alias v=vim
 fi
 alias nvim_latest=~/Downloads/nvim-osx64/bin/nvim
+alias vim=nvim
 # }}}
 # docker {{{
 #export DOCKER_TLS_VERIFY="1"
@@ -158,7 +179,8 @@ function __bookmarklist() {
     fi
     cat ~/.bookmark
 }
-alias bm='cd $(__bookmarklist | fzf) && basename $(pwd) | xargs tmux rename-window'
+#alias bm='cd $(__bookmarklist | fzf) && basename $(pwd) | xargs tmux rename-window'
+alias bm='cd $(__bookmarklist | fzf) && echo "\x1b]2;$(basename $(pwd))\x1b\\"'
 alias cdd='cd $(git rev-parse --show-toplevel) && cd $(fd -t d . | fzf)'
 # }}}
 # git {{{
@@ -266,8 +288,15 @@ fi
 export DENO_INSTALL="${HOME}/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 
+# Denops
+export DENOPS_TEST_DENOPS_PATH=${HOME}/.vim/repos/denops.vim
+
 if which bat > /dev/null 2>&1; then
     alias cat=bat
+fi
+
+if which wezterm > /dev/null 2>&1; then
+   alias icat="wezterm imgcat"
 fi
 
 if [[ -e ~/.zshenv.local ]]; then

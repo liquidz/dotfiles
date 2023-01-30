@@ -1,12 +1,18 @@
 {
     "coc.source.iced.enable": true,
     "nextword.filetypes": ["markdown", "asciidoc", "gitcommit", "clojure", "vim", "help", "text"],
+    "suggest.noselect": true,
     // neovim ではこれがあると、意図せず候補が確定されなくていいかも？
     // まだ検証が不十分だけど
     //"suggest.keepCompleteopt": true,
 
     "tree.key.close": "q",
     "tree.key.toggle": "l",
+
+    "suggest.floatConfig": {
+      "border": true,
+      "highlight": "CocSuggestFloating"
+    },
 
     "deno.enable": true,
     "deno.lint": true,
@@ -69,24 +75,36 @@
             "rootPatterns": ["project.clj", "deps.edn"],
             "additionalSchemes": ["jar", "zipfile"],
             // 大きいファイルだとカーソル移動もままならないくらい遅くなるので無効化した
+            "disabledFeatures": ["completion", "diagnostics", "codeLens"],
             "disableDiagnostics": true,
-            "disableCompletion": true,
+            //"disableCompletion": true,
             "trace.server": "verbose",
             "initializationOptions": {
                 "auto-add-ns-to-new-files?": false,
                 "ignore-classpath-directories": true
             }
+        },
+        "tailwind": {
+            "command": "tailwindcss-language-server",
+            "args": [],
+            "filetypes": ["css"],
+            "trace.server": "verbose"
+        },
+        "eclipse-jdt-ls": {
+            "command": "eclipse-jdt-ls",
+            "args": [],
+            "filetypes": ["java"],
+            "trace.server": "verbose"
+        },
+        "zls": {
+            "command": "zls",
+            "args": [],
+            "filetypes": ["zig"],
+            "rootPatterns": ["build.zig"],
+            "trace.server": "verbose"
         }
     },
-
-    // // coc-clojure
-    // // https://github.com/NoahTheDuke/coc-clojure
-    // "clojure.disableDiagnostics": true,
-    // "clojure.trace.server": "verbose",
-    // "clojure.initializationOptions": {
-    //     "auto-add-ns-to-new-files?": false,
-    //     "ignore-classpath-directories": true
-    // },
+    "java.jdt.ls.vmargs": "-Dfile.encoding=UTF-8",
 
     "suggest.minTriggerInputLength": 2,
     "suggest.triggerCompletionWait": 300,

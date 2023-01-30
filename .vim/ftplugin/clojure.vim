@@ -1,5 +1,11 @@
 scriptencoding utf-8
 
+" cf. https://github.com/vim/vim/blob/adce965162dd89bf29ee0e5baf53652e7515762c/runtime/syntax/clojure.vim#L54
+let g:clojure_syntax_keywords = {
+      \ 'clojureDefine': ['s/defn', 's/fn', 's/defschema', 's/defmethod', 's/defprotocol', 's/defrecord'],
+      \ 'clojureSpecial': ['merr/let'],
+      \ }
+
 if exists('g:loaded_clojure_ftplugin')
   finish
 endif
@@ -68,13 +74,37 @@ let g:iced#nrepl#auto#document_delay = 200
 highlight icedEvalPopup ctermfg=5 guifg=#FF7BA9
 let g:iced#eval#popup_highlight = 'icedEvalPopup'
 
-" let g:iced#eval#keep_inline_result = v:true
+"let g:iced#eval#popup_align = 'right'
+"let g:iced#eval#keep_inline_result = v:true
 
-"let g:iced#buffer#stdout#size = 28
+"set clipboard=unnamed
+
+let g:iced#navigate#jump_fallback_command = ':call CocAction("jumpDefinition")'
 
 let g:iced_multi_session#does_switch_session = v:true
 
+let g:iced#nrepl#eval#ignoring_vars_in_stacktrace = [
+      \ 'clojure.core/apply',
+      \ 'clojure.core/eval',
+      \ 'clojure.core/with-bindings*',
+      \ 'clojure.lang.AFn/applyTo',
+      \ 'clojure.lang.AFn/applyToHelper',
+      \ 'clojure.lang.AFn/run',
+      \ 'clojure.lang.Compiler/eval',
+      \ 'clojure.lang.RestFn/invoke',
+      \ 'clojure.lang.Var/applyTo',
+      \ 'clojure.main/repl',
+      \ 'java.lang.Thread/run',
+      \ 'nrepl.middleware.interruptible-eval/evaluate',
+      \ 'nrepl.middleware.interruptible-eval/interruptible-eval',
+      \ 'nrepl.middleware.session/session-exec',
+      \ ]
+
 let g:iced#selector#search_order = ['ddu', 'fzf']
+
+"let g:iced#refactor#insert_newline_after_require = v:false
+
+
 
 let g:iced#ddu#selector#ddu_options = {
       \ 'uiParams': {'ff': {'startFilter': v:true}},
@@ -194,17 +224,26 @@ function! s:test_finished(v) abort
   " let color = (a:v.result ==# 'succeeded' ? success_color[idx] : failure_color[idx])
   "
   " return ['curl', '-XPOST', printf('localhost:8890/%s', color)]
-  let label = (a:v.result ==# 'succeeded' ? 'Succeeded' : 'Failed')
-  let text = printf("Test Finished\nResult: %s\n%s", label, a:v.summary)
-  return ['osascript', '-e', printf('display notification "%s"', text)]
+
+  " let label = (a:v.result ==# 'succeeded' ? 'Succeeded' : 'Failed')
+  " let text = printf("Test Finished\nResult: %s\n%s", label, a:v.summary)
+  " return ['osascript', '-e', printf('display notification "%s"', text)]
+
+  if a:v.result ==# 'succeeded'
+    return ['curl', '-d', 'succeeded', printf('ntfy.sh/%s', $NTFY_TOPIC)]
+  else
+    return ['curl', '-H', 'Priority: high', '-d', 'failed', printf('ntfy.sh/%s', $NTFY_TOPIC)]
+  endif
 endfunction
 
 
 if ! has('nvim')
   let g:iced#hook['connected'] = {'type': 'function', 'exec': {_ -> notification#show('✅ Connected')}}
 endif
-let g:iced#hook['test_finished'] = {'type': 'function', 'exec': {v -> notification#show(printf('%s %s', (v.result ==# 'succeeded' ? '😊' : '😱'), v.result))}}
+"let g:iced#hook['test_finished'] = {'type': 'function', 'exec': {v -> notification#show(printf('%s %s', (v.result ==# 'succeeded' ? '😊' : '😱'), v.result))}}
 let g:iced#hook['test_finished'] = {'type': 'shell', 'exec': funcref('s:test_finished')}
+" let g:iced#hook['form_change_prepared'] = {'type': 'command', 'exec': 'ParinferOff'}
+" let g:iced#hook['form_changed'] = {'type': 'command', 'exec': 'ParinferOn'}
 
 function! s:auto_connect() abort
   if expand('%:t') ==# 'project.clj' || expand('%:e') ==# 'edn'
@@ -223,6 +262,7 @@ endfunction
 
 " overwrite mapping
 nmap <Leader>em <Plug>(iced_eval_at_mark)
+nmap <Leader>ecm <Plug>(iced_eval_in_context_at_mark)
 nmap <Leader>eM <Plug>(iced_macroexpand_1_outer_list)
 nmap <Nop>(disable_expand_all) <Plug>(iced_macroexpand_outer_list)
 
@@ -256,6 +296,7 @@ endfunction
 nmap <Leader>hn <Plug>(iced_ns_popup_show_form)
 nmap <Nop>(disable_next_use_case) <Plug>(iced_next_use_case)
 
+nnoremap <silent> <Plug>(iced_eval_and_time) <Cmd>call iced#operation#setup_wrapper('(clojure.core/time *v)')<CR>g@
 aug Fixme
   au!
   au FileType clojure nmap <buffer> <Leader>eat <Plug>(iced_eval_and_time)<Plug>(sexp_outer_list)``
@@ -270,7 +311,7 @@ aug MyClojureSetting
 
   au FileType clojure imap <silent><buffer> <C-h> <Plug>(sexp_insert_backspace)
   au FileType clojure inoremap <buffer> >> ->
-  au FileType clojure inoremap <buffer> ## #_
+  "au FileType clojure inoremap <buffer> ## #_
 
   au FileType clojure nmap <buffer> tt <Plug>(iced_cycle_src_and_test)
   "au FileType clojure nmap <buffer> <C-l><C-l><C-l> <Plug>(iced_clean_all)
@@ -298,14 +339,15 @@ aug MyClojureSetting
   au FileType clojure nmap <buffer> <Leader>ere <Plug>(iced_eval_and_replace)<Plug>(sexp_outer_list)``
   au FileType clojure nmap <buffer> <Leader>ert <Plug>(iced_eval_and_replace)<Plug>(sexp_outer_top_list)``
 
-  au FileType clojure nmap <buffer> <Leader>ece <Plug>(iced_eval_and_comment)<Plug>(sexp_outer_list)``
-  au FileType clojure nmap <buffer> <Leader>ect <Plug>(iced_eval_and_comment)<Plug>(sexp_outer_top_list)``
+  " au FileType clojure nmap <buffer> <Leader>ece <Plug>(iced_eval_and_comment)<Plug>(sexp_outer_list)``
+  " au FileType clojure nmap <buffer> <Leader>ect <Plug>(iced_eval_and_comment)<Plug>(sexp_outer_top_list)``
 
   au FileType clojure nmap <buffer> <Leader>epe <Plug>(iced_eval_and_print)<Plug>(sexp_outer_list)``
 
   " au FileType clojure nmap <silent> <buffer> <C-w><C-]> :<C-u>IcedDefJump . tabedit<CR>
   au FileType clojure nmap <silent> <buffer> g<C-]> <Cmd>IcedDefJump . tabedit<CR>
   au FileType clojure nmap <silent> <buffer> v<C-]> <Cmd>IcedDefJump . vsplit<CR>
+  au FileType clojure nmap <silent> <buffer> r<C-]> <Cmd>IcedBrowseReferences<CR>
 
   " mapping for yanking (like `"xee"`)
   " au FileType clojure nmap <silent> ee <Plug>(iced_eval)<Plug>(sexp_outer_list)``
@@ -321,8 +363,8 @@ aug MyClojureSetting
   au FileType clojure nmap <silent><buffer> <LocalLeader>kl <Plug>(sexp_swap_element_forward)
   au FileType clojure xmap <silent><buffer> <LocalLeader>kl <Plug>(sexp_swap_element_forward)
 
-  au FileType clojure nmap <silent><buffer> <LocalLeader>ks <Plug>(sexp_capture_next_element)
-  au FileType clojure nmap <silent><buffer> <LocalLeader>kb <Plug>(sexp_emit_tail_element)
+  " au FileType clojure nmap <silent><buffer> <LocalLeader>ks <Plug>(sexp_capture_next_element)
+  " au FileType clojure nmap <silent><buffer> <LocalLeader>kb <Plug>(sexp_emit_tail_element)
 
   " "" NOTE: &<< and &>> are binded to <Alt-.> and <Alt-,> by Alaritty
   " au FileType clojure nmap <silent><buffer> &<< <Plug>(dps_paredit_slurp)

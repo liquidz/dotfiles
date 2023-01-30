@@ -1,3 +1,5 @@
+#export PATH="/opt/homebrew/bin:$PATH"
+
 # vi キーバインド
 bindkey -v
 
@@ -144,6 +146,7 @@ function cd() {
    builtin cd $@ && ls;
 }
 
+# 入力中のコマンドを vim で編集する
 export EDITOR=vim
 zle -N edit-command-line
 bindkey '^e'  edit-command-line
@@ -183,25 +186,25 @@ fi
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
-# tmux
-if [[ ! -n $TMUX && $- == *l* ]]; then
-    # get the IDs
-    ID="$(tmux list-sessions)"
-    if [[ -z "$ID" ]]; then
-        tmux new-session
-    fi
-
-    create_new_session="Create New Session"
-    ID="$ID\n${create_new_session}:"
-    ID="$(echo $ID | fzf | cut -d: -f1)"
-    if [[ "$ID" = "${create_new_session}" ]]; then
-        tmux new-session
-    elif [[ -n "$ID" ]]; then
-        tmux attach-session -t "$ID"
-    else
-      :  # Start terminal normally
-    fi
-fi
+# # tmux
+# if [[ ! -n $TMUX && $- == *l* ]]; then
+#     # get the IDs
+#     ID="$(tmux list-sessions)"
+#     if [[ -z "$ID" ]]; then
+#         tmux new-session
+#     fi
+#
+#     create_new_session="Create New Session"
+#     ID="$ID\n${create_new_session}:"
+#     ID="$(echo $ID | fzf | cut -d: -f1)"
+#     if [[ "$ID" = "${create_new_session}" ]]; then
+#         tmux new-session
+#     elif [[ -n "$ID" ]]; then
+#         tmux attach-session -t "$ID"
+#     else
+#       :  # Start terminal normally
+#     fi
+# fi
 
 export WASMTIME_HOME="$HOME/.wasmtime"
 
@@ -227,6 +230,35 @@ zshaddhistory() {
    cmd=${line%% *}
    [[ "$(command -v $cmd)" != '' ]]
 }
+
+# https://zenn.dev/ymotongpoo/articles/20220802-osc-133-zsh
+# zshでOSC 133に対応する
+_prompt_executing=""
+function __prompt_precmd() {
+    local ret="$?"
+    if test "$_prompt_executing" != "0"
+    then
+      _PROMPT_SAVE_PS1="$PS1"
+      _PROMPT_SAVE_PS2="$PS2"
+      PS1=$'%{\e]133;P;k=i\a%}'$PS1$'%{\e]133;B\a\e]122;> \a%}'
+      PS2=$'%{\e]133;P;k=s\a%}'$PS2$'%{\e]133;B\a%}'
+    fi
+    if test "$_prompt_executing" != ""
+    then
+       printf "\033]133;D;%s;aid=%s\007" "$ret" "$$"
+    fi
+    printf "\033]133;A;cl=m;aid=%s\007" "$$"
+    _prompt_executing=0
+}
+function __prompt_preexec() {
+    PS1="$_PROMPT_SAVE_PS1"
+    PS2="$_PROMPT_SAVE_PS2"
+    printf "\033]133;C;\007"
+    _prompt_executing=1
+}
+preexec_functions+=(__prompt_preexec)
+precmd_functions+=(__prompt_precmd)
+
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

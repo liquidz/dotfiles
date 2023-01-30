@@ -84,6 +84,7 @@
    {:path (home k)
     :url (str "https://raw.githubusercontent.com/git/git/master/contrib/completion/" v)}))
 
+
 ;; zinit
 (dad/directory {:path (home ".zinit")})
 (dad/git {:path (home ".zinit/bin")
@@ -107,3 +108,9 @@
 ;; Only for Mac
 ;; defaults write -g InitialKeyRepeat -int 15
 ;; defaults write -g KeyRepeat -int 2
+
+(def ^:private tailwindcss-intellisense-version "0.9.1")
+(let [url (format "https://github.com/tailwindlabs/tailwindcss-intellisense/releases/download/v%s/vscode-tailwindcss-%s.vsix"
+                  tailwindcss-intellisense-version
+                  tailwindcss-intellisense-version)]
+  (dad/download {:path (home "bin") :url url}))

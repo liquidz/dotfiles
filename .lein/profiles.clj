@@ -1,5 +1,7 @@
 {:user
  {:plugins []
+  :dependencies [[com.github.liquidz/antq "RELEASE"]]
+  :aliases {"outdated" ["run" "-m" "antq.core"]}
 
   ;; :dependencies [[lambdaisland/kaocha "1.0.681"]]
   ;;

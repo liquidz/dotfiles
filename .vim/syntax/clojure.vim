@@ -3,10 +3,12 @@ scriptencoding utf-8
 " 位置を把握しやすくするためのハイライト
 syntax keyword merrErrorSymbol +err+
 syntax keyword merrErr merr/err
+syntax keyword merrTry merr/try
 syntax keyword myTap tap>
 highlight cMerrKeyword term=reverse cterm=underline ctermfg=213 guifg=#e27878
 highlight link merrErrorSymbol cMerrKeyword
 highlight link merrErr cMerrKeyword
+highlight link merrTry cMerrKeyword
 highlight link myTap cMerrKeyword
 
 " 間違いや消し忘れを防ぐためのハイライト

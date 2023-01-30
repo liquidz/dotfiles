@@ -8,11 +8,11 @@
 	rebase = true
 [core]
 	editor = /usr/local/bin/vim
-	pager = delta --color-only --theme OneHalfDark
-[interactive]
-	diffFilter = delta --color-only --theme OneHalfDark
-[diff]
-	external = difft
+# 	pager = delta --color-only --theme OneHalfDark
+# [interactive]
+# 	diffFilter = delta --color-only --theme OneHalfDark
+# [diff]
+# 	external = difft
 [url "git@github.com:"]
 	pushinsteadof = https://liquidz@github.com/
 [alias]
@@ -49,8 +49,6 @@
 	main    = C       !git commit
 	main    = F       ?git commit --fixup %(commit)
 	main    = R       ?git rebase -i %(commit) --autosquash --keep-empty
-	main    = <Esc>c  ?git rebase --continue
-	main    = <Esc>a  ?git rebase --abort
 	main    = S       ?git stash save %(promptStashMessage:)
 	main    = W       ?git commit --allow-empty -m 'WIP [skip ci]'
 	main    = <Esc>p  ?git cherry-pick %(commit)
@@ -80,3 +78,5 @@
 	status  = x       ?git checkout %(file)
 	status  = C       >git commit -v
 	status  = d       enter
+	status  = <Esc>c  ?git rebase --continue
+	status  = <Esc>a  ?git rebase --abort

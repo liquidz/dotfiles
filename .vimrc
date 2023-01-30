@@ -97,9 +97,10 @@ set formatoptions+=mM
 set nonumber
 set ruler
 set list
-set listchars=tab:>-,trail:_,eol:\ ,extends:>,precedes:>
+set listchars=tab:>-,trail:_,extends:>,precedes:>
 set wrap
 set cmdheight=2
+"set cmdheight=0
 set showcmd
 set smartindent
 set smarttab
@@ -108,7 +109,7 @@ set noequalalways
 set cursorline
 set breakindent
 set nocursorcolumn
-set signcolumn=yes
+set signcolumn=auto
 augroup cch
   autocmd! cch
   autocmd WinLeave * set nocursorline
@@ -148,7 +149,6 @@ nnoremap <silent> ss :<C-u>setlocal spell!<CR>
 
 inoremap jj <Esc>
 cnoremap jj <Esc>
-inoremap jk <Esc>
 
 nnoremap mz :<C-u>10messages<CR>
 
@@ -342,8 +342,62 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : MyComplete()
 " }}}
 " matchit {{{
 
-source $VIMRUNTIME/macros/matchit.vim
-let b:match_ignorecase = 1
+" source $VIMRUNTIME/macros/matchit.vim
+" let b:match_ignorecase = 1
+
+
+let s:default_skip = "synIDattr(synID(line('.'),col('.'),1),'name') =~? 'comment\\|string\\|regex\\|character'"
+
+function! IcedonGetTopFormRange() abort
+  let view = winsaveview()
+  try
+    let start = searchpos('^\S', "bcW", 0, 0, s:default_skip)
+    if start == [0, 0]
+      return [[0, 0], [0, 0]]
+    endif
+
+    call search('(', 'cW', 0, 0, s:default_skip)
+    let end = searchpairpos('(', '', ')', 'nW', s:default_skip)
+    if end == [0, 0]
+      return [[0, 0], [0, 0]]
+    endif
+    return [start, end]
+  finally
+    call winrestview(view)
+  endtry
+endfunction
+
+function! IcedonGetCurrentFormRange() abort
+  let view = winsaveview()
+  try
+    let start = searchpos('(', "bcW", 0, 0, s:default_skip)
+    if start == [0, 0]
+      return [[0, 0], [0, 0]]
+    endif
+
+    let end = searchpairpos('(', '', ')', 'nW', s:default_skip)
+    if end == [0, 0]
+      return [[0, 0], [0, 0]]
+    endif
+    return [start, end]
+  finally
+    call winrestview(view)
+  endtry
+endfunction
+
+" function! IcedonCurrentForm() abort
+" 	let view = winsaveview()
+" 	try
+" 		let start = searchpos('^\S', "bcW")
+"
+"
+" 		" searchpair('(', '', ')', 'W', "synIDattr(synID(line('.'),col('.'),1),'name') =~? 'Comment\|String\|Regex\|Character'")
+" 	finally
+" 		call winrestview(view)
+" 	endtry
+" endfunction
+
+
 
 " }}}
 " netrw {{{

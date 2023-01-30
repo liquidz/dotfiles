@@ -15,24 +15,32 @@ call plug#begin('~/.vim/repos')
 
 " Deno/Denops
 Plug 'vim-denops/denops.vim'
-"Plug 'vim-denops/denops-helloworld.vim'
+"Plug '~/src/github.com/vim-denops/denops-helloworld.vim'
 "Plug '~/src/github.com/liquidz/denops-helloworld.vim'
 "Plug '~/src/github.com/liquidz/dps-paredit'
+"Plug '~/src/github.com/liquidz/dps-parinfer'
 
 "Plug 'github/copilot.vim'
 " Plug 'nathanaelkane/vim-indent-guides'
+
+Plug 'yuki-yano/fuzzy-motion.vim'
+"Plug 'tani/glance-vim'
 
 Plug 'mattn/vim-notification'
 " gin と tig-explorer を両方有効にすると tig-explorer でのコミット時に
 " コミットメッセージ入力画面が別タブに移動してしまってコミット後に元のタブに戻れなくなる
 " Plug 'lambdalisue/gin.vim'
 
+Plug 'jparise/vim-graphql'
+
 if g:use_ddu
   Plug 'Shougo/ddu.vim'
   " Install your UIs
   Plug 'Shougo/ddu-ui-ff'
+  Plug 'Shougo/ddu-ui-filer'
   " Install your sources
   Plug 'Shougo/ddu-source-action'
+  Plug 'Shougo/ddu-source-file'
   Plug 'Shougo/ddu-source-file_rec'
   Plug 'Shougo/ddu-source-line'
   Plug 'shun/ddu-source-buffer'
@@ -41,13 +49,20 @@ if g:use_ddu
   Plug '~/src/github.com/liquidz/ddu-source-custom-list'
   Plug 'shun/ddu-source-rg'
 
+  Plug 'lambdalisue/mr.vim' | Plug 'kuuote/ddu-source-mr'
+  "Plug 'kuuote/ddu-source-git_diff'
+
   " Install your filters
   Plug 'yuki-yano/ddu-filter-fzf'
   Plug 'Shougo/ddu-filter-matcher_substring'
   Plug 'Shougo/ddu-filter-matcher_hidden'
+  Plug 'lambdalisue/kensaku.vim' | Plug 'Milly/ddu-filter-kensaku'
   " Install your kinds
   Plug 'Shougo/ddu-kind-file'
   Plug 'Shougo/ddu-commands.vim'
+
+  " ddu-ui-filer
+  Plug 'Shougo/ddu-column-filename'
 endif
 
 
@@ -59,12 +74,13 @@ endif
 Plug 'mracos/mermaid.vim'
 Plug 'aklt/plantuml-syntax', {'on': []}
 "Plug '~/src/github.com/liquidz/plantuml-syntax', {'on': []}
-Plug 'ayu-theme/ayu-vim'
+"Plug 'ayu-theme/ayu-vim'
+Plug 'cocopon/iceberg.vim'
+"Plug 'colepeters/spacemacs-theme.vim'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'easymotion/vim-easymotion', {'on': '<Plug>(easymotion-prefix)'}
 "Plug 'haya14busa/vim-metarepeat'
 "Plug 'hrsh7th/vim-eft'
-"Plug 'iberianpig/tig-explorer.vim', {'on': ['TigStatus', 'TigGrep', 'TigBlame']}
 Plug 'iberianpig/tig-explorer.vim'
 Plug 'inside/vim-search-pulse', {'on': []}
 Plug 'itchyny/lightline.vim'
@@ -94,7 +110,8 @@ Plug 'skanehira/translate.vim', {'on': ['<Plug>(VTranslate)', '<Plug>(VTranslate
 Plug 't9md/vim-quickhl', {'on': []}
 Plug 'thinca/vim-localrc'
 Plug 'thinca/vim-qfreplace', {'on': 'Qfreplace'}
-Plug 'thinca/vim-quickrun', {'on': '<Plug>(quickrun)'}
+"Plug 'thinca/vim-quickrun', {'on': '<Plug>(quickrun)'}
+Plug 'thinca/vim-quickrun', {'on': []}
 Plug 'thinca/vim-visualstar', {'on': []}
 Plug 'tpope/vim-endwise', {'on': []}
 "Plug 'tpope/vim-fugitive'
@@ -105,6 +122,7 @@ Plug 'tyru/open-browser.vim', {'on': []}
 Plug 'vim-jp/vital.vim', {'for': ['vim', 'asciidoc']}
 Plug 'yuki-yano/vim-operator-replace', {'on': []}
 Plug 'liquidz/vim-file-to-file', {'on': []}
+Plug 'seroqn/foldmaker.vim'
 
 " /default }}}
 " filetype {{{
@@ -173,9 +191,12 @@ if has('unix')
 
   endif
 
+  Plug 'cohama/lexima.vim', {'for': ['zig']}
+
   "" Clojure {{{
   Plug 'guns/vim-sexp',           {'for': ['lisp', 'clojure']}
-  Plug 'eraserhd/parinfer-rust',  {'for': 'clojure', 'do': 'cargo build --release'}
+  Plug 'eraserhd/parinfer-rust',  {'for': 'clojure', 'do': 'bash build.sh'}
+  "Plug '~/src/github.com/liquidz/dps-parinfer', {'for': ['lisp', 'clojure']}
   "Plug 'liquidz/paredit',         {'for': ['lisp', 'clojure']}
   if g:use_vim_diced
     Plug '~/src/github.com/liquidz/vim-diced',              {'for': 'clojure'}
@@ -190,7 +211,8 @@ if has('unix')
     Plug '~/src/github.com/liquidz/vim-iced-neil',          {'for': 'clojure'}
     Plug '~/src/github.com/liquidz/vim-clojuredocs-help',   {'for': 'clojure'}
     if g:use_ddu
-      Plug '~/src/github.com/liquidz/vim-iced-ddu-selector',  {'for': 'clojure'}
+      "Plug '~/src/github.com/liquidz/vim-iced-ddu-selector',  {'for': 'clojure'}
+      Plug '~/src/github.com/liquidz/vim-iced-ddu-selector'
     endif
   endif
   if s:use_ddc
@@ -207,13 +229,33 @@ if has('unix')
     " Plug '~/src/github.com/liquidz/vim-diced-coc-source', {'for': 'clojure'}
   endif
 
-
   " }}}
 endif
 
 " /filetype }}}
 
 call plug#end()
+
+if s:has_plug('denops.vim') " {{{
+  if ! executable('deno')
+    let g:denops#deno = printf('%s/.deno/bin/deno', $HOME)
+  endif
+
+  "let g:denops_server_addr = '127.0.0.1:32123'
+  call denops#plugin#check_type()
+
+  if s:has_plug('vim-search-pulse')
+    nmap n <Plug>(anzu-n)<Plug>Pulse
+    nmap N <Plug>(anzu-N)<Plug>Pulse
+    nmap * <Plug>(anzu-star)<Plug>Pulse
+    nmap # <Plug>(anzu-sharp)<Plug>Pulse
+  else
+    nmap n <Plug>(anzu-mode-n)
+    nmap N <Plug>(anzu-mode-N)
+    nmap * <Plug>(anzu-star)
+    nmap # <Plug>(anzu-sharp)
+  endif
+endif " }}}
 
 if s:has_plug('vim-anzu') " {{{
   if s:has_plug('vim-search-pulse')
@@ -231,7 +273,7 @@ endif " }}}
 
 if s:has_plug('auto-pairs') " {{{
   aug AutoPairFileType
-    au Filetype clojure let b:AutoPairs = {'(':')', '[':']', '{':'}','"':'"'}
+    au Filetype clojure let b:AutoPairs = {'"':'"'}
   aug END
 endif " }}}
 
@@ -248,6 +290,31 @@ if s:has_plug('ayu-vim') " {{{
   let ayucolor="mirage" " for mirage version of theme
 
   colorscheme ayu
+endif " }}}
+
+if s:has_plug('iceberg.vim') " {{{
+  " Important!!
+  if has('termguicolors')
+    set termguicolors
+  endif
+
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
+  colorscheme iceberg
+endif " }}}
+
+if s:has_plug('spacemacs-theme.vim') " {{{
+  " Important!!
+  if has('termguicolors')
+    set termguicolors
+  endif
+
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
+	set background=dark
+	colorscheme spacemacs-theme
 endif " }}}
 
 if s:has_plug('vim-brightest') " {{{
@@ -267,18 +334,29 @@ if s:has_plug('caw.vim') " {{{
 endif " }}}
 
 if s:has_plug('coc.nvim') " {{{
+  if ! executable('node')
+    let g:coc_node_path = '/usr/local/bin/node'
+  endif
+
   function! s:coc_check_back_space() abort
     let col = col('.') - 1
     return !col || getline('.')[col - 1] =~# '\s'
   endfunction
 
   iunmap <expr><tab>
-  inoremap <expr><tab>
-        \ pumvisible() ? "\<c-n>" :
-        \ <SID>coc_check_back_space() ? "\<Tab>" :
-        \ coc#refresh()
+  inoremap <silent><expr> <TAB> coc#pum#visible()
+    \ ? coc#pum#next(1)
+    \ : <SID>coc_check_back_space()
+    \   ? "\<Tab>"
+    \   : coc#refresh()
+
+  inoremap <expr> <CR> coc#pum#visible() ? coc#_select_confirm() : "\<CR>"
+  inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+
+  nmap <silent> <LocalLeader>cc  <plug>(coc-codeaction-selected)iw
 
   nmap <silent> <LocalLeader>cr  <Cmd>call CocAction('rename')<CR>
+  nmap <silent> <LocalLeader>cd  <Cmd>call CocAction('jumpDefinition')<CR>
   nmap <silent> <LocalLeader>cf  <Cmd>call CocAction('jumpReferences')<CR>
   nmap <silent> <LocalLeader>cic <Cmd>call CocAction('showIncomingCalls')<CR>
   "nmap <silent> gd                    <Plug>(coc-definition)
@@ -288,7 +366,7 @@ if s:has_plug('coc.nvim') " {{{
 
   aug MyCocSetting
     au!
-    au FileType typescript nnoremap <buffer> K :call CocActionAsync('doHover')<CR>
+    au FileType typescript,css nnoremap <buffer> K :call CocActionAsync('doHover')<CR>
   aug END
 endif " }}}
 
@@ -304,7 +382,8 @@ if s:has_plug('ctrlp.vim') " {{{
   let g:ctrlp_show_hidden         = 1   " 隠しファイルも表示
   let g:ctrlp_match_window        = 'results:50'
   let g:ctrlp_follow_symlinks     = 1
-  let g:ctrlp_root_markers        = ['.root', 'project.clj', 'deps.edn', 'Cargo.toml', 'pom.xml', 'README.md']
+  let g:ctrlp_lazy_update         = 100
+  let g:ctrlp_match_func          = {'match': 'ctrlp_matchfuzzy#matcher'}
   let g:ctrlp_custom_ignore = {
         \   'dir' : '\v[\/](\.git|cookbooks|target|Vendor|cache|node_modules|\.cache|\.cpcache|\.shadow-cljs)$',
         \   'file': '\v\.(o|bk|org|exe|so|dll|skl|cgi|gitkeep|png|gif|jpg)$',
@@ -320,7 +399,18 @@ if s:has_plug('ctrlp.vim') " {{{
   nnoremap <LocalLeader>pq  :CtrlPBuffer<CR>
   nnoremap <LocalLeader>pcc :CtrlPClearCache<CR>
 
-  let g:ctrlp_match_func = {'match': 'ctrlp_matchfuzzy#matcher'}
+
+  " function! s:fixme() abort
+  "   echom 'kiteru'
+  " endfunction
+
+  " aug MyCtrlPSetting
+  "   au!
+  "   "au BufEnter ControlP highlight CursorLine guibg=Blue
+  "   "au BufEnter ControlP call s:fixme()
+  "   au WinEnter * call s:fixme()
+  "
+  " aug END
 
 endif " }}}
 
@@ -487,6 +577,8 @@ endif " }}}
 if s:has_plug('lightline.vim') " {{{
   if s:has_plug('ayu-vim')
     let s:colorscheme = 'ayu'
+  elseif s:has_plug('iceberg.vim')
+    let s:colorscheme = 'iceberg'
   endif
 
   if !has('gui_running')
@@ -571,10 +663,6 @@ if s:has_plug('vim-quickrun') " {{{
         \     'command': 'actionlint',
         \     'exec'   : '%c %s'
         \   },
-        \   'zig': {
-        \     'command': 'zig',
-        \     'exec'   : '%c test %s'
-        \   },
         \   'liz': {
         \     'command': 'sh',
         \     'exec'   : '%c -c ''liz %s && zig version''',
@@ -586,6 +674,15 @@ if s:has_plug('vim-quickrun') " {{{
         \   'typescript_test': {
         \     'command': 'deno',
         \     'exec'   : '%c --unstable test --allow-all %s'
+        \   },
+        \   'zig': {
+        \     'command': 'zig',
+        \     'exec'   : '%c build',
+        \   },
+        \   'zig_test': {
+        \     'command'   : 'zig',
+        \     'exec'      : '%c build test',
+        \     'outputter' : 'error:buffer:quickfix'
         \   },
         \   'watchdogs_checker/phpcs': {
         \     'command' : 'phpcs',
@@ -787,7 +884,8 @@ endif " }}}
 
 if s:has_plug('parinfer-rust') " {{{
   let g:parinfer_mode = 'smart'
-  let g:parinfer_force_balance = v:true
+  "let g:parinfer_force_balance = v:true
+  "let g:parinfer_logfile = '/tmp/parinfer.log'
 
   function! s:parinfer_toggle() abort
     if g:parinfer_mode ==# 'smart'
@@ -831,11 +929,11 @@ endif " }}}
 
 if s:has_plug('vim-sexp') " {{{
   let g:sexp_filetypes = 'clojure,lisp'
-  "let g:sexp_enable_insert_mode_mappings = 1
+  let g:sexp_enable_insert_mode_mappings=0
   let g:sexp_mappings = {
-        \ 'sexp_indent': '',
-        \ 'sexp_indent_top': '',
-        \ }
+       \ 'sexp_indent': '',
+       \ 'sexp_indent_top': '',
+       \ }
 endif " }}}
 
 if s:has_plug('vim-submode') " {{{
@@ -873,9 +971,11 @@ if s:has_plug('vim-submode') " {{{
     " call submode#map('slurp', 'n', '', 's', ':<C-u>DPSlurpSexp<CR>')
     " call submode#map('slurp', 'n', '', 'b', ':<C-u>DPBarfSexp<CR>')
 
-    call submode#enter_with('window', 'v', '', '<', '<Nop>')
-    call submode#leave_with('window', 'v', '', '<Esc>')
-
+    call submode#enter_with('slurp', 'n', '', '<LocalLeader>ks', ':<C-u>IcedSlurp<CR>')
+    call submode#enter_with('slurp', 'n', '', '<LocalLeader>kb', ':<C-u>IcedBarf<CR>')
+    call submode#leave_with('slurp', 'n', '', '<Esc>')
+    call submode#map('slurp', 'n', '', 's', ':<C-u>IcedSlurp<CR>')
+    call submode#map('slurp', 'n', '', 'b', ':<C-u>IcedBarf<CR>')
   catch
     echo 'submode is not installed'
     PlugInstall vim-submode
@@ -938,6 +1038,9 @@ if s:has_plug('ddu.vim') " {{{
     \   'file_external': {
     \     'matchers': ['matcher_fzf', 'matcher_hidden'],
     \   },
+    \   'line': {
+    \     'matchers': ['matcher_kensaku'],
+    \   },
     \ },
     \ 'sourceParams': {
     \   'file_rec': {
@@ -948,13 +1051,17 @@ if s:has_plug('ddu.vim') " {{{
     \     'cmd': ['fd', '.', '--type', 'f', '--hidden'],
     \   },
     \   'rg': {
-    \     'args': ['--column', '--no-heading', '--color', 'never'],
+    \     'path': trim(system('git rev-parse --show-toplevel')),
+    \     'args': ['--json'],
     \   },
     \ },
     \ 'uiParams': {
     \   'ff': {
     \     'winHeight': 10,
     \     'filterSplitDirection': has('nvim') ? 'floating' : 'botright',
+    \   },
+    \   'filer': {
+    \     'split': 'no',
     \   },
     \ },
     \ 'kindOptions': {
@@ -970,10 +1077,12 @@ if s:has_plug('ddu.vim') " {{{
     \ }
     \ })
 
-
   call ddu#custom#patch_global({
     \ 'filterParams': {
     \   'matcher_fzf': {
+    \     'highlightMatched': 'SpellLocal',
+    \   },
+    \   'matcher_kensaku': {
     \     'highlightMatched': 'SpellLocal',
     \   },
     \ }})
@@ -986,6 +1095,13 @@ if s:has_plug('ddu.vim') " {{{
     \ },
     \ })
 
+  " call ddu#custom#patch_global({
+  "  \ 'ui': 'filer',
+  "  \ 'actionOptions': {
+  "  \   'narrow': {
+  "  \     'quit': v:false,
+  "  \   },
+  "  \ }})
 
   function! s:resumable_ddu(...) abort
     let g:last_ddu_name = a:1
@@ -993,9 +1109,13 @@ if s:has_plug('ddu.vim') " {{{
   endfunction
 
   function! s:ddu_resume() abort
-    if exists('g:last_ddu_name')
-      exec printf('Ddu -name=%s -resume -ui-param-startFilter=v:false', g:last_ddu_name)
-    endif
+    if ! exists('g:last_ddu_name') | return | endif
+    call ddu#start({
+          \ 'name': g:last_ddu_name,
+          \ 'resume': v:true,
+          \ 'uiParams': {'_': {'startFilter': v:false},
+          \              'ff': {'startFilter': v:false}},
+          \ })
   endfunction
 
   command! -nargs=* ResumableDdu call s:resumable_ddu(<f-args>)
@@ -1006,26 +1126,34 @@ if s:has_plug('ddu.vim') " {{{
     let has_git_dir = (finddir('.git', ';') !=# '')
     let source = (has_git_dir ? 'file_external' : 'file_rec')
     let path = trim(has_git_dir ? system('git rev-parse --show-toplevel') : '.')
-
     call ddu#start({
-        \ 'sources': [{'name': source, 'params': {'path': path}},
-        \             {'name': 'file_old'}],
+        \ 'name': g:last_ddu_name,
+        \ 'sources': [{'name': source, 'options': {'path': path}}],
         \ 'uiParams': {'_': {'displaySourceName': 'short'},
         \              'ff': {'startFilter': v:true}},
         \ })
   endfunction
 
-  function! s:ddu_rg_live() abort
+  function! s:ddu_rg(name) abort
+    let g:last_ddu_name = a:name
     call ddu#start({
-          \   'volatile': v:true,
-          \   'sources': [{
-          \     'name': 'rg',
-          \     'options': {'matchers': []},
-          \   }],
-          \   'uiParams': {'ff': {
-          \     'ignoreEmpty': v:false,
-          \     'autoResize': v:false,
-          \   }},
+          \ 'name': g:last_ddu_name,
+          \ 'input': expand('<cword>'),
+          \ 'volatile': v:true,
+          \ 'sources': [{'name': 'rg',
+          \              'options': {'matchers': []}}],
+          \ 'uiParams': {'ff': {'ignoreEmpty': v:false,
+          \                     'autoResize': v:false}},
+          \ })
+  endfunction
+
+  function! s:ddu_mr(name) abort
+    let g:last_ddu_name = a:name
+    call ddu#start({
+          \ 'name': g:last_ddu_name,
+          \ 'sources': [{'name': 'mr', 'params': {'kind': 'mrw'}}],
+          \ 'uiParams': {'_': {'displaySourceName': 'short'},
+          \              'ff': {'startFilter': v:true}},
           \ })
   endfunction
 
@@ -1037,7 +1165,13 @@ if s:has_plug('ddu.vim') " {{{
   nnoremap <Leader>dl <Cmd>ResumableDdu search line -ui-param-startFilter<CR>
   nnoremap <Leader>d* <Cmd>ResumableDdu search line -input=`expand('<cword>')` -ui-param-startFilter=v:false<CR>
   nnoremap <Leader>db <Cmd>ResumableDdu buffer buffer -ui-param-startFilter<CR>
-  nnoremap <Leader>dg <Cmd>call <SID>ddu_rg_live()<CR>
+  nnoremap <Leader>dg <Cmd>call <SID>ddu_rg('ripgrep')<CR>
+
+  nnoremap <Leader>df <Cmd>Ddu -ui=filer -source-option-columns=filename file<CR>
+  nnoremap <Leader><Leader> <Cmd>call <SID>ddu_mr('mr')<CR>
+
+  "nnoremap <Leader>dD <Cmd>ResumableDdu git_diff git_diff -ui-param-startFilter=v:false<CR>
+
   "command! DduRgLive call <SID>ddu_rg_live()
 
   autocmd FileType ddu-ff call s:ddu_ff_my_settings()
@@ -1054,22 +1188,55 @@ if s:has_plug('ddu.vim') " {{{
 
   autocmd FileType ddu-ff-filter call s:ddu_filter_my_settings()
   function! s:ddu_filter_my_settings() abort
-    "inoremap <buffer><silent> <CR> <Esc><Cmd>close<CR>
-    inoremap <buffer><silent> <CR>
-        \ <Esc><Cmd>close<CR>
-        \ <Cmd>call win_gotoid(g:ddu#ui#ff#_filter_parent_winid)<CR>
-    nnoremap <buffer><silent> <CR> <Cmd>close<CR>
+    inoremap <buffer><silent> <CR> <Esc><Cmd>call ddu#ui#ff#close()<CR>
+	  nnoremap <buffer><silent> <CR> <Cmd><Cmd>call ddu#ui#ff#close()<CR>
+
     nnoremap <buffer><silent> q <Cmd>close<CR>
     nnoremap <buffer><silent> <Esc> <Cmd>close<CR>
   endfunction
+
+  autocmd FileType ddu-filer call s:ddu_filer_my_settings()
+  function! s:ddu_filer_my_settings() abort
+    nnoremap <buffer><expr> <CR> ddu#ui#filer#is_directory()
+          \ ? "<Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'narrow'})<CR>"
+          \ : "<Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'open'})<CR>"
+    nnoremap <buffer><expr> l ddu#ui#filer#is_directory()
+          \ ? "<Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'narrow'})<CR>"
+          \ : "<Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'open'})<CR>"
+    nnoremap <buffer> h <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'narrow', 'params': {'path': ".."}})<CR>
+    nnoremap <buffer><silent> o <Cmd>call ddu#ui#filer#do_action('expandItem')<CR>
+    nnoremap <buffer> q <Cmd>call ddu#ui#filer#do_action('quit')<CR>
+    nnoremap <buffer> d <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'trash'})<CR>
+    nnoremap <buffer> r <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'rename'})<CR>
+    nnoremap <buffer> K <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'newDirectory'})<CR>
+    nnoremap <buffer> % <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'newFile'})<CR>
+    nnoremap <buffer> <C-l> <Cmd>call ddu#ui#filer#do_action('checkItems')<CR>
+	endfunction
 endif " }}}
 
 if s:has_plug('gin.vim') " {{{
   nmap <buffer> <LocalLeader>gh <Plug>(gin-action-help)
 endif " }}}
 
+if s:has_plug('lexima.vim') " {{{
+  "call lexima#add_rule({'char': ']', 'at': '\%#\[', 'leave': 1, 'filetype': 'zig'})
+  "call lexima#add_rule({'char': '"', 'at': '\%#\[', 'leave': 1, 'filetype': 'clojure'})
+endif " }}}
 
-let g:denops_server_addr = '127.0.0.1:32123'
+if s:has_plug('fuzzy-motion.vim') " {{{
+  let g:fuzzy_motion_matchers = ['fzf', 'kensaku']
+
+  nmap <LocalLeader>/ <Cmd>FuzzyMotion<CR>
+endif " }}}
+
+" let g:foldmaker#use_marker = 1
+" let g:foldmaker = {}
+" let g:foldmaker.clojure = {
+"      \ 'fdtype': 'pylike',
+"      \ 'foldings': {
+"      \   'function': {'start': '^\s*(def\s'},
+"      \ }}
+
 
 " if s:has_plug('fixme') " {{{
 " endif " }}}
@@ -1097,6 +1264,16 @@ endfunction
 call timer_start(200, funcref('s:load_plug'))
 " }}}
 
+"let g:dps_parinfer_delay = 300
+
+" icedon
+nnoremap <buffer> <Leader>i' <Plug>(icedon_connect)
+nnoremap <buffer> <Leader>iss <Plug>(icedon_open_info_buffer)
+nnoremap <buffer> <Leader>isq <Plug>(icedon_close_info_buffer)
+nnoremap <buffer> <Leader>iet <Plug>(icedon_eval_outer_top_form)
+nnoremap <buffer> <Leader>iee <Plug>(icedon_eval_outer_form)
+
+
 " developing plugins {{{
 " http://www.kaoriya.net/blog/2015/12/01/vim-switch-developing-plugin/
 let s:dirs = [ $HOME.'/src/github.com/liquidz' ]
@@ -1108,3 +1285,8 @@ for pattern in [ 'vim*', '*vim', 'dps*' ]
     end
   endfor
 endfor " }}}
+
+function! Fixme() abort
+  silent! undojoin
+  call setline(1, 'foo')
+endfunction
