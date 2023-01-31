@@ -45,6 +45,7 @@ let g:iced_enable_clj_kondo_analysis = v:true
 let g:iced_enable_clj_kondo_local_analysis = v:true
 let g:iced_enable_enhanced_definition_extraction = v:false
 let g:iced_enable_auto_document = 'insert'
+"let g:iced_enable_auto_document = 'never'
 
 "let g:iced_enable_enhanced_cljs_completion = v:false
 "let g:iced_formatter = 'joker'

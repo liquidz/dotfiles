@@ -7,7 +7,7 @@
 [pull]
 	rebase = true
 [core]
-	editor = /usr/local/bin/vim
+	editor = nvim
 # 	pager = delta --color-only --theme OneHalfDark
 # [interactive]
 # 	diffFilter = delta --color-only --theme OneHalfDark
@@ -35,7 +35,7 @@
 [tig "bind"]
 	diff    = F       ?git commit --fixup %(commit)
 	diff    = R       !git rebase -i %(commit) --autosquash --keep-empty
-	diff    = <C-V>   !vim -c %(lineno) %(file)
+	diff    = <C-V>   !nvim -c %(lineno) %(file)
 	generic = <C-L>   refresh
 	generic = B       view-blame
 	generic = b       view-refs
@@ -69,7 +69,7 @@
 	refs    = <Esc>P  ?!git remote prune origin
 	stage   = v       stage-update-line
 	stage   = x       status-revert
-	stage   = <C-V>   !vim -c %(lineno) %(file)
+	stage   = <C-V>   !nvim -c %(lineno) %(file)
 	stash   = !       none
 	stash   = a       ?!git stash apply %(stash)
 	stash   = p       ?!git stash pop %(stash)
