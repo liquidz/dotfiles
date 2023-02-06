@@ -1,6 +1,7 @@
 # IMPORTANT
 "query:Exchange Online Basic Authentication:( tags # \"exchange\" ) and ( title =~ \"Basic Authentication\" )"
 "query:Google Workspace Updates:( tags # \"google\" ) and ( title =~ \"Less secure app\" )"
+"query:Vulnerability:( tags # \"security\" ) and ( content =~ \"(vulnerability|bug)\" )"
 
 ---Feeds---
 
@@ -19,6 +20,9 @@ http://feeds.feedburner.com/Workflowy "~Workflowy" outliner tool
 # HIDDEN
 http://googleappsupdates.blogspot.com/atom.xml !hidden google
 https://techcommunity.microsoft.com/plugins/custom/microsoft/o365/custom-blog-rss?tid=-8723788122276908667&board=Exchange&label=&messages=&size=10 !hidden exchange
+
+https://hnrss.org/newest !hidden security
+https://feeds.feedburner.com/TheHackersNews !hidden security
 
 # Open Source
 https://lemmy.ml/feeds/c/opensource.xml?sort=New !hidden oss lemmy

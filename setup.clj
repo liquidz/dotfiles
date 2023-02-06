@@ -71,6 +71,7 @@
 
 ;; neovim の設定
 (doseq [[k v] {".config/nvim/init.vim" ".vimrc"
+               ".config/nvim/after" ".vim/after"
                ".config/nvim/ftplugin" ".vim/ftplugin"
                ".config/nvim/coc-settings.json" ".vim/coc-settings.json"}]
   (dad/link {:path (home k)

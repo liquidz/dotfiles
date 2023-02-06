@@ -1,7 +1,6 @@
 scriptencoding utf-8
 let g:dotfiles = $HOME.'/src/github.com/liquidz/dotfiles'
 
-let s:use_ddc = v:false
 let g:use_ddu = v:true
 let g:use_vim_diced = v:false
 
@@ -20,13 +19,7 @@ Plug 'vim-denops/denops.vim'
 "Plug '~/src/github.com/liquidz/dps-paredit'
 "Plug '~/src/github.com/liquidz/dps-parinfer'
 
-"Plug 'github/copilot.vim'
-" Plug 'nathanaelkane/vim-indent-guides'
-
 Plug 'yuki-yano/fuzzy-motion.vim'
-"Plug 'tani/glance-vim'
-
-Plug 'mattn/vim-notification'
 " gin と tig-explorer を両方有効にすると tig-explorer でのコミット時に
 " コミットメッセージ入力画面が別タブに移動してしまってコミット後に元のタブに戻れなくなる
 " Plug 'lambdalisue/gin.vim'
@@ -65,23 +58,25 @@ if g:use_ddu
   Plug 'Shougo/ddu-column-filename'
 endif
 
-
-" Plug 'thinca/vim-themis'
-
-" Plug 'ctrlpvim/ctrlp.vim'
-" Plug 'mattn/ctrlp-matchfuzzy'
-
 Plug 'mracos/mermaid.vim'
 Plug 'aklt/plantuml-syntax', {'on': []}
 "Plug '~/src/github.com/liquidz/plantuml-syntax', {'on': []}
 "Plug 'ayu-theme/ayu-vim'
 Plug 'cocopon/iceberg.vim'
+"Plug 'navarasu/onedark.nvim'
+
+
+
 "Plug 'colepeters/spacemacs-theme.vim'
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'easymotion/vim-easymotion', {'on': '<Plug>(easymotion-prefix)'}
 "Plug 'haya14busa/vim-metarepeat'
 "Plug 'hrsh7th/vim-eft'
 Plug 'iberianpig/tig-explorer.vim'
+if has('nvim')
+  " required by tig-explorer with nvim
+  Plug 'rbgrouleff/bclose.vim'
+endif
 Plug 'inside/vim-search-pulse', {'on': []}
 Plug 'itchyny/lightline.vim'
 Plug 'jiangmiao/auto-pairs', {'on': []}
@@ -123,6 +118,13 @@ Plug 'vim-jp/vital.vim', {'for': ['vim', 'asciidoc']}
 Plug 'yuki-yano/vim-operator-replace', {'on': []}
 Plug 'liquidz/vim-file-to-file', {'on': []}
 Plug 'seroqn/foldmaker.vim'
+if has('nvim')
+  Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+  "Plug 'nvim-treesitter/playground'
+  Plug 'nvim-treesitter/nvim-treesitter-context'
+  Plug 'mfussenegger/nvim-treehopper'
+  Plug 'lukas-reineke/indent-blankline.nvim'
+endif
 
 " /default }}}
 " filetype {{{
@@ -131,23 +133,8 @@ Plug 'nelstrom/vim-textobj-rubyblock', {'for': 'ruby'}
 Plug 'thinca/vim-prettyprint',         {'for': 'vim'}
 Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 
-if s:use_ddc
-  Plug 'Shougo/ddc.vim'
-  "Plug 'Shougo/pum.vim'
-  Plug 'Shougo/ddc-around'
-  Plug 'Shougo/ddc-cmdline-history'
-  "Plug 'matsui54/ddc-filter_editdistance'
-  Plug 'matsui54/ddc-matcher_fuzzy'
-  Plug 'Shougo/ddc-matcher_head'
-  Plug 'Shougo/ddc-matcher_length'
-  Plug 'shun/ddc-vim-lsp'
-endif
-
 if has('unix')
-  if !s:use_ddc
-    Plug 'neoclide/coc.nvim', {'on': [], 'for': 'clojure', 'branch': 'release'}
-    "Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  endif
+  Plug 'neoclide/coc.nvim', {'on': [], 'for': 'clojure', 'branch': 'release'}
 
 
   "" Common Lisp
@@ -160,36 +147,6 @@ if has('unix')
   Plug 'rhysd/reply.vim', {'for': ['lua', 'typescript']}
 
   Plug 'ziglang/zig.vim', {'for': 'zig'}
-
-  if has('nvim')
-    if s:use_ddc
-      Plug 'prabirshrestha/vim-lsp'
-      Plug 'mattn/vim-lsp-settings'
-    endif
-    " ---- NEOVIM ----
-    "Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-
-    " Plug 'subnut/nvim-ghost.nvim', {'do': ':call nvim_ghost#installer#install()'}
-
-    "Plug 'abecodes/tabout.nvim'
-
-
-    "Plug 'Olical/conjure', {'tag': 'v4.3.1'}
-  else
-    " ---- VIM ----
-
-    if s:use_ddc
-      Plug 'prabirshrestha/vim-lsp'
-      Plug 'mattn/vim-lsp-settings'
-    endif
-
-
-    " Plug 'prabirshrestha/asyncomplete.vim'
-    " Plug 'prabirshrestha/asyncomplete-lsp.vim'
-    " Plug '~/src/github.com/liquidz/vim-iced-asyncomplete',  {'for': 'clojure'}
-
-
-  endif
 
   Plug 'cohama/lexima.vim', {'for': ['zig']}
 
@@ -215,19 +172,11 @@ if has('unix')
       Plug '~/src/github.com/liquidz/vim-iced-ddu-selector'
     endif
   endif
-  if s:use_ddc
-    if g:use_vim_diced
-      Plug '~/src/github.com/liquidz/vim-diced-ddc-source', {'for': 'clojure'}
-    else
-      Plug '~/src/github.com/liquidz/vim-iced-ddc-source', {'for': 'clojure'}
-    endif
+  if g:use_vim_diced
   else
-    if g:use_vim_diced
-    else
-      Plug '~/src/github.com/liquidz/vim-iced-coc-source', {'on': [], 'for': 'clojure'}
-    endif
-    " Plug '~/src/github.com/liquidz/vim-diced-coc-source', {'for': 'clojure'}
+    Plug '~/src/github.com/liquidz/vim-iced-coc-source', {'on': [], 'for': 'clojure'}
   endif
+    " Plug '~/src/github.com/liquidz/vim-diced-coc-source', {'for': 'clojure'}
 
   " }}}
 endif
@@ -241,8 +190,8 @@ if s:has_plug('denops.vim') " {{{
     let g:denops#deno = printf('%s/.deno/bin/deno', $HOME)
   endif
 
-  "let g:denops_server_addr = '127.0.0.1:32123'
-  call denops#plugin#check_type()
+  let g:denops_server_addr = '127.0.0.1:32123'
+  "call denops#plugin#check_type()
 
   if s:has_plug('vim-search-pulse')
     nmap n <Plug>(anzu-n)<Plug>Pulse
@@ -256,6 +205,36 @@ if s:has_plug('denops.vim') " {{{
     nmap # <Plug>(anzu-sharp)
   endif
 endif " }}}
+
+if s:has_plug('nvim-treesitter') " {{{
+lua <<EOC
+  require'nvim-treesitter.configs'.setup {
+    ensure_installed = { "clojure", "vim", "help" },
+    ignore_install = { "gitcommit" },
+    sync_install = false,
+    auto_install = false,
+
+    highlight = {
+      enable = false,
+      disable = {},
+      additional_vim_regex_highlighting = false,
+    },
+  }
+EOC
+endif " }}}
+
+if s:has_plug('nvim-treesitter-context')
+lua <<EOC
+  require'treesitter-context'.setup{
+    enable = true,
+  }
+EOC
+endif
+
+if s:has_plug('nvim-treehopper')
+  omap <silent> m :<C-U>lua require('tsht').nodes()<CR>
+  xnoremap <silent> m :lua require('tsht').nodes()<CR>
+endif
 
 if s:has_plug('vim-anzu') " {{{
   if s:has_plug('vim-search-pulse')
@@ -302,6 +281,10 @@ if s:has_plug('iceberg.vim') " {{{
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 
   colorscheme iceberg
+
+  if has('nvim')
+    highlight! link FloatBorder Conceal
+  endif
 endif " }}}
 
 if s:has_plug('spacemacs-theme.vim') " {{{
@@ -414,127 +397,6 @@ if s:has_plug('ctrlp.vim') " {{{
 
 endif " }}}
 
-if s:has_plug('ddc.vim') " {{{
-  "let s:pum_loaded = !empty(globpath(&rtp, 'autoload/pum.vim'))
-  let s:pum_loaded = s:has_plug('pum.vim')
-
-  " Disable preview window
-  set completeopt-=preview
-
-  " Customize global settings
-  " Use around source.
-  " https://github.com/Shougo/ddc-around
-  " call ddc#custom#patch_global('sources', [
-  "      \ 'around',
-  "      \ 'vim-lsp',
-  "      \ 'iced',
-  "      \ ])
-  call ddc#custom#patch_global('sources', [ 'around' ])
-
-  call ddc#custom#patch_global('backspaceCompletion', v:true)
-  if s:pum_loaded
-    call ddc#custom#patch_global('autoCompleteEvents', [
-          \ 'InsertEnter', 'TextChangedI', 'TextChangedP',
-          \ 'CmdlineEnter', 'CmdlineChanged',
-          \ ])
-    call ddc#custom#patch_global('completionMenu', 'pum.vim')
-  endif
-
-  " matsui54/ddc-matcher_fuzzy
-  call ddc#custom#patch_global('sourceOptions', {
-        \ '_': {'matchers': ['matcher_fuzzy']},
-        \ })
-  call ddc#custom#patch_global('filterParams', {
-        \ 'matcher_fuzzy': {'camelcase': v:true},
-        \ })
-
-  " Change source options
-  call ddc#custom#patch_global('sourceOptions', {
-        \ 'around': {
-        \     'mark': 'A',
-        \     'matchers': ['matcher_head', 'matcher_length'],
-        \ },
-        \ 'vim-lsp': {
-        \     'mark': 'lsp',
-        \     'forceCompletionPattern': '\.',
-        \ },
-        \ 'iced': {
-        \     'mark': 'iced',
-        \ 'keywordPattern': '[a-zA-Z_]\w*',
-        \     'forceCompletionPattern': '\w\/\w*',
-        \ },
-        \ 'cmdline-history': {'mark': 'history'},
-        \ })
-
-  call ddc#custom#patch_global('sourceParams', {
-        \ 'around': {'maxSize': 500},
-        \ })
-
-  " Customize settings on a filetype
-  call ddc#custom#patch_filetype(['txt'], 'sources', ['around'])
-  " call ddc#custom#patch_filetype(['c', 'cpp'], 'sources', ['around', 'clangd'])
-  " call ddc#custom#patch_filetype(['c', 'cpp'], 'sourceOptions', {
-  "      \ 'clangd': {'mark': 'C'},
-  "      \ })
-  " call ddc#custom#patch_filetype('markdown', 'sourceParams', {
-  "      \ 'around': {'maxSize': 100},
-  "      \ })
-  call ddc#custom#patch_filetype('typescript', 'sources', ['vim-lsp', 'around'])
-  call ddc#custom#patch_filetype('clojure', 'sources', ['iced', 'around'])
-  call ddc#custom#patch_filetype('vim', 'sources', ['vim-lsp', 'around'])
-  call ddc#custom#patch_filetype('sql', 'sources', ['vim-lsp', 'around'])
-
-  " Mappings
-  " <TAB>: completion.
-  if s:pum_loaded
-    inoremap <silent><expr> <TAB>
-          \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
-          \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
-          \ '<TAB>' : ddc#manual_complete()
-    inoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
-    inoremap <C-n>   <Cmd>call pum#map#select_relative(+1)<CR>
-    inoremap <C-p>   <Cmd>call pum#map#select_relative(-1)<CR>
-    inoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
-    inoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
-
-    function! CommandlinePre() abort
-      " Note: It disables default command line completion!
-      cnoremap <expr> <Tab>
-            \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
-            \ ddc#manual_complete()
-      cnoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
-      cnoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
-      cnoremap <C-e>   <Cmd>call pum#map#cancel()<CR>
-
-      " Overwrite sources
-      let s:prev_buffer_config = ddc#custom#get_buffer()
-      call ddc#custom#patch_buffer('sources',
-            \ ['cmdline-history', 'around'])
-      autocmd MyAutoCmd CmdlineLeave * ++once call CommandlinePost()
-      " Enable command line completion
-      call ddc#enable_cmdline_completion()
-      call ddc#enable()
-    endfunction
-    function! CommandlinePost() abort
-      " Restore sources
-      call ddc#custom#set_buffer(s:prev_buffer_config)
-      cunmap <Tab>
-    endfunction
-
-    nnoremap : <Cmd>call CommandlinePre()<CR>:
-
-  else
-    inoremap <silent><expr> <TAB>
-          \ pumvisible() ? "\<C-n>" :
-          \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
-          \ "\<TAB>" : ddc#manual_complete()
-    inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
-  endif
-
-  " Use ddc.
-  call ddc#enable()
-endif " }}}
-
 if s:has_plug('vim-eft') " {{{
   nmap f <Plug>(eft-f-repeatable)
   xmap f <Plug>(eft-f-repeatable)
@@ -578,6 +440,8 @@ if s:has_plug('lightline.vim') " {{{
   if s:has_plug('ayu-vim')
     let s:colorscheme = 'ayu'
   elseif s:has_plug('iceberg.vim')
+    let s:colorscheme = 'iceberg'
+  else
     let s:colorscheme = 'iceberg'
   endif
 
@@ -1229,6 +1093,18 @@ if s:has_plug('fuzzy-motion.vim') " {{{
   nmap <LocalLeader>/ <Cmd>FuzzyMotion<CR>
 endif " }}}
 
+if s:has_plug('indent-blankline.nvim') " {{{
+  let g:indent_blankline_indent_level = 40
+  lua << END
+    require("indent_blankline").setup {
+      char_highlight_list = {
+        "FoldColumn",
+      },
+    }
+END
+endif " }}}
+
+
 " let g:foldmaker#use_marker = 1
 " let g:foldmaker = {}
 " let g:foldmaker.clojure = {
@@ -1285,8 +1161,3 @@ for pattern in [ 'vim*', '*vim', 'dps*' ]
     end
   endfor
 endfor " }}}
-
-function! Fixme() abort
-  silent! undojoin
-  call setline(1, 'foo')
-endfunction

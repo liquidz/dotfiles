@@ -115,7 +115,7 @@ if which nvim > /dev/null 2>&1; then
    alias v=vim
 fi
 alias nvim_latest=~/Downloads/nvim-osx64/bin/nvim
-#alias vim=nvim
+alias vim=nvim
 # }}}
 # docker {{{
 #export DOCKER_TLS_VERIFY="1"

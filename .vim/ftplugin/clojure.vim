@@ -72,8 +72,9 @@ let g:iced_enable_default_key_mappings = (! g:use_vim_diced)
 let g:iced#navigate#prefer_local_jump = v:true
 let g:iced#nrepl#auto#document_delay = 200
 
-highlight icedEvalPopup ctermfg=5 guifg=#FF7BA9
-let g:iced#eval#popup_highlight = 'icedEvalPopup'
+" hi link IcedEvalPopupColor Title
+" " highlight IcedEvalPopupColor ctermfg=5 guifg=#FF7BA9
+" let g:iced#eval#popup_highlight = 'IcedEvalPopupColor'
 
 "let g:iced#eval#popup_align = 'right'
 "let g:iced#eval#keep_inline_result = v:true
@@ -173,10 +174,10 @@ let g:iced#format#options = {
     \ 'remove-multiple-non-indenting-spaces?': v:true,
     \ }
 
-let g:iced#hook = {
-      \ 'session_switched': {'type': 'shell',
-      \                   'exec': {v -> printf('tmux display-message "Session: switch to %s"', v.session)}},
-      \ }
+" let g:iced#hook = {
+"      \ 'session_switched': {'type': 'shell',
+"      \                   'exec': {v -> printf('tmux display-message "Session: switch to %s"', v.session)}},
+"      \ }
 
 " function! s:fixme(param) abort
 "   if iced#buffer#nr(bufname('%')) == bufnr('%')
@@ -238,13 +239,13 @@ function! s:test_finished(v) abort
 endfunction
 
 
-if ! has('nvim')
-  let g:iced#hook['connected'] = {'type': 'function', 'exec': {_ -> notification#show('✅ Connected')}}
-endif
-"let g:iced#hook['test_finished'] = {'type': 'function', 'exec': {v -> notification#show(printf('%s %s', (v.result ==# 'succeeded' ? '😊' : '😱'), v.result))}}
-let g:iced#hook['test_finished'] = {'type': 'shell', 'exec': funcref('s:test_finished')}
-" let g:iced#hook['form_change_prepared'] = {'type': 'command', 'exec': 'ParinferOff'}
-" let g:iced#hook['form_changed'] = {'type': 'command', 'exec': 'ParinferOn'}
+" if ! has('nvim')
+"   let g:iced#hook['connected'] = {'type': 'function', 'exec': {_ -> notification#show('✅ Connected')}}
+" endif
+" "let g:iced#hook['test_finished'] = {'type': 'function', 'exec': {v -> notification#show(printf('%s %s', (v.result ==# 'succeeded' ? '😊' : '😱'), v.result))}}
+" let g:iced#hook['test_finished'] = {'type': 'shell', 'exec': funcref('s:test_finished')}
+" " let g:iced#hook['form_change_prepared'] = {'type': 'command', 'exec': 'ParinferOff'}
+" " let g:iced#hook['form_changed'] = {'type': 'command', 'exec': 'ParinferOn'}
 
 function! s:auto_connect() abort
   if expand('%:t') ==# 'project.clj' || expand('%:e') ==# 'edn'

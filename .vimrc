@@ -38,6 +38,10 @@ if &compatible
   set nocompatible " for gvim on windows
 endif
 language messages en_US.UTF-8
+
+let mapleader=' ' "<space>
+let maplocalleader=','
+
 set modeline
 set modelines=3
 set textwidth=0
@@ -131,14 +135,7 @@ set foldlevel=2
 set autoread
 
 " }}}
-" system {{{
 
-" let mapleader=','
-" let maplocalleader=' ' "<space>
-let mapleader=' ' "<space>
-let maplocalleader=','
-
-" }}}
 " spell {{{
 
 set spelllang=en,cjk " スペルチェック時に日本語は除外する
