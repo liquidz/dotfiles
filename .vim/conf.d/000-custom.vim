@@ -22,3 +22,36 @@ function! TestErrFmt(errfmt,lines)
   endtry
 endfunction
 
+function! s:add_qf_list() abort
+  let filename = expand('%:p')
+  let lnum = getcurpos()[1]
+  let current_window = winnr()
+
+  call setqflist([{
+        \ 'filename': filename,
+        \ 'lnum': lnum,
+        \ 'text': getline('.')
+        \ }], 'a')
+  try
+    copen
+  finally
+    execute current_window .. 'wincmd w'
+  endtry
+endfunction
+
+function! s:clear_qf_list() abort
+  call setqflist([])
+  cclose
+endfunction
+
+command! AddQfList call s:add_qf_list()
+command! ClearQfList call s:clear_qf_list()
+
+" vim.api.nvim_create_user_command('AddQfList', function(opts)
+"   local filename = vim.fn.expand('%:p')
+"
+"   for i = opts.line1, opts.line2 do
+"     vim.fn.setqflist({ { filename = filename, lnum = i, text = vim.fn.getline(i) } }, 'a')
+"   end
+"   vim.cmd([[copen]])
+" end, { range = true })

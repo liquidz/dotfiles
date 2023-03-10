@@ -20,9 +20,9 @@
    :email "liquidz.uo@gmail.com"})
 
 ;; git clone
-(dad/git {:path (install-dir)
-          :url "https://github.com/liquidz/dotfiles"
-          :revision "master"})
+;; (dad/git {:path (install-dir)
+;;           :url "https://github.com/liquidz/dotfiles"
+;;           :revision "main"})
 
 ;; 必要なディレクトリを作成
 (doseq [dir [".boot"

@@ -210,6 +210,8 @@ export WASMTIME_HOME="$HOME/.wasmtime"
 
 export PATH="$WASMTIME_HOME/bin:$PATH"
 export PATH="/usr/local/opt/curl/bin:$PATH"
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/opt/homebrew/opt/openssl@3/bin:$PATH"
 
 # # cf. https://mollifier.hatenablog.com/entry/20090728/p1
 # function zshaddhistory() {

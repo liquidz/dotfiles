@@ -12,7 +12,6 @@ PATH=$PATH:~/.roswell/bin
 PATH=$PATH:~/src/github.com/liquidz/vim-iced/bin
 PATH=$PATH:~/.nodebrew/current/bin
 PATH=$PATH:/opt/homebrew/bin
-PATH=/opt/homebrew/bin:$PATH
 
 PATH="/usr/local/bin:$PATH:/usr/local/sbin"
 

@@ -74,7 +74,7 @@ let g:iced#nrepl#auto#document_delay = 200
 
 " hi link IcedEvalPopupColor Title
 " " highlight IcedEvalPopupColor ctermfg=5 guifg=#FF7BA9
-" let g:iced#eval#popup_highlight = 'IcedEvalPopupColor'
+let g:iced#eval#popup_highlight = 'IcedEvalPopupColor'
 
 "let g:iced#eval#popup_align = 'right'
 "let g:iced#eval#keep_inline_result = v:true
@@ -210,7 +210,6 @@ let g:iced#format#options = {
 "      \ 'type': 'function',
 "      \ 'exec': {_ -> lsp#disable_diagnostics_for_buffer(bufnr('iced_stdout'))},
 "      \ })
-
 
 let s:counter = 0
 function! s:test_finished(v) abort

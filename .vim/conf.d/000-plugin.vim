@@ -78,7 +78,7 @@ if has('nvim')
   Plug 'rbgrouleff/bclose.vim'
 endif
 Plug 'inside/vim-search-pulse', {'on': []}
-Plug 'itchyny/lightline.vim'
+"Plug 'itchyny/lightline.vim'
 Plug 'jiangmiao/auto-pairs', {'on': []}
 Plug 'junegunn/fzf', { 'on': [], 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim', {'on': ['Files']}
@@ -124,6 +124,8 @@ if has('nvim')
   Plug 'nvim-treesitter/nvim-treesitter-context'
   Plug 'mfussenegger/nvim-treehopper'
   Plug 'lukas-reineke/indent-blankline.nvim'
+  Plug 'gen740/SmoothCursor.nvim'
+  Plug 'github/copilot.vim'
 endif
 
 " /default }}}
@@ -320,6 +322,19 @@ if s:has_plug('coc.nvim') " {{{
   if ! executable('node')
     let g:coc_node_path = '/usr/local/bin/node'
   endif
+
+  let g:coc_global_extensions = [
+       \ 'coc-copilot',
+       \ 'coc-diagnostic',
+       \ 'coc-eslint',
+       \ 'coc-lines',
+       \ 'coc-prettier',
+       \ 'coc-tsserver',
+       \ ]
+  " coc-tsserver と一緒に入っていると ts プロジェクトにて
+  " tsserver を無効にする .vim/coc-settings.json がプロジェクトルートに作成さ
+  " れてしまうので一旦 uninstall
+  "     \ 'coc-deno',
 
   function! s:coc_check_back_space() abort
     let col = col('.') - 1
@@ -941,6 +956,12 @@ if s:has_plug('ddu.vim') " {{{
     \ }
     \ })
 
+    "\     'split': has('nvim') ? 'floating' : 'horizontal',
+    "\     'floatingBorder': 'rounded',
+    "\     'previewFloating': v:true,
+    "\     'previewVertical': v:true,
+    "\     'highlights': {'floating': 'Normal' },
+
   call ddu#custom#patch_global({
     \ 'filterParams': {
     \   'matcher_fzf': {
@@ -951,13 +972,13 @@ if s:has_plug('ddu.vim') " {{{
     \   },
     \ }})
 
-  call ddu#custom#patch_local('files', {
-    \ 'uiParams': {
-    \   'ff': {
-    \     'split': has('nvim') ? 'floating' : 'horizontal',
-    \   }
-    \ },
-    \ })
+  " call ddu#custom#patch_local('files', {
+  "  \ 'uiParams': {
+  "  \   'ff': {
+  "  \     'split': has('nvim') ? 'floating' : 'horizontal',
+  "  \   }
+  "  \ },
+  "  \ })
 
   " call ddu#custom#patch_global({
   "  \ 'ui': 'filer',
@@ -1104,6 +1125,63 @@ if s:has_plug('indent-blankline.nvim') " {{{
 END
 endif " }}}
 
+" if s:has_plug('vim-iced')
+" lua << END
+"   vim.fn['iced#hook#add']('connected', {
+"     type = "function",
+"     exec = function()
+"       vim.diagnostic.disable(vim.fn.bufnr("iced_stdout"))
+"     end
+"   })
+" END
+" endif
+
+if s:has_plug('SmoothCursor.nvim') " {{{
+  lua << END
+    vim.api.nvim_set_hl(0, 'SmoothCursor', { fg = '#8aa872' })
+
+    require('smoothcursor').setup {
+      fancy = {
+        enable = true,
+        head = { cursor = "•", texthl = "SmoothCursor", linehl = nil },
+        body = {
+            { cursor = "•", texthl = "SmoothCursor" },
+            { cursor = ".", texthl = "SmoothCursor" },
+            { cursor = ".", texthl = "SmoothCursor" },
+        },
+        tail = { cursor = nil, texthl = "SmoothCursor" }
+      }
+    }
+
+    local autocmd = vim.api.nvim_create_autocmd
+    autocmd({ 'ModeChanged' }, {
+      callback = function()
+        local current_mode = vim.fn.mode()
+        if current_mode == 'n' then
+          vim.api.nvim_set_hl(0, 'SmoothCursor', { fg = '#8aa872' })
+          vim.fn.sign_define('smoothcursor', { text = '•'})
+        elseif current_mode == 'v' then
+          vim.api.nvim_set_hl(0, 'SmoothCursor', { fg = '#bf616a' })
+          vim.fn.sign_define('smoothcursor', { text = '' })
+        elseif current_mode == 'V' then
+          vim.api.nvim_set_hl(0, 'SmoothCursor', { fg = '#bf616a' })
+          vim.fn.sign_define('smoothcursor', { text = '' })
+        elseif current_mode == '' then
+          vim.api.nvim_set_hl(0, 'SmoothCursor', { fg = '#bf616a' })
+          vim.fn.sign_define('smoothcursor', { text = '' })
+        elseif current_mode == 'i' then
+          vim.api.nvim_set_hl(0, 'SmoothCursor', { fg = '#668aab' })
+          vim.fn.sign_define('smoothcursor', { text = '' })
+        end
+      end,
+    })
+END
+endif " }}}
+
+if s:has_plug('copilot.vim') " {{{
+  imap <silent><script><expr> <C-a> copilot#Accept("\<CR>")
+  let g:copilot_no_tab_map = v:true
+endif " }}}
 
 " let g:foldmaker#use_marker = 1
 " let g:foldmaker = {}
@@ -1148,6 +1226,7 @@ nnoremap <buffer> <Leader>iss <Plug>(icedon_open_info_buffer)
 nnoremap <buffer> <Leader>isq <Plug>(icedon_close_info_buffer)
 nnoremap <buffer> <Leader>iet <Plug>(icedon_eval_outer_top_form)
 nnoremap <buffer> <Leader>iee <Plug>(icedon_eval_outer_form)
+
 
 
 " developing plugins {{{

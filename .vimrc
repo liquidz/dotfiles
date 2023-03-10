@@ -103,8 +103,14 @@ set ruler
 set list
 set listchars=tab:>-,trail:_,extends:>,precedes:>
 set wrap
-set cmdheight=2
-"set cmdheight=0
+"set cmdheight=1
+
+if has('nvim')
+  set cmdheight=0
+  "set cmdheight=2
+else
+  set cmdheight=2
+endif
 set showcmd
 set smartindent
 set smarttab
@@ -113,7 +119,8 @@ set noequalalways
 set cursorline
 set breakindent
 set nocursorcolumn
-set signcolumn=auto
+"set signcolumn=auto
+set signcolumn=yes
 augroup cch
   autocmd! cch
   autocmd WinLeave * set nocursorline
@@ -310,7 +317,8 @@ set statusline+=%{'['.(&fenc!=''?&fenc:'?').'-'.&ff.']'}\   " フォーマット
 set statusline+=%y\         " タイプ
 set statusline+=%4l,%2c\    " 行、列
 set statusline+=%3p%%\      " 何％
-set laststatus=2
+"set laststatus=2
+set laststatus=0
 
 " }}}
 " omni completion {{{

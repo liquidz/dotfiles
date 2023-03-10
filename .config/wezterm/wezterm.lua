@@ -4,6 +4,9 @@ local act = wezterm.action
 return {
   -- https://wezfurlong.org/wezterm/config/lua/config/index.html
 
+  -- cf. https://github.com/wez/wezterm/issues/2756
+  front_end = "WebGpu",
+
   -- font
   font = wezterm.font("Utatane", {weight="Bold"}),
   font_size = 15.0,

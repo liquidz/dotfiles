@@ -14,9 +14,29 @@
       "highlight": "CocSuggestFloating"
     },
 
-    "deno.enable": true,
-    "deno.lint": true,
-    "deno.unstable": true,
+    // "deno.enable": true,
+    // "deno.lint": true,
+    // "deno.unstable": true,
+
+    "tsserver.formatOnType": true,
+    "eslint.autoFixOnSave": true,
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact"
+    ],
+    "coc.preferences.formatOnSaveFiletypes": [
+        "css",
+        "html",
+        "markdown",
+        "typescriptreact",
+        "typescript",
+        "javascriptreact",
+        "javascript",
+        "json",
+        "graphql"
+    ],
 
     "diagnostic-languageserver.linters": {
         "clj_kondo_lint": {
