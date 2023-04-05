@@ -102,7 +102,8 @@ let g:iced#nrepl#eval#ignoring_vars_in_stacktrace = [
       \ 'nrepl.middleware.session/session-exec',
       \ ]
 
-let g:iced#selector#search_order = ['ddu', 'fzf']
+let g:iced#selector#search_order = ['ddu', 'telescope', 'fzf']
+"let g:iced#selector#search_order = ['telescope', 'fzf']
 
 "let g:iced#refactor#insert_newline_after_require = v:false
 

@@ -298,6 +298,10 @@ if which wezterm > /dev/null 2>&1; then
    alias icat="wezterm imgcat"
 fi
 
+if which fzf-make > /dev/null 2>&1; then
+    alias fm=fzf-make
+fi
+
 if [[ -e ~/.zshenv.local ]]; then
     source ~/.zshenv.local
 fi

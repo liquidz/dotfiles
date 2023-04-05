@@ -1,132 +1,139 @@
 {
-    "coc.source.iced.enable": true,
-    "nextword.filetypes": ["markdown", "asciidoc", "gitcommit", "clojure", "vim", "help", "text"],
-    "suggest.noselect": true,
-    // neovim ではこれがあると、意図せず候補が確定されなくていいかも？
-    // まだ検証が不十分だけど
-    //"suggest.keepCompleteopt": true,
+  "coc.source.iced.enable": true,
+  "nextword.filetypes": [
+    "markdown",
+    "asciidoc",
+    "gitcommit",
+    "clojure",
+    "vim",
+    "help",
+    "text"
+  ],
+  "suggest.noselect": true,
+  // neovim ではこれがあると、意図せず候補が確定されなくていいかも？
+  // まだ検証が不十分だけど
+  //"suggest.keepCompleteopt": true,
 
-    "tree.key.close": "q",
-    "tree.key.toggle": "l",
+  "tree.key.close": "q",
+  "tree.key.toggle": "l",
 
-    "suggest.floatConfig": {
-      "border": true,
-      "highlight": "CocSuggestFloating"
-    },
+  "suggest.floatConfig": {
+    "border": true,
+    "highlight": "CocSuggestFloating"
+  },
 
-    // "deno.enable": true,
-    // "deno.lint": true,
-    // "deno.unstable": true,
+  // "deno.enable": true,
+  // "deno.lint": true,
+  // "deno.unstable": true,
 
-    "tsserver.formatOnType": true,
-    "eslint.autoFixOnSave": true,
-    "eslint.validate": [
-        "javascript",
-        "javascriptreact",
-        "typescript",
-        "typescriptreact"
-    ],
-    "coc.preferences.formatOnSaveFiletypes": [
-        "css",
-        "html",
-        "markdown",
-        "typescriptreact",
-        "typescript",
-        "javascriptreact",
-        "javascript",
-        "json",
-        "graphql"
-    ],
+  "tsserver.formatOnType": true,
+  "eslint.autoFixOnSave": true,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "coc.preferences.formatOnSaveFiletypes": [
+    "css",
+    "html",
+    "markdown",
+    "typescriptreact",
+    "typescript",
+    "javascriptreact",
+    "javascript",
+    "json",
+    "graphql"
+  ],
 
-    "diagnostic-languageserver.linters": {
-        "clj_kondo_lint": {
-            "command": "clj-kondo",
-            "debounce": 100,
-            "args": [ "--lint", "%filepath"],
-            "offsetLine": 0,
-            "offsetColumn": 0,
-            "sourceName": "clj-kondo",
-            "formatLines": 1,
-            "formatPattern": [
-                "^[^:]+:(\\d+):(\\d+):\\s+([^:]+):\\s+(.*)$",
-                {
-                    "line": 1,
-                    "column": 2,
-                    "message": 4,
-                    "security": 3
-                }
-            ],
-            "securities": {
-                    "error": "error",
-                    "warning": "warning",
-                    "note": "info"
-            }
-
-        },
-        "actionlint": {
-            "command": "actionlint",
-            "debounce": 100,
-            "offsetLine": 0,
-            "offsetColumn": 0,
-            "args": ["-oneline", "%relativepath"],
-            "sourceName": "actionlint",
-            "formatLines": 1,
-            "formatPattern": [
-              "^([^:]+):(\\d+):(\\d+):\\s+(.*)$",
-              {
-                "line": 2,
-                "column": 3,
-                "message": 4
-              }
-            ]
+  "diagnostic-languageserver.linters": {
+    "clj_kondo_lint": {
+      "command": "clj-kondo",
+      "debounce": 100,
+      "args": ["--lint", "%filepath"],
+      "offsetLine": 0,
+      "offsetColumn": 0,
+      "sourceName": "clj-kondo",
+      "formatLines": 1,
+      "formatPattern": [
+        "^[^:]+:(\\d+):(\\d+):\\s+([^:]+):\\s+(.*)$",
+        {
+          "line": 1,
+          "column": 2,
+          "message": 4,
+          "security": 3
         }
+      ],
+      "securities": {
+        "error": "error",
+        "warning": "warning",
+        "note": "info"
+      }
     },
-    "diagnostic-languageserver.filetypes": {
-      "clojure": "clj_kondo_lint",
-      "yaml": "actionlint"
-    },
-
-    "codeLens.enable": true,
-    "languageserver": {
-        "clojure-lsp": {
-            "command": "bash",
-            "args": ["-c", "clojure-lsp"],
-            "filetypes": ["clojure"],
-            "rootPatterns": ["project.clj", "deps.edn"],
-            "additionalSchemes": ["jar", "zipfile"],
-            // 大きいファイルだとカーソル移動もままならないくらい遅くなるので無効化した
-            "disabledFeatures": ["completion", "diagnostics", "codeLens"],
-            "disableDiagnostics": true,
-            //"disableCompletion": true,
-            "trace.server": "verbose",
-            "initializationOptions": {
-                "auto-add-ns-to-new-files?": false,
-                "ignore-classpath-directories": true
-            }
-        },
-        "tailwind": {
-            "command": "tailwindcss-language-server",
-            "args": [],
-            "filetypes": ["css"],
-            "trace.server": "verbose"
-        },
-        "eclipse-jdt-ls": {
-            "command": "eclipse-jdt-ls",
-            "args": [],
-            "filetypes": ["java"],
-            "trace.server": "verbose"
-        },
-        "zls": {
-            "command": "zls",
-            "args": [],
-            "filetypes": ["zig"],
-            "rootPatterns": ["build.zig"],
-            "trace.server": "verbose"
+    "actionlint": {
+      "command": "actionlint",
+      "debounce": 100,
+      "offsetLine": 0,
+      "offsetColumn": 0,
+      "args": ["-oneline", "%relativepath"],
+      "sourceName": "actionlint",
+      "formatLines": 1,
+      "formatPattern": [
+        "^([^:]+):(\\d+):(\\d+):\\s+(.*)$",
+        {
+          "line": 2,
+          "column": 3,
+          "message": 4
         }
-    },
-    "java.jdt.ls.vmargs": "-Dfile.encoding=UTF-8",
+      ]
+    }
+  },
+  "diagnostic-languageserver.filetypes": {
+    "clojure": "clj_kondo_lint",
+    "yaml": "actionlint"
+  },
 
-    "suggest.minTriggerInputLength": 2,
-    "suggest.triggerCompletionWait": 300,
-    "suggest.timeout": 5000
+  "codeLens.enable": true,
+  "languageserver": {
+    "clojure-lsp": {
+      "command": "bash",
+      "args": ["-c", "clojure-lsp"],
+      "filetypes": ["clojure"],
+      "rootPatterns": ["project.clj", "deps.edn"],
+      "additionalSchemes": ["jar", "zipfile"],
+      // 大きいファイルだとカーソル移動もままならないくらい遅くなるので無効化した
+      "disabledFeatures": ["completion", "diagnostics", "codeLens"],
+      "disableDiagnostics": true,
+      //"disableCompletion": true,
+      "trace.server": "verbose",
+      "initializationOptions": {
+        "auto-add-ns-to-new-files?": false,
+        "ignore-classpath-directories": true
+      }
+    },
+    "tailwind": {
+      "command": "tailwindcss-language-server",
+      "args": [],
+      "filetypes": ["css"],
+      "trace.server": "verbose"
+    },
+    "eclipse-jdt-ls": {
+      "command": "eclipse-jdt-ls",
+      "args": [],
+      "filetypes": ["java"],
+      "trace.server": "verbose"
+    },
+    "zls": {
+      "command": "zls",
+      "args": [],
+      "filetypes": ["zig"],
+      "rootPatterns": ["build.zig"],
+      "trace.server": "verbose"
+    }
+  },
+  "java.jdt.ls.vmargs": "-Dfile.encoding=UTF-8",
+
+  "suggest.minTriggerInputLength": 2,
+  "suggest.triggerCompletionWait": 300,
+  "suggest.timeout": 5000
 }

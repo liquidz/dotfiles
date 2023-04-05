@@ -46,6 +46,7 @@ set modeline
 set modelines=3
 set textwidth=0
 set hidden
+set mouse=
 
 if has('unix')
   set nofixendofline
@@ -106,8 +107,8 @@ set wrap
 "set cmdheight=1
 
 if has('nvim')
-  set cmdheight=0
-  "set cmdheight=2
+  "set cmdheight=0
+  set cmdheight=1
 else
   set cmdheight=2
 endif
@@ -308,17 +309,25 @@ aug END
 " }}}
 " status line {{{
 
-set statusline=[%n]\        " バッファ番号
-set statusline+=%f\         " 相対ファイル名
-set statusline+=%m\         " バッファ状態[+]
-set statusline+=%r          " 読み取り専用フラグ
-set statusline+=%<%=        " 右寄せ
-set statusline+=%{'['.(&fenc!=''?&fenc:'?').'-'.&ff.']'}\   " フォーマット＆文字コード
-set statusline+=%y\         " タイプ
-set statusline+=%4l,%2c\    " 行、列
-set statusline+=%3p%%\      " 何％
-"set laststatus=2
-set laststatus=0
+if has('nvim')
+  set statusline=%{''}
+  set fillchars=stl:─,stlnc:─,vert:│
+  set laststatus=2
+else
+  set statusline=[%n]\        " バッファ番号
+  set statusline+=%f\         " 相対ファイル名
+  set statusline+=%m\         " バッファ状態[+]
+  set statusline+=%r          " 読み取り専用フラグ
+  set statusline+=%<%=        " 右寄せ
+  set statusline+=%{'['.(&fenc!=''?&fenc:'?').'-'.&ff.']'}\   " フォーマット＆文字コード
+  set statusline+=%y\         " タイプ
+  set statusline+=%4l,%2c\    " 行、列
+  set statusline+=%3p%%\      " 何％
+  set laststatus=2
+endif
+
+
+"set laststatus=0
 
 " }}}
 " omni completion {{{

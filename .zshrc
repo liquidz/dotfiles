@@ -286,3 +286,7 @@ if [ -f ~/.zinit/bin/zinit.zsh ] ; then
         OMZP::docker/_docker \
         OMZP::docker-compose/_docker-compose
 fi
+
+if which github-copilot-cli > /dev/null 2>&1; then
+    eval "$(github-copilot-cli alias -- "$0")"
+fi

@@ -12,6 +12,10 @@ call plug#begin('~/.vim/repos')
 
 " default {{{
 
+
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
+
 " Deno/Denops
 Plug 'vim-denops/denops.vim'
 "Plug '~/src/github.com/vim-denops/denops-helloworld.vim'
@@ -65,7 +69,9 @@ Plug 'aklt/plantuml-syntax', {'on': []}
 Plug 'cocopon/iceberg.vim'
 "Plug 'navarasu/onedark.nvim'
 
-
+Plug 'voldikss/vim-floaterm'
+Plug 'skywind3000/asyncrun.vim'
+Plug 'vim-test/vim-test'
 
 "Plug 'colepeters/spacemacs-theme.vim'
 Plug 'ConradIrwin/vim-bracketed-paste'
@@ -126,6 +132,7 @@ if has('nvim')
   Plug 'lukas-reineke/indent-blankline.nvim'
   Plug 'gen740/SmoothCursor.nvim'
   Plug 'github/copilot.vim'
+  Plug 'lewis6991/gitsigns.nvim'
 endif
 
 " /default }}}
@@ -173,6 +180,8 @@ if has('unix')
       "Plug '~/src/github.com/liquidz/vim-iced-ddu-selector',  {'for': 'clojure'}
       Plug '~/src/github.com/liquidz/vim-iced-ddu-selector'
     endif
+
+    Plug 'liquidz/vim-iced-telescope-selector'
   endif
   if g:use_vim_diced
   else
@@ -286,6 +295,14 @@ if s:has_plug('iceberg.vim') " {{{
 
   if has('nvim')
     highlight! link FloatBorder Conceal
+
+    highlight! link StatusLine SpecialKey
+    highlight! link StatusLineNC Whitespace
+    highlight! link WinSeparator Whitespace
+
+    " highlight! link StatusLine Directory
+    " highlight! link StatusLineNC Conceal
+    " highlight! link WinSeparator Conceal
   endif
 endif " }}}
 
@@ -325,16 +342,17 @@ if s:has_plug('coc.nvim') " {{{
 
   let g:coc_global_extensions = [
        \ 'coc-copilot',
+       \ 'coc-deno',
        \ 'coc-diagnostic',
        \ 'coc-eslint',
        \ 'coc-lines',
        \ 'coc-prettier',
+       \ 'coc-tsdetect',
        \ 'coc-tsserver',
        \ ]
   " coc-tsserver と一緒に入っていると ts プロジェクトにて
   " tsserver を無効にする .vim/coc-settings.json がプロジェクトルートに作成さ
   " れてしまうので一旦 uninstall
-  "     \ 'coc-deno',
 
   function! s:coc_check_back_space() abort
     let col = col('.') - 1
@@ -1073,8 +1091,8 @@ if s:has_plug('ddu.vim') " {{{
 
   autocmd FileType ddu-ff-filter call s:ddu_filter_my_settings()
   function! s:ddu_filter_my_settings() abort
-    inoremap <buffer><silent> <CR> <Esc><Cmd>call ddu#ui#ff#close()<CR>
-	  nnoremap <buffer><silent> <CR> <Cmd><Cmd>call ddu#ui#ff#close()<CR>
+    inoremap <buffer> <CR> <Esc><Cmd>call ddu#ui#do_action('closeFilterWindow')<CR>
+    nnoremap <buffer> <CR> <Cmd>call ddu#ui#do_action('closeFilterWindow')<CR>
 
     nnoremap <buffer><silent> q <Cmd>close<CR>
     nnoremap <buffer><silent> <Esc> <Cmd>close<CR>
@@ -1097,6 +1115,21 @@ if s:has_plug('ddu.vim') " {{{
     nnoremap <buffer> % <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'newFile'})<CR>
     nnoremap <buffer> <C-l> <Cmd>call ddu#ui#filer#do_action('checkItems')<CR>
 	endfunction
+endif " }}}
+
+if s:has_plug('vim-test') " {{{
+  aug MyVimTestSetting
+    au!
+    au FileType typescript nmap <silent> <leader>tt :TestNearest<CR>
+    au FileType typescript nmap <silent> <leader>tb :TestFile<CR>
+  aug END
+
+  let g:test#javascript#runner = 'jest'
+  let test#javascript#jest#executable = 'yarn jest'
+  "let test#strategy = (has('nvim') ? 'neovim' : 'vimterminal')
+  "let test#strategy = "asyncrun"
+  let test#strategy = "floaterm"
+
 endif " }}}
 
 if s:has_plug('gin.vim') " {{{
@@ -1124,17 +1157,6 @@ if s:has_plug('indent-blankline.nvim') " {{{
     }
 END
 endif " }}}
-
-" if s:has_plug('vim-iced')
-" lua << END
-"   vim.fn['iced#hook#add']('connected', {
-"     type = "function",
-"     exec = function()
-"       vim.diagnostic.disable(vim.fn.bufnr("iced_stdout"))
-"     end
-"   })
-" END
-" endif
 
 if s:has_plug('SmoothCursor.nvim') " {{{
   lua << END
@@ -1175,6 +1197,12 @@ if s:has_plug('SmoothCursor.nvim') " {{{
         end
       end,
     })
+END
+endif " }}}
+
+if s:has_plug('gitsigns.nvim') " {{{
+  lua << END
+  require('gitsigns').setup()
 END
 endif " }}}
 
