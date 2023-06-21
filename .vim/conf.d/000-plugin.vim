@@ -12,6 +12,7 @@ call plug#begin('~/.vim/repos')
 
 " default {{{
 
+" Plug 'TimUntersberger/neogit'
 
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
@@ -45,6 +46,7 @@ if g:use_ddu
   Plug 'matsui54/ddu-source-file_external'
   Plug '~/src/github.com/liquidz/ddu-source-custom-list'
   Plug 'shun/ddu-source-rg'
+  Plug 'kamecha/ddu-source-window'
 
   Plug 'lambdalisue/mr.vim' | Plug 'kuuote/ddu-source-mr'
   "Plug 'kuuote/ddu-source-git_diff'
@@ -69,8 +71,7 @@ Plug 'aklt/plantuml-syntax', {'on': []}
 Plug 'cocopon/iceberg.vim'
 "Plug 'navarasu/onedark.nvim'
 
-Plug 'voldikss/vim-floaterm'
-Plug 'skywind3000/asyncrun.vim'
+Plug 'tpope/vim-dispatch'
 Plug 'vim-test/vim-test'
 
 "Plug 'colepeters/spacemacs-theme.vim'
@@ -126,13 +127,16 @@ Plug 'liquidz/vim-file-to-file', {'on': []}
 Plug 'seroqn/foldmaker.vim'
 if has('nvim')
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-  "Plug 'nvim-treesitter/playground'
+  Plug 'nvim-treesitter/playground'
   Plug 'nvim-treesitter/nvim-treesitter-context'
   Plug 'mfussenegger/nvim-treehopper'
   Plug 'lukas-reineke/indent-blankline.nvim'
   Plug 'gen740/SmoothCursor.nvim'
   Plug 'github/copilot.vim'
   Plug 'lewis6991/gitsigns.nvim'
+  Plug 'nvim-tree/nvim-web-devicons'
+  "Plug 'romgrk/barbar.nvim'
+  Plug 'nanozuki/tabby.nvim'
 endif
 
 " /default }}}
@@ -220,7 +224,7 @@ endif " }}}
 if s:has_plug('nvim-treesitter') " {{{
 lua <<EOC
   require'nvim-treesitter.configs'.setup {
-    ensure_installed = { "clojure", "vim", "help" },
+    ensure_installed = { "clojure", "vim", "help", "javascript", "typescript", "tsx" },
     ignore_install = { "gitcommit" },
     sync_install = false,
     auto_install = false,
@@ -233,14 +237,14 @@ lua <<EOC
   }
 EOC
 endif " }}}
-
-if s:has_plug('nvim-treesitter-context')
-lua <<EOC
-  require'treesitter-context'.setup{
-    enable = true,
-  }
-EOC
-endif
+"
+" if s:has_plug('nvim-treesitter-context')
+" lua <<EOC
+"   require'treesitter-context'.setup{
+"     enable = true,
+"   }
+" EOC
+" endif
 
 if s:has_plug('nvim-treehopper')
   omap <silent> m :<C-U>lua require('tsht').nodes()<CR>
@@ -382,8 +386,17 @@ if s:has_plug('coc.nvim') " {{{
 
   aug MyCocSetting
     au!
-    au FileType typescript,css nnoremap <buffer> K :call CocActionAsync('doHover')<CR>
+    au FileType typescript,typescriptreact,css nnoremap <buffer> K :call CocActionAsync('doHover')<CR>
   aug END
+
+  " highlight MyCocInlayHint ctermfg=5 guifg=#5c3c3c guibg=#211414
+  "highlight MyCocInlayHint ctermfg=5 guifg=#5c3c3c
+  "highlight MyCocInlayHint ctermfg=5 guifg=#3b4f3d
+  highlight MyCocInlayHint ctermfg=5 guifg=#3b474f
+  hi link CocInlayHint MyCocInlayHint
+"   CocInlayHint   xxx ctermfg=242 ctermbg=235 guifg=#6b7089 guibg=#1e2132
+" CocInlayHintParameter xxx links to CocInlayHint
+" CocInlayHintType xxx links to CocInlayHint
 endif " }}}
 
 if s:has_plug('columnskip.vim') " {{{
@@ -954,8 +967,11 @@ if s:has_plug('ddu.vim') " {{{
     \ },
     \ 'uiParams': {
     \   'ff': {
-    \     'winHeight': 10,
     \     'filterSplitDirection': has('nvim') ? 'floating' : 'botright',
+    \     "autoAction" : { "name": "preview" },
+	  \     "previewWindowOptions": [ ["&signcolumn", "no"], ["&wrap", 0], ["&number", 0]],
+    \     "previewSplit": "vertical",
+    \     "previewWidth": 60,
     \   },
     \   'filer': {
     \     'split': 'no',
@@ -967,6 +983,9 @@ if s:has_plug('ddu.vim') " {{{
     \   },
     \   'custom-list': {
     \     'defaultAction': 'callback',
+    \   },
+    \   'window': {
+    \     'defaultAction': 'open'
     \   },
     \   'action': {
     \     'defaultAction': 'do',
@@ -1069,6 +1088,7 @@ if s:has_plug('ddu.vim') " {{{
   nnoremap <Leader>d* <Cmd>ResumableDdu search line -input=`expand('<cword>')` -ui-param-startFilter=v:false<CR>
   nnoremap <Leader>db <Cmd>ResumableDdu buffer buffer -ui-param-startFilter<CR>
   nnoremap <Leader>dg <Cmd>call <SID>ddu_rg('ripgrep')<CR>
+  nnoremap <Leader>dw <Cmd>call ddu#start({'sources': [{'name': 'window'}] })<CR>
 
   nnoremap <Leader>df <Cmd>Ddu -ui=filer -source-option-columns=filename file<CR>
   nnoremap <Leader><Leader> <Cmd>call <SID>ddu_mr('mr')<CR>
@@ -1115,21 +1135,27 @@ if s:has_plug('ddu.vim') " {{{
     nnoremap <buffer> % <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'newFile'})<CR>
     nnoremap <buffer> <C-l> <Cmd>call ddu#ui#filer#do_action('checkItems')<CR>
 	endfunction
+
+  " 先に ddu をロードしておく
+  " call timer_start(10, { _ ->
+  "      \ ddu#start({
+  "      \   'ui': 'ff',
+	 "     \   'uiParams': { 'ff': { 'ignoreEmpty': v:true } },
+	 "     \   })
+	 "     \ })
+
 endif " }}}
 
 if s:has_plug('vim-test') " {{{
   aug MyVimTestSetting
     au!
-    au FileType typescript nmap <silent> <leader>tt :TestNearest<CR>
-    au FileType typescript nmap <silent> <leader>tb :TestFile<CR>
+    au FileType typescript,typescriptreact nmap <silent> <leader>tt :TestNearest<CR>
+    au FileType typescript,typescriptreact nmap <silent> <leader>tb :TestFile<CR>
   aug END
 
   let g:test#javascript#runner = 'jest'
   let test#javascript#jest#executable = 'yarn jest'
-  "let test#strategy = (has('nvim') ? 'neovim' : 'vimterminal')
-  "let test#strategy = "asyncrun"
-  let test#strategy = "floaterm"
-
+  let test#strategy = "dispatch"
 endif " }}}
 
 if s:has_plug('gin.vim') " {{{
@@ -1151,8 +1177,29 @@ if s:has_plug('indent-blankline.nvim') " {{{
   let g:indent_blankline_indent_level = 40
   lua << END
     require("indent_blankline").setup {
+      show_current_context = true,
+      show_current_context_start = false,
+      use_treesitter = true,
       char_highlight_list = {
         "FoldColumn",
+      },
+      context_highlight_list = {
+        'Constant',
+      },
+      context_patterns = {
+        "class",
+        "^func",
+        "method",
+        "^if",
+        "while",
+        "for",
+        "with",
+        "try",
+        -- clojure
+        "list_lit",
+        "vec_lit",
+        "map_lit",
+        "set_lit",
       },
     }
 END
@@ -1202,13 +1249,104 @@ endif " }}}
 
 if s:has_plug('gitsigns.nvim') " {{{
   lua << END
-  require('gitsigns').setup()
+  require('gitsigns').setup {
+    on_attach = function(bufnr)
+      local gs = package.loaded.gitsigns
+      local function map(mode, l, r, opts)
+        opts = opts or {}
+        opts.buffer = bufnr
+        vim.keymap.set(mode, l, r, opts)
+      end
+
+      map('n', 'gj', function()
+        if vim.wo.diff then return 'gj' end
+        vim.schedule(function() gs.next_hunk() end)
+        return '<Ignore>'
+      end, {expr = true})
+
+      map('n', 'gk', function()
+        if vim.wo.diff then return 'gk' end
+        vim.schedule(function() gs.prev_hunk() end)
+        return '<Ignore>'
+      end, {expr = true})
+    end
+  }
+END
+endif " }}}
+
+if s:has_plug('barbar.nvim') " {{{
+  lua << END
+  vim.g.barbar_auto_setup = false
+  -- require('barbar').setup {
+  --   hide = {extensions = false, inactive = true},
+  --   clickable = false,
+  -- }
+END
+endif " }}}
+
+if s:has_plug('tabby.nvim') " {{{
+  lua << END
+  local theme = {
+    fill = 'TabLineFill',
+    -- Also you can do this: fill = { fg='#f2e9de', bg='#907aa9', style='italic' }
+    head = 'TabLine',
+    current_tab = 'TabLineSel',
+    tab = 'TabLine',
+    win = 'TabLine',
+    tail = 'TabLine',
+    active = 'StatusLine',
+    nonactive = 'StatusLineNC',
+    title = 'Title',
+  }
+  require('tabby.tabline').set(function(line)
+    return {
+      line.tabs().foreach(function(tab)
+        local hl = tab.is_current() and theme.current_tab or theme.tab
+        return {
+          tab.is_current() and {' ' , hl = theme.active} or '',
+          tab.name(),
+          {'▎', hl = tab.is_current() and theme.active or theme.nonactive },
+          hl = hl,
+          margin = ' ',
+        }
+      end),
+
+      line.spacer(),
+      line.wins_in_tab(line.api.get_current_tab()).foreach(function(win)
+        if win.is_current() then
+          return {
+            vim.fn['iced#repl#status'](),
+            {'▎', hl = theme.nonactive },
+            vim.fn['iced_multi_session#current'](),
+            {'▎', hl = theme.nonactive },
+            {win.buf().id, hl = theme.title },
+            margin = ' ',
+          }
+        end
+      end),
+      hl = theme.fill,
+    }
+  end)
+END
+endif " }}}
+
+if s:has_plug('neogit') " {{{
+  lua << END
+  require('neogit').setup {}
 END
 endif " }}}
 
 if s:has_plug('copilot.vim') " {{{
   imap <silent><script><expr> <C-a> copilot#Accept("\<CR>")
   let g:copilot_no_tab_map = v:true
+
+  let g:copilot_filetypes = #{
+        \ gitcommit: v:true,
+        \ markdown: v:true,
+        \ text: v:true,
+        \ ddu-ff-filter: v:false,
+        \ }
+
 endif " }}}
 
 " let g:foldmaker#use_marker = 1
@@ -1268,3 +1406,14 @@ for pattern in [ 'vim*', '*vim', 'dps*' ]
     end
   endfor
 endfor " }}}
+
+
+
+
+"     'split': has('nvim') ? 'floating' : 'horizontal',
+"     "floatingBorder": "rounded",
+"     "floatingTitlePos": "center",
+"     "previewFloating": v:true,
+"     "previewFloatingBorder": "rounded",
+"     "previewFloatingTitle": [ ["Preview", "String"] ],
+"     "previewFloatingTitlePos": "center",

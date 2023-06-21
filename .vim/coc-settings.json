@@ -37,7 +37,7 @@
   "coc.preferences.formatOnSaveFiletypes": [
     "css",
     "html",
-    "markdown",
+    //"markdown",
     "typescriptreact",
     "typescript",
     "javascriptreact",
@@ -45,6 +45,16 @@
     "json",
     "graphql"
   ],
+
+  // cf. https://github.com/neoclide/coc-tsserver#configuration-options
+  "typescript.inlayHints.parameterNames.enabled": "all",
+  "typescript.inlayHints.parameterTypes.enabled": true,
+  "typescript.inlayHints.variableTypes.enabled": true,
+  "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+  "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+  "typescript.inlayHints.enumMemberValues.enabled": true,
+
+  "inlayHint.enable": true,
 
   "diagnostic-languageserver.linters": {
     "clj_kondo_lint": {
@@ -135,5 +145,15 @@
 
   "suggest.minTriggerInputLength": 2,
   "suggest.triggerCompletionWait": 300,
-  "suggest.timeout": 5000
+  "suggest.timeout": 5000,
+  "tsserver.enable": false,
+  "deno.enable": true,
+  "deno.lint": true,
+  "coc.source.file.trimSameExts": [],
+  "prettier.disableLanguages": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ]
 }

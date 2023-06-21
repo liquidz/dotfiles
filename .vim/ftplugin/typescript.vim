@@ -40,7 +40,7 @@ if ! empty(globpath(&rtp, 'autoload/lsp.vim'))
 else
   " coc
   nmap <C-]> <Plug>(coc-definition)
-  nmap K <Plug>(coc-diagnostic-info)
+  "nmap K <Plug>(coc-diagnostic-info)
   "nmap K <Plug>(coc-codelens-action)
   nmap <Leader>jt <Plug>(coc-type-definition)
   nmap <Leader>hh <Plug>(coc-codeaction-selected)

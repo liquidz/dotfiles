@@ -1,6 +1,6 @@
 (ns setup
   (:require
-   [babashka.pods :as pods]))
+    [babashka.pods :as pods]))
 
 (pods/load-pod "dad")
 (require '[pod.liquidz.dad :as dad])
@@ -63,24 +63,24 @@
 
 
 ;; vim の設定
-(doseq [dir '[.vim/autoload .vim/backup .vim/memo]]
+(doseq [dir [".vim/autoload" ".vim/backup" ".vim/memo"]]
   (dad/directory {:path (home dir)}))
 
 (dad/download {:path (home ".vim/autoload/plug.vim")
                :url "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"})
 
 ;; neovim の設定
-(doseq [[k v] {".config/nvim/init.vim" ".vimrc"
-               ".config/nvim/after" ".vim/after"
-               ".config/nvim/ftplugin" ".vim/ftplugin"
-               ".config/nvim/coc-settings.json" ".vim/coc-settings.json"}]
+(doseq [[k v] {".config/nvim/init.vim",          ".vimrc"
+               ".config/nvim/after",             ".vim/after"
+               ".config/nvim/ftplugin",          ".vim/ftplugin"
+               ".config/nvim/coc-settings.json", ".vim/coc-settings.json"}]
   (dad/link {:path (home k)
              :source (install-dir v)}))
 
 ;; zsh の設定
 ;;;; git 補完
-(doseq [[k v] {".zsh/_git"                "git-completion.zsh"
-               ".zsh/git-completion.bash" "git-completion.bash"}]
+(doseq [[k v] {".zsh/_git",                "git-completion.zsh"
+               ".zsh/git-completion.bash", "git-completion.bash"}]
   (dad/download
    {:path (home k)
     :url (str "https://raw.githubusercontent.com/git/git/master/contrib/completion/" v)}))
