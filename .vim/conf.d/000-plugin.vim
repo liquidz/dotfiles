@@ -1,7 +1,10 @@
 scriptencoding utf-8
 let g:dotfiles = $HOME.'/src/github.com/liquidz/dotfiles'
 
+let g:denops_dev = v:false
 let g:use_ddu = v:true
+let g:use_ddc = v:false
+let g:use_cmp = v:false
 let g:use_vim_diced = v:false
 
 function! s:has_plug(name) abort
@@ -14,8 +17,6 @@ call plug#begin('~/.vim/repos')
 
 " Plug 'TimUntersberger/neogit'
 
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
 
 " Deno/Denops
 Plug 'vim-denops/denops.vim'
@@ -30,6 +31,7 @@ Plug 'yuki-yano/fuzzy-motion.vim'
 " Plug 'lambdalisue/gin.vim'
 
 Plug 'jparise/vim-graphql'
+"Plug 'ctrlpvim/ctrlp.vim'
 
 if g:use_ddu
   Plug 'Shougo/ddu.vim'
@@ -43,6 +45,8 @@ if g:use_ddu
   Plug 'Shougo/ddu-source-line'
   Plug 'shun/ddu-source-buffer'
   Plug 'Shougo/ddu-source-file_old'
+  Plug 'Shougo/ddu-source-register'
+  Plug '4513ECHO/ddu-source-source'
   Plug 'matsui54/ddu-source-file_external'
   Plug '~/src/github.com/liquidz/ddu-source-custom-list'
   Plug 'shun/ddu-source-rg'
@@ -58,6 +62,7 @@ if g:use_ddu
   Plug 'lambdalisue/kensaku.vim' | Plug 'Milly/ddu-filter-kensaku'
   " Install your kinds
   Plug 'Shougo/ddu-kind-file'
+  Plug 'Shougo/ddu-kind-word'
   Plug 'Shougo/ddu-commands.vim'
 
   " ddu-ui-filer
@@ -85,7 +90,6 @@ if has('nvim')
   Plug 'rbgrouleff/bclose.vim'
 endif
 Plug 'inside/vim-search-pulse', {'on': []}
-"Plug 'itchyny/lightline.vim'
 Plug 'jiangmiao/auto-pairs', {'on': []}
 Plug 'junegunn/fzf', { 'on': [], 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim', {'on': ['Files']}
@@ -125,18 +129,33 @@ Plug 'vim-jp/vital.vim', {'for': ['vim', 'asciidoc']}
 Plug 'yuki-yano/vim-operator-replace', {'on': []}
 Plug 'liquidz/vim-file-to-file', {'on': []}
 Plug 'seroqn/foldmaker.vim'
-if has('nvim')
+Plug 'github/copilot.vim'
+
+if !has('nvim')
+  Plug 'itchyny/lightline.vim'
+  Plug 'airblade/vim-gitgutter'
+else
+  Plug 'nvim-lua/plenary.nvim'
+  " Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.1' }
+
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'nvim-treesitter/playground'
   Plug 'nvim-treesitter/nvim-treesitter-context'
   Plug 'mfussenegger/nvim-treehopper'
   Plug 'lukas-reineke/indent-blankline.nvim'
   Plug 'gen740/SmoothCursor.nvim'
-  Plug 'github/copilot.vim'
   Plug 'lewis6991/gitsigns.nvim'
   Plug 'nvim-tree/nvim-web-devicons'
   "Plug 'romgrk/barbar.nvim'
   Plug 'nanozuki/tabby.nvim'
+
+  " Nvim LSP client
+  if g:use_ddc || g:use_cmp
+    Plug 'williamboman/mason.nvim'
+    Plug 'williamboman/mason-lspconfig.nvim'
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'jose-elias-alvarez/null-ls.nvim'
+  endif
 endif
 
 " /default }}}
@@ -147,7 +166,6 @@ Plug 'thinca/vim-prettyprint',         {'for': 'vim'}
 Plug 'vim-scripts/ruby-matchit',       {'for': 'ruby'}
 
 if has('unix')
-  Plug 'neoclide/coc.nvim', {'on': [], 'for': 'clojure', 'branch': 'release'}
 
 
   "" Common Lisp
@@ -171,6 +189,9 @@ if has('unix')
   if g:use_vim_diced
     Plug '~/src/github.com/liquidz/vim-diced',              {'for': 'clojure'}
   else
+    " FIXME
+    Plug '~/src/github.com/liquidz/vim-riced'
+
     Plug '~/src/github.com/liquidz/vim-iced',               {'for': 'clojure'}
     if ! has('nvim')
       Plug '~/src/github.com/liquidz/vim-iced-fern-debugger', {'for': 'clojure'}
@@ -184,15 +205,47 @@ if has('unix')
       "Plug '~/src/github.com/liquidz/vim-iced-ddu-selector',  {'for': 'clojure'}
       Plug '~/src/github.com/liquidz/vim-iced-ddu-selector'
     endif
-
-    Plug 'liquidz/vim-iced-telescope-selector'
   endif
-  if g:use_vim_diced
+
+  if g:use_ddc
+    Plug 'Shougo/ddc.vim'
+    Plug 'Shougo/pum.vim'
+    Plug 'matsui54/denops-popup-preview.vim'
+    " UI
+    Plug 'Shougo/ddc-ui-native'
+    Plug 'Shougo/ddc-ui-pum'
+    Plug 'Shougo/ddc-ui-inline'
+    Plug 'Shougo/ddc-ui-none'
+    " Source
+    Plug 'Shougo/ddc-source-around'
+    Plug 'LumaKernel/ddc-source-file'
+    Plug 'Shougo/ddc-source-copilot'
+    Plug 'Shougo/ddc-source-nvim-lsp'
+    Plug 'Shougo/ddc-source-omni'
+    Plug '~/src/github.com/liquidz/vim-iced-ddc-source', {'for': 'clojure'}
+    " Matcher
+    Plug 'Shougo/ddc-filter-matcher_head'
+    Plug 'Shougo/ddc-filter-matcher_length'
+    " Filter
+    Plug 'tani/ddc-fuzzy'
+    Plug 'Shougo/ddc-filter-sorter_rank'
+  elseif g:use_cmp
+    Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'hrsh7th/cmp-buffer'
+    Plug 'hrsh7th/cmp-path'
+    Plug 'hrsh7th/cmp-cmdline'
+    Plug 'lamp/cmp-iced', {'for': 'clojure'}
+    Plug 'hrsh7th/nvim-cmp'
   else
+    Plug 'neoclide/coc.nvim', {'on': [], 'for': 'clojure', 'branch': 'release'}
     Plug '~/src/github.com/liquidz/vim-iced-coc-source', {'on': [], 'for': 'clojure'}
   endif
-    " Plug '~/src/github.com/liquidz/vim-diced-coc-source', {'for': 'clojure'}
 
+  " if g:use_vim_diced
+  " else
+  "   Plug '~/src/github.com/liquidz/vim-iced-coc-source', {'on': [], 'for': 'clojure'}
+  " endif
+    " Plug '~/src/github.com/liquidz/vim-diced-coc-source', {'for': 'clojure'}
   " }}}
 endif
 
@@ -205,8 +258,11 @@ if s:has_plug('denops.vim') " {{{
     let g:denops#deno = printf('%s/.deno/bin/deno', $HOME)
   endif
 
-  let g:denops_server_addr = '127.0.0.1:32123'
-  "call denops#plugin#check_type()
+  if g:denops_dev
+    call denops#plugin#check_type()
+  else
+    let g:denops_server_addr = '127.0.0.1:32123'
+  endif
 
   if s:has_plug('vim-search-pulse')
     nmap n <Plug>(anzu-n)<Plug>Pulse
@@ -412,9 +468,9 @@ if s:has_plug('ctrlp.vim') " {{{
   let g:ctrlp_match_window        = 'results:50'
   let g:ctrlp_follow_symlinks     = 1
   let g:ctrlp_lazy_update         = 100
-  let g:ctrlp_match_func          = {'match': 'ctrlp_matchfuzzy#matcher'}
+"  let g:ctrlp_match_func          = {'match': 'ctrlp_matchfuzzy#matcher'}
   let g:ctrlp_custom_ignore = {
-        \   'dir' : '\v[\/](\.git|cookbooks|target|Vendor|cache|node_modules|\.cache|\.cpcache|\.shadow-cljs)$',
+        \   'dir' : '\v[\/](\.git|cookbooks|target|Vendor|cache|node_modules|\.cache|\.cpcache|\.shadow-cljs|\.next)$',
         \   'file': '\v\.(o|bk|org|exe|so|dll|skl|cgi|gitkeep|png|gif|jpg)$',
         \   'link': 'some_bad_symbolic_links',
         \ }
@@ -499,24 +555,51 @@ if s:has_plug('lightline.vim') " {{{
     return get(g:, 'coc_status', '')
   endfunction
 
+  " let g:lightline = {
+  "      \ 'colorscheme': s:colorscheme,
+  "      \ 'active': {
+  "        \   'left': [['mode', 'readonly'],
+  "        \            ['paste', 'modified']],
+  "        \   'right': [['lineinfo'], ['fileformat', 'filetype'], ['anzu'], ['coc_status'], ['iced_multi_session'], ['iced']]
+  "        \ },
+  "        \ 'component_function': {
+  "          \   'anzu': 'anzu#search_status',
+  "          \   'iced': 'iced#repl#status',
+  "          \   'iced_multi_session': 'iced_multi_session#current',
+  "          \   'coc_status': 'MyCocStatus',
+  "          \ },
+  "          \ 'separator': { 'left': "\ue0b4", 'right': "\ue0b6"},
+  "          \ 'subseparator': { 'left': "\ue0b5", 'right':  "\ue0b7" },
+  "          \ 'tabline': { 'left': [[ 'tabs' ]], 'right': [[ 'bufnum' ]] }
+  "          \ }
+
   let g:lightline = {
-        \ 'colorscheme': s:colorscheme,
-        \ 'active': {
-          \   'left': [['mode', 'readonly'],
-          \            ['paste', 'modified']],
-          \   'right': [['lineinfo'], ['fileformat', 'filetype'], ['anzu'], ['coc_status'], ['iced_multi_session'], ['iced']]
-          \ },
-          \ 'component_function': {
-            \   'anzu': 'anzu#search_status',
-            \   'iced': 'iced#repl#status',
-            \   'iced_multi_session': 'iced_multi_session#current',
-            \   'coc_status': 'MyCocStatus',
-            \ },
-            \ 'separator': { 'left': "\ue0b4", 'right': "\ue0b6"},
-            \ 'subseparator': { 'left': "\ue0b5", 'right':  "\ue0b7" },
-            \ 'tabline': { 'left': [[ 'tabs' ]], 'right': [[ 'bufnum' ]] }
-            \ }
+        \   'colorscheme': s:colorscheme,
+        \   'active': { 'left': [], 'right': [] },
+        \   'separator': { 'left': "\ue0b4", 'right': "\ue0b6"},
+        \   'subseparator': { 'left': "\ue0b5", 'right':  "\ue0b7" },
+        \   'tabline': {
+        \     'left': [[ 'tabs' ]],
+        \     'right': [['filetype', 'bufnum' ], ['iced']]
+        \   },
+        \   'component_function': {
+        \     'anzu': 'anzu#search_status',
+        \     'iced': 'iced#repl#status',
+        \     'iced_multi_session': 'iced_multi_session#current',
+        \     'coc_status': 'MyCocStatus',
+        \   },
+        \ }
 endif " }}}
+
+if s:has_plug('vim-gitgutter')
+  nmap gj <Plug>(GitGutterNextHunk)
+  nmap gk <Plug>(GitGutterPrevHunk)
+
+  aug MyGitGutterSetting
+    au!
+    au BufWritePost * GitGutter
+  aug END
+endif
 
 if s:has_plug('vim-operator-replace') " {{{
   map <Leader>r <Plug>(operator-replace)
@@ -696,6 +779,31 @@ if s:has_plug('tig-explorer.vim') " {{{
   nnoremap <silent> <LocalLeader>gg :call <SID>tig_grep()<CR>
   nnoremap <LocalLeader>gs <Cmd>TigStatus<CR>
   nnoremap <LocalLeader>gb <Cmd>TigBlame<CR>
+endif " }}}
+
+if s:has_plug('gin.vim') " {{{
+  let g:gin_patch_default_args = [
+        \ '++no-head',
+        \ ]
+  let g:gin_log_default_args = [
+        \ '--pretty=%C(yellow)%h%C(reset)%C(auto)%d%C(reset) %s %C(cyan)@%an%C(reset) %C(magenta)[%ar]%C(reset)',
+        \ ]
+
+  nnoremap <silent> <LocalLeader>gs :call uochan#gin#goto('GinStatus', #{reset: v:true})<CR>
+  nnoremap <silent> <LocalLeader>gg :call uochan#gin#grep(expand('<cword>'))<CR>
+
+  aug MyGinSetting
+    au!
+    au User GinComponentPost redrawtabline
+    au FileType gin silent! call uochan#gin#au_gin_buffer()
+    au FileType gitrebase silent! call uochan#gin#au_gitrebase()
+    au FileType gitcommit silent! call uochan#gin#au_gitcommit()
+    au FileType gin-status silent! call uochan#gin#au_gin_status()
+    au FileType gin-log silent! call uochan#gin#au_gin_log()
+    au Filetype gin-diff silent! call uochan#gin#au_gin_diff()
+    au Filetype gin-branch silent! call uochan#gin#au_gin_branch()
+    au BufReadCmd ginedit://* silent! call uochan#gin#au_gin_edit()
+  aug END
 endif " }}}
 
 if s:has_plug('vim-which-key') " {{{
@@ -911,6 +1019,17 @@ if s:has_plug('vlime') " {{{
   let g:vlime_compiler_policy = { 'DEBUG': 3 }
 endif " }}}
 
+if s:has_plug('vim-iced') " {{{
+" call iced#hook#add('eval_prepared', {
+"    \ 'type': 'function',
+"    \ 'exec': {v -> iced#buffer#stdout#append(printf(";; Eval:\n%s", v['code']))},
+"    \ })
+" call iced#hook#add('evaluated', {
+"   \ 'type': 'function',
+"   \ 'exec': {v -> iced#buffer#stdout#append(printf(";; Ret:\n%s", v['result']['value']))},
+"   \ })
+endif " }}}
+
 if s:has_plug('translate.vim') " {{{
   let g:translate_source = 'en'
   let g:translate_target = 'ja'
@@ -935,12 +1054,26 @@ if s:has_plug('ddu.vim') " {{{
 
   call ddu#custom#patch_global({
     \ 'ui': 'ff',
+    \ 'uiParams': {
+    \   'ff': {
+    \     'filterSplitDirection': has('nvim') ? 'floating' : 'botright',
+    \     "autoAction" : { "name": "preview" },
+    \     "previewWindowOptions": [ ["&signcolumn", "no"], ["&wrap", 0], ["&number", 0]],
+    \     "previewSplit": "vertical",
+    \     "previewWidth": 60,
+    \   },
+    \   'filer': {
+    \     'split': 'no',
+    \   },
+    \ },
+    \
     \ 'sources': [
     \   {'name': 'file_rec', 'params': {}},
     \ ],
     \ 'sourceOptions': {
     \   '_': {
     \     'matchers': ['matcher_fzf'],
+    \     'sorters': ['sorter_fzf'],
     \   },
     \   'file_rec': {
     \     'matchers': ['matcher_fzf', 'matcher_hidden'],
@@ -965,18 +1098,7 @@ if s:has_plug('ddu.vim') " {{{
     \     'args': ['--json'],
     \   },
     \ },
-    \ 'uiParams': {
-    \   'ff': {
-    \     'filterSplitDirection': has('nvim') ? 'floating' : 'botright',
-    \     "autoAction" : { "name": "preview" },
-	  \     "previewWindowOptions": [ ["&signcolumn", "no"], ["&wrap", 0], ["&number", 0]],
-    \     "previewSplit": "vertical",
-    \     "previewWidth": 60,
-    \   },
-    \   'filer': {
-    \     'split': 'no',
-    \   },
-    \ },
+    \
     \ 'kindOptions': {
     \   'file': {
     \     'defaultAction': 'open',
@@ -990,14 +1112,14 @@ if s:has_plug('ddu.vim') " {{{
     \   'action': {
     \     'defaultAction': 'do',
     \   },
+    \   'word': {
+    \     'defaultAction': "append",
+    \   },
+    \   'source': {
+    \     'defaultAction': 'execute',
+    \   },
     \ }
     \ })
-
-    "\     'split': has('nvim') ? 'floating' : 'horizontal',
-    "\     'floatingBorder': 'rounded',
-    "\     'previewFloating': v:true,
-    "\     'previewVertical': v:true,
-    "\     'highlights': {'floating': 'Normal' },
 
   call ddu#custom#patch_global({
     \ 'filterParams': {
@@ -1081,14 +1203,16 @@ if s:has_plug('ddu.vim') " {{{
 
   nnoremap <Leader>dd <Cmd>DduResumeLast<CR>
 
-  if !s:has_plug('ctrlp.vim')
-    nnoremap <C-p>      <Cmd>call <SID>ddu_file_rec('file')<CR>
+  if s:has_plug('ctrlp.vim')
+    nnoremap <LocalLeader>pp <Cmd>call <SID>ddu_file_rec('file')<CR>
+	else
+    nnoremap <C-p> <Cmd>call <SID>ddu_file_rec('file')<CR>
   endif
   nnoremap <Leader>dl <Cmd>ResumableDdu search line -ui-param-startFilter<CR>
   nnoremap <Leader>d* <Cmd>ResumableDdu search line -input=`expand('<cword>')` -ui-param-startFilter=v:false<CR>
   nnoremap <Leader>db <Cmd>ResumableDdu buffer buffer -ui-param-startFilter<CR>
   nnoremap <Leader>dg <Cmd>call <SID>ddu_rg('ripgrep')<CR>
-  nnoremap <Leader>dw <Cmd>call ddu#start({'sources': [{'name': 'window'}] })<CR>
+  nnoremap <Leader>du <Cmd>call ddu#start({'sources': [{'name': 'source'}]})<CR>
 
   nnoremap <Leader>df <Cmd>Ddu -ui=filer -source-option-columns=filename file<CR>
   nnoremap <Leader><Leader> <Cmd>call <SID>ddu_mr('mr')<CR>
@@ -1144,6 +1268,48 @@ if s:has_plug('ddu.vim') " {{{
 	 "     \   })
 	 "     \ })
 
+endif " }}}
+
+if s:has_plug('ddc.vim') " {{{
+  if s:has_plug('pum.vim')
+    call pum#set_option(#{
+          \ auto_select: v:false,
+          \ horizontal_menu: v:false,
+          \ max_width: 100,
+          \ offset_cmdcol: 0,
+          \ padding: v:true,
+          \ use_complete: v:true,
+          \ use_setline: v:false,
+          \ })
+
+    call pum#set_local_option('c', #{
+          \   horizontal_menu: v:false,
+          \ })
+
+    let g:iced#util#pumvisible_fn = function('pum#visible')
+  endif
+
+  call ddc#custom#load_config(printf('%s/ddc.ts', expand('<sfile>:p:h')))
+
+  inoremap <expr> <TAB>
+        \ pum#visible() ?
+        \   '<Cmd>call pum#map#insert_relative(+1, "loop")<CR>' :
+        \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+        \   '<TAB>' : ddc#map#manual_complete()
+  inoremap <S-Tab> <Cmd>call pum#map#insert_relative(-1)<CR>
+
+  inoremap <Down>   <Cmd>call pum#map#select_relative(+1)<CR>
+  inoremap <Up>   <Cmd>call pum#map#select_relative(-1)<CR>
+  inoremap <expr> <C-l>  ddc#map#manual_complete()
+
+  " inoremap <C-y>   <Cmd>call pum#map#confirm()<CR>
+  " inoremap <C-o>   <Cmd>call pum#map#confirm_word()<CR>
+  " inoremap <Home>  <Cmd>call pum#map#insert_relative(-9999, 'ignore')<CR>
+  " inoremap <End>   <Cmd>call pum#map#insert_relative(+9999, 'ignore')<CR>
+
+  if s:has_plug('denops-popup-preview.vim')
+    call popup_preview#enable()
+  endif
 endif " }}}
 
 if s:has_plug('vim-test') " {{{
@@ -1330,6 +1496,163 @@ if s:has_plug('tabby.nvim') " {{{
 END
 endif " }}}
 
+if s:has_plug('mason.nvim') " {{{
+  lua << END
+  require('mason').setup()
+END
+endif " }}}
+
+if s:has_plug('nvim-lspconfig') && s:has_plug('mason.nvim') " {{{
+  lua << END
+  local lspconfig = require("lspconfig")
+  local mason_lspconfig = require('mason-lspconfig')
+
+  vim.api.nvim_create_autocmd('LspAttach', {
+    group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+    callback = function(ev)
+      if not (ev.data and ev.data.client_id) then
+        return
+      end
+
+      local bufnr = ev.buf
+      local client = vim.lsp.get_client_by_id(ev.data.client_id)
+      if client.supports_method('textDocument/inlayHint') then
+        -- enable inlay hint
+        --vim.lsp.buf.inlay_hint(bufnr, true)
+        vim.lsp.inlay_hint(bufnr, true)
+        -- toggle inly hint
+        vim.keymap.set('n', 'gh', function()
+          vim.lsp.inlay_hint(bufnr)
+        end, bufopts)
+        --vim.api.nvim_set_hl(0, 'LspInlayHint', { fg = "#B6617F", bg = "#511D30" })
+        vim.api.nvim_set_hl(0, 'LspInlayHint', { fg = "#161820", bg = "#68843C" })
+      end
+    end,
+  })
+
+  mason_lspconfig.setup {
+    ensure_installed = {
+      "clojure_lsp",
+      "denols",
+      "eslint",
+      "graphql",
+      "tailwindcss",
+      "tsserver",
+      "vimls",
+      "zls",
+    },
+  }
+
+  mason_lspconfig.setup_handlers({ function(server_name)
+    local opts = {}
+    opts.on_attach = function(client, bufnr)
+      local bufopts = { silent = true, buffer = bufnr }
+
+      -- disable highlight
+      client.server_capabilities.semanticTokensProvider = nil
+
+      if server_name ~= "clojure_lsp" then
+        vim.keymap.set('n', '<C-]>', vim.lsp.buf.definition, bufopts)
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+      end
+        --vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+    end
+
+    if server_name == 'denols' then
+      local deno_root_dir = lspconfig.util.root_pattern("deno.jsonc")
+      local is_deno_repo = deno_root_dir(vim.api.nvim_buf_get_name(0)) ~= nil
+      if not is_deno_repo then
+        return
+      end
+
+      opts.root_dir = deno_root_dir
+      opts.init_options = {
+        inlayHints = {
+          parameterNames = {
+            enabled = 'all',
+            suppressWhenArgumentMatchesName = true,
+          },
+          parameterTypes = { enabled = true},
+          variableTypes = {
+            enabled = false,
+            suppressWhenTypeMatchesName = false,
+          },
+          propertyDeclarationTypes = { enabled = true },
+          functionLikeReturnTypes = { enabled = false },
+          enumMemberValues = { enabled = true },
+        }
+      }
+
+    elseif server_name == 'tsserver' then
+      local node_root_dir = lspconfig.util.root_pattern("package.json")
+      local is_node_repo = node_root_dir(vim.api.nvim_buf_get_name(0)) ~= nil
+      if not is_node_repo then
+        return
+      end
+
+      opts.root_dir = node_root_dir
+      opts.settings = {
+        typescript = {
+          inlayHints = {
+            includeInlayParameterNameHints = 'all',
+            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+            includeInlayFunctionParameterTypeHints = true,
+            includeInlayVariableTypeHints = false,
+            includeInlayVariableTypeHintsWhenTypeMatchesName = false,
+            includeInlayPropertyDeclarationTypeHints = true,
+            includeInlayFunctionLikeReturnTypeHints = false,
+            includeInlayEnumMemberValueHints = true,
+          }
+        }
+      }
+
+    elseif server_name == 'eslint' then
+      local node_root_dir = lspconfig.util.root_pattern("package.json")
+      local is_node_repo = node_root_dir(vim.api.nvim_buf_get_name(0)) ~= nil
+      if not is_node_repo then
+        return
+      end
+      opts.root_dir = node_root_dir
+    end
+
+    lspconfig[server_name].setup(opts)
+  end })
+END
+endif " }}}
+
+if s:has_plug('null-ls.nvim') && s:has_plug('mason.nvim') " {{{
+  lua << END
+	local mason = require("mason")
+  local mason_package = require("mason-core.package")
+  local mason_registry = require("mason-registry")
+  local null_ls = require("null-ls")
+	local null_sources = {}
+
+	for _, package in ipairs(mason_registry.get_installed_packages()) do
+    local package_categories = package.spec.categories[1]
+		-- Formatter
+		if package_categories == mason_package.Cat.Formatter then
+      table.insert(null_sources, null_ls.builtins.formatting[package.name])
+    end
+		-- Linter
+    if package_categories == mason_package.Cat.Linter then
+      if package.name ~= "clj-kondo" then
+        table.insert(null_sources, null_ls.builtins.diagnostics[package.name])
+      end
+
+    end
+  end
+
+  null_ls.setup({ sources = null_sources })
+
+END
+
+  aug MyNullLsSetting
+    au!
+    au BufWritePre *.js,*.ts,*.tsx lua vim.lsp.buf.format()
+  aug END
+endif " }}}
+
 if s:has_plug('neogit') " {{{
   lua << END
   require('neogit').setup {}
@@ -1347,6 +1670,58 @@ if s:has_plug('copilot.vim') " {{{
         \ ddu-ff-filter: v:false,
         \ }
 
+endif " }}}
+
+
+if s:has_plug('nvim-cmp') " {{{
+  lua << END
+  local cmp = require('cmp')
+
+  cmp.setup({
+    snippet = {
+      -- REQUIRED - you must specify a snippet engine
+      expand = function(args)
+        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+      end,
+    },
+    window = {
+      -- completion = cmp.config.window.bordered(),
+      -- documentation = cmp.config.window.bordered(),
+    },
+    mapping = cmp.mapping.preset.insert({
+      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<Tab>'] = function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        else
+          fallback()
+        end
+      end,
+      ['<S-Tab>'] = function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        else
+          fallback()
+        end
+      end,
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    }),
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+    }, {
+      { name = 'buffer' },
+    })
+  })
+
+  cmp.setup.filetype('gitcommit', {
+    sources = cmp.config.sources({
+      { name = 'git' }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
+    }, {
+      { name = 'buffer' },
+    })
+  })
+END
 endif " }}}
 
 " let g:foldmaker#use_marker = 1
@@ -1386,14 +1761,18 @@ call timer_start(200, funcref('s:load_plug'))
 
 "let g:dps_parinfer_delay = 300
 
-" icedon
-nnoremap <buffer> <Leader>i' <Plug>(icedon_connect)
-nnoremap <buffer> <Leader>iss <Plug>(icedon_open_info_buffer)
-nnoremap <buffer> <Leader>isq <Plug>(icedon_close_info_buffer)
-nnoremap <buffer> <Leader>iet <Plug>(icedon_eval_outer_top_form)
-nnoremap <buffer> <Leader>iee <Plug>(icedon_eval_outer_form)
-
-
+" MyCursorSign {{{
+if ! has('nvim')
+  sign define mycursorsign text=• texthl=Title
+  function! s:cursor_sign() abort
+    call sign_unplace('mycursorsign')
+    call sign_place(0, 'mycursorsign', 'mycursorsign', expand('%:p'), {'lnum': line('.')})
+  endfunction
+  aug MyCursorSign
+    au CursorMoved *.ts,*.tsx,*.clj,*.edn,*.json call s:cursor_sign()
+  aug END
+endif
+" }}}
 
 " developing plugins {{{
 " http://www.kaoriya.net/blog/2015/12/01/vim-switch-developing-plugin/

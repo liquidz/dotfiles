@@ -109,9 +109,9 @@ let g:iced#selector#search_order = ['ddu', 'telescope', 'fzf']
 
 
 
-let g:iced#ddu#selector#ddu_options = {
-      \ 'uiParams': {'ff': {'startFilter': v:true}},
-      \ }
+" let g:iced#ddu#selector#ddu_options = {
+"      \ 'uiParams': {'ff': {'startFilter': v:true}},
+"      \ }
 
 
 function! MyCocExecuteCommand(command, extra_args) abort
@@ -146,11 +146,11 @@ let g:iced#palette = {
 "      \ 'LspBrowseReferences': ":call CocActionAsync('jumpReferences')",
 "      \ }
 
-aug MyCoCSetting
-  au!
-  au CursorHold * silent call CocActionAsync('highlight')
-  au BufEnter list://* highlight CursorLine ctermbg=242 guibg=#343F4C
-aug END
+" aug MyCoCSetting
+"   au!
+"   au CursorHold * silent call CocActionAsync('highlight')
+"   au BufEnter list://* highlight CursorLine ctermbg=242 guibg=#343F4C
+" aug END
 
 
 
@@ -211,6 +211,27 @@ let g:iced#format#options = {
 "      \ 'type': 'function',
 "      \ 'exec': {_ -> lsp#disable_diagnostics_for_buffer(bufnr('iced_stdout'))},
 "      \ })
+
+
+" call iced#hook#add('eval_prepared', {
+"     \ 'type': 'function',
+"     \ 'exec': {v -> iced#buffer#stdout#append(printf(';; Eval: %s', v['code']))},
+"     \ })
+" call iced#hook#add('evaluated', {
+"    \ 'type': 'function',
+"    \ 'exec': {v -> iced#buffer#stdout#append(printf(';; Ret: %s', v['result']['value']))},
+"    \ })
+
+" let g:iced#hook = {}
+" let g:iced#hook['eval_prepared'] = {
+"      \ 'type': 'function',
+"      \ 'exec': {v -> iced#buffer#stdout#append(printf(";; Eval:\n%s", v['code']))},
+"      \ }
+"
+" let g:iced#hook['evaluated'] = {
+"      \ 'type': 'function',
+"      \ 'exec': {v -> iced#buffer#stdout#append(printf(";; Ret:\n%s", v['result']['value']))},
+"      \ }
 
 let s:counter = 0
 function! s:test_finished(v) abort

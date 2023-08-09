@@ -104,14 +104,13 @@ set ruler
 set list
 set listchars=tab:>-,trail:_,extends:>,precedes:>
 set wrap
-"set cmdheight=1
-
-if has('nvim')
-  "set cmdheight=0
-  set cmdheight=1
-else
-  set cmdheight=2
-endif
+set cmdheight=1
+" if has('nvim')
+"   "set cmdheight=0
+"   set cmdheight=1
+" else
+"   set cmdheight=2
+" endif
 set showcmd
 set smartindent
 set smarttab
@@ -309,22 +308,25 @@ aug END
 " }}}
 " status line {{{
 
-if has('nvim')
-  set statusline=%{''}
-  set fillchars=stl:─,stlnc:─,vert:│
-  set laststatus=2
-else
-  set statusline=[%n]\        " バッファ番号
-  set statusline+=%f\         " 相対ファイル名
-  set statusline+=%m\         " バッファ状態[+]
-  set statusline+=%r          " 読み取り専用フラグ
-  set statusline+=%<%=        " 右寄せ
-  set statusline+=%{'['.(&fenc!=''?&fenc:'?').'-'.&ff.']'}\   " フォーマット＆文字コード
-  set statusline+=%y\         " タイプ
-  set statusline+=%4l,%2c\    " 行、列
-  set statusline+=%3p%%\      " 何％
-  set laststatus=2
-endif
+set statusline=%{''}
+set fillchars=stl:─,stlnc:─,vert:│
+set laststatus=2
+" if has('nvim')
+"   set statusline=%{''}
+"   set fillchars=stl:─,stlnc:─,vert:│
+"   set laststatus=2
+" else
+"   set statusline=[%n]\        " バッファ番号
+"   set statusline+=%f\         " 相対ファイル名
+"   set statusline+=%m\         " バッファ状態[+]
+"   set statusline+=%r          " 読み取り専用フラグ
+"   set statusline+=%<%=        " 右寄せ
+"   set statusline+=%{'['.(&fenc!=''?&fenc:'?').'-'.&ff.']'}\   " フォーマット＆文字コード
+"   set statusline+=%y\         " タイプ
+"   set statusline+=%4l,%2c\    " 行、列
+"   set statusline+=%3p%%\      " 何％
+"   set laststatus=2
+" endif
 
 
 "set laststatus=0

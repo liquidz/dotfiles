@@ -42,19 +42,18 @@
     "typescript",
     "javascriptreact",
     "javascript",
-    "json",
-    "graphql"
+    "json"
+    //"graphql"
   ],
 
   // cf. https://github.com/neoclide/coc-tsserver#configuration-options
-  "typescript.inlayHints.parameterNames.enabled": "all",
-  "typescript.inlayHints.parameterTypes.enabled": true,
-  "typescript.inlayHints.variableTypes.enabled": true,
-  "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
-  "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
-  "typescript.inlayHints.enumMemberValues.enabled": true,
-
-  "inlayHint.enable": true,
+  // "typescript.inlayHints.parameterNames.enabled": "all",
+  // "typescript.inlayHints.parameterTypes.enabled": true,
+  // "typescript.inlayHints.variableTypes.enabled": true,
+  // "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+  // "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+  // "typescript.inlayHints.enumMemberValues.enabled": true,
+  // "inlayHint.enable": true,
 
   "diagnostic-languageserver.linters": {
     "clj_kondo_lint": {
