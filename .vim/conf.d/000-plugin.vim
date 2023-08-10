@@ -580,7 +580,7 @@ if s:has_plug('lightline.vim') " {{{
         \   'subseparator': { 'left': "\ue0b5", 'right':  "\ue0b7" },
         \   'tabline': {
         \     'left': [[ 'tabs' ]],
-        \     'right': [['filetype', 'bufnum' ], ['iced']]
+        \     'right': [['filetype', 'bufnum' ], ['anzu'], ['iced']]
         \   },
         \   'component_function': {
         \     'anzu': 'anzu#search_status',
