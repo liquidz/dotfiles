@@ -1,0 +1,286 @@
+#[[plugins]]
+#repo = '$HOME/src/github.com/liquidz/vim-riced'
+#if = 'has("unix")'
+#on_ft = 'clojure'
+
+[[plugins]]
+repo = '~/src/github.com/liquidz/vim-iced'
+if = 'has("unix")'
+on_ft = 'clojure'
+depends = ['guns/vim-sexp']
+hook_source = '''
+  if !exists('g:use_vim_diced')
+    let g:use_vim_diced = v:false
+  endif
+
+  let g:iced_formatter = 'cljstyle'
+  " let g:iced_formatter = 'joker'
+  " let g:iced_formatter = 'zprint'
+  let g:iced_enable_clj_kondo_analysis = v:true
+  let g:iced_enable_clj_kondo_local_analysis = v:true
+  let g:iced_enable_enhanced_definition_extraction = v:false
+  let g:iced_enable_auto_document = 'insert'
+
+  let g:clojure_fuzzy_indent_patterns = [
+      \ '^with', '^def', '^let', '^\w\+-let'
+      \ ]
+
+  let g:iced#buffer#stdout#max_line = 512
+  let g:iced#buffer#stdout#mods = 'vertical'
+  "let g:iced#buffer#document#mods = 'vertical'
+  let g:iced#clojuredocs#use_clj_docs_on_cljs = v:true
+  let g:iced#grep#prg = 'git grep -I --line-number --no-color'
+  let g:iced#nrepl#auto#does_switch_session = v:true
+  let g:iced#nrepl#complete#ignore_context = v:true
+  let g:iced#nrepl#skip_evaluation_when_buffer_size_is_exceeded = v:true
+  let g:iced_enable_auto_indent = v:false
+  let g:iced_enable_default_key_mappings = v:true
+  ""let g:iced_enable_default_key_mappings = (! g:use_vim_diced)
+  "let g:iced#message#enable_notify = v:true
+  let g:iced#navigate#prefer_local_jump = v:true
+  let g:iced#nrepl#auto#document_delay = 200
+
+  " hi link IcedEvalPopupColor Title
+  " " highlight IcedEvalPopupColor ctermfg=5 guifg=#FF7BA9
+  let g:iced#eval#popup_highlight = 'IcedEvalPopupColor'
+
+  "let g:iced#eval#popup_align = 'right'
+  "let g:iced#eval#keep_inline_result = v:true
+
+  "set clipboard=unnamed
+
+  let g:iced#navigate#jump_fallback_command = ':call CocAction("jumpDefinition")'
+
+  let g:iced_multi_session#does_switch_session = v:true
+
+  let g:iced#nrepl#eval#ignoring_vars_in_stacktrace = [
+        \ 'clojure.core/apply',
+        \ 'clojure.core/eval',
+        \ 'clojure.core/with-bindings*',
+        \ 'clojure.lang.AFn/applyTo',
+        \ 'clojure.lang.AFn/applyToHelper',
+        \ 'clojure.lang.AFn/run',
+        \ 'clojure.lang.Compiler/eval',
+        \ 'clojure.lang.RestFn/invoke',
+        \ 'clojure.lang.Var/applyTo',
+        \ 'clojure.main/repl',
+        \ 'java.lang.Thread/run',
+        \ 'nrepl.middleware.interruptible-eval/evaluate',
+        \ 'nrepl.middleware.interruptible-eval/interruptible-eval',
+        \ 'nrepl.middleware.session/session-exec',
+        \ ]
+
+  let g:iced#selector#search_order = ['ddu', 'telescope', 'fzf']
+
+  let g:iced#palette = {
+        \ 'LspDemoteFn': ":call MyCocExecuteCommand('demote-fn', [])",
+        \ 'LspPromoteFn': ":call MyCocExecuteCommand('promote-fn', [])",
+        \ 'LspCreateFunction': ":call MyCocExecuteCommand('create-function', [])",
+        \ 'LspCyclePrivacy': ":call MyCocExecuteCommand('cycle-privacy', [])",
+        \ 'LspSortMap': ":call MyCocExecuteCommand('sort-map', [])",
+        \ 'LspIntroduceLet': ":call MyCocExecuteCommand('introduce-let', [])",
+        \ 'LspBrowseReferences': ":call CocActionAsync('jumpReferences')",
+        \ }
+  let g:iced_sign = {'error': "\uf1e2", 'trace': 'T', 'lint': 'L'}
+  let g:iced#format#rule = {'#"^\w"': '[[:inner 0]]'}
+  let g:iced#format#options = {
+      \ 'remove-consecutive-blank-lines?': v:false,
+      \ 'remove-multiple-non-indenting-spaces?': v:true,
+      \ }
+
+  aug MyClojureSetting
+    au!
+    "" cljstyle auto fix
+    "au BufWritePre *.clj,*.cljs,*.cljc,*.edn execute ':IcedFormatSyncAll'
+
+    if !g:use_vim_diced
+      au BufWritePre *.clj,*.cljs,*.cljc,*.edn execute ':IcedFormatSync'
+    endif
+  aug END
+'''
+[plugins.ftplugin]
+clojure = '''
+  let g:clojure_syntax_keywords = {
+       \ 'clojureDefine': ['s/defn', 's/fn', 's/defschema', 's/defmethod', 's/defprotocol', 's/defrecord'],
+       \ 'clojureSpecial': ['merr/let'],
+       \ }
+
+  " overwrite mapping
+  nmap <buffer> <Leader>em <Plug>(iced_eval_at_mark)
+  nmap <buffer> <Leader>ecm <Plug>(iced_eval_in_context_at_mark)
+  nmap <buffer> <Leader>eM <Plug>(iced_macroexpand_1_outer_list)
+  nmap <buffer> <Nop>(disable_expand_all) <Plug>(iced_macroexpand_outer_list)
+
+  function! MyClojureDefJump() abort
+    if iced#repl#is_connected()
+      exe "normal \<Plug>(iced_def_jump)"
+    else
+      exe "normal \<Plug>(coc-definition)"
+    endif
+  endfunction
+
+  nmap <buffer><silent> <C-]> :call MyClojureDefJump()<CR>
+  nmap <buffer> <Nop>(disable_def_jump) <Plug>(iced_def_jump)
+
+  if has('nvim')
+    nmap <buffer><silent> <C-]> :call MyClojureDefJump()<CR>
+  endif
+
+  nmap <buffer> <Leader>hn <Plug>(iced_ns_popup_show_form)
+  nmap <buffer> <Nop>(disable_next_use_case) <Plug>(iced_next_use_case)
+
+  nnoremap <buffer><silent> <Plug>(iced_eval_and_time) <Cmd>call iced#operation#setup_wrapper('(clojure.core/time *v)')<CR>g@
+  nmap <buffer> <Leader>eat <Plug>(iced_eval_and_time)<Plug>(sexp_outer_list)``
+
+  nnoremap <buffer> HH :lprevious<CR>
+  nnoremap <buffer> LL :lnext<CR>
+
+  imap <silent><buffer> <C-h> <Plug>(sexp_insert_backspace)
+  inoremap <buffer> >> ->
+
+  nmap <buffer> tt <Plug>(iced_cycle_src_and_test)
+  nnoremap <buffer> <Leader>go :<C-u>IcedEval (user/go)<CR>
+  nnoremap <buffer> <Leader>stop :<C-u>IcedEval (user/stop)<CR>
+  nnoremap <buffer> <Leader>Go :<C-u>IcedEval (user/reset)<CR>
+
+  nmap <buffer> <Leader><Esc> <Cmd>IcedClearInlineResult<CR>
+  map <buffer> q :<C-u>q<CR>
+
+  nmap <buffer> <Leader>eae <Plug>(iced_eval_and_tap)<Plug>(sexp_outer_list)``
+
+  nmap <buffer> <Leader>ere <Plug>(iced_eval_and_replace)<Plug>(sexp_outer_list)``
+  nmap <buffer> <Leader>ert <Plug>(iced_eval_and_replace)<Plug>(sexp_outer_top_list)``
+
+  nmap <buffer> <Leader>epe <Plug>(iced_eval_and_print)<Plug>(sexp_outer_list)``
+
+  nmap <silent> <buffer> g<C-]> <Cmd>IcedDefJump . tabedit<CR>
+  nmap <silent> <buffer> v<C-]> <Cmd>IcedDefJump . vsplit<CR>
+  nmap <silent> <buffer> r<C-]> <Cmd>IcedBrowseReferences<CR>
+
+  "" vim-sexp
+  nmap <silent><buffer> <LocalLeader>kk <Plug>(sexp_swap_list_backward)
+  xmap <silent><buffer> <LocalLeader>kk <Plug>(sexp_swap_list_backward)
+  nmap <silent><buffer> <LocalLeader>kj <Plug>(sexp_swap_list_forward)
+  xmap <silent><buffer> <LocalLeader>kj <Plug>(sexp_swap_list_forward)
+  nmap <silent><buffer> <LocalLeader>kh <Plug>(sexp_swap_element_backward)
+  xmap <silent><buffer> <LocalLeader>kh <Plug>(sexp_swap_element_backward)
+  nmap <silent><buffer> <LocalLeader>kl <Plug>(sexp_swap_element_forward)
+  xmap <silent><buffer> <LocalLeader>kl <Plug>(sexp_swap_element_forward)
+
+  vmap <silent><buffer> <LocalLeader>ke <Plug>(dps_paredit_sexp_range_expansion)
+
+  nmap <silent><buffer> <Leader>l <Plug>(sexp_insert_at_list_tail)<CR>
+  nmap <silent><buffer> <Leader>o <Plug>(sexp_insert_at_list_tail)<Right><CR>
+
+  "" vim-iced-kaocha
+  nmap <silent><buffer> <Leader>ktt <Plug>(iced_kaocha_test_under_cursor)
+  nmap <silent><buffer> <Leader>ktn <Plug>(iced_kaocha_test_ns)
+  nmap <silent><buffer> <Leader>ktr <Plug>(iced_kaocha_test_redo)
+  nmap <silent><buffer> <Leader>ktl <Plug>(iced_kaocha_test_rerun_last)
+'''
+
+[[plugins]]
+repo = 'guns/vim-sexp'
+on_ft = ['lisp', 'clojure']
+hook_source = '''
+  let g:sexp_filetypes = 'clojure,lisp'
+  let g:sexp_enable_insert_mode_mappings=0
+  let g:sexp_mappings = {
+       \ 'sexp_indent': '',
+       \ 'sexp_indent_top': '',
+       \ }
+'''
+
+[[plugins]]
+repo = 'eraserhd/parinfer-rust'
+on_ft = 'clojure'
+hook_post_update = '''
+  echo "Start to build parinfer-rust"
+  let l:cwd = getcwd()
+  try
+    lcd $HOME/.vim/.cache/dein/repos/github.com/eraserhd/parinfer-rust
+    call mkdir('.cargo', 'p')
+    call writefile(['[build]', 'target = "aarch64-apple-darwin"'], '.cargo/config')
+
+    call system('cargo build --release')
+    if isdirectory('./target/aarch64-apple-darwin/release')
+      if isdirectory('./target/release')
+        call delete('./target/release', 'rf')
+      endif
+      call rename('./target/aarch64-apple-darwin/release', './target/release')
+    endif
+  finally
+    execute printf('lcd %s', l:cwd)
+  endtry
+'''
+hook_source = '''
+  let g:parinfer_mode = 'smart'
+  "let g:parinfer_force_balance = v:true
+  "let g:parinfer_logfile = '/tmp/parinfer.log'
+
+  function! s:parinfer_toggle() abort
+    if g:parinfer_mode ==# 'smart'
+      let g:parinfer_mode = 'paren'
+    else
+      let g:parinfer_mode = 'smart'
+    endif
+    echo printf('Parinfer is "%s" mode now', g:parinfer_mode)
+  endfunction
+
+  command! ParinferToggle call <SID>parinfer_toggle()
+  nnoremap <Leader>pt :<C-u>ParinferToggle<CR>
+'''
+
+## only vim?
+[[plugins]]
+repo = 'lambdalisue/fern.vim'
+on_ft = 'clojure'
+if = 'has("unix") && !has("nvim")'
+hook_source = '''
+  aug MyFernFileSetting
+    au!
+    " lambdalisue/fern-bookmark.vim
+    au FileType fern nmap <buffer><nowait> b :<C-u>Fern bookmark:///<CR>
+  aug END
+'''
+
+# [[plugins]]
+# repo = '~/src/github.com/liquidz/vim-iced-fern-debugger'
+# if = 'has("unix") && !has("nvim")'
+# on_ft = 'clojure'
+# depends = ['lambdalisue/fern.vim']
+
+[[plugins]]
+repo = '~/src/github.com/liquidz/vim-iced-function-list'
+if = 'has("unix")'
+on_ft = 'clojure'
+
+[[plugins]]
+repo = '~/src/github.com/liquidz/vim-iced-kaocha'
+if = 'has("unix")'
+on_ft = 'clojure'
+
+[[plugins]]
+repo = '~/src/github.com/liquidz/vim-iced-multi-session'
+if = 'has("unix")'
+on_ft = 'clojure'
+
+[[plugins]]
+repo = '~/src/github.com/liquidz/vim-iced-neil'
+if = 'has("unix")'
+on_ft = 'clojure'
+
+# [[plugins]]
+# repo = '~/src/github.com/liquidz/vim-clojuredocs-help'
+# if = 'has("unix")'
+# on_ft = 'clojure'
+
+[[plugins]]
+repo = '~/src/github.com/liquidz/vim-iced-coc-source'
+if = '!g:use_ddc && !g:use_cmp'
+on_ft = 'clojure'
+
+[[plugins]]
+repo = '~/src/github.com/liquidz/vim-iced-ddu-selector'
+if = 'g:use_ddu'
+on_ft = 'clojure'

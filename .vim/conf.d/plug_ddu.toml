@@ -1,0 +1,316 @@
+[[plugins]]
+repo = 'Shougo/ddu.vim'
+depends = ['vim-denops/denops.vim']
+hook_add = '''
+  function! s:resumable_ddu(...) abort
+    let g:last_ddu_name = a:1
+    exec printf('Ddu -name=%s %s', g:last_ddu_name, join(a:000[1:], ' '))
+  endfunction
+
+  function! s:ddu_resume() abort
+    if ! exists('g:last_ddu_name') | return | endif
+    call ddu#start({
+          \ 'name': g:last_ddu_name,
+          \ 'resume': v:true,
+          \ 'uiParams': {'_': {'startFilter': v:false},
+          \              'ff': {'startFilter': v:false}},
+          \ })
+  endfunction
+
+  command! -nargs=* ResumableDdu call s:resumable_ddu(<f-args>)
+  command! DduResumeLast call s:ddu_resume(<f-args>)
+'''
+hook_source = '''
+  call ddu#custom#patch_global({
+    \ 'ui': 'ff',
+    \ 'uiParams': {
+    \   'ff': {
+    \     'filterSplitDirection': has('nvim') ? 'floating' : 'botright',
+    \     "autoAction" : { "name": "preview" },
+    \     "previewWindowOptions": [ ["&signcolumn", "no"], ["&wrap", 0], ["&number", 0]],
+    \     "previewSplit": "vertical",
+    \     "previewWidth": 60,
+    \   },
+    \   'filer': {
+    \     'split': 'no',
+    \   },
+    \ },
+    \
+    \ 'sources': [
+    \   {'name': 'file_rec', 'params': {}},
+    \ ],
+    \ 'sourceOptions': {
+    \   '_': {
+    \     'matchers': ['matcher_fzf'],
+    \     'sorters': ['sorter_fzf'],
+    \   },
+    \   'file_rec': {
+    \     'matchers': ['matcher_fzf', 'matcher_hidden'],
+    \   },
+    \   'file_external': {
+    \     'matchers': ['matcher_fzf', 'matcher_hidden'],
+    \   },
+    \   'line': {
+    \     'matchers': ['matcher_kensaku'],
+    \   },
+    \ },
+    \ 'sourceParams': {
+    \   'file_rec': {
+    \     'path': trim(system('git rev-parse --show-toplevel')),
+    \     'ignoredDirectories': ['.git', '.cache', 'target', 'postgres', 'node_modules', '.shadow-cljs', '.cpcache'],
+    \   },
+    \   'file_external': {
+    \     'cmd': ['fd', '.', '--type', 'f', '--hidden'],
+    \   },
+    \   'rg': {
+    \     'path': trim(system('git rev-parse --show-toplevel')),
+    \     'args': ['--json'],
+    \   },
+    \ },
+    \
+    \ 'kindOptions': {
+    \   'file': {
+    \     'defaultAction': 'open',
+    \   },
+    \   'custom-list': {
+    \     'defaultAction': 'callback',
+    \   },
+    \   'window': {
+    \     'defaultAction': 'open'
+    \   },
+    \   'action': {
+    \     'defaultAction': 'do',
+    \   },
+    \   'word': {
+    \     'defaultAction': "append",
+    \   },
+    \   'source': {
+    \     'defaultAction': 'execute',
+    \   },
+    \ }
+    \ })
+
+  call ddu#custom#patch_global({
+    \ 'filterParams': {
+    \   'matcher_fzf': {
+    \     'highlightMatched': 'SpellLocal',
+    \   },
+    \   'matcher_kensaku': {
+    \     'highlightMatched': 'SpellLocal',
+    \   },
+    \ }})
+
+  " call ddu#custom#patch_local('files', {
+  "  \ 'uiParams': {
+  "  \   'ff': {
+  "  \     'split': has('nvim') ? 'floating' : 'horizontal',
+  "  \   }
+  "  \ },
+  "  \ })
+
+  " call ddu#custom#patch_global({
+  "  \ 'ui': 'filer',
+  "  \ 'actionOptions': {
+  "  \   'narrow': {
+  "  \     'quit': v:false,
+  "  \   },
+  "  \ }})
+
+  function! s:ddu_file_rec(name) abort
+    let g:last_ddu_name = a:name
+    let has_git_dir = (finddir('.git', ';') !=# '')
+    let source = (has_git_dir ? 'file_external' : 'file_rec')
+    let path = trim(has_git_dir ? system('git rev-parse --show-toplevel') : '.')
+    call ddu#start({
+        \ 'name': g:last_ddu_name,
+        \ 'sources': [{'name': source, 'options': {'path': path}}],
+        \ 'uiParams': {'_': {'displaySourceName': 'short'},
+        \              'ff': {'startFilter': v:true}},
+        \ })
+  endfunction
+
+  function! s:ddu_rg(name) abort
+    let g:last_ddu_name = a:name
+    call ddu#start({
+          \ 'name': g:last_ddu_name,
+          \ 'input': expand('<cword>'),
+          \ 'volatile': v:true,
+          \ 'sources': [{'name': 'rg',
+          \              'options': {'matchers': []}}],
+          \ 'uiParams': {'ff': {'ignoreEmpty': v:false,
+          \                     'autoResize': v:false}},
+          \ })
+  endfunction
+
+  function! s:ddu_mr(name) abort
+    let g:last_ddu_name = a:name
+    call ddu#start({
+          \ 'name': g:last_ddu_name,
+          \ 'sources': [{'name': 'mr', 'params': {'kind': 'mrw'}}],
+          \ 'uiParams': {'_': {'displaySourceName': 'short'},
+          \              'ff': {'startFilter': v:true}},
+          \ })
+  endfunction
+
+  nnoremap <Leader>dd <Cmd>DduResumeLast<CR>
+
+  nnoremap <C-p> <Cmd>call <SID>ddu_file_rec('file')<CR>
+  nnoremap <Leader>dl <Cmd>ResumableDdu search line -ui-param-startFilter<CR>
+  nnoremap <Leader>d* <Cmd>ResumableDdu search line -input=`expand('<cword>')` -ui-param-startFilter=v:false<CR>
+  nnoremap <Leader>db <Cmd>ResumableDdu buffer buffer -ui-param-startFilter<CR>
+  nnoremap <Leader>dg <Cmd>call <SID>ddu_rg('ripgrep')<CR>
+  nnoremap <Leader>du <Cmd>call ddu#start({'sources': [{'name': 'source'}]})<CR>
+
+  nnoremap <Leader>df <Cmd>Ddu -ui=filer -source-option-columns=filename file<CR>
+  nnoremap <Leader><Leader> <Cmd>call <SID>ddu_mr('mr')<CR>
+
+  "nnoremap <Leader>dD <Cmd>ResumableDdu git_diff git_diff -ui-param-startFilter=v:false<CR>
+
+  "command! DduRgLive call <SID>ddu_rg_live()
+
+  autocmd FileType ddu-ff call s:ddu_ff_my_settings()
+  function! s:ddu_ff_my_settings() abort
+    nnoremap <buffer><silent> <CR> <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
+    nnoremap <buffer><silent> <Space> <Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>
+    nnoremap <buffer><silent> i <Cmd>call ddu#ui#ff#do_action('openFilterWindow')<CR>
+    nnoremap <buffer><silent> a <Cmd>call ddu#ui#ff#do_action('chooseAction')<CR>
+    nnoremap <buffer><silent> v <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'open', 'params': {'command': 'vsplit'}})<CR>
+    nnoremap <buffer><silent> t <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'open', 'params': {'command': 'tabedit'}})<CR>
+    nnoremap <buffer><silent> q <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+    nnoremap <buffer><silent> <Esc> <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+  endfunction
+
+  autocmd FileType ddu-ff-filter call s:ddu_filter_my_settings()
+  function! s:ddu_filter_my_settings() abort
+    inoremap <buffer> <CR> <Esc><Cmd>call ddu#ui#do_action('closeFilterWindow')<CR>
+    nnoremap <buffer> <CR> <Cmd>call ddu#ui#do_action('closeFilterWindow')<CR>
+
+    nnoremap <buffer><silent> q <Cmd>close<CR>
+    nnoremap <buffer><silent> <Esc> <Cmd>close<CR>
+  endfunction
+
+  autocmd FileType ddu-filer call s:ddu_filer_my_settings()
+  function! s:ddu_filer_my_settings() abort
+    nnoremap <buffer><expr> <CR> ddu#ui#filer#is_directory()
+          \ ? "<Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'narrow'})<CR>"
+          \ : "<Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'open'})<CR>"
+    nnoremap <buffer><expr> l ddu#ui#filer#is_directory()
+          \ ? "<Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'narrow'})<CR>"
+          \ : "<Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'open'})<CR>"
+    nnoremap <buffer> h <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'narrow', 'params': {'path': ".."}})<CR>
+    nnoremap <buffer><silent> o <Cmd>call ddu#ui#filer#do_action('expandItem')<CR>
+    nnoremap <buffer> q <Cmd>call ddu#ui#filer#do_action('quit')<CR>
+    nnoremap <buffer> d <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'trash'})<CR>
+    nnoremap <buffer> r <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'rename'})<CR>
+    nnoremap <buffer> K <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'newDirectory'})<CR>
+    nnoremap <buffer> % <Cmd>call ddu#ui#filer#do_action('itemAction', {'name': 'newFile'})<CR>
+    nnoremap <buffer> <C-l> <Cmd>call ddu#ui#filer#do_action('checkItems')<CR>
+	endfunction
+'''
+
+### UIs
+
+[[plugins]]
+repo = 'Shougo/ddu-ui-ff'
+depends = ['vim-denops/denops.vim']
+
+[[plugins]]
+repo = 'Shougo/ddu-ui-filer'
+depends = ['vim-denops/denops.vim']
+
+## Sources
+
+[[plugins]]
+repo = 'Shougo/ddu-source-action'
+depends = ['vim-denops/denops.vim']
+
+[[plugins]]
+repo = 'Shougo/ddu-source-file'
+depends = ['vim-denops/denops.vim']
+
+[[plugins]]
+repo = 'Shougo/ddu-source-file_rec'
+depends = ['vim-denops/denops.vim']
+
+[[plugins]]
+repo = 'Shougo/ddu-source-line'
+depends = ['vim-denops/denops.vim']
+
+[[plugins]]
+repo = 'shun/ddu-source-buffer'
+depends = ['vim-denops/denops.vim']
+
+[[plugins]]
+repo = 'Shougo/ddu-source-file_old'
+depends = ['vim-denops/denops.vim']
+
+[[plugins]]
+repo = 'Shougo/ddu-source-register'
+depends = ['vim-denops/denops.vim']
+
+[[plugins]]
+repo = '4513ECHO/ddu-source-source'
+depends = ['vim-denops/denops.vim']
+
+[[plugins]]
+repo = 'matsui54/ddu-source-file_external'
+depends = ['vim-denops/denops.vim']
+
+[[plugins]]
+repo = '~/src/github.com/liquidz/ddu-source-custom-list'
+depends = ['vim-denops/denops.vim']
+
+[[plugins]]
+repo = 'shun/ddu-source-rg'
+depends = ['vim-denops/denops.vim']
+
+[[plugins]]
+repo = 'kamecha/ddu-source-window'
+depends = ['vim-denops/denops.vim']
+
+[[plugins]]
+repo = 'lambdalisue/mr.vim'
+
+[[plugins]]
+repo = 'kuuote/ddu-source-mr'
+depends = ['lambdalisue/mr.vim', 'vim-denops/denops.vim']
+
+### Filters
+
+[[plugins]]
+repo = 'yuki-yano/ddu-filter-fzf'
+depends = ['vim-denops/denops.vim']
+
+[[plugins]]
+repo = 'Shougo/ddu-filter-matcher_substring'
+depends = ['vim-denops/denops.vim']
+
+[[plugins]]
+repo = 'Shougo/ddu-filter-matcher_hidden'
+depends = ['vim-denops/denops.vim']
+
+[[plugins]]
+repo = 'lambdalisue/kensaku.vim'
+depends = ['vim-denops/denops.vim']
+
+[[plugins]]
+repo = 'Milly/ddu-filter-kensaku'
+depends = ['lambdalisue/kensaku.vim', 'vim-denops/denops.vim']
+
+### Kinds
+
+[[plugins]]
+repo = 'Shougo/ddu-kind-file'
+depends = ['vim-denops/denops.vim']
+
+[[plugins]]
+repo = 'Shougo/ddu-kind-word'
+depends = ['vim-denops/denops.vim']
+
+[[plugins]]
+repo = 'Shougo/ddu-commands.vim'
+depends = ['vim-denops/denops.vim']
+
+[[plugins]]
+repo = 'Shougo/ddu-column-filename'
+depends = ['vim-denops/denops.vim']
