@@ -6,6 +6,8 @@ hook_add = '''
     let g:coc_node_path = '/usr/local/bin/node'
   endif
 
+  let g:iced#util#pumvisible_fn = function('coc#pum#visible')
+
   let g:coc_global_extensions = [
        \ 'coc-copilot',
        \ 'coc-deno',
@@ -26,11 +28,12 @@ hook_add = '''
   endfunction
 
   iunmap <expr><tab>
-  inoremap <silent><expr> <TAB> coc#pum#visible()
-    \ ? coc#pum#next(1)
-    \ : <SID>coc_check_back_space()
-    \   ? "\<Tab>"
-    \   : coc#refresh()
+  inoremap <silent><expr> <TAB>
+    \ coc#pum#visible() ? coc#pum#next(1) :
+    \ exists('b:_copilot.suggestions') ? copilot#Accept("\<CR>") :
+    \ <SID>coc_check_back_space() ? "\<Tab>" :
+    \ coc#refresh()
+  inoremap <silent><expr> <c-l> coc#refresh()
 
   inoremap <expr> <CR> coc#pum#visible() ? coc#_select_confirm() : "\<CR>"
   inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"

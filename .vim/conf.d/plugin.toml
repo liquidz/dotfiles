@@ -16,16 +16,6 @@ hook_source = '''
 '''
 
 [[plugins]]
-repo = 'machakann/vim-sandwich'
-hook_source = '''
-  let g:textobj_sandwich_no_default_key_mappings = 1
-  omap ii <Plug>(textobj-sandwich-auto-i)
-  xmap ii <Plug>(textobj-sandwich-auto-i)
-  omap aa <Plug>(textobj-sandwich-auto-a)
-  xmap aa <Plug>(textobj-sandwich-auto-a)
-'''
-
-[[plugins]]
 repo = 'yuki-yano/fuzzy-motion.vim'
 hook_source = '''
   let g:fuzzy_motion_matchers = ['fzf', 'kensaku']
@@ -38,8 +28,8 @@ repo = 'jparise/vim-graphql'
 [[plugins]]
 repo = 'mracos/mermaid.vim'
 
-[[plugins]]
-repo = 'aklt/plantuml-syntax'
+# [[plugins]]
+# repo = 'aklt/plantuml-syntax'
 
 [[plugins]]
 repo = 'cocopon/iceberg.vim'
@@ -89,35 +79,12 @@ hook_source = '''
 repo = 'ConradIrwin/vim-bracketed-paste'
 
 [[plugins]]
-repo = 'inside/vim-search-pulse'
-depends = ['osyo-manga/vim-anzu']
-hook_add = '''
-  let g:vim_search_pulse_mode = 'cursor_line'
-  let g:vim_search_pulse_disable_auto_mappings = 1
-
-  nmap n <Plug>(anzu-n)<Plug>Pulse
-  nmap N <Plug>(anzu-N)<Plug>Pulse
-  nmap * <Plug>(anzu-star)<Plug>Pulse
-  nmap # <Plug>(anzu-sharp)<Plug>Pulse
-'''
-
-[[plugins]]
-repo = 'jiangmiao/auto-pairs'
-hook_source = '''
-  aug AutoPairFileType
-    au Filetype clojure let b:AutoPairs = {'"': '"', '```': '```' }
-  aug END
-'''
-
-[[plugins]]
 repo = 'kana/vim-operator-user'
 
 [[plugins]]
 repo = 'kana/vim-submode'
 hook_source = '''
   let g:submode_timeout = 0
-'''
-hook_post_source = '''
   try
     call submode#enter_with('window', 'n', '', '<C-w><C-w>', '<Nop>')
     call submode#leave_with('window', 'n', '', '<Esc>')
@@ -162,92 +129,10 @@ hook_post_source = '''
 '''
 
 [[plugins]]
-repo = 'kana/vim-textobj-line'
-
-[[plugins]]
 repo = 'kana/vim-textobj-user'
 
 [[plugins]]
-repo = 'lambdalisue/readablefold.vim'
-
-[[plugins]]
-repo = 'luochen1990/rainbow'
-hook_add = '''
-  let g:rainbow_active = 1
-  let g:rainbow_conf = {
-        \ 'ctermfgs': ['darkmagenta', 'red', 'darkcyan', 'brown', 'darkgreen', 'darkred'],
-        \ 'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
-        \ 'separately': {'*': 0, 'clojure': {}}
-        \ }
-'''
-
-[[plugins]]
-repo = 'mattn/vim-sonictemplate'
-hook_add = '''
-  let g:sonictemplate_vim_template_dir = '$HOME/.vim/template'
-'''
-hook_source = '''
-  function! s:ddu_sonictemplate() abort
-    let candidates = sonictemplate#complete('', '', 0)
-    let id = denops#callback#register(
-          \ {s -> sonictemplate#apply(s, 'n')},
-          \ {'once': v:true})
-
-    stopinsert
-    call ddu#start({
-         \ 'sources': [{'name': 'custom-list',
-         \              'params': {'texts': candidates, 'callbackId': id}}],
-         \ 'uiParams': {'ff': {'startFilter': v:true}},
-         \ })
-  endfunction
-
-  function! s:my_sonictemplate() abort
-    let line = getline(line('.'))
-    let input = trim(strpart(line, 0, col('.')))
-    let pos = getcurpos()
-
-    if empty(input)
-      " call fzf#sonictemplate#run()
-      call s:ddu_sonictemplate()
-    else
-      call sonictemplate#postfix()
-      " 何も展開されなかった
-      if pos == getcurpos()
-        call fzf#sonictemplate#run()
-      endif
-    endif
-  endfunction
-
-  nnoremap <silent> <C-l> <Cmd>call <SID>my_sonictemplate()<CR>
-  inoremap <silent> <C-l> <Cmd>call <SID>my_sonictemplate()<CR>
-'''
-
-[[plugins]]
-repo = 'osyo-manga/vim-anzu'
-
-[[plugins]]
-repo = 'osyo-manga/vim-brightest'
-hook_add = '''
-  let g:brightest#highlight = { "group" : "BrightestUndercurl" }
-'''
-
-[[plugins]]
 repo = 'thinca/vim-localrc'
-
-[[plugins]]
-repo = 'thinca/vim-visualstar'
-
-[[plugins]]
-repo = 'tpope/vim-endwise'
-
-[[plugins]]
-repo = 'tpope/vim-repeat'
-
-[[plugins]]
-repo = 'tyru/open-browser.vim'
-
-[[plugins]]
-repo = 'liquidz/vim-file-to-file'
 
 [[plugins]]
 repo = 'seroqn/foldmaker.vim'
@@ -268,7 +153,7 @@ hook_source = '''
 
 [[plugins]]
 repo = 'itchyny/lightline.vim'
-if = '!has("nvim")'
+#if = '!has("nvim")'
 hook_add = '''
   if !has('gui_running')
     set t_Co=256
@@ -308,3 +193,6 @@ hook_add = '''
     au BufWritePost * GitGutter
   aug END
 '''
+
+[[plugins]]
+repo = '~/src/github.com/liquidz/vim-fixme'

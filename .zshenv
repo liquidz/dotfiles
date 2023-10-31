@@ -114,7 +114,7 @@ if which nvim > /dev/null 2>&1; then
    alias v=vim
 fi
 alias nvim_latest=~/Downloads/nvim-osx64/bin/nvim
-# alias vim=nvim
+alias vim=nvim
 # }}}
 # docker {{{
 #export DOCKER_TLS_VERIFY="1"
@@ -169,7 +169,7 @@ function __bookmarklist() {
     if [[ -d ~/src/bitbucket.org ]]; then
         find ~/src/bitbucket.org -maxdepth 2 -type d
     fi
-    find ~/.vim/repos -maxdepth 1 -type d
+    find ~/.vim/.cache/dein/repos/github.com -maxdepth 2 -type d
     if [[ -d ~/src/gitlab.com ]]; then
         find ~/src/gitlab.com -maxdepth 2 -type d
     fi

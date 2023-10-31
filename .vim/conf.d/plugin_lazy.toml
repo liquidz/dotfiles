@@ -50,13 +50,6 @@ hook_add = '''
   nnoremap <LocalLeader>gb <Cmd>TigBlame<CR>
 '''
 
-## Neovim 向けには tig-explorer で必要
-# [[plugins]]
-# repo = 'rbgrouleff/bclose.vim'
-# if = 'has("nvim")'
-# on_source = 'tig-explorer.vim'
-# depends = ['iberianpig/tig-explorer.vim']
-
 [[plugins]]
 repo = 'junegunn/vim-easy-align'
 on_map = '<Plug>(EasyAlign)'
@@ -274,7 +267,7 @@ on_ft = 'zig'
 [[plugins]]
 repo = 'inkarkat/vim-SyntaxRange'
 on_ft = 'toml'
-hook_post_source = "call SyntaxRange#Include(\"hook_.\+ = '''\", \"'''\", 'vim', '')"
+hook_source = "call SyntaxRange#Include(\"hook_.\+ = '''\", \"'''\", 'vim', '')"
 
 [plugins.ftplugin]
 toml = '''
@@ -286,3 +279,129 @@ toml = '''
     return line ==# '' || line[0:1] ==# '  '
   endfunction
 '''
+
+[[plugins]]
+repo = 'inside/vim-search-pulse'
+on_my_timer = 'on'
+hook_add = '''
+  let g:vim_search_pulse_mode = 'cursor_line'
+  let g:vim_search_pulse_disable_auto_mappings = 1
+
+  nmap n <Plug>(anzu-n)<Plug>Pulse
+  nmap N <Plug>(anzu-N)<Plug>Pulse
+  nmap * <Plug>(anzu-star)<Plug>Pulse
+  nmap # <Plug>(anzu-sharp)<Plug>Pulse
+'''
+
+[[plugins]]
+repo = 'jiangmiao/auto-pairs'
+on_my_timer = 'on'
+hook_source = '''
+  aug AutoPairFileType
+    au Filetype clojure let b:AutoPairs = {'"': '"', '```': '```' }
+  aug END
+'''
+
+[[plugins]]
+repo = 'kana/vim-textobj-line'
+on_my_timer = 'on'
+
+[[plugins]]
+repo = 'lambdalisue/readablefold.vim'
+on_my_timer = 'on'
+
+[[plugins]]
+repo = 'luochen1990/rainbow'
+on_my_timer = 'on'
+hook_add = '''
+  let g:rainbow_active = 1
+  let g:rainbow_conf = {
+        \ 'ctermfgs': ['darkmagenta', 'red', 'darkcyan', 'brown', 'darkgreen', 'darkred'],
+        \ 'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+        \ 'separately': {'*': 0, 'clojure': {}}
+        \ }
+'''
+
+[[plugins]]
+repo = 'machakann/vim-sandwich'
+on_my_timer = 'on'
+hook_source = '''
+  let g:textobj_sandwich_no_default_key_mappings = 1
+  omap ii <Plug>(textobj-sandwich-auto-i)
+  xmap ii <Plug>(textobj-sandwich-auto-i)
+  omap aa <Plug>(textobj-sandwich-auto-a)
+  xmap aa <Plug>(textobj-sandwich-auto-a)
+'''
+
+[[plugins]]
+repo = 'mattn/vim-sonictemplate'
+on_my_timer = 'on'
+hook_add = '''
+  let g:sonictemplate_vim_template_dir = '$HOME/.vim/template'
+'''
+hook_source = '''
+  function! s:ddu_sonictemplate() abort
+    let candidates = sonictemplate#complete('', '', 0)
+    let id = denops#callback#register(
+          \ {s -> sonictemplate#apply(s, 'n')},
+          \ {'once': v:true})
+
+    stopinsert
+    call ddu#start({
+         \ 'sources': [{'name': 'custom-list',
+         \              'params': {'texts': candidates, 'callbackId': id}}],
+         \ 'uiParams': {'ff': {'startFilter': v:true}},
+         \ })
+  endfunction
+
+  function! s:my_sonictemplate() abort
+    let line = getline(line('.'))
+    let input = trim(strpart(line, 0, col('.')))
+    let pos = getcurpos()
+
+    if empty(input)
+      " call fzf#sonictemplate#run()
+      call s:ddu_sonictemplate()
+    else
+      call sonictemplate#postfix()
+      " 何も展開されなかった
+      " if pos == getcurpos()
+      "   call fzf#sonictemplate#run()
+      " endif
+    endif
+  endfunction
+
+  nnoremap <silent> <LocalLeader>l <Cmd>call <SID>my_sonictemplate()<CR>
+  inoremap <silent> <LocalLeader>l <Cmd>call <SID>my_sonictemplate()<CR>
+'''
+
+[[plugins]]
+repo = 'osyo-manga/vim-anzu'
+on_my_timer = 'on'
+
+[[plugins]]
+repo = 'osyo-manga/vim-brightest'
+on_my_timer = 'on'
+hook_add = '''
+  let g:brightest#highlight = { "group" : "BrightestUndercurl" }
+'''
+
+[[plugins]]
+repo = 'thinca/vim-visualstar'
+on_my_timer = 'on'
+
+[[plugins]]
+repo = 'tpope/vim-endwise'
+on_my_timer = 'on'
+
+[[plugins]]
+repo = 'tpope/vim-repeat'
+on_my_timer = 'on'
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+on_my_timer = 'on'
+
+[[plugins]]
+repo = 'liquidz/vim-file-to-file'
+on_my_timer = 'on'

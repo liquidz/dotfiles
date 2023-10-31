@@ -55,3 +55,13 @@ command! ClearQfList call s:clear_qf_list()
 "   end
 "   vim.cmd([[copen]])
 " end, { range = true })
+
+let g:most_recently_closed = []
+augroup MostRecentlyClosed
+  autocmd!
+  autocmd BufWinLeave * call insert(g:most_recently_closed, expand('<amatch>'))
+augroup END
+
+noremap <Up> <Cmd>if len(g:most_recently_closed) > 0 \|
+               \     exec ':tabnew ' .. remove(g:most_recently_closed, 0) \|
+               \   endif<CR>

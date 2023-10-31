@@ -33,32 +33,55 @@ endif
 " ==================================================
 " let g:dein#auto_recache = !has('win32')
 
-let $BASE_DIR = fnamemodify(expand('<sfile>'), ':h')
-call dein#begin(s:dein_path, expand('<sfile>'))
+"if dein#min#load_state(s:dein_path)
+  let $BASE_DIR = fnamemodify(expand('<sfile>'), ':h')
+  call dein#begin(s:dein_path, expand('<sfile>'))
 
-call dein#load_toml('$BASE_DIR/plugin.toml', #{lazy: 0})
+  call dein#load_toml('$BASE_DIR/plugin.toml', #{lazy: 0})
+  if has('nvim')
+    call dein#load_toml('$BASE_DIR/plugin.nvim.toml', #{lazy: 0})
+  endif
 
-if g:use_ddu
-  call dein#load_toml('$BASE_DIR/plug_ddu.toml', #{lazy: 0})
-endif
+  if g:use_ddu
+    call dein#load_toml('$BASE_DIR/plug_ddu.toml', #{lazy: 0})
+  endif
 
-if g:use_ddc
-elseif g:use_cmp
-else
-  call dein#load_toml('$BASE_DIR/plug_coc.toml', #{lazy: 0})
-endif
+  if g:use_ddc
+  elseif g:use_cmp
+  else
+    call dein#load_toml('$BASE_DIR/plug_coc.toml', #{lazy: 0})
+  endif
 
-" LAZY
-call dein#load_toml('$BASE_DIR/plugin_lazy.toml', #{lazy: 1})
-call dein#load_toml('$BASE_DIR/lang_clojure.toml', #{lazy: 1})
+  " LAZY
+  call dein#load_toml('$BASE_DIR/plugin_lazy.toml', #{lazy: 1})
+  call dein#load_toml('$BASE_DIR/lang_clojure.toml', #{lazy: 1})
 
-call dein#end()
-call dein#save_state()
+  call dein#end()
+"   call dein#save_state()
+" endif
 
 " NOTE: filetype detection is needed
 if bufname('%') !=# ''
   silent filetype detect
 endif
+
+" ==================================================
+function! s:load_plugins_by_timer(_) abort
+  let s:manual_load_plugins = []
+  for s:name in keys(g:dein#_plugins)
+    let s:plugin = get(g:dein#_plugins, s:name)
+    if get(s:plugin, 'lazy', 0) == 1
+          \ && get(s:plugin, 'sourced', 1) == 0
+          \ && get(s:plugin, 'on_my_timer', 'off') ==# 'on'
+      call add(s:manual_load_plugins, s:plugin)
+    endif
+  endfor
+  " echom printf('FIXME %s', keys(g:dein#_plugins))
+  " echom printf('FIXME %s', g:dein#_plugins['plantuml-syntax' ])
+  " echom printf('FIXME %s', s:manual_load_plugins)
+  call dein#source(s:manual_load_plugins)
+endfunction
+call timer_start(200, funcref('s:load_plugins_by_timer'))
 
 filetype plugin indent on
 syntax enable

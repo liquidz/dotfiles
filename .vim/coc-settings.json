@@ -40,8 +40,8 @@
     //"markdown",
     "typescriptreact",
     "typescript",
-    "javascriptreact",
-    "javascript",
+    //"javascriptreact",
+    //"javascript",
     "json"
     //"graphql"
   ],
