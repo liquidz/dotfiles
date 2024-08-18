@@ -65,3 +65,11 @@ augroup END
 noremap <Up> <Cmd>if len(g:most_recently_closed) > 0 \|
                \     exec ':tabnew ' .. remove(g:most_recently_closed, 0) \|
                \   endif<CR>
+
+function! s:memo() abort
+  let fname = strftime('%Y-%m-%d.md')
+  let path = expand("$HOME/.vim/memo")
+  execute printf(':tabnew %s/%s', path, fname)
+endfunction
+
+command! Memo call s:memo()
