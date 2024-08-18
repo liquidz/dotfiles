@@ -39,6 +39,7 @@ return {
   -- shortcut
   leader = { key="a", mods="CTRL", timeout_milliseconds=1000},
   keys = {
+    {key = 'Tab', mods = 'CTRL', action = wezterm.action.DisableDefaultAssignment},
     {key = "r", mods = "LEADER|SHIFT", action = "ReloadConfiguration"},
     {key = "c", mods = "LEADER", action = act{SpawnTab = "CurrentPaneDomain"}},
     {key = "0", mods = "LEADER", action = act{ActivateTab = 0}},

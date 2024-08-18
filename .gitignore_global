@@ -1,5 +1,10 @@
 **/.lsp
+**/.nrepl.edn
 .DS_Store
 .local.vimrc
+.vim/coc-settings.json
 *.bk
 *.org
+*.old
+foo.*
+bar.*

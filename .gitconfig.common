@@ -15,6 +15,8 @@
 # 	external = difft
 [url "git@github.com:"]
 	pushinsteadof = https://liquidz@github.com/
+[rebase]
+  autostash = true
 [alias]
 	st   = status
 	ci   = ci-status
@@ -34,7 +36,7 @@
 
 [tig "bind"]
 	diff    = F       ?git commit --fixup %(commit)
-	diff    = R       !git rebase -i %(commit) --autosquash --keep-empty
+	diff    = R       !git rebase --rebase-merge -i %(commit) --autosquash --keep-empty
 	diff    = <C-V>   !nvim -c %(lineno) %(file)
 	generic = <C-L>   refresh
 	generic = B       view-blame
@@ -48,7 +50,7 @@
 	main    = B       ?git checkout -b %(promptBranchName:)
 	main    = C       !git commit
 	main    = F       ?git commit --fixup %(commit)
-	main    = R       ?git rebase -i %(commit) --autosquash --keep-empty
+	main    = R       ?git rebase --rebase-merge -i %(commit) --autosquash --keep-empty
 	main    = S       ?git stash save %(promptStashMessage:)
 	main    = W       ?git commit --allow-empty -m 'WIP [skip ci]'
 	main    = <Esc>p  ?git cherry-pick %(commit)
@@ -59,8 +61,8 @@
 	refs    = F       ?git fetch %(remote)
 	refs    = P       ?!git push -f %(remote) %(branch)
 	refs    = p       ?!git push -u %(remote) %(branch)
-	refs    = r       ?git rebase %(branch)
-	refs    = R       ?git rebase %(remote)/%(branch)
+	refs    = r       ?git rebase --rebase-merge %(branch)
+	refs    = R       ?git rebase --rebase-merge %(remote)/%(branch)
 	refs    = <C-R>   ?git branch -m %(branch) %(promptNewBranchName:)
 	refs    = x       ?!git branch -d %(branch)
 	refs    = X       ?!git branch -D %(branch)

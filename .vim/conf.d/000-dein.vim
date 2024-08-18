@@ -1,8 +1,21 @@
+"finish
+
 let g:denops_dev = v:false
 let g:use_ddu = v:true
+let g:use_ctrlp = v:false
+let g:use_fzf = v:true
 let g:use_ddc = v:false
 let g:use_cmp = v:false
-let g:use_vim_diced = v:false
+let g:use_vim_iced = v:true
+let g:use_vim_elin = v:false
+
+if stridx(getcwd(), 'vim-elin') != -1
+      \ || stridx(getcwd(), 'antq') != -1
+      \ || stridx(getcwd(), 'build.edn') != -1
+  echom printf('ELIN ENABLED!')
+  let g:use_vim_iced = v:false
+  let g:use_vim_elin = v:true
+endif
 
 " ==================================================
 " AUTO INSTALLING DEIN
@@ -27,7 +40,6 @@ if &runtimepath !~# s:target_rtp
   execute 'set runtimepath+=' .. s:dein_repo_path
 endif
 
-
 " ==================================================
 " DEIN CONFIGURATION
 " ==================================================
@@ -46,6 +58,14 @@ endif
     call dein#load_toml('$BASE_DIR/plug_ddu.toml', #{lazy: 0})
   endif
 
+  if g:use_ctrlp
+    call dein#load_toml('$BASE_DIR/plug_ctrlp.toml', #{lazy: 0})
+  endif
+
+  if g:use_fzf
+    call dein#load_toml('$BASE_DIR/plug_fzf.toml', #{lazy: 0, merged: 0})
+  endif
+
   if g:use_ddc
   elseif g:use_cmp
   else
@@ -55,6 +75,9 @@ endif
   " LAZY
   call dein#load_toml('$BASE_DIR/plugin_lazy.toml', #{lazy: 1})
   call dein#load_toml('$BASE_DIR/lang_clojure.toml', #{lazy: 1})
+
+  call dein#load_toml('$BASE_DIR/plug_iced.toml', #{lazy: 1})
+  call dein#load_toml('$BASE_DIR/plug_elin.toml', #{lazy: 1})
 
   call dein#end()
 "   call dein#save_state()
@@ -85,3 +108,6 @@ call timer_start(200, funcref('s:load_plugins_by_timer'))
 
 filetype plugin indent on
 syntax enable
+
+command! DeinRecacheRuntimepath call dein#recache_runtimepath()
+command! DeinUpdate call dein#update()
