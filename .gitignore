@@ -20,3 +20,4 @@ bin/dad
 .cache
 **/.lsp
 .dvpm-cache
+.vim/template/clojure/*_work.clj
