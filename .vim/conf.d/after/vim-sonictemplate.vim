@@ -20,17 +20,23 @@ function! s:telescope_sonictemplate() abort
   call luaeval('require("uochan.telescope").sonictemplate(_A[1], _A[2])', [id, candidates])
 endfunction
 
+function! s:ui_select_sonictemplate() abort
+  let candidates = sonictemplate#complete('', '', 0)
+  let id = denops#callback#register(
+        \ {s -> sonictemplate#apply(s, 'n')},
+        \ {'once': v:true})
+  call luaeval('require("uochan.ui_select").sonictemplate(_A[1], _A[2])', [id, candidates])
+endfunction
+
 function! s:my_sonictemplate() abort
   let line = getline(line('.'))
   let input = trim(strpart(line, 0, col('.')))
   let pos = getcurpos()
 
   if empty(input)
-    if g:use_telescope
-      return s:telescope_sonictemplate()
-    endif
+    return s:ui_select_sonictemplate()
 
-    return call fzf#sonictemplate#run()
+    "return call fzf#sonictemplate#run()
     " call s:ddu_sonictemplate()
   else
     call sonictemplate#postfix()
