@@ -21,8 +21,8 @@
 " let g:loaded_2html_plugin       = 1
 " let g:loaded_gzip               = 1
 " let g:loaded_man                = 1
-" let g:loaded_matchit            = 1
-" let g:loaded_matchparen         = 1
+let g:loaded_matchit            = 1
+let g:loaded_matchparen         = 1
 " let g:loaded_netrwPlugin        = 1
 " let g:loaded_remote_plugins     = 1
 " let g:loaded_shada_plugin       = 1
@@ -156,12 +156,21 @@ cnoremap jj <Esc>
 
 nnoremap mz :<C-u>10messages<CR>
 
+nnoremap g/ /
+
 nnoremap <LocalLeader>sh :<C-u>terminal ++close zsh<CR>
 
 " https://medium.com/@vinodkri/zooming-vim-window-splits-like-a-pro-d7a9317d40
 " noremap <C-w>O <c-w>o
 " noremap <C-w>o <c-w>_ \| <c-w>\|
 " noremap <C-w>z <c-w>=
+nnoremap <Leader>wh <C-w>h
+nnoremap <Leader>wl <C-w>l
+nnoremap <Leader>wk <C-w>k
+nnoremap <Leader>wj <C-w>j
+nnoremap <Leader>ws <C-w>s
+nnoremap <Leader>wv <C-w>v
+nnoremap <Leader>wo <C-w>o
 
 " git commit の画面である場合
 if $HOME ==# $USERPROFILE || $GIT_EXEC_PATH !=# ''
@@ -230,6 +239,12 @@ nnoremap QQ :<C-u>bd!<CR>
 " 補完できるようにする
 set wildcharm=<Tab>
 cnoremap <expr> <Tab> '<Cmd>set nosmartcase<CR><Tab><Cmd>let &smartcase = ' .. &smartcase .. '<CR>'
+
+" https://blog.atusy.net/2024/05/29/vim-hl-enhanced/
+nnoremap H H<Plug>(H)
+nnoremap L L<Plug>(L)
+nnoremap <Plug>(H)H <PageUp>H<Plug>(H)
+nnoremap <Plug>(L)L <PageDown>Lzb<Plug>(L)
 
 " }}}
 " copy to clipboard {{{
@@ -450,6 +465,8 @@ let g:zip_zipcmd= ''
 
 if has('nvim')
   set runtimepath+=$HOME/.vim/
+else
+  set runtimepath+=$HOME/.config/vim
 endif
 
 runtime! conf.d/*.vim

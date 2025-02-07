@@ -13,7 +13,10 @@
                  ["maven-releases" {:url "https://localhost:8443/repository/maven-releases/"
                                     :creds :gpg}]
                  ["github" {:url "https://maven.pkg.github.com/liquidz/test"
-                            :creds :gpg}]]
+                            :creds :gpg}]
+
+                 ["clojars" {:url "https://clojars.org/repo"
+                             :sign-releases false}]]
 
   ;; :signing {:gpg-passphrase :env/gpgpass}
   :repl-options {:timeout 3600000}}}

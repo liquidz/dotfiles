@@ -43,7 +43,6 @@ else
   "nmap K <Plug>(coc-diagnostic-info)
   "nmap K <Plug>(coc-codelens-action)
   nmap <Leader>jt <Plug>(coc-type-definition)
-  nmap <Leader>hh <Plug>(coc-codeaction-selected)
 endif
 
 inoremap ;; <Esc>A;

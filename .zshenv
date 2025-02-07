@@ -1,5 +1,6 @@
 # path {{{
 PATH=$PATH:~/bin
+PATH=$PATH:~/bin/nvim-macos-arm64/bin
 PATH=$PATH:/opt/local/bin
 PATH=$PATH:~/.vim/repos/vim-themis/bin
 PATH=$PATH:/usr/local/nodejs/bin
@@ -10,6 +11,7 @@ PATH=$PATH:~/.cargo/bin
 PATH=$PATH:~/.skim/bin
 PATH=$PATH:~/.roswell/bin
 PATH=$PATH:~/src/github.com/liquidz/vim-iced/bin
+PATH=$PATH:~/src/github.com/liquidz/elin/bin
 PATH=$PATH:~/.nodebrew/current/bin
 PATH=$PATH:/opt/homebrew/bin
 
@@ -169,7 +171,7 @@ function __bookmarklist() {
     if [[ -d ~/src/bitbucket.org ]]; then
         find ~/src/bitbucket.org -maxdepth 2 -type d
     fi
-    find ~/.vim/.cache/dein/repos/github.com -maxdepth 2 -type d
+    find ~/.vim/.dvpm-cache/github.com -maxdepth 2 -type d
     if [[ -d ~/src/gitlab.com ]]; then
         find ~/src/gitlab.com -maxdepth 2 -type d
     fi

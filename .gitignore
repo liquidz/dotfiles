@@ -19,3 +19,4 @@ test/.workspace
 bin/dad
 .cache
 **/.lsp
+.dvpm-cache
