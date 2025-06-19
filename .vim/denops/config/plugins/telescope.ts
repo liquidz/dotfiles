@@ -41,10 +41,4 @@ export const telescopePlugins: Plugin[] = [
       console.log(new TextDecoder().decode((await cmd2.output()).stdout));
     },
   },
-
-  {
-    url: "liquidz/elin-telescope.nvim",
-    dst: "~/src/github.com/liquidz/elin-telescope.nvim",
-    profiles: ["neovim"],
-  },
 ];

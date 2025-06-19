@@ -1,4 +1,4 @@
 export const pluginStatus = {
-  telescope: false,
-  nvimDeck: true,
+  telescope: true,
+  nvimDeck: false,
 };

@@ -78,7 +78,11 @@ export const clojurePlugins: Plugin[] = [
     url: "liquidz/elin",
     dst: "~/src/github.com/liquidz/elin",
     profiles: ["default"],
-    dependencies: ["liquidz/elin-coc-source", "liquidz/elin-format"],
+    dependencies: [
+      "liquidz/elin-coc-source",
+      "liquidz/elin-format",
+      "liquidz/elin-telescope.nvim",
+    ],
     cache: {
       before: `
         let g:elin_enable_default_key_mappings = v:true
@@ -112,5 +116,10 @@ export const clojurePlugins: Plugin[] = [
     url: "liquidz/elin-format",
     dst: "~/src/github.com/liquidz/elin-format",
     profiles: ["default"],
+  },
+  {
+    url: "liquidz/elin-telescope.nvim",
+    dst: "~/src/github.com/liquidz/elin-telescope.nvim",
+    profiles: ["neovim"],
   },
 ];

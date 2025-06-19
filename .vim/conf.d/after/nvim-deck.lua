@@ -35,7 +35,7 @@ vim.api.nvim_create_autocmd('User', {
     -- If you want to start the filter by default, call ctx.prompt() here
     ctx.prompt()
     -- Enable preview mode by default
-    ctx.set_preview_mode(true)
+    --ctx.set_preview_mode(true)
   end
 })
 
@@ -100,7 +100,7 @@ local function find_files_in_git_root()
   deck.start(require('deck.builtin.source.files')({
     root_dir = get_git_root(),
     ignore_globs = global_ignore_globs,
-    decorators = { 'git_root_dirname' },
+    --decorators = { 'git_root_dirname' },
   }))
 end
 
@@ -137,3 +137,5 @@ end)
 
 -- Replace vim.ui.select
 vim.ui.select = deck.ui_select
+
+

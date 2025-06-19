@@ -21,8 +21,8 @@
 " let g:loaded_2html_plugin       = 1
 " let g:loaded_gzip               = 1
 " let g:loaded_man                = 1
-let g:loaded_matchit            = 1
-let g:loaded_matchparen         = 1
+" let g:loaded_matchit            = 1
+" let g:loaded_matchparen         = 1
 " let g:loaded_netrwPlugin        = 1
 " let g:loaded_remote_plugins     = 1
 " let g:loaded_shada_plugin       = 1
@@ -86,7 +86,9 @@ cnoremap <expr> ? getcmdtype() == '?' ? '\?' : '?'
 " }}}
 " paste {{{
 
-set pastetoggle=<C-x><C-p>
+if !has('nvim')
+  set pastetoggle=<C-x><C-p>
+endif
 
 " }}}
 " visual {{{

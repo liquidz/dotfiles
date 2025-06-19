@@ -154,30 +154,34 @@ hook_source = '''
 
   nnoremap <Leader>dd <Cmd>DduResumeLast<CR>
 
-  nnoremap <C-p> <Cmd>call <SID>ddu_file_rec('file')<CR>
-  nnoremap <Leader>dl <Cmd>ResumableDdu search line -ui-param-startFilter<CR>
-  nnoremap <Leader>d* <Cmd>ResumableDdu search line -input=`expand('<cword>')` -ui-param-startFilter=v:false<CR>
-  nnoremap <Leader>db <Cmd>ResumableDdu buffer buffer -ui-param-startFilter<CR>
+
+  ""Ddu file -ui-param-ff-startFilter=v:true;
+
+  " nnoremap <C-p> <Cmd>call <SID>ddu_file_rec('file')<CR>
+  " nnoremap <Leader><Leader> <Cmd>call <SID>ddu_mr('mr')<CR>
+
+  nnoremap <Leader>dl <Cmd>ResumableDdu search line -ui-param-ff-startFilter<CR>
+  nnoremap <Leader>d* <Cmd>ResumableDdu search line -input=`expand('<cword>')` -ui-param-ff-startFilter=v:false<CR>
+  nnoremap <Leader>db <Cmd>ResumableDdu buffer buffer -ui-param-ff-startFilter<CR>
   nnoremap <Leader>dg <Cmd>call <SID>ddu_rg('ripgrep')<CR>
   nnoremap <Leader>du <Cmd>call ddu#start({'sources': [{'name': 'source'}]})<CR>
 
   nnoremap <Leader>df <Cmd>Ddu -ui=filer -source-option-columns=filename file<CR>
-  nnoremap <Leader><Leader> <Cmd>call <SID>ddu_mr('mr')<CR>
 
-  "nnoremap <Leader>dD <Cmd>ResumableDdu git_diff git_diff -ui-param-startFilter=v:false<CR>
+  "nnoremap <Leader>dD <Cmd>ResumableDdu git_diff git_diff -ui-param-ff-startFilter=v:false<CR>
 
   "command! DduRgLive call <SID>ddu_rg_live()
 
   autocmd FileType ddu-ff call s:ddu_ff_my_settings()
   function! s:ddu_ff_my_settings() abort
-    nnoremap <buffer><silent> <CR> <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
-    nnoremap <buffer><silent> <Space> <Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>
-    nnoremap <buffer><silent> i <Cmd>call ddu#ui#ff#do_action('openFilterWindow')<CR>
-    nnoremap <buffer><silent> a <Cmd>call ddu#ui#ff#do_action('chooseAction')<CR>
-    nnoremap <buffer><silent> v <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'open', 'params': {'command': 'vsplit'}})<CR>
-    nnoremap <buffer><silent> t <Cmd>call ddu#ui#ff#do_action('itemAction', {'name': 'open', 'params': {'command': 'tabedit'}})<CR>
-    nnoremap <buffer><silent> q <Cmd>call ddu#ui#ff#do_action('quit')<CR>
-    nnoremap <buffer><silent> <Esc> <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+    nnoremap <buffer><silent> <CR> <Cmd>call ddu#ui#do_action('itemAction')<CR>
+    nnoremap <buffer><silent> <Space> <Cmd>call ddu#ui#do_action('toggleSelectItem')<CR>
+    nnoremap <buffer><silent> i <Cmd>call ddu#ui#do_action('openFilterWindow')<CR>
+    nnoremap <buffer><silent> a <Cmd>call ddu#ui#do_action('chooseAction')<CR>
+    nnoremap <buffer><silent> v <Cmd>call ddu#ui#do_action('itemAction', {'name': 'open', 'params': {'command': 'vsplit'}})<CR>
+    nnoremap <buffer><silent> t <Cmd>call ddu#ui#do_action('itemAction', {'name': 'open', 'params': {'command': 'tabedit'}})<CR>
+    nnoremap <buffer><silent> q <Cmd>call ddu#ui#do_action('quit')<CR>
+    nnoremap <buffer><silent> <Esc> <Cmd>call ddu#ui#do_action('quit')<CR>
   endfunction
 
   autocmd FileType ddu-ff-filter call s:ddu_filter_my_settings()

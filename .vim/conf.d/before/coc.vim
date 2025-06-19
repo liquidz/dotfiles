@@ -51,7 +51,9 @@ command! LspCodeActionCursor :call CocActionAsync('codeAction', 'cursor')
 
 aug MyCocSetting
   au!
-  au FileType typescript,typescriptreact,css nnoremap <buffer> K :call CocActionAsync('doHover')<CR>
+  "au FileType typescript,typescriptreact,css nnoremap <buffer> K :call CocActionAsync('doHover')<CR>
+  au BufRead *.ts,*.tsx,*.css nnoremap <buffer> K :call CocActionAsync('doHover')<CR>
+  au BufEnter *.ts,*.tsx,*.css nnoremap <buffer> K :call CocActionAsync('doHover')<CR>
 aug END
 
 highlight MyCocInlayHint ctermfg=5 guifg=#3b474f

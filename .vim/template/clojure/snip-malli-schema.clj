@@ -1,1 +1,1 @@
-{:malli/schema [:=> [:cat {{_cursor_}}] :any]}
+(m/=> {{_expr_:@@}} [:=> [:cat {{_cursor_}}] :nil])

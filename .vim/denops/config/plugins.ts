@@ -2,6 +2,7 @@ import type { Plugin } from "./type.ts";
 import { telescopePlugins } from "./plugins/telescope.ts";
 import { nvimDeckPlugins } from "./plugins/nvim_deck.ts";
 import { clojurePlugins } from "./plugins/clojure.ts";
+import { codeCompanionPlugins } from "./plugins/codecompanion.ts";
 import { pluginStatus } from "./status.ts";
 
 export const plugins: Plugin[] = [
@@ -27,10 +28,11 @@ export const plugins: Plugin[] = [
   { url: "vim-jp/vital.vim", profiles: ["default"] },
   //{ url: "nelstrom/vim-textobj-rubyblock", profiles: ["default"] },
   { url: "thinca/vim-prettyprint", profiles: ["default"] },
-  { url: "vim-scripts/ruby-matchit", profiles: ["default"] },
+  //{ url: "vim-scripts/ruby-matchit", profiles: ["default"] },
   { url: "rhysd/reply.vim", profiles: ["default"] },
   { url: "rust-lang/rust.vim", profiles: ["default"] },
   { url: "ziglang/zig.vim", profiles: ["default"] },
+  // { url: "Shougo/cmdline.vim", profiles: ["default"] },
 
   { url: "nvim-lua/plenary.nvim", profiles: ["neovim"] },
   { url: "kevinhwang91/nvim-bqf", profiles: ["neovim"] },
@@ -58,7 +60,7 @@ export const plugins: Plugin[] = [
       after: `lua << EOB
         require("nvim-treesitter.install").compilers = { vim.g.gcc_bin_path }
         require('nvim-treesitter.configs').setup {
-          ensure_installed = { "clojure", "vim", "javascript", "typescript", "tsx", "lua" },
+          ensure_installed = { "clojure", "vim", "vimdoc", "javascript", "typescript", "tsx", "lua", "markdown" },
           ignore_install = { "gitcommit" },
           sync_install = false,
           auto_install = false,
@@ -174,10 +176,9 @@ export const plugins: Plugin[] = [
     },
   },
 
-  // cf. https://github.com/yukimemi/dvpm/issues/78
   {
     url: "github/copilot.vim",
-    profiles: ["default"],
+    profiles: ["vim"],
     cache: {
       after: `
         let g:copilot_no_tab_map = v:true
@@ -187,7 +188,29 @@ export const plugins: Plugin[] = [
               \\ text: v:true,
               \\ ddu-ff-filter: v:false,
               \\ }
+        imap <silent><script><expr> <C-Tab> copilot#Accept("\<CR>")
       `,
+    },
+  },
+  {
+    url: "zbirenbaum/copilot.lua",
+    profiles: ["neovim"],
+    cache: {
+      after: `lua << EOB
+      require('copilot').setup({
+        suggestion = {
+          auto_trigger = true,
+          keymap = {
+            accept = "<C-Tab>",
+          },
+        },
+        filetypes = {
+          gitcommit = true,
+          markdown = true,
+          text = true,
+        },
+      })
+      EOB`,
     },
   },
 
@@ -442,7 +465,9 @@ export const plugins: Plugin[] = [
     url: "neoclide/coc.nvim",
     rev: "release",
     profiles: ["default"],
-    cache: { beforeFile: "~/.vim/conf.d/before/coc.vim" },
+    cache: {
+      beforeFile: "~/.vim/conf.d/before/coc.vim",
+    },
   },
 
   {
@@ -590,4 +615,5 @@ export const plugins: Plugin[] = [
   ...(pluginStatus.nvimDeck ? nvimDeckPlugins : []),
   //...(fuzzyFinder === "telescope" ? telescopePlugins : []),
   ...clojurePlugins,
+  ...codeCompanionPlugins,
 ];

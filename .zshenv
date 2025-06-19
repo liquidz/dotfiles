@@ -1,6 +1,7 @@
 # path {{{
 PATH=$PATH:~/bin
 PATH=$PATH:~/bin/nvim-macos-arm64/bin
+#PATH=$PATH:~/bin/nvim-macos-x86_64/bin
 PATH=$PATH:/opt/local/bin
 PATH=$PATH:~/.vim/repos/vim-themis/bin
 PATH=$PATH:/usr/local/nodejs/bin
@@ -12,7 +13,7 @@ PATH=$PATH:~/.skim/bin
 PATH=$PATH:~/.roswell/bin
 PATH=$PATH:~/src/github.com/liquidz/vim-iced/bin
 PATH=$PATH:~/src/github.com/liquidz/elin/bin
-PATH=$PATH:~/.nodebrew/current/bin
+#PATH=$PATH:~/.nodebrew/current/bin
 PATH=$PATH:/opt/homebrew/bin
 
 PATH="/usr/local/bin:$PATH:/usr/local/sbin"
@@ -309,3 +310,6 @@ if [[ -e ~/.zshenv.local ]]; then
 fi
 
 . "$HOME/.cargo/env"
+source $HOME/.local/bin/env
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
