@@ -66,8 +66,8 @@
 (doseq [dir [".vim/autoload" ".vim/backup" ".vim/memo"]]
   (dad/directory {:path (home dir)}))
 
-(dad/download {:path (home ".vim/autoload/plug.vim")
-               :url "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"})
+;;(dad/download {:path (home ".vim/autoload/plug.vim")
+;;               :url "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"))
 
 ;; neovim の設定
 (doseq [[k v] {".config/nvim/init.vim",          ".vimrc"

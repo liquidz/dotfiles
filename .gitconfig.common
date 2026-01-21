@@ -27,7 +27,7 @@
 [tig]
 	ignore-case = true
 	main-view   = id date author:email-user,maxwidth=10 commit-title:graph=no,refs=yes
-	refs-view	  = line-number:no id:no date:default author:email-user,maxwidth=10 ref commit-title
+	refs-view   = line-number:no id:no date:default author:email-user,maxwidth=10 ref commit-title
 
 [tig "bind"]
 	diff    = F       ?git commit --fixup %(commit)
@@ -49,6 +49,8 @@
 	main    = S       ?git stash save %(promptStashMessage:)
 	main    = W       ?git commit --allow-empty -m 'WIP [skip ci]'
 	main    = <Esc>p  ?git cherry-pick %(commit)
+	main    = w       !git worktree list
+	main    = t       !echo %(repo:worktree)
 	refs    = !       none
 	refs    = B       ?git checkout -b %(promptBranchName:)
 	refs    = c       ?git checkout %(branch)
@@ -64,6 +66,7 @@
 	refs    = <Esc>f  ?!git fetch origin pull/%(promptPullRequestID:)/head:PullRequest
 	refs    = <Esc>p  ?!git remote prune --dry-run origin
 	refs    = <Esc>P  ?!git remote prune origin
+	refs    = <Esc>w  ?!git worktree add %(promptDir:) %(branch)
 	stage   = v       stage-update-line
 	stage   = x       status-revert
 	stage   = <C-V>   !nvim -c %(lineno) %(file)

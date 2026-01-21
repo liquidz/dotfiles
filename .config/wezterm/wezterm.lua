@@ -25,6 +25,17 @@ config.set_environment_variables = {
   LC_CTYPE = "ja_JP.UTF-8"
 }
 
+local background_image = wezterm.home_dir .. '/.config/wezterm/bg.jpeg'
+config.background = {
+  --{ source = { Gradient = { colors = { '#112633', '#001522' } } }, opacity = 0.75, width = '100%', height = '100%' },
+  { source = { Gradient = { colors = { '#112633', '#001522' } } }, opacity = 1.0, width = '100%', height = '100%' },
+  {
+    source = { File = background_image },
+    opacity = 0.02,
+    vertical_align = 'Middle',
+    horizontal_align = 'Center',
+  },
+}
 
 config.inactive_pane_hsb = {
     saturation = 0.4,

@@ -132,6 +132,12 @@
       "filetypes": ["java"],
       "trace.server": "verbose"
     },
+    "steel-language-server": {
+      "command": "steel-language-server",
+      "args": [],
+      "filetypes": ["scheme"],
+      "trace.server": "verbose"
+    },
     "zls": {
       "command": "zls",
       "args": [],

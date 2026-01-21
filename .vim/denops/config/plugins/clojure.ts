@@ -51,7 +51,7 @@ export const clojurePlugins: Plugin[] = [
 
   {
     url: "eraserhd/parinfer-rust",
-    profiles: ["default"],
+    profiles: ["vim"],
     // build = 'sh -c "cargo build --target=aarch64-apple-darwin --release && rm -rf target/release && mv target/aarch64-apple-darwin/release target/release"'
     cache: {
       after: `
@@ -75,6 +75,16 @@ export const clojurePlugins: Plugin[] = [
   },
 
   {
+    url: "gpanders/nvim-parinfer",
+    profiles: ["neovim"],
+    cache: {
+      after: `
+        let g:parinfer_mode = 'smart'
+      `,
+    },
+  },
+
+  {
     url: "liquidz/elin",
     dst: "~/src/github.com/liquidz/elin",
     profiles: ["default"],
@@ -82,6 +92,7 @@ export const clojurePlugins: Plugin[] = [
       "liquidz/elin-coc-source",
       "liquidz/elin-format",
       "liquidz/elin-telescope.nvim",
+      "liquidz/elin-nvim-notify",
     ],
     cache: {
       before: `
@@ -120,6 +131,11 @@ export const clojurePlugins: Plugin[] = [
   {
     url: "liquidz/elin-telescope.nvim",
     dst: "~/src/github.com/liquidz/elin-telescope.nvim",
+    profiles: ["neovim"],
+  },
+  {
+    url: "liquidz/elin-nvim-notify",
+    dst: "~/src/github.com/liquidz/elin-nvim-notify",
     profiles: ["neovim"],
   },
 ];

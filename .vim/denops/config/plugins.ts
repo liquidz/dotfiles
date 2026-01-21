@@ -2,7 +2,8 @@ import type { Plugin } from "./type.ts";
 import { telescopePlugins } from "./plugins/telescope.ts";
 import { nvimDeckPlugins } from "./plugins/nvim_deck.ts";
 import { clojurePlugins } from "./plugins/clojure.ts";
-import { codeCompanionPlugins } from "./plugins/codecompanion.ts";
+//import { codeCompanionPlugins } from "./plugins/codecompanion.ts";
+import { claudeCodePlugins } from "./plugins/claude_code.ts";
 import { pluginStatus } from "./status.ts";
 
 export const plugins: Plugin[] = [
@@ -10,7 +11,10 @@ export const plugins: Plugin[] = [
   { url: "mracos/mermaid.vim", profiles: ["default"] },
   { url: "aklt/plantuml-syntax", profiles: ["default"] },
   { url: "tpope/vim-dispatch", profiles: ["default"] },
-  { url: "ConradIrwin/vim-bracketed-paste", profiles: ["default"] },
+  {
+    url: "ConradIrwin/vim-bracketed-paste",
+    profiles: ["default"],
+  },
   { url: "kana/vim-operator-user", profiles: ["default"] },
   { url: "kana/vim-textobj-user", profiles: ["default"] },
   { url: "seroqn/foldmaker.vim", profiles: ["default"] },
@@ -19,25 +23,64 @@ export const plugins: Plugin[] = [
   { url: "tpope/vim-endwise", profiles: ["default"] },
   { url: "tpope/vim-repeat", profiles: ["default"] },
   { url: "tyru/open-browser.vim", profiles: ["default"] },
-  { url: "tyru/open-browser-github.vim", profiles: ["default"] },
+  {
+    url: "tyru/open-browser-github.vim",
+    profiles: ["default"],
+  },
   { url: "liquidz/vim-file-to-file", profiles: ["default"] },
   { url: "osyo-manga/vim-anzu", profiles: ["default"] },
   { url: "kana/vim-textobj-line", profiles: ["default"] },
-  { url: "lambdalisue/readablefold.vim", profiles: ["default"] },
+  {
+    url: "lambdalisue/readablefold.vim",
+    profiles: ["default"],
+  },
   { url: "thinca/vim-qfreplace", profiles: ["default"] },
   { url: "vim-jp/vital.vim", profiles: ["default"] },
   //{ url: "nelstrom/vim-textobj-rubyblock", profiles: ["default"] },
   { url: "thinca/vim-prettyprint", profiles: ["default"] },
   //{ url: "vim-scripts/ruby-matchit", profiles: ["default"] },
-  { url: "rhysd/reply.vim", profiles: ["default"] },
   { url: "rust-lang/rust.vim", profiles: ["default"] },
   { url: "ziglang/zig.vim", profiles: ["default"] },
   // { url: "Shougo/cmdline.vim", profiles: ["default"] },
+  //{ url: "lambdalisue/vim-gin", profiles: ["default"] },
 
+  //{ url: "xiyaowong/transparent.nvim", profiles: ["neovim"] },
   { url: "nvim-lua/plenary.nvim", profiles: ["neovim"] },
   { url: "kevinhwang91/nvim-bqf", profiles: ["neovim"] },
   { url: "sindrets/diffview.nvim", profiles: ["neovim"] },
   { url: "ibhagwan/fzf-lua", profiles: ["neovim"] },
+  { url: "MunifTanjim/nui.nvim", profiles: ["neovim"] },
+  {
+    url: "rcarriga/nvim-notify",
+    profiles: ["neovim"],
+    cache: {
+      after: `lua << EOB
+        local stages_util = require('notify.stages.util')
+        local fade_in_slide_out_with_margin = require("uochan.nvim_notify.fade_in_slide_out_with_margin")
+
+        require("notify").setup({
+          background_colour = "#000000",
+          render = "minimal",
+          animate = false,
+          stages = "static",
+          --stages = fade_in_slide_out_with_margin(stages_util.DIRECTION.TOP_DOWN),
+          --stages = fade_in_slide_out_with_margin(stages_util.DIRECTION.BOTTOM_UP),
+          top_down = false,
+        })
+      EOB`,
+    },
+  },
+
+  {
+    url: "thinca/vim-partedit",
+    profiles: ["default"],
+    cache: {
+      before: `
+        let g:partedit#prefix_pattern = '\\s*'
+        let g:partedit#auto_prefix = 0
+      `,
+    },
+  },
 
   {
     url: "yuki-yano/vim-operator-replace",
@@ -60,7 +103,7 @@ export const plugins: Plugin[] = [
       after: `lua << EOB
         require("nvim-treesitter.install").compilers = { vim.g.gcc_bin_path }
         require('nvim-treesitter.configs').setup {
-          ensure_installed = { "clojure", "vim", "vimdoc", "javascript", "typescript", "tsx", "lua", "markdown" },
+          ensure_installed = { "clojure", "scheme", "vim", "vimdoc", "javascript", "typescript", "tsx", "lua", "markdown", "markdown_inline" },
           ignore_install = { "gitcommit" },
           sync_install = false,
           auto_install = false,
@@ -170,15 +213,48 @@ export const plugins: Plugin[] = [
 
   {
     url: "kana/vim-submode",
-    profiles: ["default"],
+    profiles: ["vim"],
     cache: {
       afterFile: "~/.vim/conf.d/after/vim-submode.vim",
     },
   },
 
   {
+    url: "nvimtools/hydra.nvim",
+    profiles: ["neovim"],
+    cache: {
+      after: `lua << EOB
+        local Hydra = require("hydra")
+
+
+        Hydra({
+          name = "Window",
+          mode = "n",
+          body = "<C-w>",
+          heads = {
+            { "+",  "<C-w>5+" },
+            { "-",  "<C-w>5-" },
+            { "<",  "<C-w>5<lt>" },
+            { ">",  "<C-w>5>" },
+            --{ "h",  "<C-w>h", { desc = "left"  } },
+            --{ "H",  "<C-w>H", { desc = "left"  } },
+            --{ "j",  "<C-w>j", { desc = "down"  } },
+            --{ "J",  "<C-w>J", { desc = "down"  } },
+            --{ "k",  "<C-w>k", { desc = "up"    } },
+            --{ "K",  "<C-w>K", { desc = "up"    } },
+            --{ "l",  "<C-w>l", { desc = "right" } },
+            --{ "L",  "<C-w>L", { desc = "right" } },
+            { "q",  "<C-w>q", { exit = true, desc = "quit" } },
+            { "<Esc>", nil, { exit = true } },
+          },
+        })
+      EOB`,
+    },
+  },
+
+  {
     url: "github/copilot.vim",
-    profiles: ["vim"],
+    profiles: ["default"],
     cache: {
       after: `
         let g:copilot_no_tab_map = v:true
@@ -194,7 +270,7 @@ export const plugins: Plugin[] = [
   },
   {
     url: "zbirenbaum/copilot.lua",
-    profiles: ["neovim"],
+    profiles: ["never"],
     cache: {
       after: `lua << EOB
       require('copilot').setup({
@@ -211,33 +287,6 @@ export const plugins: Plugin[] = [
         },
       })
       EOB`,
-    },
-  },
-
-  {
-    url: "itchyny/lightline.vim",
-    profiles: ["default"],
-    cache: {
-      before: `
-        if !has('gui_running')
-          set t_Co=256
-        endif
-
-        let g:lightline = {
-              \\   'colorscheme': 'iceberg',
-              \\   'active': { 'left': [], 'right': [] },
-              \\   'separator': { 'left': "\ue0b4", 'right': "\ue0b6"},
-              \\   'subseparator': { 'left': "\ue0b5", 'right':  "\ue0b7" },
-              \\   'tabline': {
-              \\     'left': [[ 'tabs' ]],
-              \\     'right': [['filetype', 'bufnum' ], ['anzu'], ['elin'] ]
-              \\   },
-              \\   'component_function': {
-              \\     'anzu': 'anzu#search_status',
-              \\     'elin': 'elin#status',
-              \\   },
-              \\ }
-      `,
     },
   },
 
@@ -611,9 +660,237 @@ export const plugins: Plugin[] = [
     },
   },
 
+  {
+    url: "rickhowe/diffchar.vim",
+    profiles: ["default"],
+  },
+
+  {
+    url: "rickhowe/spotdiff.vim",
+    dependencies: ["rickhowe/diffchar.vim"],
+    profiles: ["default"],
+    cache: {
+      before: `
+        vmap <silent> <LocalLeader>d <Plug>(VDiffthis)
+        nmap <silent> <LocalLeader>D <Plug>(VDiffoff!)
+      `,
+    },
+  },
+
+  /*
+  {
+    url: "nekowasabi/hellshake-yano.vim",
+    profiles: ["default"],
+    cache: {
+      before: `
+      let g:hellshake_yano = {
+        \\   'useJapanese': v:false,
+        \\   'useNumericMultiCharHints': v:false,
+        \\   'defaultMinWordLength': 3,
+        \\   'perKeyMinLength': {
+        \\     'v': 1,
+        \\     'V': 1,
+        \\     'w': 1,
+        \\     'b': 1,
+        \\     'h': 2,
+        \\     'j': 2,
+        \\     'k': 2,
+        \\     'l': 2,
+        \\     'f': 3,
+        \\     'F': 3,
+        \\   },
+        \\   'singleCharKeys': 'ASDFGNM',
+        \\   'multiCharKeys': 'BCEIOPRTUVWY',
+        \\   'highlightHintMarker': 'Search',
+        \\   'highlightHintMarkerCurrent': 'IncSearch',
+        \\   'maxHints': 50,
+        \\   'cacheSize': 3000,
+        \\   'debounceDelay': 30,
+        \\   'suppressOnKeyRepeat': v:true,
+        \\   'keyRepeatThreshold': 80,
+        \\   'enableDebug': v:false,
+        \\ }
+      `,
+    },
+  },
+  */
+
+  // Vimade let's you dim, fade, tint, animate, and customize colors in your windows and buffers for (Neo)vim
+  {
+    url: "TaDaa/vimade",
+    profiles: ["neovim"],
+    cache: {
+      after: `lua << EOB
+        require('vimade').setup({
+          recipe = {'default', {animate = false}},
+          fadelevel = 0.5,
+        })
+      EOB`,
+    },
+  },
+
+  {
+    url: "b0o/incline.nvim",
+    profiles: ["neovim"],
+    dependencies: ["neoclide/coc.nvim"],
+    cache: {
+      after: `lua << EOB
+      local devicons = require 'nvim-web-devicons'
+
+      require('incline').setup({
+        render = function(props)
+          local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
+          if filename == '' then
+            filename = '[No Name]'
+          end
+          local ft = vim.api.nvim_get_option_value("filetype", { buf = props.buf })
+
+          local ft_icon, ft_color = devicons.get_icon_color(filename)
+          local function get_diagnostic_label()
+            local icons = { error = '', warn = '', info = '', hint = '' }
+            local label = {}
+
+            for severity, icon in pairs(icons) do
+              local n = #vim.diagnostic.get(props.buf, { severity = vim.diagnostic.severity[string.upper(severity)] })
+              if n > 0 then
+                table.insert(label, { icon .. n .. ' ', group = 'DiagnosticSign' .. severity })
+              end
+            end
+            if #label > 0 then
+              table.insert(label, { '┊ ' })
+            end
+            return label
+          end
+
+          local function get_coc_diagnostic_label()
+            local icons = { error = '', warn = '', info = '', hint = '' }
+            local label = {}
+
+            -- 現在のバッファの診断情報を取得
+            local bufnr = vim.api.nvim_get_current_buf()
+            -- vim.fn['coc#rpc#ready']() == 1
+            --結果 = 条件式 and 真のときの値 or 偽のときの値
+            --local diagnostics = vim.fn.CocAction('diagnosticList')
+            local is_coc_initialized = (vim.g.coc_service_initialized or 0) == 1
+            local diagnostics = is_coc_initialized and vim.fn.CocAction('diagnosticList') or {}
+
+
+            -- 重要度別にカウント（現在のバッファのみ）
+            local counts = { error = 0, warn = 0, info = 0, hint = 0 }
+
+            for _, diagnostic in ipairs(diagnostics) do
+              -- 現在のバッファの診断情報のみをカウント
+              if diagnostic.bufnr == bufnr then
+                local severity = diagnostic.severity:lower()
+                if severity == 'warning' then
+                  severity = 'warn'
+                elseif severity == 'information' then
+                  severity = 'info'
+                elseif severity == 'error' then
+                  severity = 'error'
+                end
+
+                if counts[severity] then
+                  counts[severity] = counts[severity] + 1
+                end
+              end
+            end
+
+            -- ラベルを構築
+            for severity, icon in pairs(icons) do
+              if counts[severity] > 0 then
+                table.insert(label, { icon .. ' ' .. counts[severity] .. ' ', group = 'DiagnosticSign' .. severity })
+              end
+            end
+
+            if #label > 0 then
+              table.insert(label, { '┊ ' })
+            end
+
+            return label
+          end
+
+          local function get_icon()
+            if ft == 'clojure' then
+              local status = vim.fn['elin#status']()
+              if status == '' then
+                return ft_icon or ''
+              end
+              return status
+            end
+            return ft_icon or ''
+          end
+
+          return {
+            { get_coc_diagnostic_label() },
+            { get_icon() .. ' ', guifg = ft_color, guibg = 'none' },
+            { filename .. ' ', gui = vim.bo[props.buf].modified and 'bold,italic' or 'bold' },
+          }
+
+        end,
+      })
+      EOB`,
+    },
+  },
+
+  {
+    url: "folke/noice.nvim",
+    profiles: ["neovim"],
+    dependencies: ["MunifTanjim/nui.nvim", "rcarriga/nvim-notify"],
+    cache: {
+      after: `lua << EOB
+        require("noice").setup({
+          routes = {
+            {
+              filter = {
+                event = "msg_show",
+                kind = "",
+                find = "written",
+              },
+              opts = { skip = true },
+            },
+            {
+              filter = {
+                event = "msg_show",
+                kind = "search_count",
+              },
+              opts = { skip = true },
+            },
+          },
+          cmdline = {
+            view = "cmdline",
+          },
+          commands = {
+            history = {
+              view = "split",
+              opts = { enter = true, format = "details" },
+              filter = {
+                any = {
+                  { event = "notify" },
+                  { event = "msg_show" }, -- echo系メッセージ
+                },
+              },
+            },
+          },
+        })
+      EOB`,
+    },
+  },
+
+  //{
+  //  url: "rmagatti/auto-session",
+  //  profiles: ["neovim"],
+  //  cache: {
+  //    after: `lua << EOB
+  //      require("auto-session").setup({})
+  //    EOB`,
+  //  },
+  //},
+
   ...(pluginStatus.telescope ? telescopePlugins : []),
   ...(pluginStatus.nvimDeck ? nvimDeckPlugins : []),
   //...(fuzzyFinder === "telescope" ? telescopePlugins : []),
   ...clojurePlugins,
-  ...codeCompanionPlugins,
+  //...codeCompanionPlugins,
+  ...claudeCodePlugins,
 ];

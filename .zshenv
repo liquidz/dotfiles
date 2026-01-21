@@ -189,7 +189,7 @@ alias cdd='cd $(git rev-parse --show-toplevel) && cd $(fd -t d . | fzf)'
 if which hub > /dev/null 2>&1; then
     alias git=hub
 fi
-alias b='git branch -a | fzf | sed "s/\* *//g"'
+alias b='git branch -a | fzf --multi | sed "s/\* *//g"'
 alias -g B='$(b)'
 alias l='git log --oneline | fzf | cut -d" " -f1'
 alias -g L='$(l)'
@@ -312,4 +312,5 @@ fi
 . "$HOME/.cargo/env"
 source $HOME/.local/bin/env
 export VOLTA_HOME="$HOME/.volta"
+export VOLTA_FEATURE_PNPM=1
 export PATH="$VOLTA_HOME/bin:$PATH"

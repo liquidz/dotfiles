@@ -19,10 +19,13 @@ let g:quickrun_config['go'] = {
       \     'command' : 'go',
       \     'exec'    : '%c run %s'
       \ }
-
 let g:quickrun_config['matlab'] = {
       \     'command' : 'octave',
       \     'exec'    : '%c -q %s'
+      \ }
+let g:quickrun_config['scheme'] = {
+      \     'command' : 'steel',
+      \     'exec'    : '%c %s'
       \ }
 
 " let g:quickrun_config = {

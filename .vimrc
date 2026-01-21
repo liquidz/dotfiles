@@ -54,6 +54,31 @@ endif
 
 if !has('nvim')
   set cryptmethod=blowfish2
+else
+  " 背景を透過
+  aug TransparentBackground
+    au!
+    " カラースキーム読み込み後に再設定
+    au ColorScheme * highlight Normal       ctermbg=none guibg=none
+    au ColorScheme * highlight NonText      ctermbg=none guibg=none
+    au ColorScheme * highlight EndOfBuffer  ctermbg=none guibg=none
+
+    au ColorScheme * highlight WinSeparator       ctermbg=none guibg=none
+
+    au ColorScheme * highlight StatusLine ctermbg=none guibg=none cterm=none gui=none
+    au ColorScheme * highlight StatusLineNC ctermbg=none guibg=none cterm=none gui=none
+
+    au ColorScheme * highlight TabLine      ctermbg=none guibg=none
+    au ColorScheme * highlight TabLineSel   ctermbg=none guibg=none
+    au ColorScheme * highlight TabLineFill  ctermbg=none guibg=none cterm=none gui=none
+
+    au ColorScheme * highlight VertSplit   ctermbg=none guibg=none
+    au ColorScheme * highlight SignColumn  ctermbg=none guibg=none
+    au ColorScheme * highlight GitSignsAdd  ctermbg=none guibg=none
+    au ColorScheme * highlight GitSignsChange  ctermbg=none guibg=none
+    au ColorScheme * highlight GitSignsDelete  ctermbg=none guibg=none
+
+  aug END
 endif
 
 " }}}
@@ -106,13 +131,12 @@ set ruler
 set list
 set listchars=tab:>-,trail:_,extends:>,precedes:>
 set wrap
-set cmdheight=1
-" if has('nvim')
-"   "set cmdheight=0
-"   set cmdheight=1
-" else
-"   set cmdheight=2
-" endif
+"set cmdheight=1
+if has('nvim')
+  set cmdheight=0
+else
+  set cmdheight=2
+endif
 set showcmd
 set smartindent
 set smarttab
@@ -178,7 +202,7 @@ nnoremap <Leader>wo <C-w>o
 if $HOME ==# $USERPROFILE || $GIT_EXEC_PATH !=# ''
   " Esc で terminal から抜け出せるようにする
   if !has('nvim')
-    tnoremap <Esc> <C-\><C-n
+    tnoremap <Esc> <C-\><C-n>
   else
     tnoremap <Esc> <C-\><C-n>
     set notimeout ttimeout timeoutlen=100
@@ -248,6 +272,11 @@ nnoremap L L<Plug>(L)
 nnoremap <Plug>(H)H <PageUp>H<Plug>(H)
 nnoremap <Plug>(L)L <PageDown>Lzb<Plug>(L)
 
+tnoremap <C-w>h <C-\><C-n><C-w>h
+tnoremap <C-w>j <C-\><C-n><C-w>j
+tnoremap <C-w>k <C-\><C-n><C-w>k
+tnoremap <C-w>l <C-\><C-n><C-w>l
+
 " }}}
 " copy to clipboard {{{
 
@@ -276,6 +305,10 @@ nnoremap t$ :<C-u>tablast<CR>
 
 " }}}
 " command {{{
+
+function! CopyCurrentFile() abort
+  echo expand('%:p') | let @+ = expand('%:p')
+endfunction
 
 command! ToUTF8 set fileencoding=utf-8
 command! ToEUC  set fileencoding=euc-jp
@@ -326,8 +359,9 @@ aug END
 " status line {{{
 
 set statusline=%{''}
+"set statusline='─'
 set fillchars=stl:─,stlnc:─,vert:│
-set laststatus=2
+set laststatus=0
 " if has('nvim')
 "   set statusline=%{''}
 "   set fillchars=stl:─,stlnc:─,vert:│
@@ -380,57 +414,6 @@ inoremap <expr><tab> pumvisible() ? "\<c-n>" : MyComplete()
 
 
 let s:default_skip = "synIDattr(synID(line('.'),col('.'),1),'name') =~? 'comment\\|string\\|regex\\|character'"
-
-function! IcedonGetTopFormRange() abort
-  let view = winsaveview()
-  try
-    let start = searchpos('^\S', "bcW", 0, 0, s:default_skip)
-    if start == [0, 0]
-      return [[0, 0], [0, 0]]
-    endif
-
-    call search('(', 'cW', 0, 0, s:default_skip)
-    let end = searchpairpos('(', '', ')', 'nW', s:default_skip)
-    if end == [0, 0]
-      return [[0, 0], [0, 0]]
-    endif
-    return [start, end]
-  finally
-    call winrestview(view)
-  endtry
-endfunction
-
-function! IcedonGetCurrentFormRange() abort
-  let view = winsaveview()
-  try
-    let start = searchpos('(', "bcW", 0, 0, s:default_skip)
-    if start == [0, 0]
-      return [[0, 0], [0, 0]]
-    endif
-
-    let end = searchpairpos('(', '', ')', 'nW', s:default_skip)
-    if end == [0, 0]
-      return [[0, 0], [0, 0]]
-    endif
-    return [start, end]
-  finally
-    call winrestview(view)
-  endtry
-endfunction
-
-" function! IcedonCurrentForm() abort
-" 	let view = winsaveview()
-" 	try
-" 		let start = searchpos('^\S', "bcW")
-"
-"
-" 		" searchpair('(', '', ')', 'W', "synIDattr(synID(line('.'),col('.'),1),'name') =~? 'Comment\|String\|Regex\|Character'")
-" 	finally
-" 		call winrestview(view)
-" 	endtry
-" endfunction
-
-
 
 " }}}
 " netrw {{{

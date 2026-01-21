@@ -4,7 +4,6 @@ export const telescopePlugins: Plugin[] = [
   {
     url: "nvim-telescope/telescope.nvim",
     profiles: ["neovim"],
-    rev: "0.1.8",
     dependencies: [
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope-ui-select.nvim",
