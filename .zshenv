@@ -199,6 +199,9 @@ alias -g root='$(git rev-parse --show-toplevel)'
 
 alias wip-commit='git commit --allow-empty -am "WIP [skip ci]"'
 # }}}
+# jujutsu {{{
+alias jr='jj new "root()"'
+# }}}
 # ssh {{{
 alias ss='ssh $(grep "Host " ~/.ssh/config | cut -c6- | fzf)'
 # alias sss='tmux split-window ss'
@@ -230,6 +233,44 @@ alias sq='sk -i -c "scrapq search {}" | cut -f1 | xargs -i scrapq get {} | vim -
 # }}}
 # newsboat {{{
 alias nb='newsboat'
+# }}}
+# cmux {{{
+alias md='cmux markdown open'
+
+function start_review() {
+  emulate -L zsh
+  setopt err_return pipe_fail
+
+  if [ $# -lt 1 ]; then
+    echo "Usage: start_review <branch-name|pr-url>" >&2
+    return 1
+  fi
+
+  local input="$1" branch pr_json pr_number pr_title title
+
+  if [[ "$input" =~ '^https?://github\.com/.+/pull/[0-9]+' ]]; then
+    branch=$(gh pr view "$input" --json headRefName --jq '.headRefName')
+    [[ -n "$branch" ]] || { echo "Error: Failed to resolve branch from URL '$input'" >&2; return 1; }
+  else
+    branch="$input"
+  fi
+
+  ha get "$branch"
+
+  pr_json=$(gh pr list --head "$branch" --state all --json number,title --limit 1)
+  if [ "$(echo "$pr_json" | jq 'length')" -eq 0 ]; then
+    echo "Error: No pull request found for branch '$branch'" >&2
+    return 1
+  fi
+
+  pr_number=$(echo "$pr_json" | jq -r '.[0].number')
+  pr_title=$(echo "$pr_json" | jq -r '.[0].title')
+  title="#${pr_number} review: ${pr_title}"
+
+  cmux --password helloworld workspace-action --action rename --title "$title"
+  cmux --password helloworld workspace-action --action set-color --color green
+}
+
 # }}}
 # mitamae {{{
 #alias mita='sudo mitamae local -y ~/src/github.com/liquidz/cookbooks/nodes/$(hostname).yaml'
@@ -282,6 +323,8 @@ alias antq-jar='java -jar ~/src/github.com/liquidz/antq/target/antq-standalone.j
 
 # }}}
 
+alias move-to-new-window='wezterm cli move-pane-to-new-tab --new-window'
+
 if which fd > /dev/null 2>&1; then
   export FZF_DEFAULT_COMMAND='fd --type f --hidden'
 fi
@@ -311,6 +354,3 @@ fi
 
 . "$HOME/.cargo/env"
 source $HOME/.local/bin/env
-export VOLTA_HOME="$HOME/.volta"
-export VOLTA_FEATURE_PNPM=1
-export PATH="$VOLTA_HOME/bin:$PATH"

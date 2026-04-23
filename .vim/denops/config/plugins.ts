@@ -2,7 +2,7 @@ import type { Plugin } from "./type.ts";
 import { telescopePlugins } from "./plugins/telescope.ts";
 import { nvimDeckPlugins } from "./plugins/nvim_deck.ts";
 import { clojurePlugins } from "./plugins/clojure.ts";
-//import { codeCompanionPlugins } from "./plugins/codecompanion.ts";
+// import { codeCompanionPlugins } from "./plugins/codecompanion.ts";
 import { claudeCodePlugins } from "./plugins/claude_code.ts";
 import { pluginStatus } from "./status.ts";
 
@@ -128,11 +128,6 @@ export const plugins: Plugin[] = [
       EOB`,
     },
   },
-  // {
-  //   url: "nvim-treesitter/playground",
-  //   dependencies: ["nvim-treesitter/nvim-treesitter"],
-  //
-  // },
   {
     url: "nvim-treesitter/nvim-treesitter-context",
     dependencies: ["nvim-treesitter/nvim-treesitter"],
@@ -575,6 +570,7 @@ export const plugins: Plugin[] = [
       before: `
         aug AutoPairFileType
           au Filetype clojure let b:AutoPairs = {'"': '"', '\`\`\`': '\`\`\`' }
+          au Filetype scheme let b:AutoPairs = {'"': '"', '\`\`\`': '\`\`\`' }
         aug END
       `,
     },

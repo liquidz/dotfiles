@@ -153,7 +153,7 @@
           "conditions": [
             {
               "type": "frontmost_application_unless",
-              "bundle_identifiers": ["^com\\.github\\.wez\\.wezterm$"]
+              "bundle_identifiers": ["com.cmuxterm.app"]
             },
             {
               "type": "variable_if",
@@ -166,7 +166,7 @@
           },
           "to": [
             {
-              "shell_command": "osascript -e 'tell application \"WezTerm\" to activate' &"
+              "shell_command": "osascript -e 'tell application \"cmux\" to activate' &"
             }
           ]
         },
@@ -175,7 +175,7 @@
           "conditions": [
             {
               "type": "frontmost_application_if",
-              "bundle_identifiers": ["^com\\.github\\.wez\\.wezterm$"]
+              "bundle_identifiers": ["com.cmuxterm.app"]
             },
             {
               "type": "variable_if",

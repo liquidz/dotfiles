@@ -9,6 +9,9 @@ autoload -U compinit &&  compinit -u
 if which hub > /dev/null 2>&1; then
     compdef hub=git
 fi
+if which jj > /dev/null 2>&1; then
+    source <(jj util completion zsh)
+fi
 
 # https://book.babashka.org/#_terminal_tab_completion
 _bb_tasks() {

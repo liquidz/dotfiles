@@ -41,6 +41,7 @@
               ".config/karabiner/assets/complex_modifications/mine.json"
               ".config/zeno"
               ".config/fd"
+              ".config/jj"
               ".ctags"
               ".gemrc"
               ".joker"
@@ -103,7 +104,9 @@
              (str "git config --global core.excludesfile " (install-dir ".gitignore_global"))
              (str "git config --global user.name    " (:name git-user))
              (str "git config --global user.email   " (:email git-user))
-             (str "git config --global commit.template " (install-dir ".gitmessage"))]
+             (str "git config --global commit.template " (install-dir ".gitmessage"))
+             (str "jj config set --user user.name  " (:name git-user))
+             (str "jj config set --user user.email " (:email git-user))]
    :pre-not (str "test $(git config user.name) = " (:name git-user))})
 
 ;; Only for Mac

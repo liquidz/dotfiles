@@ -14,3 +14,4 @@ bar.*
 .clojure-mcp
 docs/bugfix
 docs/reviews
+.ha
