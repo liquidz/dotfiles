@@ -298,11 +298,11 @@ fi
 source "$HOME/.docker/init-zsh.sh" || true # Added by Docker Desktop
 
 # pnpm
-#export PNPM_HOME="$HOME/Library/pnpm"
-#case ":$PATH:" in
-#  *":$PNPM_HOME:"*) ;;
-#  *) export PATH="$PNPM_HOME:$PATH" ;;
-#esac
+export PNPM_HOME="/Users/iizukamasashi/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
 # pnpm end
 
 eval "$(atuin init zsh)"
