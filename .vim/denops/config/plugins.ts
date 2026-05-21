@@ -18,7 +18,7 @@ export const plugins: Plugin[] = [
   { url: "kana/vim-operator-user", profiles: ["default"] },
   { url: "kana/vim-textobj-user", profiles: ["default"] },
   { url: "seroqn/foldmaker.vim", profiles: ["default"] },
-  { url: "lambdalisue/fern.vim", profiles: ["default"] },
+  // { url: "lambdalisue/fern.vim", profiles: ["default"] },
   { url: "thinca/vim-visualstar", profiles: ["default"] },
   { url: "tpope/vim-endwise", profiles: ["default"] },
   { url: "tpope/vim-repeat", profiles: ["default"] },
@@ -28,7 +28,7 @@ export const plugins: Plugin[] = [
     profiles: ["default"],
   },
   { url: "liquidz/vim-file-to-file", profiles: ["default"] },
-  { url: "osyo-manga/vim-anzu", profiles: ["default"] },
+  // { url: "osyo-manga/vim-anzu", profiles: ["default"] },
   { url: "kana/vim-textobj-line", profiles: ["default"] },
   {
     url: "lambdalisue/readablefold.vim",
@@ -37,10 +37,10 @@ export const plugins: Plugin[] = [
   { url: "thinca/vim-qfreplace", profiles: ["default"] },
   { url: "vim-jp/vital.vim", profiles: ["default"] },
   //{ url: "nelstrom/vim-textobj-rubyblock", profiles: ["default"] },
-  { url: "thinca/vim-prettyprint", profiles: ["default"] },
+  // { url: "thinca/vim-prettyprint", profiles: ["default"] },
   //{ url: "vim-scripts/ruby-matchit", profiles: ["default"] },
-  { url: "rust-lang/rust.vim", profiles: ["default"] },
-  { url: "ziglang/zig.vim", profiles: ["default"] },
+  // { url: "rust-lang/rust.vim", profiles: ["default"] },
+  // { url: "ziglang/zig.vim", profiles: ["default"] },
   // { url: "Shougo/cmdline.vim", profiles: ["default"] },
   //{ url: "lambdalisue/vim-gin", profiles: ["default"] },
 
@@ -71,16 +71,16 @@ export const plugins: Plugin[] = [
     },
   },
 
-  {
-    url: "thinca/vim-partedit",
-    profiles: ["default"],
-    cache: {
-      before: `
-        let g:partedit#prefix_pattern = '\\s*'
-        let g:partedit#auto_prefix = 0
-      `,
-    },
-  },
+  // {
+  //   url: "thinca/vim-partedit",
+  //   profiles: ["default"],
+  //   cache: {
+  //     before: `
+  //       let g:partedit#prefix_pattern = '\\s*'
+  //       let g:partedit#auto_prefix = 0
+  //     `,
+  //   },
+  // },
 
   {
     url: "yuki-yano/vim-operator-replace",
@@ -189,22 +189,22 @@ export const plugins: Plugin[] = [
     },
   },
 
-  {
-    url: "vim-test/vim-test",
-    profiles: ["default"],
-    dependencies: ["tpope/vim-dispatch"],
-    cache: {
-      after: `
-        aug MyVimTestSetting
-          au!
-          au FileType typescript,typescriptreact nmap <silent> <leader>tt :TestNearest<CR>
-          au FileType typescript,typescriptreact nmap <silent> <leader>tb :TestFile<CR>
-        aug END
+  // {
+  //   url: "vim-test/vim-test",
+  //   profiles: ["default"],
+  //   dependencies: ["tpope/vim-dispatch"],
+  //   cache: {
+  //     after: `
+  //       aug MyVimTestSetting
+  //         au!
+  //         au FileType typescript,typescriptreact nmap <silent> <leader>tt :TestNearest<CR>
+  //         au FileType typescript,typescriptreact nmap <silent> <leader>tb :TestFile<CR>
+  //       aug END
 
-        let g:test#javascript#runner = 'jest'
-      `,
-    },
-  },
+  //       let g:test#javascript#runner = 'jest'
+  //     `,
+  //   },
+  // },
 
   {
     url: "kana/vim-submode",
@@ -247,59 +247,43 @@ export const plugins: Plugin[] = [
     },
   },
 
-  {
-    url: "github/copilot.vim",
-    profiles: ["default"],
-    cache: {
-      after: `
-        let g:copilot_no_tab_map = v:true
-        let g:copilot_filetypes = #{
-              \\ gitcommit: v:true,
-              \\ markdown: v:true,
-              \\ text: v:true,
-              \\ ddu-ff-filter: v:false,
-              \\ }
-        imap <silent><script><expr> <C-Tab> copilot#Accept("\<CR>")
-      `,
-    },
-  },
-  {
-    url: "zbirenbaum/copilot.lua",
-    profiles: ["never"],
-    cache: {
-      after: `lua << EOB
-      require('copilot').setup({
-        suggestion = {
-          auto_trigger = true,
-          keymap = {
-            accept = "<C-Tab>",
-          },
-        },
-        filetypes = {
-          gitcommit = true,
-          markdown = true,
-          text = true,
-        },
-      })
-      EOB`,
-    },
-  },
-
-  {
-    url: "airblade/vim-gitgutter",
-    profiles: ["vim"],
-    cache: {
-      before: `
-        nmap gj <Plug>(GitGutterNextHunk)
-        nmap gk <Plug>(GitGutterPrevHunk)
-
-        aug MyGitGutterSetting
-          au!
-          au BufWritePost * GitGutter
-        aug END
-      `,
-    },
-  },
+  //{
+  //  url: "github/copilot.vim",
+  //  profiles: ["default"],
+  //  cache: {
+  //    after: `
+  //      let g:copilot_no_tab_map = v:true
+  //      let g:copilot_filetypes = #{
+  //            \\ gitcommit: v:true,
+  //            \\ markdown: v:true,
+  //            \\ text: v:true,
+  //            \\ ddu-ff-filter: v:false,
+  //            \\ }
+  //      imap <silent><script><expr> <C-Tab> copilot#Accept("\<CR>")
+  //    `,
+  //  },
+  //},
+  //{
+  //  url: "zbirenbaum/copilot.lua",
+  //  profiles: ["never"],
+  //  cache: {
+  //    after: `lua << EOB
+  //    require('copilot').setup({
+  //      suggestion = {
+  //        auto_trigger = true,
+  //        keymap = {
+  //          accept = "<C-Tab>",
+  //        },
+  //      },
+  //      filetypes = {
+  //        gitcommit = true,
+  //        markdown = true,
+  //        text = true,
+  //      },
+  //    })
+  //    EOB`,
+  //  },
+  //},
 
   {
     url: "easymotion/vim-easymotion",
@@ -435,20 +419,20 @@ export const plugins: Plugin[] = [
     },
   },
 
-  {
-    url: "NeogitOrg/neogit",
-    profiles: ["neovim"],
-    dependencies: [
-      "nvim-lua/plenary.nvim",
-      "sindrets/diffview.nvim",
-      "ibhagwan/fzf-lua",
-    ],
-    cache: {
-      after: `lua << EOB
-        require('neogit').setup {}
-      EOB`,
-    },
-  },
+  //{
+  //  url: "NeogitOrg/neogit",
+  //  profiles: ["neovim"],
+  //  dependencies: [
+  //    "nvim-lua/plenary.nvim",
+  //    "sindrets/diffview.nvim",
+  //    "ibhagwan/fzf-lua",
+  //  ],
+  //  cache: {
+  //    after: `lua << EOB
+  //      require('neogit').setup {}
+  //    EOB`,
+  //  },
+  //},
 
   {
     url: "nvim-tree/nvim-web-devicons",
@@ -460,16 +444,31 @@ export const plugins: Plugin[] = [
     },
   },
 
+  //{
+  //  url: "tani/dmacro.vim",
+  //  profiles: ["neovim"],
+  //  cache: {
+  //    after: `lua << EOB
+  //      vim.keymap.set({ "i", "n" }, '<C-q>', '<Plug>(dmacro-play-macro)')
+  //    EOB`,
+  //  },
+  //},
+
   {
-    url: "tani/dmacro.vim",
-    profiles: ["neovim"],
+    url: "airblade/vim-gitgutter",
+    profiles: ["vim"],
     cache: {
-      after: `lua << EOB
-        vim.keymap.set({ "i", "n" }, '<C-q>', '<Plug>(dmacro-play-macro)')
-      EOB`,
+      before: `
+        nmap gj <Plug>(GitGutterNextHunk)
+        nmap gk <Plug>(GitGutterPrevHunk)
+
+        aug MyGitGutterSetting
+          au!
+          au BufWritePost * GitGutter
+        aug END
+      `,
     },
   },
-
   {
     url: "lewis6991/gitsigns.nvim",
     profiles: ["neovim"],
@@ -660,7 +659,6 @@ export const plugins: Plugin[] = [
     url: "rickhowe/diffchar.vim",
     profiles: ["default"],
   },
-
   {
     url: "rickhowe/spotdiff.vim",
     dependencies: ["rickhowe/diffchar.vim"],
@@ -884,7 +882,7 @@ export const plugins: Plugin[] = [
   //},
 
   ...(pluginStatus.telescope ? telescopePlugins : []),
-  ...(pluginStatus.nvimDeck ? nvimDeckPlugins : []),
+  //...(pluginStatus.nvimDeck ? nvimDeckPlugins : []),
   //...(fuzzyFinder === "telescope" ? telescopePlugins : []),
   ...clojurePlugins,
   //...codeCompanionPlugins,
